@@ -5,7 +5,7 @@ import { toPersianDigits, formatCurrency } from '../utils/persian';
 import { ThemeMode } from '../types';
 import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
-import authorImg from '../assets/author_hakimian.jpg';
+import authorImg from '../assets/author_ali.jpg';
 
 interface ProductPricingProps {
   onAddToCart: (bookId: string, customAuthorSignature?: boolean, recipientName?: string) => void;
@@ -154,7 +154,7 @@ export const ProductPricing: React.FC<ProductPricingProps> = ({ onAddToCart, the
                   <img
                     src={authorImg}
                     alt="علی‌اصغر حکیمیان"
-                    className="w-10 h-10 rounded-full object-cover border-2 border-[#B87333] shrink-0 shadow-md"
+                    className="w-14 h-14 rounded-xl object-cover border-2 border-[#B87333] shrink-0 shadow-md"
                     referrerPolicy="no-referrer"
                   />
                   <label className="flex items-center gap-2 cursor-pointer flex-1">

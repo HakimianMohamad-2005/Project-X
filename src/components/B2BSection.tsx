@@ -78,9 +78,9 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'dark' }) => {
               }`}>
                 <Users className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
                 <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>نشست مدیریتی با علی‌اصغر حکیمیان</h3>
+                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>نشست مدیریتی با دکتر علی‌اصغر حکیمیان</h3>
                   <p className="text-xs text-stone-400 mt-1">
-                    امکان هماهنگی جلسه تحلیلی حضوری یا آنلاین با نویسنده برای سفارش‌های بالای ۲۰ دوره.
+                    امکان هماهنگی جلسه تحلیلی حضوری یا آنلاین با نویسنده (دکترای مدیریت استراتژیک، متخصص نرم‌افزار و حسابداری) برای سفارش‌های بالای ۲۰ دوره.
                   </p>
                 </div>
               </div>

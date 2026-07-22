@@ -53,28 +53,28 @@ export const Navbar: React.FC<NavbarProps> = ({
         : 'bg-[#121314]/90 border-stone-800 text-[#FAF7F2]'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 gap-4">
           
           {/* Right Section: Logo & Brand */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => handleSelectTab('books')}
-              className="flex items-center gap-3 text-right group focus:outline-none"
+              className="flex items-center gap-3 text-right group focus:outline-none shrink-0"
             >
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#B87333] to-[#8B4513] p-0.5 shadow-lg shadow-[#B87333]/20 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#B87333] to-[#8B4513] p-0.5 shadow-lg shadow-[#B87333]/20 flex items-center justify-center shrink-0">
                 <div className={`w-full h-full rounded-[10px] flex items-center justify-center transition-colors ${
                   isLight ? 'bg-white group-hover:bg-amber-50' : 'bg-[#121314] group-hover:bg-[#1E2022]'
                 }`}>
                   <span className="text-[#B87333] font-black text-xl tracking-tighter">+۳</span>
                 </div>
               </div>
-              <div className="flex flex-col">
-                <span className={`font-extrabold text-xl tracking-tight transition-colors ${
+              <div className="flex flex-col text-right whitespace-nowrap shrink-0">
+                <span className={`font-extrabold text-lg sm:text-xl tracking-tight transition-colors ${
                   isLight ? 'text-stone-900 group-hover:text-[#B87333]' : 'text-[#FAF7F2] group-hover:text-[#B87333]'
                 }`}>
                   اورانگوتان <span className="text-[#B87333]">+۳</span>
                 </span>
-                <span className={`text-[11px] font-medium ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
+                <span className={`text-[11px] font-medium leading-tight ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
                   کتاب دو جلدی علی‌اصغر حکیمیان
                 </span>
               </div>
@@ -82,14 +82,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Center Navigation Tabs (Desktop) */}
-          <nav className="hidden xl:flex items-center gap-1.5 p-1.5 rounded-2xl bg-stone-500/10 border border-stone-500/20 text-xs font-semibold">
+          <nav className="hidden xl:flex items-center gap-1 p-1.5 rounded-2xl bg-stone-500/10 border border-stone-500/20 text-xs font-semibold shrink">
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleSelectTab(item.id)}
-                  className={`relative px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap ${
+                  className={`relative px-2.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap ${
                     isActive
                       ? isLight
                         ? 'bg-white text-[#B87333] font-bold shadow-md'
@@ -103,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {isActive && (
                     <motion.div
                       layoutId="activeTabIndicator"
-                      className="absolute -bottom-1 left-3 right-3 h-0.5 bg-[#B87333] rounded-full"
+                      className="absolute -bottom-1 left-2.5 right-2.5 h-0.5 bg-[#B87333] rounded-full"
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -113,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Left Action Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 me-2 lg:me-6 mr-3 lg:mr-8">
             
             {/* Dark / Light Theme Toggle */}
             <motion.button

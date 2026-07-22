@@ -4,8 +4,8 @@ import { toPersianDigits, formatCurrency } from '../utils/persian';
 import { BUNDLE_DATA, BOOKS_DATA } from '../data/bookData';
 import { ActiveTab, ThemeMode } from '../types';
 import { BookCoverPlaceholder } from './BookCoverPlaceholder';
-import { AuthorImagePlaceholder } from './AuthorImagePlaceholder';
 import { motion } from 'motion/react';
+import authorImg from '../assets/author_ali.jpg';
 
 interface HeroProps {
   onAddToCart: (bookId: string) => void;
@@ -192,27 +192,35 @@ export const Hero: React.FC<HeroProps> = ({
                 <BookCoverPlaceholder volume={2} size="md" theme={theme} />
               </div>
 
-              {/* Author Portrait Banner Insert */}
-              <div className={`p-3 rounded-2xl border flex items-center justify-between gap-3 ${
+              {/* Author Info Banner Insert */}
+              <div className={`p-4 rounded-2xl border flex items-center justify-between gap-3 ${
                 isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/80 border-stone-800'
               }`}>
-                <div className="flex items-center gap-3">
-                  <AuthorImagePlaceholder theme={theme} size="sm" />
-                  <div className="space-y-1">
-                    <span className={`text-xs font-bold block ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                      علی‌اصغر حکیمیان
+                <div className="flex items-center gap-3.5">
+                  <img
+                    src={authorImg}
+                    alt="علی‌اصغر حکیمیان"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#B87333] shrink-0 shadow-lg"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="space-y-1 text-right">
+                    <span className={`text-sm font-bold block ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
+                      نویسنده: علی‌اصغر حکیمیان
+                    </span>
+                    <span className="text-xs text-[#B87333] font-bold block">
+                      دکترای مدیریت استراتژیک
                     </span>
                     <span className="text-[11px] text-stone-400 block">
-                      نویسنده کتاب و مدیر ارشد صنایع
+                      متخصص نرم‌افزار • متخصص حسابداری
                     </span>
-                    <button
-                      onClick={() => onTabChange('author')}
-                      className="text-[10px] text-[#B87333] font-bold underline block mt-1"
-                    >
-                      مطالعه رزومه و بیوگرافی کامل ←
-                    </button>
                   </div>
                 </div>
+                <button
+                  onClick={() => onTabChange('author')}
+                  className="text-xs text-[#B87333] hover:text-amber-400 font-bold underline shrink-0 transition-colors"
+                >
+                  رزومه کامل ←
+                </button>
               </div>
 
               {/* Pricing & Add to Cart Action */}

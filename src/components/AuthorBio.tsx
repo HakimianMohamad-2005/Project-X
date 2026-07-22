@@ -39,15 +39,35 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'dark' }) => {
             {/* Left Column: Bio Content */}
             <div className="lg:col-span-8 space-y-6 text-right">
               
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <span className="text-xs font-bold text-[#B87333] tracking-widest uppercase">
                   درباره نویسنده کتاب
                 </span>
                 <h2 className={`text-3xl font-extrabold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
                   علی‌اصغر حکیمیان
                 </h2>
+
+                {/* Professional Titles & Credentials */}
+                <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border shadow-sm ${
+                    isLight ? 'bg-amber-100/80 border-amber-300 text-amber-950' : 'bg-amber-950/60 border-amber-700/60 text-amber-300'
+                  }`}>
+                    🎓 دکترای مدیریت استراتژیک
+                  </span>
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border shadow-sm ${
+                    isLight ? 'bg-stone-100 border-stone-300 text-stone-900' : 'bg-stone-800/80 border-stone-700 text-stone-200'
+                  }`}>
+                    💻 متخصص نرم‌افزار
+                  </span>
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border shadow-sm ${
+                    isLight ? 'bg-stone-100 border-stone-300 text-stone-900' : 'bg-stone-800/80 border-stone-700 text-stone-200'
+                  }`}>
+                    📊 متخصص حسابداری
+                  </span>
+                </div>
+
                 <p className="text-xs text-stone-400 font-medium">
-                  حاصل چهار دهه فعالیت اجرایی در صنایع تولیدی، شرکت‌های نرم‌افزاری و سیستم‌های مالی در ایران
+                  حاصل چهار دهه فعالیت اجرایی و راهبردی در مدیریت استراتژیک، توسعه نرم‌افزار و سیستم‌های حسابداری و مالی
                 </p>
               </div>
 
@@ -65,7 +85,7 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'dark' }) => {
               <p className={`text-xs sm:text-sm leading-relaxed font-normal ${
                 isLight ? 'text-stone-700' : 'text-stone-300'
               }`}>
-                علی‌اصغر حکیمیان در طول ۴۰ سال سابقه مدیریت، با صدها چالش واقعی از کارخانجات پودر آب‌پنیر و شرکت‌های بلبرینگ تا تیم‌های فروش نرم‌افزار و توزیع شیر مدارس دست و پنجه نرم کرده است. او در کتاب دو جلدی «اورانگوتان +۳» تلاش کرده است بدون تعارفات آکادمیک و بدون نسخه‌پیچی‌های شیک غربی، عارضه‌های بومی مدیریت در ایران را تحلیل و راهکار دهد.
+                دکتر علی‌اصغر حکیمیان دارای دکترای مدیریت استراتژیک، متخصص نرم‌افزار و متخصص حسابداری است. او با بیش از ۴۰ سال سابقه ارزنده‌ی مدیریتی، مشاوره و اجرای پروژه‌های کلان، ترکیب کم‌نظیری از تفکر استراتژیک مدیریتی، تسلط بر فناوری‌های نرم‌افزاری و تحلیل‌های دقیق مالی و حسابداری را در مجموعه کتاب «اورانگوتان +۳» گرد آورده است.
               </p>
 
               {/* Experience Highlights Grid */}
@@ -75,11 +95,11 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'dark' }) => {
                   isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#121314] border-stone-800'
                 }`}>
                   <div className={`flex items-center gap-2 text-xs font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                    <Factory className="w-4 h-4 text-[#B87333]" />
-                    <span>صنعت و تولید</span>
+                    <Award className="w-4 h-4 text-[#B87333]" />
+                    <span>دکترای مدیریت استراتژیک</span>
                   </div>
                   <p className="text-[11px] text-stone-400">
-                    عارضه‌یابی خطوط تولید و افزایش ظرفیت بدون تجهیزات جدید.
+                    عارضه‌یابی ساختاری، تحلیل الگوی تصمیم‌گیری و راهبری تغییرات ماندگار در سازمان.
                   </p>
                 </div>
 
@@ -88,10 +108,10 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'dark' }) => {
                 }`}>
                   <div className={`flex items-center gap-2 text-xs font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
                     <Code2 className="w-4 h-4 text-[#B87333]" />
-                    <span>نرم‌افزار و داده</span>
+                    <span>متخصص نرم‌افزار</span>
                   </div>
                   <p className="text-[11px] text-stone-400">
-                    طراحی سیستم‌های یکپارچه و حذف بدهی‌های داده‌ای انبار.
+                    طراحی سامانه‌های یکپارچه صنعتی، سیستم‌های ثبت داده و اتوماسیون فرایندها.
                   </p>
                 </div>
 
@@ -100,10 +120,10 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'dark' }) => {
                 }`}>
                   <div className={`flex items-center gap-2 text-xs font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
                     <LineChart className="w-4 h-4 text-[#B87333]" />
-                    <span>مالی و کنترل سود</span>
+                    <span>متخصص حسابداری</span>
                   </div>
                   <p className="text-[11px] text-stone-400">
-                    تمایز سود عملیاتی از تورمی و بستن نشتهای انبار.
+                    کنترل نشت مالی انبارها، تفکیک سود عملیاتی از تورمی و بهینه‌سازی جریان نقدینگی.
                   </p>
                 </div>
 
