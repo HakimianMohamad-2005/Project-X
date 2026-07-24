@@ -19,40 +19,47 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
 }) => {
   const isLight = theme === 'light';
 
-  // Sizing styles
+  // Sizing styles (Enlarged)
   const sizeClasses = {
-    sm: 'w-28 h-40 text-xs',
-    md: 'w-40 h-56 text-sm',
-    lg: 'w-56 h-80 text-base'
+    sm: 'w-32 h-48 text-xs',
+    md: 'w-48 h-72 sm:w-52 sm:h-76 text-sm',
+    lg: 'w-60 h-88 sm:w-64 sm:h-96 text-base'
   }[size];
 
   if (volume === 'bundle') {
     return (
-      <div className={`relative group perspective-1000 ${size === 'lg' ? 'w-64 h-84' : 'w-48 h-64'}`}>
+      <div className={`relative group [perspective:1200px] ${size === 'lg' ? 'w-64 h-96' : 'w-52 h-76'}`}>
         {/* 3D Boxset / Stacked Books Effect */}
-        <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-[#B87333] via-amber-700 to-stone-900 p-1 shadow-2xl transition-transform duration-300 group-hover:scale-105">
-          <div className={`w-full h-full rounded-[14px] ${isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#121314] text-[#FAF7F2]'} flex flex-col justify-between relative overflow-hidden border border-amber-500/30`}>
+        <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-[#B87333] via-amber-700 to-stone-900 p-1 shadow-2xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(-14deg)_rotateX(6deg)_scale(1.05)]">
+          <div className={`w-full h-full rounded-[14px] ${isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#121314] text-[#FAF7F2]'} flex relative overflow-hidden border border-amber-500/30`}>
             
-            {/* Real Cover Image Overlay */}
-            <div className="relative w-full h-full overflow-hidden rounded-[13px]">
+            {/* Split Covers Effect for Vol 1 & Vol 2 Bundle */}
+            <div className="relative w-1/2 h-full overflow-hidden border-r border-amber-500/40">
               <img
                 src="/Jeld%20-%20Front.png"
-                alt="پک کامل کتاب اورانگوتان +۳"
-                className="w-full h-full object-cover"
+                alt="جلد اول کتاب اورانگوتان +۳"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent flex flex-col justify-between p-3.5">
-                <div className="flex justify-between items-start">
-                  <span className="text-[10px] font-black bg-[#B87333] text-white px-2 py-0.5 rounded-full shadow">
-                    دوره کامل ۲ جلدی
-                  </span>
-                  <BookOpen className="w-4 h-4 text-amber-400 drop-shadow" />
-                </div>
-                <div className="text-right space-y-0.5">
-                  <p className="text-[10px] text-amber-300 font-bold">مجموع ۷۲۸ صفحه • هاردکاور</p>
-                  <p className="text-xs font-black text-white">علی‌اصغر حکیمیان</p>
-                </div>
-              </div>
+              <span className="absolute top-2 right-2 text-[9px] font-black bg-black/70 text-amber-300 px-1.5 py-0.5 rounded backdrop-blur">جلد ۱</span>
+            </div>
+
+            <div className="relative w-1/2 h-full overflow-hidden">
+              <img
+                src="/Jeld2%20-%20Front.png"
+                alt="جلد دوم کتاب اورانگوتان +۳"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                referrerPolicy="no-referrer"
+              />
+              <span className="absolute top-2 left-2 text-[9px] font-black bg-black/70 text-amber-300 px-1.5 py-0.5 rounded backdrop-blur">جلد ۲</span>
+            </div>
+
+            {/* Overlay Badge */}
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950 via-stone-950/80 to-transparent p-3 text-right">
+              <span className="text-[10px] font-black bg-[#B87333] text-white px-2 py-0.5 rounded-full shadow">
+                دوره کامل ۲ جلدی
+              </span>
+              <p className="text-[11px] font-bold text-white mt-1">مجموع ۷۲۸ صفحه • نویسنده: علی‌اصغر حکیمیان</p>
             </div>
 
           </div>
@@ -65,59 +72,118 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
 
   if (isVol1) {
     return (
-      <div className={`relative group ${sizeClasses} rounded-2xl bg-gradient-to-tr from-[#8B4513] via-amber-800 to-stone-900 p-0.5 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
-        <div className="w-full h-full rounded-[15px] overflow-hidden relative shadow-inner bg-stone-900">
-          <img
-            src="/Jeld%20-%20Front.png"
-            alt="طرح جلد کتاب اورانگوتان +۳ جلد اول - علی‌اصغر حکیمیان"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            referrerPolicy="no-referrer"
-          />
-          {/* Subtle Spine Highlight & Shadow */}
-          <div className="absolute inset-y-0 right-0 w-2 bg-gradient-to-l from-black/40 to-transparent pointer-events-none" />
-          <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-r from-white/20 to-transparent pointer-events-none" />
+      <div className={`relative group ${sizeClasses} [perspective:1200px] cursor-pointer`}>
+        {/* Main 3D Book Wrapper */}
+        <div className="relative w-full h-full transition-all duration-1000 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)] shadow-2xl rounded-2xl">
+          
+          {/* Inner Pages (Visible when cover swings open) */}
+          <div className="absolute inset-0 rounded-2xl bg-[#FAF6EE] text-stone-900 border-2 border-stone-300/80 p-4 flex flex-col justify-between overflow-hidden shadow-inner">
+            {/* Paper Texture Lines */}
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
+
+            <div className="relative z-0 text-right space-y-2 pr-2 pt-2">
+              <div className="flex items-center justify-between border-b border-amber-800/20 pb-1.5">
+                <span className="text-[10px] font-extrabold text-[#8B4513] tracking-tight">جلد اول • صفحه اول</span>
+                <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+              </div>
+              <h4 className="text-sm font-black text-stone-900 leading-tight">
+                اورانگوتان <span className="text-[#8B4513]">+۳</span>
+              </h4>
+              <p className="text-[11px] font-bold text-amber-900">
+                فصل ۱: وضعیت اورانگوتانی چیست؟
+              </p>
+              <p className="text-[10px] text-stone-700 leading-relaxed font-serif line-clamp-4">
+                «در هر سازمانی که تصمیم‌گیری بر اساس هیجان، شایعه و حس غریزی باشد، اتلاف مالی پنهان رخ می‌دهد. خودآگاهی اولین گام برای درمان خونریزی مالی است...»
+              </p>
+            </div>
+
+            <div className="relative z-0 pt-2 border-t border-amber-800/20 flex items-center justify-between text-[10px] text-stone-600 font-bold">
+              <span>علی‌اصغر حکیمیان</span>
+              <span className="text-[#8B4513]">۳۸۴ صفحه</span>
+            </div>
+          </div>
+
+          {/* Paper Thickness Effect (3D Side Edges) */}
+          <div className="absolute top-1 bottom-1 left-0.5 w-3 bg-gradient-to-r from-stone-200 via-amber-50 to-stone-300 rounded-l border-r border-stone-400/50 shadow-md pointer-events-none [transform:translateZ(-2px)]" />
+
+          {/* Front Cover (Opens 3D on Hover) */}
+          <div className="absolute inset-0 rounded-2xl bg-stone-900 [transform-origin:right_center] transition-transform duration-1000 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(135deg)] shadow-2xl overflow-hidden border border-amber-600/30">
+            <img
+              src="/Jeld%20-%20Front.png"
+              alt="طرح جلد کتاب اورانگوتان +۳ جلد اول - علی‌اصغر حکیمیان"
+              className="w-full h-full object-cover rounded-2xl"
+              referrerPolicy="no-referrer"
+            />
+            
+            {/* Spine Shadow Effect */}
+            <div className="absolute inset-y-0 right-0 w-3 bg-gradient-to-l from-black/60 to-transparent pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-r from-white/30 to-transparent pointer-events-none" />
+
+            {/* Subtle Hover Hint Badge */}
+            <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md text-amber-300 text-[10px] font-bold py-1 px-2.5 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-1">
+              <BookOpen className="w-3 h-3" />
+              <span>مشاهده داخل کتاب</span>
+            </div>
+          </div>
+
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`relative group ${sizeClasses} rounded-2xl bg-gradient-to-tr from-stone-900 via-stone-800 to-[#B87333] border border-amber-500/40 p-0.5 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
-      
-      <div className={`w-full h-full rounded-[15px] ${
-        isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#181A1C] text-[#FAF7F2]'
-      } p-3.5 flex flex-col justify-between relative overflow-hidden`}>
+    <div className={`relative group ${sizeClasses} [perspective:1200px] cursor-pointer`}>
+      {/* Main 3D Book Wrapper */}
+      <div className="relative w-full h-full transition-all duration-1000 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)] shadow-2xl rounded-2xl">
         
-        {/* Top Header */}
-        <div className="flex items-center justify-between border-b border-stone-800/80 pb-2">
-          <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-amber-600 text-white">
-            جلد ۲
-          </span>
-          <span className="text-[10px] text-stone-400 font-bold">
-            ۳۴۴ صفحه
-          </span>
-        </div>
+        {/* Inner Pages (Visible when cover swings open) */}
+        <div className="absolute inset-0 rounded-2xl bg-[#FAF6EE] text-stone-900 border-2 border-stone-300/80 p-4 flex flex-col justify-between overflow-hidden shadow-inner">
+          {/* Paper Texture Lines */}
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
 
-        {/* Center Cover Graphic Placeholder for Vol 2 */}
-        <div className="my-auto text-center space-y-1.5 py-2">
-          
-          <div className="w-10 h-10 rounded-xl bg-stone-800/80 border border-stone-700/80 text-[#B87333] flex items-center justify-center mx-auto shadow-inner">
-            <BookOpen className="w-5 h-5 text-amber-400" />
+          <div className="relative z-0 text-right space-y-2 pr-2 pt-2">
+            <div className="flex items-center justify-between border-b border-amber-800/20 pb-1.5">
+              <span className="text-[10px] font-extrabold text-[#8B4513] tracking-tight">جلد دوم • صفحه اول</span>
+              <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+            </div>
+            <h4 className="text-sm font-black text-stone-900 leading-tight">
+              راهکارهای <span className="text-[#8B4513]">+۳</span>
+            </h4>
+            <p className="text-[11px] font-bold text-amber-900">
+              فصل ۲۰: نقشه راه پایداری و رشد +۳
+            </p>
+            <p className="text-[10px] text-stone-700 leading-relaxed font-serif line-clamp-4">
+              «وقتی سیستم مدیریتی بر پایه داده‌های شفاف و معماری سازمان یادگیرنده بنا شود، رشد پایدار اتفاق می‌افتد و سازمان بدون وابسته بودن به اشخاص اداره می‌شود...»
+            </p>
           </div>
 
-          <h4 className="text-xs font-black text-[#FAF7F2] leading-snug">
-            راهکارهای +۳
-          </h4>
-
-          <p className="text-[10px] text-stone-400 line-clamp-2">
-            تولید، فروش و ۴۰ درس
-          </p>
+          <div className="relative z-0 pt-2 border-t border-amber-800/20 flex items-center justify-between text-[10px] text-stone-600 font-bold">
+            <span>علی‌اصغر حکیمیان</span>
+            <span className="text-[#8B4513]">۳۴۴ صفحه</span>
+          </div>
         </div>
 
-        {/* Bottom Author Signature Indicator */}
-        <div className="pt-2 border-t border-stone-800/80 flex items-center justify-between text-[10px] text-stone-400">
-          <span className="font-semibold text-stone-300">علی‌اصغر حکیمیان</span>
-          <Sparkles className="w-3 h-3 text-[#B87333]" />
+        {/* Paper Thickness Effect (3D Side Edges) */}
+        <div className="absolute top-1 bottom-1 left-0.5 w-3 bg-gradient-to-r from-stone-200 via-amber-50 to-stone-300 rounded-l border-r border-stone-400/50 shadow-md pointer-events-none [transform:translateZ(-2px)]" />
+
+        {/* Front Cover (Opens 3D on Hover) */}
+        <div className="absolute inset-0 rounded-2xl bg-stone-900 [transform-origin:right_center] transition-transform duration-1000 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(135deg)] shadow-2xl overflow-hidden border border-amber-600/30">
+          <img
+            src="/Jeld2%20-%20Front.png"
+            alt="طرح جلد کتاب اورانگوتان +۳ جلد دوم - علی‌اصغر حکیمیان"
+            className="w-full h-full object-cover rounded-2xl"
+            referrerPolicy="no-referrer"
+          />
+          
+          {/* Spine Shadow Effect */}
+          <div className="absolute inset-y-0 right-0 w-3 bg-gradient-to-l from-black/60 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-r from-white/30 to-transparent pointer-events-none" />
+
+          {/* Subtle Hover Hint Badge */}
+          <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md text-amber-300 text-[10px] font-bold py-1 px-2.5 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-1">
+            <BookOpen className="w-3 h-3" />
+            <span>مشاهده داخل کتاب</span>
+          </div>
         </div>
 
       </div>

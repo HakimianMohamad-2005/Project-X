@@ -186,10 +186,10 @@ export const Hero: React.FC<HeroProps> = ({
                 </span>
               </div>
 
-              {/* Book Covers Placeholder Display */}
-              <div className="flex items-center justify-center gap-4">
-                <BookCoverPlaceholder volume={1} size="md" theme={theme} />
-                <BookCoverPlaceholder volume={2} size="md" theme={theme} />
+              {/* Book Covers Display */}
+              <div className="flex items-center justify-center gap-6 sm:gap-8 py-2">
+                <BookCoverPlaceholder volume={1} size="lg" theme={theme} />
+                <BookCoverPlaceholder volume={2} size="lg" theme={theme} />
               </div>
 
               {/* Author Info Banner Insert */}
