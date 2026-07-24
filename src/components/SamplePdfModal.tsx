@@ -26,24 +26,50 @@ export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose,
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setDownloadReady(true);
-    confetti({
-      particleCount: 50,
-      spread: 60,
-      origin: { y: 0.6 }
-    });
+    
+    // Trigger confetti safely
+    try {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.6 }
+        });
+      }
+    } catch (err) {
+      console.warn('Confetti animation error:', err);
+    }
+
+    // Automatically trigger PDF download
+    handleDownloadFile();
   };
 
-  const handleDownloadFile = () => {
-    // Simulated PDF Download
-    const element = document.createElement("a");
-    const file = new Blob([
-      "نمونه ۳۶ صفحه‌ای کتاب اورانگوتان +۳ نوشته علی‌اصغر حکیمیان\n\nفصل اول: وضعیت اورانگوتانی چیست؟\nفصل دوم: مشاهده بدون روتوش کف کارخانه..."
-    ], { type: 'text/plain;charset=utf-8' });
-    element.href = URL.createObjectURL(file);
-    element.download = "OrangutanPlus3_36Page_Sample.txt";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  const handleDownloadFile = async () => {
+    try {
+      // Fetch binary PDF file directly as a Blob to guarantee full size (1.4MB)
+      const response = await fetch("/orangutan-plus3-sample-36-pages.pdf");
+      if (!response.ok) throw new Error("File fetch failed");
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "orangutan-plus3-sample-36-pages.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+    } catch (err) {
+      console.error("Blob download failed, falling back to direct link", err);
+      // Fallback
+      const element = document.createElement("a");
+      element.href = "/orangutan-plus3-sample-36-pages.pdf";
+      element.download = "orangutan-plus3-sample-36-pages.pdf";
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
   };
 
   return (
@@ -171,13 +197,33 @@ export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose,
               </p>
             </div>
 
-            <button
-              onClick={handleDownloadFile}
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs shadow-xl flex items-center justify-center gap-2"
-            >
-              <Download className="w-4 h-4" />
-              <span>دانلود مستقیم فایل PDF نمونه</span>
-            </button>
+            <div className="space-y-3">
+              <a
+                href="/orangutan-plus3-sample-36-pages.pdf"
+                download="orangutan-plus3-sample-36-pages.pdf"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDownloadFile();
+                }}
+                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs shadow-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                <span>دانلود مستقیم فایل PDF (حجم ۱.۴ مگابایت)</span>
+              </a>
+
+              <a
+                href="/orangutan-plus3-sample-36-pages.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full py-2.5 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
+                  isLight
+                    ? 'bg-stone-100 hover:bg-stone-200 text-stone-800 border-stone-300'
+                    : 'bg-stone-800 hover:bg-stone-700 text-stone-200 border-stone-700'
+                }`}
+              >
+                <span>مشاهده و مطالعه مستقیم در مرورگر</span>
+              </a>
+            </div>
 
             <button
               onClick={onClose}
