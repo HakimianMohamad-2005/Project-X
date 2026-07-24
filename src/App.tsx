@@ -19,7 +19,7 @@ import { Footer } from './components/Footer';
 import { CartItem, Order, OrderCustomerInfo, ActiveTab, ThemeMode } from './types';
 import { BOOKS_DATA, BUNDLE_DATA } from './data/bookData';
 import { motion, AnimatePresence } from 'motion/react';
-import { saveOrderToFirebase, fetchRecentOrdersFromFirebase } from './lib/firebase';
+import { saveOrderToApi, fetchRecentOrdersFromApi } from './lib/api';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('books');
@@ -47,9 +47,9 @@ export default function App() {
     }
   }, [theme]);
 
-  // Sync orders from Firebase Firestore on app mount
+  // Sync orders from MySQL API on app mount
   useEffect(() => {
-    fetchRecentOrdersFromFirebase().then((orders) => {
+    fetchRecentOrdersFromApi().then((orders) => {
       if (orders && orders.length > 0) {
         setRecentOrders(orders);
       }
@@ -159,7 +159,7 @@ export default function App() {
   };
 
   const handlePaymentSuccess = (newOrder: Order) => {
-    saveOrderToFirebase(newOrder);
+    saveOrderToApi(newOrder);
     setRecentOrders((prev) => [newOrder, ...prev]);
     setCartItems([]);
     setIsPaymentOpen(false);

@@ -3,7 +3,7 @@ import { X, Search, Truck, CheckCircle2, Clock, Package, MapPin, Printer } from 
 import { Order, ThemeMode } from '../types';
 import { toPersianDigits, formatCurrency } from '../utils/persian';
 import { motion } from 'motion/react';
-import { searchOrderInFirebase, normalizeDigits } from '../lib/firebase';
+import { searchOrderInApi, normalizeDigits } from '../lib/api';
 
 interface OrderTrackingModalProps {
   isOpen: boolean;
@@ -53,8 +53,8 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
       return;
     }
 
-    // Search in Firebase Firestore
-    const remoteOrder = await searchOrderInFirebase(searchCode.trim());
+    // Search in MySQL Database
+    const remoteOrder = await searchOrderInApi(searchCode.trim());
     setIsSearching(false);
 
     if (remoteOrder) {
