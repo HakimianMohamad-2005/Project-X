@@ -19,6 +19,7 @@ import { Footer } from './components/Footer';
 import { CartItem, Order, OrderCustomerInfo, ActiveTab, ThemeMode } from './types';
 import { BOOKS_DATA, BUNDLE_DATA } from './data/bookData';
 import { motion, AnimatePresence } from 'motion/react';
+import { saveOrderToFirebase, fetchRecentOrdersFromFirebase } from './lib/firebase';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('books');
@@ -45,6 +46,15 @@ export default function App() {
       document.documentElement.classList.add('dark');
     }
   }, [theme]);
+
+  // Sync orders from Firebase Firestore on app mount
+  useEffect(() => {
+    fetchRecentOrdersFromFirebase().then((orders) => {
+      if (orders && orders.length > 0) {
+        setRecentOrders(orders);
+      }
+    });
+  }, []);
 
   // Checkout State
   const [pendingCustomerInfo, setPendingCustomerInfo] = useState<OrderCustomerInfo>({
@@ -149,7 +159,8 @@ export default function App() {
   };
 
   const handlePaymentSuccess = (newOrder: Order) => {
-    setRecentOrders((prev) => [...prev, newOrder]);
+    saveOrderToFirebase(newOrder);
+    setRecentOrders((prev) => [newOrder, ...prev]);
     setCartItems([]);
     setIsPaymentOpen(false);
     setIsTrackingOpen(true);

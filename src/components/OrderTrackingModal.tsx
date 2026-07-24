@@ -3,6 +3,7 @@ import { X, Search, Truck, CheckCircle2, Clock, Package, MapPin, Printer } from 
 import { Order, ThemeMode } from '../types';
 import { toPersianDigits, formatCurrency } from '../utils/persian';
 import { motion } from 'motion/react';
+import { searchOrderInFirebase } from '../lib/firebase';
 
 interface OrderTrackingModalProps {
   isOpen: boolean;
@@ -26,17 +27,34 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSearch = (e: React.FormEvent) => {
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!searchCode.trim()) return;
+    
     setErrorMsg('');
-    const found = recentOrders.find(
-      (o) => o.orderCode.toLowerCase() === searchCode.trim().toLowerCase()
+    setIsSearching(true);
+
+    const term = searchCode.trim().toLowerCase();
+    const foundLocal = recentOrders.find(
+      (o) => o.orderCode.toLowerCase() === term || o.customerInfo.phone === term
     );
 
-    if (found) {
-      setSearchedOrder(found);
+    if (foundLocal) {
+      setSearchedOrder(foundLocal);
+      setIsSearching(false);
+      return;
+    }
+
+    // Search in Firebase Firestore
+    const remoteOrder = await searchOrderInFirebase(searchCode.trim());
+    setIsSearching(false);
+
+    if (remoteOrder) {
+      setSearchedOrder(remoteOrder);
     } else {
-      setErrorMsg('سفارشی با این کد رهگیری یافت نشد. لطفاً کد را بررسی نمایید.');
+      setErrorMsg('سفارشی با این کد رهگیری یا شماره همراه در دیتابیس آنلاین ثبت نشده است.');
     }
   };
 
@@ -89,10 +107,11 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
           />
           <button
             type="submit"
-            className="px-5 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white text-xs font-bold shadow-md flex items-center gap-2"
+            disabled={isSearching}
+            className="px-5 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 disabled:opacity-50 text-white text-xs font-bold shadow-md flex items-center gap-2"
           >
             <Search className="w-4 h-4" />
-            <span>جستجو</span>
+            <span>{isSearching ? 'در حال جستجو...' : 'جستجو'}</span>
           </button>
         </form>
 

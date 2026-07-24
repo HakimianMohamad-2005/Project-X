@@ -3,6 +3,7 @@ import { X, FileText, Download, CheckCircle2, Sparkles, ShieldCheck } from 'luci
 import { LeadForm, ThemeMode } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
+import { saveLeadSampleToFirebase } from '../lib/firebase';
 
 interface SamplePdfModalProps {
   isOpen: boolean;
@@ -27,6 +28,9 @@ export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose,
     e.preventDefault();
     setDownloadReady(true);
     
+    // Save lead to Firebase Firestore
+    saveLeadSampleToFirebase(form);
+
     // Trigger confetti safely
     try {
       if (typeof confetti === 'function') {

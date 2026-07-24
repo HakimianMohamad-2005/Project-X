@@ -3,6 +3,7 @@ import { Building2, Users, FileText, CheckCircle2, PhoneCall, Send, Sparkles } f
 import { B2BForm, ThemeMode } from '../types';
 import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
+import { saveB2BInquiryToFirebase } from '../lib/firebase';
 
 interface B2BSectionProps {
   theme?: ThemeMode;
@@ -26,6 +27,7 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    saveB2BInquiryToFirebase(form);
     confetti({
       particleCount: 70,
       spread: 80,
