@@ -29,40 +29,30 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
   if (volume === 'bundle') {
     return (
       <div className={`relative group perspective-1000 ${size === 'lg' ? 'w-64 h-84' : 'w-48 h-64'}`}>
-        {/* 3D Boxset Effect */}
+        {/* 3D Boxset / Stacked Books Effect */}
         <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-[#B87333] via-amber-700 to-stone-900 p-1 shadow-2xl transition-transform duration-300 group-hover:scale-105">
-          <div className={`w-full h-full rounded-[14px] ${isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#121314] text-[#FAF7F2]'} p-4 flex flex-col justify-between relative overflow-hidden border border-amber-500/30`}>
+          <div className={`w-full h-full rounded-[14px] ${isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#121314] text-[#FAF7F2]'} flex flex-col justify-between relative overflow-hidden border border-amber-500/30`}>
             
-            {/* Background Texture & Badge */}
-            <div className="absolute -right-6 -top-6 w-24 h-24 bg-[#B87333]/20 rounded-full blur-xl pointer-events-none" />
-            
-            <div className="flex items-center justify-between border-b border-amber-500/20 pb-2">
-              <span className="text-[10px] font-black bg-[#B87333] text-white px-2 py-0.5 rounded-full tracking-wider">
-                پک کامل دو جلدی
-              </span>
-              <BookOpen className="w-4 h-4 text-[#B87333]" />
-            </div>
-
-            {/* Book Cover Placeholder Badge */}
-            <div className="my-auto text-center space-y-2">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[#B87333] flex items-center justify-center mx-auto">
-                <Image className="w-6 h-6" />
+            {/* Real Cover Image Overlay */}
+            <div className="relative w-full h-full overflow-hidden rounded-[13px]">
+              <img
+                src="/Jeld%20-%20Front.png"
+                alt="پک کامل کتاب اورانگوتان +۳"
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent flex flex-col justify-between p-3.5">
+                <div className="flex justify-between items-start">
+                  <span className="text-[10px] font-black bg-[#B87333] text-white px-2 py-0.5 rounded-full shadow">
+                    دوره کامل ۲ جلدی
+                  </span>
+                  <BookOpen className="w-4 h-4 text-amber-400 drop-shadow" />
+                </div>
+                <div className="text-right space-y-0.5">
+                  <p className="text-[10px] text-amber-300 font-bold">مجموع ۷۲۸ صفحه • هاردکاور</p>
+                  <p className="text-xs font-black text-white">علی‌اصغر حکیمیان</p>
+                </div>
               </div>
-              <span className="text-[10px] text-amber-300/80 font-mono block">
-                [محل تصویر روی جلد پک دو جلدی]
-              </span>
-              <h3 className="text-base font-black text-[#FAF7F2] tracking-tight">
-                اورانگوتان <span className="text-[#B87333]">+۳</span>
-              </h3>
-              <p className="text-[11px] text-stone-300">
-                علی‌اصغر حکیمیان
-              </p>
-            </div>
-
-            {/* Bottom Spine Detail */}
-            <div className="pt-2 border-t border-amber-500/20 flex items-center justify-between text-[10px] text-stone-400">
-              <span>۷۲۸ صفحه</span>
-              <span className="text-amber-400 font-bold">۲ جلد کامل</span>
             </div>
 
           </div>
@@ -73,12 +63,26 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
 
   const isVol1 = volume === 1;
 
+  if (isVol1) {
+    return (
+      <div className={`relative group ${sizeClasses} rounded-2xl bg-gradient-to-tr from-[#8B4513] via-amber-800 to-stone-900 p-0.5 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
+        <div className="w-full h-full rounded-[15px] overflow-hidden relative shadow-inner bg-stone-900">
+          <img
+            src="/Jeld%20-%20Front.png"
+            alt="طرح جلد کتاب اورانگوتان +۳ جلد اول - علی‌اصغر حکیمیان"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+          />
+          {/* Subtle Spine Highlight & Shadow */}
+          <div className="absolute inset-y-0 right-0 w-2 bg-gradient-to-l from-black/40 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-r from-white/20 to-transparent pointer-events-none" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={`relative group ${sizeClasses} rounded-2xl bg-gradient-to-tr ${
-      isVol1 
-        ? 'from-[#8B4513] via-amber-800 to-stone-900 border border-amber-600/40' 
-        : 'from-stone-900 via-stone-800 to-[#B87333] border border-amber-500/40'
-    } p-0.5 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
+    <div className={`relative group ${sizeClasses} rounded-2xl bg-gradient-to-tr from-stone-900 via-stone-800 to-[#B87333] border border-amber-500/40 p-0.5 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
       
       <div className={`w-full h-full rounded-[15px] ${
         isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#181A1C] text-[#FAF7F2]'
@@ -86,33 +90,27 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
         
         {/* Top Header */}
         <div className="flex items-center justify-between border-b border-stone-800/80 pb-2">
-          <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
-            isVol1 ? 'bg-[#B87333] text-white' : 'bg-amber-600 text-white'
-          }`}>
-            جلد {toPersianDigits(volume)}
+          <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-amber-600 text-white">
+            جلد ۲
           </span>
           <span className="text-[10px] text-stone-400 font-bold">
-            {isVol1 ? '۳۸۴ صفحه' : '۳۴۴ صفحه'}
+            ۳۴۴ صفحه
           </span>
         </div>
 
-        {/* Center Cover Graphic Placeholder */}
+        {/* Center Cover Graphic Placeholder for Vol 2 */}
         <div className="my-auto text-center space-y-1.5 py-2">
           
           <div className="w-10 h-10 rounded-xl bg-stone-800/80 border border-stone-700/80 text-[#B87333] flex items-center justify-center mx-auto shadow-inner">
-            <Image className="w-5 h-5" />
+            <BookOpen className="w-5 h-5 text-amber-400" />
           </div>
 
-          <span className="text-[9px] text-amber-300/80 font-mono block px-1">
-            [تصویر طرح جلد جلد {toPersianDigits(volume)}]
-          </span>
-
           <h4 className="text-xs font-black text-[#FAF7F2] leading-snug">
-            {isVol1 ? 'اورانگوتان +۳' : 'راهکارهای +۳'}
+            راهکارهای +۳
           </h4>
 
-          <p className="text-[10px] text-stone-400 line-clamp-1">
-            {isVol1 ? 'وضعیت غریزی و داده‌ها' : 'تولید، فروش و ۴۰ درس'}
+          <p className="text-[10px] text-stone-400 line-clamp-2">
+            تولید، فروش و ۴۰ درس
           </p>
         </div>
 
