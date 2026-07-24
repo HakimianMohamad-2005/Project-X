@@ -133,3 +133,30 @@ export async function saveLeadSampleToApi(leadData: LeadForm): Promise<boolean> 
   }
   return true;
 }
+
+export interface DbTestResult {
+  success: boolean;
+  message: string;
+  database?: string;
+  user?: string;
+  tables?: string[];
+  orderCount?: number;
+  serverTime?: string;
+  rawError?: string;
+}
+
+// Test PHP PDO database connection
+export async function testDatabaseConnection(): Promise<DbTestResult> {
+  try {
+    const res = await fetch('/api/test_db.php');
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    return {
+      success: false,
+      message: 'عدم دریافت پاسخ از اندپوینت PHP (/api/test_db.php). اگر در محیط لوکال/پیش‌نمایش هستید، این طبیعی است و پس از آپلود در cPanel فعال می‌شود.',
+      rawError: err?.message || String(err)
+    };
+  }
+}
+

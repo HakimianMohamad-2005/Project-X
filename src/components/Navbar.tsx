@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Menu, X, BookOpen, Sun, Moon, Sparkles, Truck, FileText, Award } from 'lucide-react';
+import { ShoppingBag, Menu, X, BookOpen, Sun, Moon, Sparkles, Truck, FileText, Award, Database } from 'lucide-react';
 import { ActiveTab, ThemeMode } from '../types';
 import { toPersianDigits } from '../utils/persian';
 import { motion } from 'motion/react';
@@ -13,6 +13,7 @@ interface NavbarProps {
   onOpenCart: () => void;
   onOpenTracking: () => void;
   onOpenSamplePdf: () => void;
+  onOpenDbTest?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -24,6 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenCart,
   onOpenTracking,
   onOpenSamplePdf,
+  onOpenDbTest,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isLight = theme === 'light';
@@ -149,6 +151,24 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>نمونه رایگان</span>
             </motion.button>
 
+            {/* Test DB Connection Button */}
+            {onOpenDbTest && (
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onOpenDbTest}
+                className={`hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                  isLight
+                    ? 'bg-amber-50 hover:bg-amber-100 text-amber-900 border-amber-300/80'
+                    : 'bg-stone-800/80 hover:bg-stone-700 text-amber-400 border-amber-500/30'
+                }`}
+                title="بررسی اتصال واقعی به دیتابیس MySQL روی cPanel"
+              >
+                <Database className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                <span>بررسی اتصال دیتابیس</span>
+              </motion.button>
+            )}
+
             {/* Order Tracking Button */}
             <motion.button
               whileHover={{ scale: 1.03 }}
@@ -229,8 +249,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-semibold text-emerald-500"
             >
               <Truck className="w-4 h-4" />
-              <span>پیگیری سفارش پستی</span>
+              <span>پیگیری سفارش</span>
             </button>
+            {onOpenDbTest && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenDbTest();
+                }}
+                className="col-span-2 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs font-semibold text-amber-600 dark:text-amber-400"
+              >
+                <Database className="w-4 h-4" />
+                <span>بررسی اتصال دیتابیس MySQL</span>
+              </button>
+            )}
           </div>
 
           {/* Navigation Links Grid */}
