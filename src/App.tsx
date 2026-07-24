@@ -14,7 +14,6 @@ import { CartDrawer } from './components/CartDrawer';
 import { SamplePdfModal } from './components/SamplePdfModal';
 import { PaymentGatewayModal } from './components/PaymentGatewayModal';
 import { OrderTrackingModal } from './components/OrderTrackingModal';
-import { DatabaseTestModal } from './components/DatabaseTestModal';
 import { Footer } from './components/Footer';
 
 import { CartItem, Order, OrderCustomerInfo, ActiveTab, ThemeMode } from './types';
@@ -31,7 +30,6 @@ export default function App() {
   const [isSamplePdfOpen, setIsSamplePdfOpen] = useState(false);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [isDbTestOpen, setIsDbTestOpen] = useState(false);
 
   // Toggle Theme Function
   const handleToggleTheme = () => {
@@ -188,7 +186,6 @@ export default function App() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenTracking={() => setIsTrackingOpen(true)}
         onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
-        onOpenDbTest={() => setIsDbTestOpen(true)}
       />
 
       {/* Hero Section Banner - Rendered on main books tab */}
@@ -303,13 +300,6 @@ export default function App() {
         isOpen={isTrackingOpen}
         onClose={() => setIsTrackingOpen(false)}
         recentOrders={recentOrders}
-        theme={theme}
-      />
-
-      {/* Database Connection Test Modal */}
-      <DatabaseTestModal
-        isOpen={isDbTestOpen}
-        onClose={() => setIsDbTestOpen(false)}
         theme={theme}
       />
 
