@@ -14,13 +14,14 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 🟢 Use Node.js
+    - name: 🟢 Setup Node.js & Cache
       uses: actions/setup-node@v4
       with:
         node-version: '20'
+        cache: 'npm'
 
     - name: 📦 Install Dependencies
-      run: npm install
+      run: npm install --no-audit --no-fund --legacy-peer-deps
 
     - name: 🏗️ Build Project
       run: npm run build
