@@ -20,7 +20,7 @@ jobs:
         node-version: '20'
 
     - name: 📦 Install Dependencies
-      run: npm ci
+      run: npm install
 
     - name: 🏗️ Build Project
       run: npm run build
@@ -31,5 +31,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./build/
+        local-dir: ./build/  # اگر پروژه‌ات Vite هست این رو بکن ./dist/
         server-dir: ./
