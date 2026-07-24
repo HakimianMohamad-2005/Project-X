@@ -16,6 +16,13 @@ try {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
     } catch (\Throwable $t) {}
 
+    // Check if table exists
+    $checkTable = $pdo->query("SHOW TABLES LIKE 'orders'")->fetch();
+    if (!$checkTable) {
+        echo json_encode(['success' => true, 'orders' => [], 'message' => 'جدول orders یافت نشد'], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
     $stmt = $pdo->query("SELECT * FROM orders ORDER BY id DESC LIMIT 50");
     $rows = $stmt->fetchAll();
 

@@ -25,7 +25,7 @@ try {
           `items` TEXT NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
     } catch (\Throwable $t) {
-        // Table creation warning ignored if table already exists or user lacks CREATE privilege
+        // Ignore if creation fails or table exists
     }
 
     // 2. Prepare variables safely
@@ -42,27 +42,33 @@ try {
     $customerInfoJson = json_encode($customerInfoArr, JSON_UNESCAPED_UNICODE);
     $itemsJson = json_encode($itemsArr, JSON_UNESCAPED_UNICODE);
 
-    // 3. Insert or Update order using MySQL VALUES() function
+    // 3. Insert or Update order using explicit named parameters for 100% MySQL/MariaDB compatibility
     $sql = "INSERT INTO `orders` (`order_code`, `created_at`, `final_price`, `status`, `payment_method`, `tracking_number`, `customer_info`, `items`) 
             VALUES (:order_code, :created_at, :final_price, :status, :payment_method, :tracking_number, :customer_info, :items)
             ON DUPLICATE KEY UPDATE 
-            `final_price` = VALUES(`final_price`),
-            `status` = VALUES(`status`),
-            `customer_info` = VALUES(`customer_info`),
-            `items` = VALUES(`items`),
-            `payment_method` = VALUES(`payment_method`),
-            `tracking_number` = VALUES(`tracking_number`)";
+            `final_price` = :final_price_upd,
+            `status` = :status_upd,
+            `payment_method` = :payment_method_upd,
+            `tracking_number` = :tracking_number_upd,
+            `customer_info` = :customer_info_upd,
+            `items` = :items_upd";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':order_code'      => $orderCode,
-        ':created_at'      => $createdAt,
-        ':final_price'     => $finalPrice,
-        ':status'          => $status,
-        ':payment_method'  => $paymentMethod,
-        ':tracking_number' => $trackingNumber,
-        ':customer_info'   => $customerInfoJson,
-        ':items'           => $itemsJson,
+        ':order_code'          => $orderCode,
+        ':created_at'          => $createdAt,
+        ':final_price'         => $finalPrice,
+        ':status'              => $status,
+        ':payment_method'      => $paymentMethod,
+        ':tracking_number'     => $trackingNumber,
+        ':customer_info'       => $customerInfoJson,
+        ':items'               => $itemsJson,
+        ':final_price_upd'     => $finalPrice,
+        ':status_upd'          => $status,
+        ':payment_method_upd'  => $paymentMethod,
+        ':tracking_number_upd' => $trackingNumber,
+        ':customer_info_upd'   => $customerInfoJson,
+        ':items_upd'           => $itemsJson,
     ]);
 
     echo json_encode([
@@ -75,6 +81,6 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'خطا در ثبت سفارش در دیتابیس: ' . $e->getMessage()
+        'message' => 'خطا در ثبت سفارش: ' . $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }
