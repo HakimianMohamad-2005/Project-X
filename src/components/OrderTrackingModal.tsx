@@ -19,15 +19,15 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
   theme = 'light'
 }) => {
   const [searchCode, setSearchCode] = useState('');
-  const [searchedOrder, setSearchedOrder] = useState<Order | null>(
-    recentOrders.length > 0 ? recentOrders[recentOrders.length - 1] : null
-  );
+  const [searchedOrder, setSearchedOrder] = useState<Order | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const isLight = theme === 'light';
 
-  if (!isOpen) return null;
+  // Automatically select most recent order if available
+  const activeOrder = searchedOrder || (recentOrders.length > 0 ? recentOrders[0] : null);
 
-  const [isSearching, setIsSearching] = useState(false);
+  if (!isOpen) return null;
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,8 +57,6 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
       setErrorMsg('سفارشی با این کد رهگیری یا شماره همراه در دیتابیس آنلاین ثبت نشده است.');
     }
   };
-
-  const activeOrder = searchedOrder || (recentOrders.length > 0 ? recentOrders[recentOrders.length - 1] : null);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
