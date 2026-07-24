@@ -9,7 +9,7 @@ interface DecisionCardsProps {
   theme?: ThemeMode;
 }
 
-export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'dark' }) => {
+export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' }) => {
   const [activeFlippedId, setActiveFlippedId] = useState<string | null>(null);
   const isLight = theme === 'light';
 

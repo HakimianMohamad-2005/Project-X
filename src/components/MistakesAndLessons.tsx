@@ -9,7 +9,7 @@ interface MistakesAndLessonsProps {
   theme?: ThemeMode;
 }
 
-export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 'dark' }) => {
+export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 'light' }) => {
   const [activeType, setActiveType] = useState<'mistake' | 'lesson'>('mistake');
   const [selectedTag, setSelectedTag] = useState<CategoryTag | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');

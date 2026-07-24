@@ -18,7 +18,7 @@ export const Hero: React.FC<HeroProps> = ({
   onAddToCart,
   onOpenSamplePdf,
   onTabChange,
-  theme = 'dark'
+  theme = 'light'
 }) => {
   const isLight = theme === 'light';
 

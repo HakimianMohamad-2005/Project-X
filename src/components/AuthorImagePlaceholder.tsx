@@ -9,7 +9,7 @@ interface AuthorImagePlaceholderProps {
 }
 
 export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
-  theme = 'dark',
+  theme = 'light',
   size = 'md'
 }) => {
   const isLight = theme === 'light';

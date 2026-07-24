@@ -8,7 +8,7 @@ interface CaseStudiesProps {
   theme?: ThemeMode;
 }
 
-export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'dark' }) => {
+export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => {
   const [selectedCategory, setSelectedCategory] = useState<CaseCategory>('all');
   const [activeModalCase, setActiveModalCase] = useState<CaseStudy | null>(null);
   const isLight = theme === 'light';

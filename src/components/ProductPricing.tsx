@@ -12,7 +12,7 @@ interface ProductPricingProps {
   theme?: ThemeMode;
 }
 
-export const ProductPricing: React.FC<ProductPricingProps> = ({ onAddToCart, theme = 'dark' }) => {
+export const ProductPricing: React.FC<ProductPricingProps> = ({ onAddToCart, theme = 'light' }) => {
   const [authorSignature, setAuthorSignature] = useState(true);
   const [recipientName, setRecipientName] = useState('');
   const [addedSuccessId, setAddedSuccessId] = useState<string | null>(null);

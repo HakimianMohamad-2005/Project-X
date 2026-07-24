@@ -22,7 +22,7 @@ export const PaymentGatewayModal: React.FC<PaymentGatewayModalProps> = ({
   customerInfo,
   cartItems,
   onPaymentSuccess,
-  theme = 'dark'
+  theme = 'light'
 }) => {
   const [cardNumber, setCardNumber] = useState('6037-9978-4512-8802');
   const [cvv2, setCvv2] = useState('429');

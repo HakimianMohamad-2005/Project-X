@@ -10,7 +10,7 @@ interface SamplePdfModalProps {
   theme?: ThemeMode;
 }
 
-export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose, theme = 'dark' }) => {
+export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose, theme = 'light' }) => {
   const [form, setForm] = useState<LeadForm>({
     fullName: '',
     phone: '',

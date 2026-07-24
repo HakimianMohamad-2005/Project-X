@@ -11,7 +11,7 @@ interface OrangutanQuizProps {
   theme?: ThemeMode;
 }
 
-export const OrangutanQuiz: React.FC<OrangutanQuizProps> = ({ onAddToCart, theme = 'dark' }) => {
+export const OrangutanQuiz: React.FC<OrangutanQuizProps> = ({ onAddToCart, theme = 'light' }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(QUIZ_QUESTIONS.length).fill(-1));
   const [showResults, setShowResults] = useState(false);

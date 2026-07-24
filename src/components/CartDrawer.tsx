@@ -22,7 +22,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onUpdateQuantity,
   onRemoveItem,
   onProceedToPayment,
-  theme = 'dark'
+  theme = 'light'
 }) => {
   const [step, setStep] = useState<'cart' | 'shipping'>('cart');
   const isLight = theme === 'light';

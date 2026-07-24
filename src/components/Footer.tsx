@@ -8,7 +8,7 @@ interface FooterProps {
   onTabChange?: (tab: ActiveTab) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ theme = 'dark', onTabChange }) => {
+export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange }) => {
   const isLight = theme === 'light';
 
   const handleNav = (tab: ActiveTab) => {

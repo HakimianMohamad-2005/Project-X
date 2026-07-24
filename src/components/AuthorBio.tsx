@@ -9,7 +9,7 @@ interface AuthorBioProps {
   theme?: ThemeMode;
 }
 
-export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'dark' }) => {
+export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'light' }) => {
   const isLight = theme === 'light';
 
   return (

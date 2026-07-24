@@ -1,5 +1,5 @@
-import React from 'react';
-import { BookOpen, Image, Sparkles, ShieldCheck, PenTool, Award } from 'lucide-react';
+import React, { useState } from 'react';
+import { BookOpen, Image, Sparkles, ShieldCheck, PenTool, Award, TouchpadIcon } from 'lucide-react';
 import { toPersianDigits } from '../utils/persian';
 
 interface BookCoverProps {
@@ -15,9 +15,10 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
   title,
   subtitle,
   size = 'md',
-  theme = 'dark'
+  theme = 'light'
 }) => {
   const isLight = theme === 'light';
+  const [isOpen, setIsOpen] = useState(false);
 
   // Sizing styles (Enlarged)
   const sizeClasses = {
@@ -28,9 +29,16 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
 
   if (volume === 'bundle') {
     return (
-      <div className={`relative group [perspective:1200px] ${size === 'lg' ? 'w-64 h-96' : 'w-52 h-76'}`}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`relative group [perspective:1200px] cursor-pointer ${size === 'lg' ? 'w-64 h-96' : 'w-52 h-76'}`}
+      >
         {/* 3D Boxset / Stacked Books Effect */}
-        <div className="relative w-full h-full rounded-2xl bg-gradient-to-br from-[#B87333] via-amber-700 to-stone-900 p-1 shadow-2xl transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(-14deg)_rotateX(6deg)_scale(1.05)]">
+        <div className={`relative w-full h-full rounded-2xl bg-gradient-to-br from-[#B87333] via-amber-700 to-stone-900 p-1 shadow-2xl transition-all duration-700 [transform-style:preserve-3d] ${
+          isOpen 
+            ? '[transform:rotateY(-14deg)_rotateX(6deg)_scale(1.05)]' 
+            : 'group-hover:[transform:rotateY(-14deg)_rotateX(6deg)_scale(1.05)]'
+        }`}>
           <div className={`w-full h-full rounded-[14px] ${isLight ? 'bg-stone-900 text-[#FAF7F2]' : 'bg-[#121314] text-[#FAF7F2]'} flex relative overflow-hidden border border-amber-500/30`}>
             
             {/* Split Covers Effect for Vol 1 & Vol 2 Bundle */}
@@ -72,9 +80,16 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
 
   if (isVol1) {
     return (
-      <div className={`relative group ${sizeClasses} [perspective:1200px] cursor-pointer`}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`relative group ${sizeClasses} [perspective:1200px] cursor-pointer select-none`}
+      >
         {/* Main 3D Book Wrapper */}
-        <div className="relative w-full h-full transition-all duration-1000 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)] shadow-2xl rounded-2xl">
+        <div className={`relative w-full h-full transition-all duration-1000 ease-out [transform-style:preserve-3d] shadow-2xl rounded-2xl ${
+          isOpen
+            ? '[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)]'
+            : 'group-hover:[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)]'
+        }`}>
           
           {/* Inner Pages (Visible when cover swings open) */}
           <div className="absolute inset-0 rounded-2xl bg-[#FAF6EE] text-stone-900 border-2 border-stone-300/80 p-4 flex flex-col justify-between overflow-hidden shadow-inner">
@@ -106,8 +121,12 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
           {/* Paper Thickness Effect (3D Side Edges) */}
           <div className="absolute top-1 bottom-1 left-0.5 w-3 bg-gradient-to-r from-stone-200 via-amber-50 to-stone-300 rounded-l border-r border-stone-400/50 shadow-md pointer-events-none [transform:translateZ(-2px)]" />
 
-          {/* Front Cover (Opens 3D on Hover) */}
-          <div className="absolute inset-0 rounded-2xl bg-stone-900 [transform-origin:right_center] transition-transform duration-1000 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(135deg)] shadow-2xl overflow-hidden border border-amber-600/30">
+          {/* Front Cover (Opens 3D on Hover or Tap) */}
+          <div className={`absolute inset-0 rounded-2xl bg-stone-900 [transform-origin:right_center] transition-transform duration-1000 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] shadow-2xl overflow-hidden border border-amber-600/30 ${
+            isOpen 
+              ? '[transform:rotateY(135deg)]' 
+              : 'group-hover:[transform:rotateY(135deg)]'
+          }`}>
             <img
               src="/Jeld%20-%20Front.png"
               alt="طرح جلد کتاب اورانگوتان +۳ جلد اول - علی‌اصغر حکیمیان"
@@ -119,10 +138,12 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
             <div className="absolute inset-y-0 right-0 w-3 bg-gradient-to-l from-black/60 to-transparent pointer-events-none" />
             <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-r from-white/30 to-transparent pointer-events-none" />
 
-            {/* Subtle Hover Hint Badge */}
-            <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md text-amber-300 text-[10px] font-bold py-1 px-2.5 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-1">
-              <BookOpen className="w-3 h-3" />
-              <span>مشاهده داخل کتاب</span>
+            {/* Subtle Hover/Touch Hint Badge */}
+            <div className={`absolute bottom-3 left-3 right-3 bg-black/75 backdrop-blur-md text-amber-300 text-[10px] font-bold py-1.5 px-2.5 rounded-lg text-center transition-all duration-300 flex items-center justify-center gap-1.5 border border-amber-500/30 shadow-lg ${
+              isOpen ? 'opacity-0' : 'opacity-90 sm:opacity-0 sm:group-hover:opacity-100'
+            }`}>
+              <BookOpen className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>{isOpen ? 'بستن جلد' : 'لمس کنید تا باز شود'}</span>
             </div>
           </div>
 
@@ -132,9 +153,16 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
   }
 
   return (
-    <div className={`relative group ${sizeClasses} [perspective:1200px] cursor-pointer`}>
+    <div 
+      onClick={() => setIsOpen(!isOpen)}
+      className={`relative group ${sizeClasses} [perspective:1200px] cursor-pointer select-none`}
+    >
       {/* Main 3D Book Wrapper */}
-      <div className="relative w-full h-full transition-all duration-1000 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)] shadow-2xl rounded-2xl">
+      <div className={`relative w-full h-full transition-all duration-1000 ease-out [transform-style:preserve-3d] shadow-2xl rounded-2xl ${
+        isOpen
+          ? '[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)]'
+          : 'group-hover:[transform:rotateY(-18deg)_rotateX(8deg)_scale(1.06)]'
+      }`}>
         
         {/* Inner Pages (Visible when cover swings open) */}
         <div className="absolute inset-0 rounded-2xl bg-[#FAF6EE] text-stone-900 border-2 border-stone-300/80 p-4 flex flex-col justify-between overflow-hidden shadow-inner">
@@ -166,8 +194,12 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
         {/* Paper Thickness Effect (3D Side Edges) */}
         <div className="absolute top-1 bottom-1 left-0.5 w-3 bg-gradient-to-r from-stone-200 via-amber-50 to-stone-300 rounded-l border-r border-stone-400/50 shadow-md pointer-events-none [transform:translateZ(-2px)]" />
 
-        {/* Front Cover (Opens 3D on Hover) */}
-        <div className="absolute inset-0 rounded-2xl bg-stone-900 [transform-origin:right_center] transition-transform duration-1000 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(135deg)] shadow-2xl overflow-hidden border border-amber-600/30">
+        {/* Front Cover (Opens 3D on Hover or Tap) */}
+        <div className={`absolute inset-0 rounded-2xl bg-stone-900 [transform-origin:right_center] transition-transform duration-1000 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] shadow-2xl overflow-hidden border border-amber-600/30 ${
+          isOpen 
+            ? '[transform:rotateY(135deg)]' 
+            : 'group-hover:[transform:rotateY(135deg)]'
+        }`}>
           <img
             src="/Jeld2%20-%20Front.png"
             alt="طرح جلد کتاب اورانگوتان +۳ جلد دوم - علی‌اصغر حکیمیان"
@@ -179,10 +211,12 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
           <div className="absolute inset-y-0 right-0 w-3 bg-gradient-to-l from-black/60 to-transparent pointer-events-none" />
           <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-r from-white/30 to-transparent pointer-events-none" />
 
-          {/* Subtle Hover Hint Badge */}
-          <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md text-amber-300 text-[10px] font-bold py-1 px-2.5 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-1">
-            <BookOpen className="w-3 h-3" />
-            <span>مشاهده داخل کتاب</span>
+          {/* Subtle Hover/Touch Hint Badge */}
+          <div className={`absolute bottom-3 left-3 right-3 bg-black/75 backdrop-blur-md text-amber-300 text-[10px] font-bold py-1.5 px-2.5 rounded-lg text-center transition-all duration-300 flex items-center justify-center gap-1.5 border border-amber-500/30 shadow-lg ${
+            isOpen ? 'opacity-0' : 'opacity-90 sm:opacity-0 sm:group-hover:opacity-100'
+          }`}>
+            <BookOpen className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <span>{isOpen ? 'بستن جلد' : 'لمس کنید تا باز شود'}</span>
           </div>
         </div>
 
@@ -190,3 +224,4 @@ export const BookCoverPlaceholder: React.FC<BookCoverProps> = ({
     </div>
   );
 };
+

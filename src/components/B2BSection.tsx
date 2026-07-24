@@ -8,7 +8,7 @@ interface B2BSectionProps {
   theme?: ThemeMode;
 }
 
-export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'dark' }) => {
+export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
   const [form, setForm] = useState<B2BForm>({
     companyName: '',
     contactPerson: '',

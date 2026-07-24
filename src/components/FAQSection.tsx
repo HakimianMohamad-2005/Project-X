@@ -18,7 +18,7 @@ interface FAQItem {
 }
 
 export const FAQSection: React.FC<FAQSectionProps> = ({
-  theme = 'dark',
+  theme = 'light',
   onSelectTab,
   onOpenSamplePdf
 }) => {

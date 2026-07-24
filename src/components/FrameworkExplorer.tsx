@@ -9,7 +9,7 @@ interface FrameworkExplorerProps {
   theme?: ThemeMode;
 }
 
-export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'dark' }) => {
+export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'light' }) => {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const isLight = theme === 'light';
 

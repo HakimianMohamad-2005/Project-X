@@ -15,7 +15,7 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
   isOpen,
   onClose,
   recentOrders,
-  theme = 'dark'
+  theme = 'light'
 }) => {
   const [searchCode, setSearchCode] = useState('');
   const [searchedOrder, setSearchedOrder] = useState<Order | null>(
