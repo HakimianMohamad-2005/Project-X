@@ -3,7 +3,7 @@ import { X, Search, Truck, CheckCircle2, Clock, Package, MapPin, Printer } from 
 import { Order, ThemeMode } from '../types';
 import { toPersianDigits, formatCurrency } from '../utils/persian';
 import { motion } from 'motion/react';
-import { searchOrderInFirebase } from '../lib/firebase';
+import { searchOrderInFirebase, normalizeDigits } from '../lib/firebase';
 
 interface OrderTrackingModalProps {
   isOpen: boolean;
@@ -36,10 +36,16 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
     setErrorMsg('');
     setIsSearching(true);
 
-    const term = searchCode.trim().toLowerCase();
-    const foundLocal = recentOrders.find(
-      (o) => o.orderCode.toLowerCase() === term || o.customerInfo.phone === term
-    );
+    const term = normalizeDigits(searchCode);
+    const foundLocal = recentOrders.find((o) => {
+      const normCode = normalizeDigits(o.orderCode || '');
+      const normPhone = normalizeDigits(o.customerInfo?.phone || '');
+      return (
+        normCode.includes(term) ||
+        normPhone.includes(term) ||
+        (term.length >= 4 && normCode.endsWith(term))
+      );
+    });
 
     if (foundLocal) {
       setSearchedOrder(foundLocal);

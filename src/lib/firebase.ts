@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { 
-  getFirestore, 
+  initializeFirestore,
   collection, 
   doc, 
   setDoc, 
@@ -8,19 +8,33 @@ import {
   getDocs, 
   query, 
   where, 
-  orderBy, 
   limit 
 } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 import { Order, LeadForm, B2BForm } from '../types';
 
+// Helper functions for digit & search normalization
+export function normalizeDigits(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/[۰-۹]/g, (d) => (d.charCodeAt(0) - 1776).toString())
+    .replace(/[٠-٩]/g, (d) => (d.charCodeAt(0) - 1632).toString())
+    .replace(/[\s\-_]/g, '')
+    .toLowerCase();
+}
+
+export function toPersianDigitsStr(str: string): string {
+  if (!str) return '';
+  return str.replace(/\d/g, (d) => String.fromCharCode(d.charCodeAt(0) + 1776));
+}
+
 // Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore DB (using specified named database ID if present)
+// Initialize Firestore DB with force long polling to bypass WebChannel/gRPC streaming CORS/network issues
 export const db = firebaseConfig.firestoreDatabaseId
-  ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
-  : getFirestore(app);
+  ? initializeFirestore(app, { experimentalForceLongPolling: true }, firebaseConfig.firestoreDatabaseId)
+  : initializeFirestore(app, { experimentalForceLongPolling: true });
 
 // Save new order to Firebase Firestore
 export async function saveOrderToFirebase(order: Order): Promise<boolean> {
@@ -42,7 +56,7 @@ export async function saveOrderToFirebase(order: Order): Promise<boolean> {
 export async function fetchRecentOrdersFromFirebase(): Promise<Order[]> {
   try {
     const ordersCol = collection(db, 'orders');
-    const q = query(ordersCol, limit(20));
+    const q = query(ordersCol, limit(30));
     const querySnapshot = await getDocs(q);
     const orders: Order[] = [];
     
@@ -58,27 +72,69 @@ export async function fetchRecentOrdersFromFirebase(): Promise<Order[]> {
   }
 }
 
-// Search order by orderCode or customer phone in Firebase Firestore
+// Search order by orderCode or customer phone in Firebase Firestore with flexible digit/prefix matching
 export async function searchOrderInFirebase(searchTerm: string): Promise<Order | null> {
   try {
+    const raw = searchTerm.trim();
+    if (!raw) return null;
+
+    const engDigits = normalizeDigits(raw);
+    const faDigits = toPersianDigitsStr(engDigits);
+    
+    // Generate candidate lookup strings
+    const candidates = new Set<string>();
+    candidates.add(raw);
+    candidates.add(engDigits);
+    candidates.add(faDigits);
+
+    if (!engDigits.startsWith('og3')) {
+      candidates.add(`OG3-${engDigits}`);
+      candidates.add(`OG3-${faDigits}`);
+      candidates.add(`og3-${engDigits}`);
+      candidates.add(`og3-${faDigits}`);
+    } else {
+      const numEng = engDigits.replace(/^og3/, '');
+      const numFa = toPersianDigitsStr(numEng);
+      candidates.add(numEng);
+      candidates.add(numFa);
+    }
+
+    const candArray = Array.from(candidates).slice(0, 30);
+
+    // Query 1: Search by orderCode using 'in'
     const ordersCol = collection(db, 'orders');
-    
-    // First try exact match on orderCode
-    const qCode = query(ordersCol, where('orderCode', '==', searchTerm.trim()));
+    const qCode = query(ordersCol, where('orderCode', 'in', candArray));
     const codeSnapshot = await getDocs(qCode);
-    
+
     if (!codeSnapshot.empty) {
       return codeSnapshot.docs[0].data() as Order;
     }
-    
-    // If not found, try match on customer phone
-    const qPhone = query(ordersCol, where('customerInfo.phone', '==', searchTerm.trim()));
+
+    // Query 2: Search by phone using 'in'
+    const qPhone = query(ordersCol, where('customerInfo.phone', 'in', candArray));
     const phoneSnapshot = await getDocs(qPhone);
-    
+
     if (!phoneSnapshot.empty) {
       return phoneSnapshot.docs[0].data() as Order;
     }
-    
+
+    // Query 3: Client-side normalized fallback over recent orders
+    const qRecent = query(ordersCol, limit(50));
+    const recentSnapshot = await getDocs(qRecent);
+    for (const docSnap of recentSnapshot.docs) {
+      const orderData = docSnap.data() as Order;
+      const normOrderCode = normalizeDigits(orderData.orderCode || '');
+      const normPhone = normalizeDigits(orderData.customerInfo?.phone || '');
+      
+      if (
+        normOrderCode.includes(engDigits) || 
+        normPhone.includes(engDigits) || 
+        (engDigits.length >= 4 && normOrderCode.endsWith(engDigits))
+      ) {
+        return orderData;
+      }
+    }
+
     return null;
   } catch (error) {
     console.error('Error searching order in Firebase Firestore:', error);
