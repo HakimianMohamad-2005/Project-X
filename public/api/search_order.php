@@ -1,50 +1,66 @@
 <?php
-require_once __DIR__ . '/db.php';
+error_reporting(0);
+ini_set('display_errors', 0);
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Content-Type: application/json; charset=utf-8');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+$host = 'localhost';
+$db   = 'oranguta_book';
+$user = 'oranguta_Controller';
+$pass = 'Y^!{i~0bYS0BI&Fi^R';
+
+$conn = @new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    echo json_encode(array(
+        'success' => false,
+        'message' => 'خطا در اتصال: ' . $conn->connect_error
+    ), JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+$conn->set_charset("utf8mb4");
 
 function normalizeDigits($str) {
     if (!$str) return '';
-    $persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-    $arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-    $num     = ['0','1','2','3','4','5','6','7','8','9'];
+    $persian = array('۰','۱','۲','۳','۴','۵','۶','۷','۸','۹');
+    $arabic  = array('٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
+    $num     = array('0','1','2','3','4','5','6','7','8','9');
     $str = str_replace($persian, $num, $str);
     $str = str_replace($arabic, $num, $str);
     return strtolower(preg_replace('/[\s\-_]/', '', $str));
 }
 
-$query = $_GET['q'] ?? $_GET['code'] ?? '';
+$query = isset($_GET['q']) ? $_GET['q'] : (isset($_GET['code']) ? $_GET['code'] : '');
 $query = trim($query);
 
 if (empty($query)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'عبارت جستجو وارد نشده است'], JSON_UNESCAPED_UNICODE);
+    echo json_encode(array('success' => false, 'message' => 'عبارت جستجو وارد نشده است'), JSON_UNESCAPED_UNICODE);
     exit();
 }
 
 $normQuery = normalizeDigits($query);
 
-try {
-    try {
-        $pdo->exec("CREATE TABLE IF NOT EXISTS `orders` (
-          `id` INT AUTO_INCREMENT PRIMARY KEY,
-          `order_code` VARCHAR(50) NOT NULL UNIQUE,
-          `created_at` VARCHAR(50) NOT NULL,
-          `final_price` DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
-          `status` VARCHAR(50) NOT NULL DEFAULT 'ثبت سفارش',
-          `payment_method` VARCHAR(50) DEFAULT 'online',
-          `tracking_number` VARCHAR(100) DEFAULT '',
-          `customer_info` TEXT NOT NULL,
-          `items` TEXT NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
-    } catch (\Throwable $t) {}
+$sql = "SELECT * FROM orders ORDER BY id DESC LIMIT 100";
+$result = $conn->query($sql);
 
-    $stmt = $pdo->query("SELECT * FROM orders ORDER BY id DESC LIMIT 100");
-    $rows = $stmt->fetchAll();
+$found = null;
 
-    $found = null;
-    foreach ($rows as $row) {
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
         $normCode = normalizeDigits($row['order_code']);
-        $custInfo = json_decode($row['customer_info'], true) ?? [];
-        $phone = $custInfo['mobile'] ?? $custInfo['phone'] ?? '';
+        $custInfo = json_decode(isset($row['customer_info']) ? $row['customer_info'] : '{}', true);
+        $custInfoArr = is_array($custInfo) ? $custInfo : array();
+        
+        $phone = isset($custInfoArr['mobile']) ? $custInfoArr['mobile'] : (isset($custInfoArr['phone']) ? $custInfoArr['phone'] : '');
         $normPhone = normalizeDigits($phone);
 
         if ($normCode === $normQuery || 
@@ -53,28 +69,27 @@ try {
             (strlen($normPhone) > 3 && strpos($normPhone, $normQuery) !== false) ||
             (strlen($normQuery) >= 4 && substr($normCode, -strlen($normQuery)) === $normQuery)) {
             
-            $found = [
-                'orderCode' => $row['order_code'],
-                'date' => $row['created_at'],
-                'createdAt' => $row['created_at'],
-                'finalPrice' => (float)$row['final_price'],
-                'totalPrice' => (float)$row['final_price'],
-                'status' => $row['status'],
-                'paymentMethod' => $row['payment_method'],
+            $itemsArr = json_decode(isset($row['items']) ? $row['items'] : '[]', true);
+
+            $found = array(
+                'orderCode'      => $row['order_code'],
+                'date'           => $row['created_at'],
+                'createdAt'      => $row['created_at'],
+                'finalPrice'     => (float)$row['final_price'],
+                'totalPrice'     => (float)$row['final_price'],
+                'status'         => $row['status'],
+                'paymentMethod'  => $row['payment_method'],
                 'trackingNumber' => $row['tracking_number'],
-                'customerInfo' => $custInfo,
-                'items' => json_decode($row['items'], true) ?? []
-            ];
+                'customerInfo'   => $custInfoArr,
+                'items'          => is_array($itemsArr) ? $itemsArr : array()
+            );
             break;
         }
     }
+}
 
-    if ($found) {
-        echo json_encode(['success' => true, 'order' => $found], JSON_UNESCAPED_UNICODE);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'سفارشی با این مشخصات یافت نشد'], JSON_UNESCAPED_UNICODE);
-    }
-} catch (\Throwable $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'خطای سرور: ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+if ($found) {
+    echo json_encode(array('success' => true, 'order' => $found), JSON_UNESCAPED_UNICODE);
+} else {
+    echo json_encode(array('success' => false, 'message' => 'سفارشی با این مشخصات یافت نشد'), JSON_UNESCAPED_UNICODE);
 }

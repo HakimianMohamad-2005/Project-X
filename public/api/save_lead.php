@@ -1,39 +1,52 @@
 <?php
-require_once __DIR__ . '/db.php';
+error_reporting(0);
+ini_set('display_errors', 0);
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Content-Type: application/json; charset=utf-8');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+$host = 'localhost';
+$db   = 'oranguta_book';
+$user = 'oranguta_Controller';
+$pass = 'Y^!{i~0bYS0BI&Fi^R';
+
+$conn = @new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    echo json_encode(array(
+        'success' => false,
+        'message' => 'خطا در اتصال: ' . $conn->connect_error
+    ), JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+$conn->set_charset("utf8mb4");
 
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
 
 if (!$data || empty($data['fullName']) || empty($data['phone'])) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'نام و شماره همراه الزامی است'], JSON_UNESCAPED_UNICODE);
+    echo json_encode(array('success' => false, 'message' => 'نام و شماره همراه الزامی است'), JSON_UNESCAPED_UNICODE);
     exit();
 }
 
-try {
-    try {
-        $pdo->exec("CREATE TABLE IF NOT EXISTS `lead_samples` (
-          `id` INT AUTO_INCREMENT PRIMARY KEY,
-          `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-          `full_name` VARCHAR(255) NOT NULL,
-          `phone` VARCHAR(50) NOT NULL,
-          `organization` VARCHAR(255) DEFAULT '',
-          `position` VARCHAR(255) DEFAULT ''
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
-    } catch (\Throwable $t) {}
+$fullName     = $conn->real_escape_string(trim((string)$data['fullName']));
+$phone        = $conn->real_escape_string(trim((string)$data['phone']));
+$organization = $conn->real_escape_string(isset($data['organization']) ? (string)$data['organization'] : '');
+$position     = $conn->real_escape_string(isset($data['position']) ? (string)$data['position'] : '');
 
-    $stmt = $pdo->prepare("INSERT INTO lead_samples (full_name, phone, organization, position) 
-                           VALUES (:full_name, :phone, :organization, :position)");
-    
-    $stmt->execute([
-        ':full_name' => $data['fullName'],
-        ':phone' => $data['phone'],
-        ':organization' => $data['organization'] ?? '',
-        ':position' => $data['position'] ?? ''
-    ]);
+$sql = "INSERT INTO lead_samples (full_name, phone, organization, position) 
+        VALUES ('".$fullName."', '".$phone."', '".$organization."', '".$position."')";
 
-    echo json_encode(['success' => true, 'message' => 'اطلاعات در دیتابیس ثبت شد'], JSON_UNESCAPED_UNICODE);
-} catch (\Throwable $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'خطای سرور: ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+if ($conn->query($sql) === TRUE) {
+    echo json_encode(array('success' => true, 'message' => 'اطلاعات با موفقیت در دیتابیس ثبت شد'), JSON_UNESCAPED_UNICODE);
+} else {
+    echo json_encode(array('success' => false, 'message' => 'خطای دیتابیس: ' . $conn->error), JSON_UNESCAPED_UNICODE);
 }
