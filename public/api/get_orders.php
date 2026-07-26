@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-try {
-    $stmt = $pdo->query("SELECT * FROM `orders` ORDER BY id DESC LIMIT 50");
-    $rows = $stmt->fetchAll();
+$sql = "SELECT * FROM `orders` ORDER BY id DESC LIMIT 50";
+$result = $conn->query($sql);
 
-    $orders = [];
-    foreach ($rows as $row) {
+$orders = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
         $custInfo = json_decode($row['customer_info'] ?? '{}', true) ?? [];
         $itemsArr = json_decode($row['items'] ?? '[]', true) ?? [];
 
@@ -23,10 +23,6 @@ try {
             'items'          => $itemsArr
         ];
     }
-
-    http_response_code(200);
-    echo json_encode(['success' => true, 'orders' => $orders], JSON_UNESCAPED_UNICODE);
-} catch (\Throwable $e) {
-    http_response_code(200);
-    echo json_encode(['success' => false, 'message' => 'خطای دیتابیس: ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }
+
+echo json_encode(['success' => true, 'orders' => $orders], JSON_UNESCAPED_UNICODE);
