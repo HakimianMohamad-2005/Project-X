@@ -1,8 +1,6 @@
 <?php
-// فعال‌سازی نمایش خطاها برای عیب‌یابی
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0);
+error_reporting(0);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -26,8 +24,7 @@ try {
         PDO::ATTR_EMULATE_PREPARES   => true,
     ]);
 } catch (\Throwable $e) {
-    // کد پاسخ را 200 می‌گذاریم تا cPanel صفحه ارور 500 نشان ندهد و متن خطا شفاف چاپ شود
-    http_response_code(200);
+    http_response_code(200); // 200 می‌گذاریم تا JSON ارور چاپ شود
     echo json_encode([
         'success' => false, 
         'message' => 'خطا در اتصال به دیتابیس: ' . $e->getMessage()
