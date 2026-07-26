@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -14,12 +17,12 @@ $db   = 'oranguta_book';
 $user = 'oranguta_Controller';
 $pass = 'Y^!{i~0bYS0BI&Fi^R';
 
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = @new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
     echo json_encode([
         'success' => false,
-        'message' => 'خطا در اتصال MySQLi: ' . $conn->connect_error
+        'message' => 'خطا در اتصال به دیتابیس: ' . $conn->connect_error
     ], JSON_UNESCAPED_UNICODE);
     exit();
 }

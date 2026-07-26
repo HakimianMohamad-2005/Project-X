@@ -1,16 +1,17 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-$sql = "SELECT * FROM `orders` ORDER BY id DESC LIMIT 50";
+$sql = "SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 50";
 $result = $conn->query($sql);
 
-$orders = [];
+$orders = array();
+
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $custInfo = json_decode($row['customer_info'] ?? '{}', true) ?? [];
-        $itemsArr = json_decode($row['items'] ?? '[]', true) ?? [];
+        $custInfo = json_decode($row['customer_info'] ?? '{}', true);
+        $itemsArr = json_decode($row['items'] ?? '[]', true);
 
-        $orders[] = [
+        $orders[] = array(
             'orderCode'      => $row['order_code'],
             'date'           => $row['created_at'],
             'createdAt'      => $row['created_at'],
@@ -19,10 +20,10 @@ if ($result && $result->num_rows > 0) {
             'status'         => $row['status'],
             'paymentMethod'  => $row['payment_method'],
             'trackingNumber' => $row['tracking_number'],
-            'customerInfo'   => $custInfo,
-            'items'          => $itemsArr
-        ];
+            'customerInfo'   => $custInfo ? $custInfo : new stdClass(),
+            'items'          => $itemsArr ? $itemsArr : array()
+        );
     }
 }
 
-echo json_encode(['success' => true, 'orders' => $orders], JSON_UNESCAPED_UNICODE);
+echo json_encode(array('success' => true, 'orders' => $orders), JSON_UNESCAPED_UNICODE);
