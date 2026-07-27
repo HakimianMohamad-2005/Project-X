@@ -75,7 +75,7 @@ export const PaymentGatewayModal: React.FC<PaymentGatewayModalProps> = ({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        className={`w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative border ${
+        className={`w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative border max-h-[90vh] overflow-y-auto ${
           isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
         }`}
       >
@@ -127,7 +127,7 @@ export const PaymentGatewayModal: React.FC<PaymentGatewayModalProps> = ({
             </div>
 
             {/* CVV2 & Expiry */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>کد CVV2:*</label>
                 <input

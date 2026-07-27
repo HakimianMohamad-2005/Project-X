@@ -113,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Left Action Controls */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 me-2 lg:me-6 mr-3 lg:mr-8">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             
             {/* Dark / Light Theme Toggle */}
             <motion.button
@@ -205,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className={`xl:hidden border-b px-4 pt-4 pb-6 space-y-3 ${
+          className={`xl:hidden border-b px-4 pt-4 pb-6 space-y-3 max-h-[80vh] overflow-y-auto ${
             isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
           }`}
         >

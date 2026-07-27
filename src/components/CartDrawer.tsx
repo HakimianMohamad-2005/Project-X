@@ -77,7 +77,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/80 backdrop-blur-sm">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10">
           
           <motion.div
             initial={{ x: '100%' }}
@@ -265,7 +265,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                           <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>استان:*</label>
                           <select
@@ -315,7 +315,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                           <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>کد پستی ۱۰ رقمی:*</label>
                           <input

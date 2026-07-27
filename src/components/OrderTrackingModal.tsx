@@ -137,7 +137,7 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
               </div>
 
               {/* Steps Visual Bar */}
-              <div className="grid grid-cols-4 gap-2 pt-2 text-center text-[10px] font-bold">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-center text-[10px] font-bold">
                 <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500">
                   <CheckCircle2 className="w-4 h-4 mx-auto mb-1 text-emerald-500" />
                   <span>ثبت سفارش</span>

@@ -82,7 +82,7 @@ export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose,
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        className={`w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative border ${
+        className={`w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative border max-h-[90vh] overflow-y-auto ${
           isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#1E2022] border-stone-700 text-[#FAF7F2]'
         }`}
       >
@@ -144,7 +144,7 @@ export const SamplePdfModal: React.FC<SamplePdfModalProps> = ({ isOpen, onClose,
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
                   نام سازمان / کارخانه:

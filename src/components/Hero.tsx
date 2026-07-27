@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             {/* H1 Heading */}
-            <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] ${
+            <h1 className={`text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] ${
               isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
             }`}>
               اورانگوتان <span className="text-[#B87333]">+۳</span>
@@ -187,20 +187,20 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Book Covers Display */}
-              <div className="flex items-center justify-center gap-6 sm:gap-8 py-2">
+              <div className="flex items-center justify-center gap-3 sm:gap-8 py-2">
                 <BookCoverPlaceholder volume={1} size="lg" theme={theme} />
                 <BookCoverPlaceholder volume={2} size="lg" theme={theme} />
               </div>
 
               {/* Author Info Banner Insert */}
-              <div className={`p-4 rounded-2xl border flex items-center justify-between gap-3 ${
+              <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 ${
                 isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/80 border-stone-800'
               }`}>
-                <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-3">
                   <img
                     src={authorImg}
                     alt="علی‌اصغر حکیمیان"
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#B87333] shrink-0 shadow-lg"
+                    className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#B87333] shrink-0 shadow-lg"
                     referrerPolicy="no-referrer"
                   />
                   <div className="space-y-1 text-right">
@@ -217,14 +217,14 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
                 <button
                   onClick={() => onTabChange('author')}
-                  className="text-xs text-[#B87333] hover:text-amber-400 font-bold underline shrink-0 transition-colors"
+                  className="text-xs text-[#B87333] hover:text-amber-400 font-bold underline shrink-0 transition-colors text-left sm:text-right"
                 >
                   رزومه کامل ←
                 </button>
               </div>
 
               {/* Pricing & Add to Cart Action */}
-              <div className={`p-4 rounded-xl border flex items-center justify-between ${
+              <div className={`p-4 rounded-xl border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 ${
                 isLight ? 'bg-amber-50/60 border-amber-200' : 'bg-stone-900/90 border-stone-800'
               }`}>
                 <div>
@@ -241,7 +241,7 @@ export const Hero: React.FC<HeroProps> = ({
 
                 <button
                   onClick={() => onAddToCart('bundle-full')}
-                  className="px-4 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shadow-md transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shadow-md transition-all text-center"
                 >
                   افزودن پک به سبد
                 </button>
