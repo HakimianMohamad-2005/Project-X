@@ -54,10 +54,10 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
               علی‌اصغر حکیمیان
             </h3>
             <p className="text-[11px] text-amber-300 font-bold drop-shadow">
-              دکترای مدیریت استراتژیک
+              مدیر صنعتی و معمار سیستم‌های سازمانی
             </p>
             <p className="text-[10px] text-stone-300 font-medium leading-tight">
-              متخصص نرم‌افزار • متخصص حسابداری
+              دکترای حرفه‌ای مدیریت استراتژیک (دانشگاه تهران)
             </p>
           </div>
         </div>
