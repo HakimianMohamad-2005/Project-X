@@ -30,7 +30,7 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'light' }) => {
                 isLight ? 'bg-amber-50 border-amber-300 text-amber-950' : 'bg-stone-900 border-amber-500/30 text-amber-300'
               }`}>
                 <Award className="w-4 h-4 text-[#B87333] shrink-0" />
-                <span>۴۰ سال تجربه مدیریت صنعت و معماری سیستم</span>
+                <span>۴۰+ سال تجربه صنعتی و مدیریتی</span>
               </div>
             </div>
 
@@ -92,7 +92,7 @@ export const AuthorBio: React.FC<AuthorBioProps> = ({ theme = 'light' }) => {
                 <p className={`text-xs sm:text-sm font-bold italic leading-relaxed ${
                   isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
                 }`}>
-                  «تجربه، تعداد سال‌هایی نیست که مدیریت کرده‌ای؛ تعداد اشتباه‌هایی است که اجازه نداده‌ای بی‌معنا در سازمان تکرار شوند.»
+                  «تجربه فقط تعداد سال‌هایی نیست که مدیریت کرده‌ای؛ توانایی تبدیل خطاهای واقعی به روش‌هایی است که اجازه نمی‌دهند همان اشتباه بی‌دلیل در سازمان تکرار شود.»
                 </p>
               </div>
 

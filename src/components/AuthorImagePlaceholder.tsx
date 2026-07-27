@@ -41,7 +41,7 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
           {/* Top Badge */}
           <div className="absolute top-3 right-3 left-3 flex items-center justify-between z-10 pointer-events-none">
             <span className="text-[10px] font-bold text-amber-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-amber-500/30 shadow-lg">
-              {toPersianDigits(40)} سال سابقه صنعت
+              ۴۰+ سال تجربه صنعتی و مدیریتی
             </span>
             <div className="p-1.5 rounded-full bg-stone-950/80 border border-amber-500/30 text-[#B87333] shadow-lg">
               <Award className="w-3.5 h-3.5" />
@@ -55,9 +55,6 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
             </h3>
             <p className="text-[11px] text-amber-300 font-bold drop-shadow">
               مدیر صنعتی و معمار سیستم‌های سازمانی
-            </p>
-            <p className="text-[10px] text-stone-300 font-medium leading-tight">
-              دکترای حرفه‌ای مدیریت استراتژیک (دانشگاه تهران)
             </p>
           </div>
         </div>
