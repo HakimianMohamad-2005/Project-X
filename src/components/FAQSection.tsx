@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, BookOpen, ShieldCheck, Truck, Users, Sparkles, CheckCircle2, ArrowLeft, FileText, Phone } from 'lucide-react';
+import { HelpCircle, ChevronDown, BookOpen, CheckCircle2, FileText, Phone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ThemeMode, ActiveTab } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -22,11 +23,12 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
   onSelectTab,
   onOpenSamplePdf
 }) => {
+  const { t } = useTranslation();
   const isLight = theme === 'light';
   const [activeCategory, setActiveCategory] = useState<'all' | 'audience' | 'content' | 'purchase' | 'shipping'>('all');
   const [openId, setOpenId] = useState<string | null>('faq-1');
 
-  const faqs: FAQItem[] = [
+  const defaultFaqs: FAQItem[] = [
     {
       id: 'faq-1',
       category: 'audience',
@@ -114,6 +116,11 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
     }
   ];
 
+  const translatedFaqs = t('faq.items', { returnObjects: true }) as FAQItem[];
+  const faqs = (Array.isArray(translatedFaqs) && translatedFaqs.length > 0)
+    ? translatedFaqs
+    : defaultFaqs;
+
   const filteredFaqs = activeCategory === 'all' 
     ? faqs 
     : faqs.filter(f => f.category === activeCategory);
@@ -123,7 +130,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
   };
 
   return (
-    <div className="space-[#121314] space-y-12 py-4">
+    <div className="space-y-12 py-4">
       
       {/* Header Banner */}
       <div className={`p-8 sm:p-12 rounded-3xl border relative overflow-hidden text-center space-y-4 ${
@@ -133,15 +140,15 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
       }`}>
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B87333]/15 text-[#B87333] border border-[#B87333]/30 text-xs font-bold">
           <HelpCircle className="w-4 h-4 text-[#B87333]" />
-          <span>راهنمای جامع قبل از خرید</span>
+          <span>{t('faq.headerBadge')}</span>
         </div>
 
         <h1 className={`text-2xl sm:text-4xl font-black leading-tight ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-          آنچه باید قبل از خرید و مطالعه کتاب بدانید
+          {t('faq.headerTitle')}
         </h1>
 
         <p className="text-xs sm:text-sm text-stone-400 max-w-2xl mx-auto leading-relaxed">
-          پاسخ شفاف به تمام پرسش‌های کلیدی شما درباره جامعه مخاطبان، نحوه کاربرد مطالب در سازمان، شیوه ارسال و خدمات پس از سفارش کتاب دو جلدی اورانگوتان +۳
+          {t('faq.headerSubtitle')}
         </p>
 
         {/* Quick Call to Action Buttons */}
@@ -152,7 +159,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
               className="px-5 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shadow-lg transition-all flex items-center gap-2"
             >
               <FileText className="w-4 h-4" />
-              <span>دانلود رایگان ۳۶ صفحه نمونه PDF</span>
+              <span>{t('faq.ctaSamplePdf')}</span>
             </button>
           )}
 
@@ -166,7 +173,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
               }`}
             >
               <BookOpen className="w-4 h-4 text-[#B87333]" />
-              <span>مشاهده و خرید نسخه فیزیکی کتاب</span>
+              <span>{t('faq.ctaBuyBooks')}</span>
             </button>
           )}
         </div>
@@ -184,7 +191,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                 : 'bg-stone-900 text-stone-400 border-stone-800 hover:text-white'
           }`}
         >
-          همه پرسش‌ها ({faqs.length})
+          {t('faq.categoryAll', { count: faqs.length })}
         </button>
 
         <button
@@ -197,7 +204,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                 : 'bg-stone-900 text-stone-400 border-stone-800 hover:text-white'
           }`}
         >
-          مخاطبان و پیش‌نیازها
+          {t('faq.categoryAudience')}
         </button>
 
         <button
@@ -210,7 +217,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                 : 'bg-stone-900 text-stone-400 border-stone-800 hover:text-white'
           }`}
         >
-          محتوا و سرفصل‌ها
+          {t('faq.categoryContent')}
         </button>
 
         <button
@@ -223,7 +230,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                 : 'bg-stone-900 text-stone-400 border-stone-800 hover:text-white'
           }`}
         >
-          نمونه کتاب و امضا
+          {t('faq.categoryPurchase')}
         </button>
 
         <button
@@ -236,7 +243,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                 : 'bg-stone-900 text-stone-400 border-stone-800 hover:text-white'
           }`}
         >
-          ارسال پستی و فاکتور
+          {t('faq.categoryShipping')}
         </button>
       </div>
 
@@ -259,7 +266,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
             >
               <button
                 onClick={() => toggleFaq(faq.id)}
-                className="w-full p-5 sm:p-6 text-right flex items-center justify-between gap-4 focus:outline-none"
+                className="w-full p-5 sm:p-6 text-right ltr:text-left flex items-center justify-between gap-4 focus:outline-none"
               >
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-xl border ${
@@ -301,7 +308,9 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                         <div className={`p-4 rounded-xl border space-y-2 ${
                           isLight ? 'bg-amber-50/50 border-amber-200/60' : 'bg-stone-900/60 border-stone-800'
                         }`}>
-                          <span className="text-xs font-extrabold text-[#B87333] block">نکات کلیدی این بخش:</span>
+                          <span className="text-xs font-extrabold text-[#B87333] block">
+                            {t('faq.highlightsTitle')}
+                          </span>
                           <ul className="space-y-1.5">
                             {faq.highlights.map((h, i) => (
                               <li key={i} className="flex items-center gap-2 text-xs">
@@ -325,12 +334,12 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
       <div className={`p-8 rounded-3xl border max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 ${
         isLight ? 'bg-stone-100 border-stone-200' : 'bg-stone-900/80 border-stone-800'
       }`}>
-        <div className="space-y-1 text-center sm:text-right">
+        <div className="space-y-1 text-center sm:text-right ltr:text-left">
           <h4 className={`text-base font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-            سوال دیگری دارید یا نیاز به مشاوره قبل از خرید دارید؟
+            {t('faq.bottomBoxTitle')}
           </h4>
           <p className="text-xs text-stone-400">
-            تیم پشتیبانی انتشارات کتاب اورانگوتان +۳ آماده پاسخگویی به سوالات شماست.
+            {t('faq.bottomBoxSubtitle')}
           </p>
         </div>
 
@@ -340,7 +349,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
             className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md flex items-center gap-2"
           >
             <Phone className="w-4 h-4" />
-            <span>تماس با پشتیبانی: ۰۲۱-۸۸۹۹۰۰۱۱</span>
+            <span>{t('faq.supportPhoneBtn')}</span>
           </a>
         </div>
       </div>

@@ -1,0 +1,750 @@
+{
+  "navbar": {
+    "title": "Orangutan",
+    "highlight": "+3",
+    "subtitle": "Two-volume book by Ali Asghar Hakimian",
+    "links": {
+      "books": "Book Overview & Purchase",
+      "framework": "+3 Framework",
+      "quiz": "Instinct Quiz",
+      "caseStudies": "Industry Cases",
+      "cards": "Decision Cards",
+      "mistakesLessons": "40 Mistakes & Lessons",
+      "faq": "FAQ",
+      "b2b": "Corporate Orders",
+      "author": "About Author"
+    },
+    "samplePdfBtn": "Free Sample",
+    "samplePdfMobile": "Download 36p Sample",
+    "orderTrackingBtn": "Order Tracking",
+    "cartTooltip": "Shopping Cart",
+    "switchThemeDark": "Switch to Dark Mode",
+    "switchThemeLight": "Switch to Light Mode",
+    "langSwitch": "FA",
+    "langTitle": "Switch language to Persian"
+  },
+  "hero": {
+    "badge": "Built on 40 Years of Executive Experience in Iranian Manufacturing Industries",
+    "title": "Orangutan",
+    "highlight": "+3",
+    "subtitle": "From Instinctive Management to an Organization That Learns, Corrects, and Endures",
+    "authorInfoPart1": "Written by ",
+    "authorName": "Ali Asghar Hakimian",
+    "authorInfoPart2": " • A realistic critique of superficial management models and practical native solutions for factories, warehouses, production lines, and toxic sales invoices.",
+    "features": {
+      "f1": "Analysis of 7 real industry cases (Whey powder, PVC, Bearings)",
+      "f2": "Formulas to stop inventory financial bleeding and inflationary profits",
+      "f3": "Special chapter: 40 big mistakes & 40 lessons from 40 years of management",
+      "f4": "Transitioning from individual memory decisions to documented systems"
+    },
+    "ctaBundle": "Purchase Full Set (Vol 1 & 2)",
+    "discountBadge": "20% OFF",
+    "ctaSamplePdf": "Download Free 36-Page Sample (PDF)",
+    "quickJumpQuiz": "5-Question Online Instinct Quiz",
+    "quickJumpCases": "View Industry Case Studies",
+    "showcaseTitle": "Cover Designs & New Edition Showcase",
+    "totalPagesBadge": "728 Pages",
+    "authorCardName": "Author: Ali Asghar Hakimian",
+    "authorCardDegree": "Doctorate in Strategic Management",
+    "authorCardSpec": "Software & Accounting Specialist",
+    "authorResumeBtn": "Full Biography →",
+    "bundlePriceLabel": "2-Volume Set Price:",
+    "addBundleBtn": "Add Bundle to Cart",
+    "tabs": {
+      "tab2Badge": "Tab 2",
+      "tab2Title": "+3 Framework Simulator →",
+      "tab2Desc": "Observe, diagnose, and apply leverage",
+      "tab3Badge": "Tab 3",
+      "tab3Title": "5-Question Online Quiz →",
+      "tab3Desc": "Measure organizational instinct level",
+      "tab4Badge": "Tab 4",
+      "tab4Title": "7 Real Industry Cases →",
+      "tab4Desc": "Whey powder, PVC, Bearings, and School milk",
+      "tab6Badge": "Tab 6",
+      "tab6Title": "40 Mistakes & 40 Lessons →",
+      "tab6Desc": "Complete archive of management lessons"
+    }
+  },
+  "books": {
+    "sectionBadge": "Direct Order from Publisher",
+    "sectionTitle": "Order Physical Editions of",
+    "sectionTitleHighlight": "Orangutan +3 Book",
+    "sectionSubtitle": "Purchase Volume 1 and 2 separately or get the complete set with custom author signature and note by Ali Asghar Hakimian.",
+    "addedToCart": "Added to Cart",
+    "vol1": {
+      "id": "vol-1",
+      "badge": "Volume One",
+      "title": "From Instinctive Management to Self-Awareness",
+      "subtitle": "Uncovering decision traps, exposing invisible waste, and diagnosing instinctive behavior",
+      "price": 380000,
+      "pageCount": 390,
+      "summary": "Volume One dissects instinctive management behaviors, showing leaders how impulse decisions without methodology lead to hidden costs and resource loss across the organization.",
+      "keyTopicsTitle": "Key Topics of Volume 1:",
+      "keyTopics": [
+        "Unmasking instinctive behavioral traps in management",
+        "Formula for calculating invisible decision costs",
+        "Analyzing reactive behavior during crisis situations",
+        "Identifying financial bleeding points in manufacturing plants"
+      ],
+      "ctaBtn": "Order Volume 1 (390 pages)"
+    },
+    "vol2": {
+      "id": "vol-2",
+      "badge": "Volume Two",
+      "title": "Sustainability & Growth Roadmap +3",
+      "subtitle": "Tools, triple levers, decision cards, and learning organization architecture",
+      "price": 480000,
+      "pageCount": 510,
+      "summary": "Volume Two provides operational tools, triple levers (seeing reality, scientific decision-making, systematic execution), and 40 decision cards to liberate the organization from person-dependency into an auto-learning entity.",
+      "keyTopicsTitle": "Key Topics of Volume 2:",
+      "keyTopics": [
+        "Triple levers of stability and longevity",
+        "Architecture of self-correcting learning organizations",
+        "Fourteen interactive managerial decision cards",
+        "Hall of 40 mistakes and 40 lessons from 40 years"
+      ],
+      "ctaBtn": "Order Volume 2 (510 pages)"
+    },
+    "bundle": {
+      "id": "bundle-full",
+      "badge": "Special Offer • Most Popular",
+      "title": "Complete 2-Volume Set (+3 Sustainability Package)",
+      "subtitle": "Includes Volume 1 and Volume 2 in deluxe hardcover",
+      "originalPrice": 860000,
+      "bundlePrice": 688000,
+      "totalPages": 900,
+      "totalPagesLabel": "Total 900 Pages",
+      "signatureTitle": "Custom Signature & Note by Ali Asghar Hakimian",
+      "signatureLabel": "Recipient Name or Organization for Signature:",
+      "signaturePlaceholder": "e.g., Dr. Alavi / Steel Industrial Corp",
+      "ctaBtn": "Order Complete Set with 20% Discount",
+      "addedSuccess": "Full Package Added to Cart",
+      "features": [
+        "Special 20% discount compared to separate purchases",
+        "Handwritten signature and custom note by the author",
+        "Free nationwide express courier shipping",
+        "Access to all decision cards and diagnostic checklists"
+      ]
+    }
+  },
+  "author": {
+    "badge": "40+ Years of Industrial & Management Experience",
+    "sectionTitle": "About the Book Author",
+    "name": "Ali Asghar Hakimian",
+    "tag1": "Industrial Director & Systems Optimization Expert",
+    "tag2": "Enterprise Systems & ERP Architect",
+    "tag3": "Financial Systems & Industrial Accounting Specialist",
+    "degree": "Doctorate in Strategic Management – University of Tehran",
+    "subtitle": "From the Factory Floor to Enterprise Architecture",
+    "quote": "“Experience is not just the number of years you have managed; it is the ability to transform real errors into methods that prevent the same mistake from recurring needlessly.”",
+    "bioParagraph1": "For over four decades, Ali Asghar Hakimian has viewed organizations not merely from the executive suite, but at ground level: from machinery and production to cost accounting, software, sales, HR, and managerial decisions.",
+    "bioParagraph2": "He founded an enterprise software company serving nearly 1,500 client companies, advised over 40 manufacturing plants, and continues to directly guide operational transformations. His experience resides right where machinery, human capital, capital, data, processes, and decisions converge.",
+    "bioParagraph3": "“Orangutan +3” is the fruit of this journey—converting real field experience, trial, error, and correction into a framework for building an organization that learns and refuses to repeat mistakes blindly.",
+    "card1Title": "Industrial Director",
+    "card1Desc": "Production, productivity, bottleneck elimination, quality, and operational overhaul",
+    "card2Title": "Enterprise Systems Architect",
+    "card2Desc": "ERP, financial software, manufacturing, sales, inventory, and workflows",
+    "card3Title": "Financial & Industrial Accounting Specialist",
+    "card3Desc": "Cost accounting, cost of goods sold, financial controls, and decision-making",
+    "stats": {
+      "clientsCount": "1,500+",
+      "clientsLabel": "Nearly 1,500 Corporate Clients",
+      "clientsSub": "Founder of Enterprise Software Firm",
+      "factoriesCount": "40+",
+      "factoriesLabel": "Advised 40+ Factories & Industrial Facilities",
+      "factoriesSub": "Operational Transformation",
+      "yearsCount": "40+ Yrs",
+      "yearsLabel": "Over Four Decades of Field Experience",
+      "yearsSub": "From Factory Floor to Boardroom"
+    }
+  },
+  "faq": {
+    "headerBadge": "Comprehensive Pre-Purchase Guide",
+    "headerTitle": "Everything You Should Know Before Reading the Book",
+    "headerSubtitle": "Clear answers to all your key questions regarding target audience, practical applications, shipping methods, and post-order services for the two-volume Orangutan +3 book.",
+    "ctaSamplePdf": "Download Free 36-Page PDF Sample",
+    "ctaBuyBooks": "View & Purchase Physical Book",
+    "categoryAll": "All Questions",
+    "categoryAudience": "Audience & Prerequisites",
+    "categoryContent": "Content & Chapters",
+    "categoryPurchase": "Sample & Signature",
+    "categoryShipping": "Shipping & Invoicing",
+    "highlightsTitle": "Key Takeaways:",
+    "bottomBoxTitle": "Have further questions or need advice before purchasing?",
+    "bottomBoxSubtitle": "The Orangutan +3 publishing support team is ready to assist you.",
+    "supportPhoneBtn": "Support Line: +98 21 88990011",
+    "items": [
+      {
+        "id": "faq-1",
+        "category": "audience",
+        "question": "Who specifically is this two-volume book written for?",
+        "answer": "“Orangutan +3” is written specifically for CEOs, factory owners, workshop founders, senior operations officers, and business owners in developing markets. If you feel the entire decision-making weight rests on your shoulders or output drops whenever you leave, this book is your exact roadmap.",
+        "highlights": [
+          "CEOs and owners of manufacturing and service industries",
+          "Senior executive, financial, and commercial directors",
+          "Entrepreneurs seeking to transition from emotional management to sustainable structure"
+        ]
+      },
+      {
+        "id": "faq-2",
+        "category": "content",
+        "question": "Is an MBA or academic background required to understand the content?",
+        "answer": "No! The language is practical, direct, and free of overly academic jargon. All models, formulas, and decision cards were distilled from real experience on factory floors and Iranian enterprises.",
+        "highlights": [
+          "Simple language, free from unpractical theoretical fluff",
+          "Focused on native examples and real market challenges",
+          "Step-by-step actionable checklists and protocols"
+        ]
+      },
+      {
+        "id": "faq-3",
+        "category": "content",
+        "question": "What is the primary difference between Volume 1 and Volume 2?",
+        "answer": "Volume 1 (From Instinctive Management to Self-Awareness) diagnoses and unmasks instinctive decision traps, revealing the root causes of financial leaks. Volume 2 (Sustainability & Growth Roadmap +3) provides operational tools, triple levers, decision cards, and learning architecture so the system runs independently.",
+        "highlights": [
+          "Vol 1: Pathology and recognition of instinctive decision traps",
+          "Vol 2: Tool building, waste formulas, and sustainable structure"
+        ]
+      },
+      {
+        "id": "faq-4",
+        "category": "content",
+        "question": "Why is this book different from translated Western management books?",
+        "answer": "Most management books on the market are translations of Western texts that ignore local economic conditions, high inflation, currency shifts, and workforce culture. Orangutan +3 comes directly from 40 years of hands-on industrial practice.",
+        "highlights": [
+          "Adapted to inflation and volatile market environments",
+          "In-depth analysis of native workforce culture and organizational behavior",
+          "Covers real case studies from local manufacturing sectors"
+        ]
+      },
+      {
+        "id": "faq-5",
+        "category": "purchase",
+        "question": "Is it possible to read a sample before placing an order?",
+        "answer": "Yes! You can download a free 36-page PDF sample featuring selected key chapters from both volumes to get familiar with the style and depth of the content.",
+        "highlights": [
+          "Instant access to a 36-page PDF sample",
+          "Completely free of charge"
+        ]
+      },
+      {
+        "id": "faq-6",
+        "category": "purchase",
+        "question": "Can I request a custom author signature and dedication?",
+        "answer": "Yes, when adding the book set to your cart, you can check the 'Request custom author signature' option and enter the recipient's name to receive a signed copy by Ali Asghar Hakimian.",
+        "highlights": [
+          "Handwritten author signature on the title page",
+          "Ideal gift choice for executives, partners, and colleagues"
+        ]
+      },
+      {
+        "id": "faq-7",
+        "category": "shipping",
+        "question": "What is the delivery timeframe and shipping procedure?",
+        "answer": "All orders are packaged within 24 business hours and dispatched nationwide via express postal courier. Tracking numbers are sent immediately via SMS and can also be checked on the site.",
+        "highlights": [
+          "Fast nationwide express delivery",
+          "Free shipping for complete sets and qualifying orders",
+          "Instant online order tracking"
+        ]
+      },
+      {
+        "id": "faq-8",
+        "category": "shipping",
+        "question": "Are corporate bulk purchases and official tax invoices available?",
+        "answer": "Yes! For companies and factories purchasing multiple sets for management teams, official corporate tax invoices are issued. Executive meetings with the author can also be scheduled.",
+        "highlights": [
+          "Official corporate tax invoices issued",
+          "Special tiered discounts for orders of 5+ sets",
+          "Option to schedule online or in-person sessions with the author"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "title": "Orangutan",
+    "highlight": "+3",
+    "desc": "The two-volume book “From Instinctive Management to an Organization That Learns, Corrects, and Endures” by Ali Asghar Hakimian.",
+    "domain": "orangutanplus3.com",
+    "navSectionsTitle": "Website Sections",
+    "navToolsTitle": "Tools & Services",
+    "navSupportTitle": "Support & Orders",
+    "navSupportText": "Fast nationwide courier shipping. Corporate orders available with official tax invoices.",
+    "supportPhone": "Support Line: +98 21 88990011",
+    "badges": {
+      "shipping": "Fast Express Delivery Nationwide",
+      "authenticity": "Guaranteed Physical Print Authenticity",
+      "invoice": "Official Corporate Invoicing Available"
+    },
+    "links": {
+      "books": "Book Overview",
+      "framework": "+3 Model Simulator",
+      "caseStudies": "Factory Case Studies",
+      "quiz": "Online Instinct Test",
+      "cards": "Decision Cards",
+      "mistakesLessons": "40 Mistakes & Lessons",
+      "faq": "Pre-Purchase FAQ",
+      "b2b": "Corporate Bulk Orders",
+      "author": "About Ali Asghar Hakimian"
+    },
+    "copyright": "All rights reserved for this platform and book content by Ali Asghar Hakimian (orangutanplus3.com).",
+    "devInfo": "Designed and developed according to Iranian executive management standards."
+  },
+  "framework": {
+    "badge": "Signature Conceptual Model of \"Orangutan +3\"",
+    "title": "Interactive 3+ Framework Simulator",
+    "subtitle": "Ali Asghar Hakimian's 3-step formula to rescue organizations from instinctive behaviors, repeated errors, and absolute reliance on personal memory.",
+    "stepLabel": "Step {{num}}",
+    "aftershockLabel": "+1 Aftershock",
+    "orangutanTitle": "Instinctive Approach (Orangutan Mode)",
+    "plus3Title": "Systemic 3+ Framework Approach (Ali Asghar Hakimian)",
+    "bottomLabel": "Factory Implementation:",
+    "bottomText": "All 3+ Framework stages with real formulas and operational checklists are detailed in Volume 1 and Volume 2.",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Unfiltered Reality Observation",
+        "subtitle": "Moving beyond polished reports to direct shop-floor observation",
+        "description": "Most managers view their organization from behind smoked-glass office windows. Financial reports and stats usually arrive retouched and delayed. In Step 1 of 3+, managers learn to go directly to production, warehouse, and customer touchpoints to analyze live data firsthand.",
+        "orangutanDiff": "In instinctive mode, the manager simply shouts and blames based on gut feeling.",
+        "plus3Diff": "In the 3+ Framework, the manager identifies root causes using first-hand shop-floor data.",
+        "tag": "Step 1 • Observation"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Leverage Point Intervention",
+        "subtitle": "Focusing on the primary bottleneck (Theory of Constraints - TOC)",
+        "description": "Pressuring all departments simultaneously drains organizational energy. The leverage point is the bottleneck where a 10% improvement doubles total capacity—such as discovering the altitude effect at 2,143m in the whey powder case study.",
+        "orangutanDiff": "In instinctive mode, the manager pressures everyone, exhausting productive employees.",
+        "plus3Diff": "In the 3+ Framework, all organizational resources focus on resolving the true bottleneck.",
+        "tag": "Step 2 • Focus"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Institutionalization in Memory",
+        "subtitle": "Converting solutions into methods, checklists, and enduring training",
+        "description": "If a solution vanishes when a key person leaves, it is not a solution—it's a temporary painkiller. Institutionalization means drafting checklists, refining warehouse formulas, standardizing shelf addresses, and turning managers into systemizing teachers.",
+        "orangutanDiff": "In instinctive mode, when a key employee leaves, all knowledge and processes perish.",
+        "plus3Diff": "In the 3+ Framework, knowledge is embedded into processes, keeping the organization self-learning.",
+        "tag": "Step 3 • Institutionalization"
+      },
+      {
+        "stepNumber": 4,
+        "title": "+ Positive Aftershocks (+1)",
+        "subtitle": "Cascading positive effects of a correct decision across the value chain",
+        "description": "When a leverage point is correctly fixed, like a pebble in water, it creates positive waves: employee morale rises, waste drops, invisible financial leaks stop, and real profit emerges.",
+        "orangutanDiff": "In instinctive mode, raw decisions create negative aftershocks and new crises.",
+        "plus3Diff": "In the 3+ Framework, one structural correction unleashes a wave of value creation throughout the organization.",
+        "tag": "Positive Aftershock"
+      }
+    ]
+  },
+  "quiz": {
+    "badge": "Executive Self-Assessment Quiz",
+    "title": "Instinctive Management Quiz",
+    "subtitle": "Answer 5 real management scenarios to evaluate your 'Orangutan Mode' index alongside custom book solutions.",
+    "progressText": "Question {{num}} of {{total}}",
+    "chapterRefPrefix": "Book Reference:",
+    "prevBtn": "Previous",
+    "nextBtn": "Next Question",
+    "viewResultsBtn": "View Diagnostic Result",
+    "retakeBtn": "Retake Quiz",
+    "orderBundleBtn": "Order Complete 2-Volume Bundle with Discount",
+    "resultScoreTitle": "Your Organizational Systemization Score: {{percentage}}%",
+    "resultAnalysisTitle": "Organizational Behavioral Analysis:",
+    "resultSolutionTitle": "Ali Asghar Hakimian's Recommended Solution:",
+    "tiers": {
+      "t1": {
+        "title": "Severe Orangutan Mode (Emotional & Instinctive Management)",
+        "description": "Your organization feels the pain and pressure but fails to identify root causes. Decisions rely on sixth sense, shouting, and personal memory. Repeated errors incur heavy costs.",
+        "recommendation": "Essential reading: Volume 1 (Chapters 1-4: Raw shop-floor observation & 4 AM strainer logs)."
+      },
+      "t2": {
+        "title": "Fluctuating Instinctive Management (Semi-Systemic with High Dependency)",
+        "description": "You have some forms and tools, but key employee absences cause severe disruption. Profits leak through warehouse voids and toxic sales invoices.",
+        "recommendation": "Study Volumes 1 & 2 (Warehouse coding, toxic invoice removal, and true profit formulas)."
+      },
+      "t3": {
+        "title": "On the Path to 3+ Systemization (Growing Organization)",
+        "description": "Most processes are transparent, but enduring success requires turning all know-how into live checklists and training manager-teachers across all levels.",
+        "recommendation": "Study Volume 2 (Chapters 39 & 40: Hall of 40 Mistakes and 40 Lessons)."
+      },
+      "t4": {
+        "title": "Self-Learning & Enduring 3+ Organization (Excellent)",
+        "description": "Congratulations! Your organization possesses enduring memory, uses live data, and doesn't rely on the physical presence of the CEO. You have successfully implemented 3+ Framework concepts.",
+        "recommendation": "Use Volume 2 to implement AI as a decision-making assistant."
+      }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "question": "When a production line or project faces delays, what is the initial reaction of top executives?",
+        "chapterRef": "Vol 1 • Ch 1 & 2 (Orangutan Mode)",
+        "options": [
+          { "text": "Holding an emergency meeting, shouting at supervisors, and penalizing operators.", "feedback": "Instinctive behavior: Emotional reaction without shop-floor data analysis." },
+          { "text": "Mandating overtime for all departments without inspecting the delay's root cause.", "feedback": "Uniform pressure across all departments exhausting productive employees." },
+          { "text": "Heading directly to the production floor, examining the live bottleneck, and checking warehouse inputs.", "feedback": "Unfiltered reality observation (Step 1 of 3+): Direct data-driven observation." }
+        ]
+      },
+      {
+        "id": 2,
+        "question": "How is warehouse inventory and customer order data maintained in your organization?",
+        "chapterRef": "Vol 1 • Ch 3 (68-Year Bearing Warehouse Audit)",
+        "options": [
+          { "text": "Mostly in the senior warehouse keeper's head or manual notebooks only he understands.", "feedback": "Dangerous reliance on individual memory with no organizational memory." },
+          { "text": "In multiple Excel spreadsheets where each manager holds a conflicting version.", "feedback": "Data debt and multiple conflicting versions of truth." },
+          { "text": "In an integrated coded system with precise shelf addresses and cycle counting.", "feedback": "Transparent logging and enduring organizational memory (3+ Framework)." }
+        ]
+      },
+      {
+        "id": 3,
+        "question": "What is your primary metric for evaluating and rewarding the sales team?",
+        "chapterRef": "Vol 2 • Ch 3 (Toxic Invoices & Repeat Sales)",
+        "options": [
+          { "text": "Number of daily phone calls and sheer routine activity.", "feedback": "Rewarding activity over results, leading to wasted time." },
+          { "text": "Total invoiced amount, even if based on long-term credit and risky checks.", "feedback": "Creating toxic invoices and failing to distinguish real sales from debt." },
+          { "text": "Actual cash collected in the bank account and customer repeat purchases.", "feedback": "Results-oriented metric ensuring financial cash flow health (3+ Framework)." }
+        ]
+      },
+      {
+        "id": 4,
+        "question": "What happens when a key employee (e.g., technical manager or warehouse lead) resigns?",
+        "chapterRef": "Vol 1 • Ch 6 (Manager as Teacher)",
+        "options": [
+          { "text": "Total department paralysis and giving salary ransoms to keep them at all costs.", "feedback": "Organization held hostage by an individual due to lack of standard procedures." },
+          { "text": "Hastily hiring a replacement and enduring months of costly mistakes.", "feedback": "Failure to transfer knowledge and experience systematically." },
+          { "text": "Relative calmness, as all processes have live checklists and video documentation.", "feedback": "Learning organization documented according to the 3+ Framework." }
+        ]
+      },
+      {
+        "id": 5,
+        "question": "How is your company's annual profit calculated?",
+        "chapterRef": "Vol 2 • Ch 4 (Steak Kebabs & Soda Discounts)",
+        "options": [
+          { "text": "Based on year-end bank balance, ignoring raw material replacement inflation.", "feedback": "Fatal financial self-deception in inflationary economies." },
+          { "text": "Based on traditional accounting that mistakes property/inventory inflation for profit.", "feedback": "Failing to separate inflation gains from true operational profit." },
+          { "text": "Strictly separating asset inflation gains from true net operational sales profit.", "feedback": "Financial intelligence calculating true raw material replacement power (3+ Framework)." }
+        ]
+      }
+    ]
+  },
+  "caseStudies": {
+    "badge": "Direct Experience from 40 Years of Industry",
+    "title": "Industrial Case Studies Vault",
+    "subtitle": "Documented case breakdowns of the steam needle, 68-year bearing warehouse, PVC shortage, and toxic invoices detailed in Volumes 1 & 2.",
+    "problemLabel": "Problem Statement:",
+    "keyMetricLabel": "Key Result:",
+    "viewCaseBtn": "Full Case Deep-Dive",
+    "modalProblemTitle": "1. Problem & Initial Crisis:",
+    "modalLeverTitle": "2. Leverage Point Intervention (3+):",
+    "modalResultTitle": "3. Operational & Financial Result:",
+    "closeModalBtn": "Close Window",
+    "categories": {
+      "all": "All Cases",
+      "production": "Production & Industry",
+      "finance": "Finance & Warehouse",
+      "sales": "Sales & Market",
+      "ai": "AI & Technology"
+    },
+    "items": [
+      {
+        "id": "case-steam-needle",
+        "title": "Steam Needle & Whey Powder",
+        "subtitle": "Boosting evaporation line capacity from 2.5 to 6.135 tons/hour",
+        "categoryLabel": "Production & Industry",
+        "volumeRef": "Vol 2 • Ch 1",
+        "problem": "The whey powder factory was stuck at a low capacity of 2.5 tons/hr, with everyone blaming the boiler.",
+        "leverIntervention": "Uncovering the impact of 2,143m elevation on boiling points, adjusting cooling towers, and modifying operator habits for steam needle calibration.",
+        "results": "Line capacity increased 2.4x to 6.135 tons/hr without purchasing multi-billion equipment.",
+        "keyMetric": "+145% Capacity Boost",
+        "quote": "“The problem wasn't a $1M boiler; it was a cheap needle adjustment and ignoring factory altitude.”"
+      },
+      {
+        "id": "case-pvc-leak",
+        "title": "8-Ton PVC Shortage & Internal Bleeding",
+        "subtitle": "Exposing silent raw material leaks from the warehouse",
+        "categoryLabel": "Finance & Warehouse",
+        "volumeRef": "Vol 2 • Ch 2",
+        "problem": "During year-end audit, 8 tons of PVC raw material went missing despite matching paperwork.",
+        "leverIntervention": "Reconciling standard production formulas with waste logs and actual output weights, exposing scale calibration errors.",
+        "results": "Preventing multi-billion annual losses and sealing material leaks with real-time logging.",
+        "keyMetric": "8-Ton Leak Recovered",
+        "quote": "“Internal bleeding is fatal because the organization feels no immediate pain while slowly dying.”"
+      },
+      {
+        "id": "case-bearing-68y",
+        "title": "68-Year Bearing Warehouse Audit",
+        "subtitle": "Overcoming absolute reliance on personal memory",
+        "categoryLabel": "Finance & Warehouse",
+        "volumeRef": "Vol 1 • Ch 3",
+        "problem": "A 68-year-old enterprise with thousands of bearing parts located only in an old storekeeper's memory.",
+        "leverIntervention": "Implementing open warehouse audits, unified part coding, 3D rack addresses, and cycle counting.",
+        "results": "Line downtime dropped to zero, freeing the factory from reliance on specific individuals.",
+        "keyMetric": "100% Parts Coded",
+        "quote": "“An organization whose memory lives inside one person's head suffers a stroke when that person takes leave.”"
+      },
+      {
+        "id": "case-milk-4am",
+        "title": "4 AM Dairy Strainer",
+        "subtitle": "The rule: Log first, deliver second",
+        "categoryLabel": "Production & Industry",
+        "volumeRef": "Vol 1 & 2",
+        "problem": "Verbal raw milk handovers at 4 AM created massive accounting discrepancies between farmers, drivers, and silos.",
+        "leverIntervention": "Enforcing the unshakeable rule: 'Log digitally/paper first, unload milk second' even at 4 AM.",
+        "results": "Total elimination of milk shortages and crystal-clear farmer payment records.",
+        "keyMetric": "0 Discrepancy",
+        "quote": "“Transparency is truly tested when enforced at 4 AM in factory darkness.”"
+      },
+      {
+        "id": "case-kabab-soda",
+        "title": "Steak Kebab & Soda Discount",
+        "subtitle": "Distinguishing operational profit from inflation profit",
+        "categoryLabel": "Sales & Market",
+        "volumeRef": "Vol 2 • Ch 4",
+        "problem": "Executives celebrated cash gains, unaware that profit stemmed from asset inflation rather than operational efficiency.",
+        "leverIntervention": "Separating inventory inflation gains from true sales margin and revamping discount policies.",
+        "results": "Preventing executive self-deception and safeguarding raw material purchasing power under inflation.",
+        "keyMetric": "True Profit Clarity",
+        "quote": "“If your profit is lower than property and material inflation, you haven't made profit; you auctioned the factory.”"
+      },
+      {
+        "id": "case-sales-toxic",
+        "title": "24-Person Sales Team & Toxic Invoices",
+        "subtitle": "Critiquing activity rewards versus actual results",
+        "categoryLabel": "Sales & Market",
+        "volumeRef": "Vol 2 • Ch 3",
+        "problem": "A 24-rep software team logged thousands of calls daily but issued uncollectible credit invoices (toxic invoices).",
+        "leverIntervention": "Switching commission terms from 'issued invoice' to 'cash collected in bank' and filtering credit clients.",
+        "results": "Tripled cash inflow and eliminated vanishing uncollectible invoices.",
+        "keyMetric": "3x Cash Collection",
+        "quote": "“A sale is just a costly joke until cash hits the bank account.”"
+      },
+      {
+        "id": "case-school-milk",
+        "title": "10-Ton School Milk Distribution & Strike Scenario",
+        "subtitle": "Crisis management 24 hours ahead of disaster",
+        "categoryLabel": "AI & Technology",
+        "volumeRef": "Vol 1 & 2",
+        "problem": "Threatened driver strikes endangered 10 tons of pasteurized school milk in southern heat.",
+        "leverIntervention": "Designing alternative distribution scenarios with local trucks 24 hours prior to the strike.",
+        "results": "100% milk delivered with zero waste, turning crisis into regional trust.",
+        "keyMetric": "0% Milk Spoilage",
+        "quote": "“Crisis management means opening your umbrella before the storm, not while drowning under floods.”"
+      }
+    ]
+  },
+  "decisionCards": {
+    "badge": "Executive Desk Action Tools",
+    "title": "Interactive Executive Decision Cards",
+    "subtitle": "4 operational tools and checklists from Volumes 1 & 2 for evaluating hidden decision costs, detecting financial leaks, and crisis management.",
+    "viewChecklistBtn": "View Checklist",
+    "closeProtocolBtn": "Close Protocol",
+    "costCalc": {
+      "title": "Online True Decision Cost Calculator:",
+      "directCostLabel": "Direct Project Cost (Toman/USD):",
+      "totalEstimatedLabel": "Estimated Minimum True Cost with Hidden Leaks:",
+      "disclaimer": "*Includes opportunity cost, initial training errors, and side-effect remediation."
+    },
+    "bleedAudit": {
+      "title": "Warehouse Profit Leak Checklist:",
+      "countIdentified": "{{count}} of 6 items identified"
+    },
+    "cards": [
+      {
+        "id": "card-cost-calc",
+        "title": "Decision Price Card",
+        "subtitle": "Evaluating 4 hidden costs before issuing executive orders",
+        "categoryLabel": "Hidden Costs",
+        "frontSummary": "Any executive decision evaluated solely on direct monetary cost imposes at least 3 hidden invisible costs on the organization.",
+        "backProtocol": "Before approving any project or process change, ask these 4 questions:",
+        "actionableSteps": [
+          "1. Direct Cost (Equipment & raw material purchase)",
+          "2. Opportunity Cost (What vital tasks are delayed while staff work on this?)",
+          "3. Learning & Error Cost (How long until operators perform without defects?)",
+          "4. Side-Effect Remediation Cost (If this fails, what is the rollback cost?)"
+        ]
+      },
+      {
+        "id": "card-bleed-audit",
+        "title": "Internal Bleeding Diagnostic Sheet",
+        "subtitle": "Identifying 6 primary silent profit leak points in factories",
+        "categoryLabel": "Financial Audits",
+        "frontSummary": "Internal bleeding is the slow drain of profits through voids invisible in standard financial statements.",
+        "backProtocol": "6-point checklist for identifying silent leaks in warehouse & production:",
+        "actionableSteps": [
+          "1. Warehouse entry scale weight vs. waybill variance",
+          "2. Machine calibration waste (Setup Waste)",
+          "3. Unrecorded micro-discounts granted by sales reps",
+          "4. Uncoded spare parts abandoned in warehouse shelves",
+          "5. Unrecorded 5-minute unplanned line micro-stoppages",
+          "6. Rework and reprocessing costs for returned goods"
+        ]
+      },
+      {
+        "id": "card-crisis-72h",
+        "title": "72-Hour Crisis Management Card",
+        "subtitle": "Prioritization protocol during abrupt resource cutoffs",
+        "categoryLabel": "Crisis Management",
+        "frontSummary": "In the first 72 hours of a crisis, emotional decisions destroy organizations. The 3+ protocol focuses on protecting vital lifelines.",
+        "backProtocol": "Immediate 72-hour actions in order of priority:",
+        "actionableSteps": [
+          "Hours 1-12: Freeze all non-essential cash outflows & verify true inventory.",
+          "Hours 12-24: Direct, transparent communication with top 3 clients & suppliers.",
+          "Hours 24-48: Activate Plan B (e.g., alternative logistics network).",
+          "Hours 48-72: Initial debrief & drafting checklists to prevent recurrence."
+        ]
+      },
+      {
+        "id": "card-key-person",
+        "title": "Key Employee Exit Risk Card",
+        "subtitle": "Evaluating organizational reliance on individuals over systems",
+        "categoryLabel": "Human Resources",
+        "frontSummary": "If one employee's departure can shut down a department, you don't have a system; you have a personal fiefdom.",
+        "backProtocol": "3-step formula for safeguarding against individual dependency:",
+        "actionableSteps": [
+          "1. Identify top 3 individuals holding unwritten operational knowledge.",
+          "2. Mandate video recording and checklist creation for their top 10 processes.",
+          "3. Conduct a 7-day 'No-Phone Vacation' test to evaluate system stability."
+        ]
+      }
+    ]
+  },
+  "mistakesLessons": {
+    "badge": "Summary of Chapters 39 & 40 (Volume 2)",
+    "title": "Hall of 40 Mistakes & 40 Lessons",
+    "subtitle": "A rare collection of 40 major executive mistakes to avoid and 40 key lessons from Ali Asghar Hakimian's 4 decades of management.",
+    "toggleMistakes": "40 Major Mistakes",
+    "toggleLessons": "40 Key Lessons",
+    "searchPlaceholder": "Search by title or description...",
+    "noResults": "No items found matching your search or category.",
+    "categories": {
+      "all": "All Categories",
+      "view": "Observing Reality",
+      "decision": "Decision Making",
+      "people": "People & Culture",
+      "system": "System & Process",
+      "market": "Sales & Market"
+    },
+    "items": [
+      {
+        "id": "m-1",
+        "number": 1,
+        "type": "mistake",
+        "title": "Managing from Behind Smoked Office Windows",
+        "description": "Blindly trusting polished written reports without regular shop-floor visits and operator dialogues.",
+        "categoryLabel": "Observing Reality",
+        "bookRef": "Vol 2 • Ch 39 (Mistake 1)"
+      },
+      {
+        "id": "m-2",
+        "number": 12,
+        "type": "mistake",
+        "title": "Buying New Equipment to Fix Management Errors",
+        "description": "Purchasing expensive machinery when existing equipment needed only a 5% needle or cooling tower recalibration.",
+        "categoryLabel": "System & Process",
+        "bookRef": "Vol 2 • Ch 39 (Mistake 12)"
+      },
+      {
+        "id": "m-3",
+        "number": 24,
+        "type": "mistake",
+        "title": "Rewarding Busyness Over Real Sales",
+        "description": "Praising sales reps who make 100 calls but leave uncollectible credit invoices.",
+        "categoryLabel": "Sales & Market",
+        "bookRef": "Vol 2 • Ch 39 (Mistake 24)"
+      },
+      {
+        "id": "m-4",
+        "number": 31,
+        "type": "mistake",
+        "title": "Yielding Ransoms to Rebellious Senior Staff",
+        "description": "Retaining toxic employees simply because warehouse or production know-how is locked in their heads.",
+        "categoryLabel": "People & Culture",
+        "bookRef": "Vol 2 • Ch 39 (Mistake 31)"
+      },
+      {
+        "id": "m-5",
+        "number": 38,
+        "type": "mistake",
+        "title": "Mistaking Inflation Profit for Operational Efficiency",
+        "description": "Celebrating a 50% revenue growth when actual production volume dropped by 20%.",
+        "categoryLabel": "Decision Making",
+        "bookRef": "Vol 2 • Ch 39 (Mistake 38)"
+      },
+      {
+        "id": "l-1",
+        "number": 1,
+        "type": "lesson",
+        "title": "Log First, Deliver Second; Without Exception",
+        "description": "Financial & systemic clarity begins at 4 AM in the darkest warehouse corner, not in conference rooms.",
+        "categoryLabel": "System & Process",
+        "bookRef": "Vol 2 • Ch 40 (Lesson 1)"
+      },
+      {
+        "id": "l-2",
+        "number": 15,
+        "type": "lesson",
+        "title": "Identify the Core Bottleneck & Align the Organization",
+        "description": "Pressuring all departments exhausts productive staff. Target the true leverage point.",
+        "categoryLabel": "Decision Making",
+        "bookRef": "Vol 2 • Ch 40 (Lesson 15)"
+      },
+      {
+        "id": "l-3",
+        "number": 27,
+        "type": "lesson",
+        "title": "Managers Must Architect Questions, Not Be Call Center Agents",
+        "description": "If staff call you for every trivial query, you haven't built a system; you built a personal call center.",
+        "categoryLabel": "People & Culture",
+        "bookRef": "Vol 2 • Ch 40 (Lesson 27)"
+      },
+      {
+        "id": "l-4",
+        "number": 33,
+        "type": "lesson",
+        "title": "A Sale is a Loss Until Cash is Collected",
+        "description": "The best client is one who settles invoices promptly, not one who places massive credit orders.",
+        "categoryLabel": "Sales & Market",
+        "bookRef": "Vol 2 • Ch 40 (Lesson 33)"
+      },
+      {
+        "id": "l-5",
+        "number": 40,
+        "type": "lesson",
+        "title": "Experience Isn't Merely Years of Management",
+        "description": "Experience is the number of mistakes you've identified and prevented from recurring mindlessly.",
+        "categoryLabel": "Observing Reality",
+        "bookRef": "Vol 2 • Ch 40 (Lesson 40)"
+      }
+    ]
+  },
+  "b2b": {
+    "badge": "Corporate Bulk Orders & Executive Gifts",
+    "title": "Corporate Bulk Orders & Executive Session Request",
+    "subtitle": "The \"Orangutan +3\" book set is a transformative gift for C-suite executives, production line leads, board members, and key clients.",
+    "features": {
+      "f1Title": "Official Tax Invoice",
+      "f1Desc": "Issuance of official VAT-compliant tax invoices for corporate training expense deduction.",
+      "f2Title": "Executive Session with Dr. Ali Asghar Hakimian",
+      "f2Desc": "In-person or online analytical sessions with the author (PhD in Strategic Management) for bulk orders exceeding 20 sets.",
+      "f3Title": "Tiered Corporate Discounts",
+      "f3Desc": "Tiered volume discounts for orders of 10+ sets with elegant corporate gift packaging."
+    },
+    "formTitle": "Corporate Order & Proforma Invoice Request Form",
+    "companyNameLabel": "Organization / Company Name:*",
+    "companyNamePlaceholder": "e.g. Mapna Group / ACME Corp",
+    "contactPersonLabel": "Contact Person / Training Director:*",
+    "contactPersonPlaceholder": "e.g. John Smith / Ms. Williams",
+    "phoneLabel": "Phone / Mobile Number:*",
+    "phonePlaceholder": "0912... or +1...",
+    "quantityLabel": "Required Quantity (Min 10):",
+    "taxInvoiceCheckbox": "I require an official VAT-compliant tax invoice.",
+    "meetingCheckbox": "I wish to request an executive briefing with Dr. Ali Asghar Hakimian.",
+    "notesLabel": "Additional Notes:",
+    "notesPlaceholder": "Specify any scheduling requirements or details...",
+    "submitBtn": "Submit Corporate Proforma Invoice Request",
+    "successTitle": "Your Corporate Request Has Been Successfully Submitted",
+    "successSubtitle": "Our corporate sales team will contact you within 2 business hours to deliver the official proforma invoice.",
+    "resetBtn": "Submit Another Request"
+  }
+}

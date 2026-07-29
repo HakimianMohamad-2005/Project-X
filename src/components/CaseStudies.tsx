@@ -1,31 +1,52 @@
 import React, { useState } from 'react';
-import { Factory, TrendingDown, Boxes, Clock, PieChart, DollarSign, Truck, X, ArrowLeft, Quote, Sparkles } from 'lucide-react';
-import { CASE_STUDIES } from '../data/bookData';
-import { CaseCategory, CaseStudy, ThemeMode } from '../types';
+import { Factory, TrendingDown, Boxes, Clock, PieChart, DollarSign, Truck, X, ArrowLeft, ArrowRight, Quote } from 'lucide-react';
+import { CaseCategory, ThemeMode } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 interface CaseStudiesProps {
   theme?: ThemeMode;
 }
 
+const ICON_BY_CASE_ID: Record<string, string> = {
+  'case-steam-needle': 'Factory',
+  'case-pvc-leak': 'TrendingDown',
+  'case-bearing-68y': 'Boxes',
+  'case-milk-4am': 'Clock',
+  'case-kabab-soda': 'PieChart',
+  'case-sales-toxic': 'DollarSign',
+  'case-school-milk': 'Truck'
+};
+
+const CATEGORY_KEYS: { key: CaseCategory; labelKey: string }[] = [
+  { key: 'all', labelKey: 'caseStudies.categories.all' },
+  { key: 'production', labelKey: 'caseStudies.categories.production' },
+  { key: 'finance', labelKey: 'caseStudies.categories.finance' },
+  { key: 'sales', labelKey: 'caseStudies.categories.sales' },
+  { key: 'ai', labelKey: 'caseStudies.categories.ai' }
+];
+
 export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => {
+  const { t, i18n } = useTranslation();
+  const isPersian = i18n.language === 'fa';
   const [selectedCategory, setSelectedCategory] = useState<CaseCategory>('all');
-  const [activeModalCase, setActiveModalCase] = useState<CaseStudy | null>(null);
+  const [activeModalCase, setActiveModalCase] = useState<any | null>(null);
   const isLight = theme === 'light';
 
-  const categories: { key: CaseCategory; label: string }[] = [
-    { key: 'all', label: 'همه پرونده‌ها' },
-    { key: 'production', label: 'تولید و صنعت' },
-    { key: 'finance', label: 'مالی و انبار' },
-    { key: 'sales', label: 'فروش و بازار' },
-    { key: 'ai', label: 'هوش مصنوعی و فناوری' }
-  ];
+  const items = (t('caseStudies.items', { returnObjects: true }) as any[]) || [];
 
   const filteredCases = selectedCategory === 'all'
-    ? CASE_STUDIES
-    : CASE_STUDIES.filter(c => c.category === selectedCategory);
+    ? items
+    : items.filter((c: any) => {
+        if (selectedCategory === 'production') return c.id === 'case-steam-needle' || c.id === 'case-milk-4am';
+        if (selectedCategory === 'finance') return c.id === 'case-pvc-leak' || c.id === 'case-bearing-68y';
+        if (selectedCategory === 'sales') return c.id === 'case-kabab-soda' || c.id === 'case-sales-toxic';
+        if (selectedCategory === 'ai') return c.id === 'case-school-milk';
+        return true;
+      });
 
-  const renderIcon = (iconName: string) => {
+  const renderIcon = (caseId: string) => {
+    const iconName = ICON_BY_CASE_ID[caseId] || 'Factory';
     switch (iconName) {
       case 'Factory':
         return <Factory className="w-5 h-5 text-[#B87333]" />;
@@ -46,6 +67,8 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
     }
   };
 
+  const BackIcon = isPersian ? ArrowLeft : ArrowRight;
+
   return (
     <section id="case-studies" className={`py-16 md:py-20 transition-colors duration-300 border-b ${
       isLight ? 'bg-[#FAF8F5] border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-800 text-[#FAF7F2]'
@@ -58,19 +81,19 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
             isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
           }`}>
             <Factory className="w-4 h-4 text-[#B87333]" />
-            <span>تجربه مستقیم از ۴۰ سال صنعت ایران</span>
+            <span>{t('caseStudies.badge')}</span>
           </div>
           <h2 className={`text-3xl sm:text-4xl font-extrabold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-            اتاق پرونده‌های واقعی <span className="text-[#B87333]">کارخانه‌ها</span>
+            {t('caseStudies.title')}
           </h2>
           <p className={`text-sm sm:text-base leading-relaxed ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-            بازخوانی مستند پرونده‌های سوزن بخار، انبارگردانی بلبرینگ ۶۸ ساله، کسری PVC و فاکتور سمی که در جلد اول و دوم تشریح شده‌اند.
+            {t('caseStudies.subtitle')}
           </p>
         </div>
 
         {/* Category Filter Pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
-          {categories.map((cat) => (
+          {CATEGORY_KEYS.map((cat) => (
             <motion.button
               key={cat.key}
               whileHover={{ scale: 1.04 }}
@@ -84,7 +107,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
                     : 'bg-[#1E2022] text-stone-300 border-stone-800 hover:border-stone-700'
               }`}
             >
-              {cat.label}
+              {t(cat.labelKey)}
             </motion.button>
           ))}
         </div>
@@ -94,7 +117,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {filteredCases.map((cs) => (
+          {filteredCases.map((cs: any) => (
             <motion.div
               layout
               initial={{ opacity: 0, scale: 0.95 }}
@@ -111,7 +134,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className={`p-2.5 rounded-xl border ${isLight ? 'bg-amber-50 border-amber-200' : 'bg-stone-900 border-stone-800'}`}>
-                    {renderIcon(cs.iconName)}
+                    {renderIcon(cs.id)}
                   </div>
                   <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md border ${
                     isLight ? 'bg-stone-100 border-stone-300 text-stone-700' : 'bg-stone-900 border-stone-800 text-stone-400'
@@ -132,14 +155,14 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
                 </div>
 
                 <p className={`text-xs line-clamp-3 leading-relaxed ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                  <strong className={isLight ? 'text-stone-900' : 'text-stone-400'}>صورت مسئله: </strong>
+                  <strong className={isLight ? 'text-stone-900' : 'text-stone-400'}>{t('caseStudies.problemLabel')} </strong>
                   {cs.problem}
                 </p>
               </div>
 
               <div className="pt-4 border-t border-stone-500/20 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-stone-400 font-medium">دست‌آورد اصلی:</span>
+                  <span className="text-xs text-stone-400 font-medium">{t('caseStudies.keyMetricLabel')}</span>
                   <span className="text-xs font-black text-[#B87333] bg-[#B87333]/10 px-2.5 py-1 rounded-md border border-[#B87333]/20">
                     {cs.keyMetric}
                   </span>
@@ -155,8 +178,8 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
                       : 'bg-stone-900 hover:bg-stone-800 text-stone-200 border-stone-800'
                   }`}
                 >
-                  <span>بررسی کامل پرونده</span>
-                  <ArrowLeft className="w-3.5 h-3.5 text-[#B87333]" />
+                  <span>{t('caseStudies.viewCaseBtn')}</span>
+                  <BackIcon className="w-3.5 h-3.5 text-[#B87333]" />
                 </motion.button>
               </div>
             </motion.div>
@@ -203,21 +226,21 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
                 <div className={`p-4 rounded-2xl border space-y-1 ${
                   isLight ? 'bg-red-50/80 border-red-200' : 'bg-stone-900/90 border-stone-800'
                 }`}>
-                  <strong className="text-red-500 block font-bold">۱. صورت مسئله و بحران ابتدایی:</strong>
+                  <strong className="text-red-500 block font-bold">{t('caseStudies.modalProblemTitle')}</strong>
                   <p className={`leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>{activeModalCase.problem}</p>
                 </div>
 
                 <div className={`p-4 rounded-2xl border space-y-1 ${
                   isLight ? 'bg-amber-50/80 border-amber-200' : 'bg-stone-900/90 border-stone-800'
                 }`}>
-                  <strong className="text-[#B87333] block font-bold">۲. مداخله در نقطه اهرمی (+۳):</strong>
+                  <strong className="text-[#B87333] block font-bold">{t('caseStudies.modalLeverTitle')}</strong>
                   <p className={`leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>{activeModalCase.leverIntervention}</p>
                 </div>
 
                 <div className={`p-4 rounded-2xl border space-y-1 ${
                   isLight ? 'bg-emerald-50/80 border-emerald-200' : 'bg-[#2E5A44]/20 border-[#2E5A44]/40'
                 }`}>
-                  <strong className="text-emerald-600 block font-bold">۳. دستاورد مالی و عملیاتی:</strong>
+                  <strong className="text-emerald-600 block font-bold">{t('caseStudies.modalResultTitle')}</strong>
                   <p className={`leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>{activeModalCase.results}</p>
                 </div>
 
@@ -234,7 +257,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
                   onClick={() => setActiveModalCase(null)}
                   className="px-6 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs"
                 >
-                  بستن پنجره
+                  {t('caseStudies.closeModalBtn')}
                 </button>
               </div>
 
@@ -245,3 +268,4 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ theme = 'light' }) => 
     </section>
   );
 };
+

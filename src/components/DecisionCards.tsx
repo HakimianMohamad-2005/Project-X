@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
-import { Calculator, Droplets, ShieldAlert, Users, RotateCw, CheckSquare, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
-import { DECISION_CARDS } from '../data/bookData';
-import { DecisionCard, ThemeMode } from '../types';
+import { Calculator, Droplets, ShieldAlert, Users, CheckSquare, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import { ThemeMode } from '../types';
 import { toPersianDigits, formatCurrency } from '../utils/persian';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 interface DecisionCardsProps {
   theme?: ThemeMode;
 }
 
+const CARD_CONFIG: Record<string, { iconName: string; toolType: 'cost_calc' | 'bleed_audit' | 'none' }> = {
+  'card-cost-calc': { iconName: 'Calculator', toolType: 'cost_calc' },
+  'card-bleed-audit': { iconName: 'Droplets', toolType: 'bleed_audit' },
+  'card-crisis-72h': { iconName: 'ShieldAlert', toolType: 'none' },
+  'card-key-person': { iconName: 'Users', toolType: 'none' }
+};
+
 export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' }) => {
+  const { t, i18n } = useTranslation();
+  const isPersian = i18n.language === 'fa';
   const [activeFlippedId, setActiveFlippedId] = useState<string | null>(null);
   const isLight = theme === 'light';
 
   // Hidden Cost Calculator state for Card 1
-  const [directCost, setDirectCost] = useState<number>(100000000); // 100M Toman
+  const [directCost, setDirectCost] = useState<number>(100000000); // 100M Toman / USD
 
   // Bleed Audit state for Card 2
   const [checkedBleedItems, setCheckedBleedItems] = useState<boolean[]>([false, false, false, false, false, false]);
+
+  const cards = (t('decisionCards.cards', { returnObjects: true }) as any[]) || [];
 
   const toggleFlip = (id: string) => {
     setActiveFlippedId(activeFlippedId === id ? null : id);
@@ -58,20 +69,21 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
             isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
           }`}>
             <Calculator className="w-4 h-4 text-[#B87333]" />
-            <span>ابزارهای کاربردی برای میز مدیران</span>
+            <span>{t('decisionCards.badge')}</span>
           </div>
           <h2 className={`text-3xl sm:text-4xl font-extrabold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-            کارت‌های تعاملی <span className="text-[#B87333]">تصمیم مدیریتی</span>
+            {t('decisionCards.title')}
           </h2>
           <p className={`text-sm sm:text-base leading-relaxed ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-            ۴ ابزار و چک‌لیست کاربردی جلد اول و دوم کتاب جهت سنجش هزینه‌های ناپدید تصمیم، کشف خونریزی مالی و پروتکل بحران.
+            {t('decisionCards.subtitle')}
           </p>
         </div>
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {DECISION_CARDS.map((card) => {
+          {cards.map((card: any) => {
             const isExpanded = activeFlippedId === card.id;
+            const config = CARD_CONFIG[card.id] || { iconName: 'Calculator', toolType: 'none' };
 
             return (
               <motion.div
@@ -89,7 +101,7 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
                 <div className="flex items-center justify-between pb-4 border-b border-stone-500/20">
                   <div className="flex items-center gap-3">
                     <div className={`p-3 rounded-2xl border ${isLight ? 'bg-amber-50 border-amber-200' : 'bg-stone-900 border-stone-800'}`}>
-                      {renderIcon(card.iconName)}
+                      {renderIcon(config.iconName)}
                     </div>
                     <div>
                       <span className="text-[11px] font-bold text-[#B87333] block">
@@ -111,7 +123,7 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
                         : 'bg-stone-900 hover:bg-stone-800 text-stone-300 border-stone-800'
                     }`}
                   >
-                    <span>{isExpanded ? 'بستن پروتکل' : 'مشاهده چک‌لیست'}</span>
+                    <span>{isExpanded ? t('decisionCards.closeProtocolBtn') : t('decisionCards.viewChecklistBtn')}</span>
                     {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </motion.button>
                 </div>
@@ -138,7 +150,7 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
                         </h4>
 
                         <ul className="space-y-2">
-                          {card.actionableSteps.map((step, idx) => (
+                          {(card.actionableSteps || []).map((step: string, idx: number) => (
                             <li
                               key={idx}
                               className={`p-3 rounded-2xl border text-xs leading-relaxed flex items-start gap-2 ${
@@ -153,15 +165,15 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
                       </div>
 
                       {/* Interactive Embedded Calculators per Tool Type */}
-                      {card.toolType === 'cost_calc' && (
+                      {config.toolType === 'cost_calc' && (
                         <div className={`p-4 rounded-2xl border space-y-4 ${
                           isLight ? 'bg-amber-50/60 border-amber-200' : 'bg-stone-900 border-stone-800'
                         }`}>
-                          <span className="text-xs font-bold text-[#B87333] block">محاسبه‌گر آنلاین هزینه واقعی تصمیم:</span>
+                          <span className="text-xs font-bold text-[#B87333] block">{t('decisionCards.costCalc.title')}</span>
                           
                           <div className="space-y-2">
                             <label className={`text-[11px] block ${isLight ? 'text-stone-700' : 'text-stone-400'}`}>
-                              هزینه مستقیم پروژه (تومان):
+                              {t('decisionCards.costCalc.directCostLabel')}
                             </label>
                             <input
                               type="number"
@@ -176,36 +188,38 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
                           <div className={`p-3 rounded-xl border text-xs space-y-1 ${
                             isLight ? 'bg-white border-amber-200' : 'bg-[#121314] border-stone-800'
                           }`}>
-                            <div className="flex items-center justify-between text-stone-600">
-                              <span>تخمین حداقل هزینه واقعی با هزینه‌های ناپدید:</span>
+                            <div className="flex items-center justify-between text-stone-600 flex-wrap gap-2">
+                              <span>{t('decisionCards.costCalc.totalEstimatedLabel')}</span>
                               <span className="text-[#B87333] font-bold">
-                                {formatCurrency(directCost * 2.2)}
+                                {isPersian ? formatCurrency(directCost * 2.2) : `$${(directCost * 2.2).toLocaleString()}`}
                               </span>
                             </div>
                             <p className="text-[10px] text-stone-400">
-                              *شامل هزینه فرصت از دست رفته، خطای اولیه آموزش و اصلاح اثرات جانبی.
+                              {t('decisionCards.costCalc.disclaimer')}
                             </p>
                           </div>
                         </div>
                       )}
 
-                      {card.toolType === 'bleed_audit' && (
+                      {config.toolType === 'bleed_audit' && (
                         <div className={`p-4 rounded-2xl border space-y-3 ${
                           isLight ? 'bg-red-50/60 border-red-200' : 'bg-stone-900 border-stone-800'
                         }`}>
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-red-500">چک‌لیست نشت سود انبار:</span>
+                            <span className="text-xs font-bold text-red-500">{t('decisionCards.bleedAudit.title')}</span>
                             <span className="text-xs font-bold text-stone-400">
-                              {toPersianDigits(totalBleedRiskCount)} از ۶ مورد شناسایی شد
+                              {t('decisionCards.bleedAudit.countIdentified', {
+                                count: isPersian ? toPersianDigits(totalBleedRiskCount) : totalBleedRiskCount
+                              })}
                             </span>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {card.actionableSteps.map((step, idx) => (
+                            {(card.actionableSteps || []).map((step: string, idx: number) => (
                               <button
                                 key={idx}
                                 onClick={() => toggleBleedCheck(idx)}
-                                className={`p-2.5 rounded-xl border text-right text-[11px] font-medium transition-all flex items-center justify-between ${
+                                className={`p-2.5 rounded-xl border text-start text-[11px] font-medium transition-all flex items-center justify-between ${
                                   checkedBleedItems[idx]
                                     ? 'bg-red-500/20 border-red-500 text-red-700 font-bold'
                                     : isLight
@@ -213,7 +227,7 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
                                       : 'bg-[#121314] border-stone-800 text-stone-400 hover:border-stone-700'
                                 }`}
                               >
-                                <span className="truncate">{step}</span>
+                                <span className="truncate me-2">{step}</span>
                                 <CheckSquare className={`w-4 h-4 shrink-0 ${checkedBleedItems[idx] ? 'text-red-500' : 'text-stone-400'}`} />
                               </button>
                             ))}
@@ -234,3 +248,4 @@ export const DecisionCards: React.FC<DecisionCardsProps> = ({ theme = 'light' })
     </section>
   );
 };
+

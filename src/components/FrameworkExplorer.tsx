@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import { Eye, Target, ShieldCheck, Zap, ArrowLeft, CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react';
-import { FRAMEWORK_STEPS } from '../data/bookData';
+import { Eye, Target, ShieldCheck, Zap, CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react';
 import { toPersianDigits } from '../utils/persian';
 import { ThemeMode } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 interface FrameworkExplorerProps {
   theme?: ThemeMode;
 }
 
+const STEP_ICONS = ['Eye', 'Target', 'ShieldCheck', 'Zap'];
+
 export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'light' }) => {
+  const { t, i18n } = useTranslation();
+  const isPersian = i18n.language === 'fa';
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const isLight = theme === 'light';
 
-  const currentStep = FRAMEWORK_STEPS[activeStepIndex];
+  const steps = (t('framework.steps', { returnObjects: true }) as any[]) || [];
+  const currentStep = steps[activeStepIndex] || {};
+  const currentIconName = STEP_ICONS[activeStepIndex] || 'Eye';
 
   const renderIcon = (iconName: string) => {
     switch (iconName) {
@@ -41,31 +47,36 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
           <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-xs font-bold ${
             isLight ? 'bg-amber-100/80 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/30 text-[#B87333]'
           }`}>
-            <span>مدل مفهومی امضایی کتاب «اورانگوتان +۳»</span>
+            <span>{t('framework.badge')}</span>
           </div>
           <h2 className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
             isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
           }`}>
-            سیمولاتور تعاملی مدل <span className="text-[#B87333]">+۳</span>
+            {t('framework.title')}
           </h2>
           <p className={`text-sm sm:text-base leading-relaxed ${
             isLight ? 'text-stone-600' : 'text-stone-400'
           }`}>
-            فرمول سه گامی علی‌اصغر حکیمیان برای نجات سازمان‌ها از رفتارهای غریزی، خطاهای تکراری و وابستگی مطلق به حافظه اشخاص.
+            {t('framework.subtitle')}
           </p>
         </div>
 
         {/* Step Selector Buttons */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {FRAMEWORK_STEPS.map((step, idx) => {
+          {steps.map((step, idx) => {
             const isActive = idx === activeStepIndex;
+            const iconName = STEP_ICONS[idx] || 'Eye';
+            const stepNumText = step.stepNumber <= 3
+              ? (isPersian ? `گام ${toPersianDigits(step.stepNumber)}` : `Step ${step.stepNumber}`)
+              : t('framework.aftershockLabel');
+
             return (
               <motion.button
-                key={step.stepNumber}
+                key={step.stepNumber || idx}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveStepIndex(idx)}
-                className={`p-4 rounded-2xl border text-right transition-all flex flex-col justify-between h-36 relative ${
+                className={`p-4 rounded-2xl border text-start transition-all flex flex-col justify-between h-36 relative ${
                   isActive
                     ? isLight
                       ? 'bg-white border-[#B87333] shadow-xl ring-2 ring-[#B87333]/30'
@@ -79,12 +90,12 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
                   <div className={`p-2 rounded-xl ${
                     isActive ? 'bg-[#B87333]/20' : isLight ? 'bg-stone-200' : 'bg-stone-800'
                   }`}>
-                    {renderIcon(step.iconName)}
+                    {renderIcon(iconName)}
                   </div>
                   <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                     isActive ? 'bg-[#B87333] text-white' : isLight ? 'bg-stone-200 text-stone-700' : 'bg-stone-800 text-stone-400'
                   }`}>
-                    {step.stepNumber <= 3 ? `گام ${toPersianDigits(step.stepNumber)}` : '+۱ پس‌لرزه'}
+                    {stepNumText}
                   </span>
                 </div>
                 <div>
@@ -118,7 +129,7 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-stone-500/20">
               <div className="flex items-center gap-4">
                 <div className="p-3.5 rounded-2xl bg-[#B87333]/20 border border-[#B87333]/30">
-                  {renderIcon(currentStep.iconName)}
+                  {renderIcon(currentIconName)}
                 </div>
                 <div>
                   <span className="text-xs font-bold text-[#B87333] uppercase tracking-wider block">
@@ -150,7 +161,7 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
               }`}>
                 <div className="flex items-center gap-2 text-red-600 font-bold text-sm">
                   <AlertTriangle className="w-5 h-5 shrink-0" />
-                  <span>رویکرد غریزی (وضعیت اورانگوتانی)</span>
+                  <span>{t('framework.orangutanTitle')}</span>
                 </div>
                 <p className={`text-xs sm:text-sm leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
                   {currentStep.orangutanDiff}
@@ -163,7 +174,7 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
               }`}>
                 <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm">
                   <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  <span>رویکرد سیستمی مدل +۳ (علی‌اصغر حکیمیان)</span>
+                  <span>{t('framework.plus3Title')}</span>
                 </div>
                 <p className={`text-xs sm:text-sm leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
                   {currentStep.plus3Diff}
@@ -178,7 +189,7 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
             }`}>
               <Lightbulb className="w-5 h-5 text-amber-500 shrink-0" />
               <div className={`text-xs sm:text-sm ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                <strong className={isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}>پیاده‌سازی در کارخانه:</strong> تمام مراحل مدل +۳ با فرمول‌های واقعی و چک‌لیست‌های عملیاتی در جلد اول و دوم کتاب تشریح گردیده‌اند.
+                <strong className={isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}>{t('framework.bottomLabel')}</strong> {t('framework.bottomText')}
               </div>
             </div>
 
@@ -189,3 +200,4 @@ export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'l
     </section>
   );
 };
+

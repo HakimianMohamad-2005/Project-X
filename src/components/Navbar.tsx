@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Menu, X, BookOpen, Sun, Moon, Sparkles, Truck, FileText, Award } from 'lucide-react';
+import { ShoppingBag, Menu, X, Sun, Moon, Truck, FileText, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ActiveTab, ThemeMode } from '../types';
 import { toPersianDigits } from '../utils/persian';
 import { motion } from 'motion/react';
+import { syncDocumentDirAndLang } from '../i18n/config';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -25,19 +27,30 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenTracking,
   onOpenSamplePdf,
 }) => {
+  const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isLight = theme === 'light';
+  const isEn = i18n.language === 'en';
 
-  const navItems: { id: ActiveTab; label: string; icon?: string }[] = [
-    { id: 'books', label: 'معرفی و خرید کتاب' },
-    { id: 'framework', label: 'مدل +۳' },
-    { id: 'quiz', label: 'آزمون غریزی' },
-    { id: 'case-studies', label: 'پرونده‌های صنعت' },
-    { id: 'cards', label: 'کارت‌های تصمیم' },
-    { id: 'mistakes-lessons', label: '۴۰ اشتباه و درس' },
-    { id: 'faq', label: 'پرسش‌ها' },
-    { id: 'b2b', label: 'سفارش سازمانی' },
-    { id: 'author', label: 'درباره نویسنده' },
+  const handleLanguageSwitch = () => {
+    const targetLang = isEn ? 'fa' : 'en';
+    const targetPath = targetLang === 'en' ? '/en' : '/';
+    
+    i18n.changeLanguage(targetLang);
+    window.history.pushState({}, '', targetPath);
+    syncDocumentDirAndLang(targetLang);
+  };
+
+  const navItems: { id: ActiveTab; key: string }[] = [
+    { id: 'books', key: 'books' },
+    { id: 'framework', key: 'framework' },
+    { id: 'quiz', key: 'quiz' },
+    { id: 'case-studies', key: 'caseStudies' },
+    { id: 'cards', key: 'cards' },
+    { id: 'mistakes-lessons', key: 'mistakesLessons' },
+    { id: 'faq', key: 'faq' },
+    { id: 'b2b', key: 'b2b' },
+    { id: 'author', key: 'author' },
   ];
 
   const handleSelectTab = (tab: ActiveTab) => {
@@ -55,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 gap-4">
           
-          {/* Right Section: Logo & Brand */}
+          {/* Logo & Brand */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => handleSelectTab('books')}
@@ -65,17 +78,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className={`w-full h-full rounded-[10px] flex items-center justify-center transition-colors ${
                   isLight ? 'bg-white group-hover:bg-amber-50' : 'bg-[#121314] group-hover:bg-[#1E2022]'
                 }`}>
-                  <span className="text-[#B87333] font-black text-xl tracking-tighter">+۳</span>
+                  <span className="text-[#B87333] font-black text-xl tracking-tighter">{t('navbar.highlight')}</span>
                 </div>
               </div>
-              <div className="flex flex-col text-right whitespace-nowrap shrink-0">
+              <div className="flex flex-col text-right ltr:text-left whitespace-nowrap shrink-0">
                 <span className={`font-extrabold text-lg sm:text-xl tracking-tight transition-colors ${
                   isLight ? 'text-stone-900 group-hover:text-[#B87333]' : 'text-[#FAF7F2] group-hover:text-[#B87333]'
                 }`}>
-                  اورانگوتان <span className="text-[#B87333]">+۳</span>
+                  {t('navbar.title')} <span className="text-[#B87333]">{t('navbar.highlight')}</span>
                 </span>
                 <span className={`text-[11px] font-medium leading-tight ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-                  کتاب دو جلدی علی‌اصغر حکیمیان
+                  {t('navbar.subtitle')}
                 </span>
               </div>
             </button>
@@ -99,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         : 'text-stone-300 hover:text-white hover:bg-stone-800/60'
                   }`}
                 >
-                  {item.label}
+                  {t(`navbar.links.${item.key}`)}
                   {isActive && (
                     <motion.div
                       layoutId="activeTabIndicator"
@@ -115,6 +128,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Left Action Controls */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             
+            {/* Language Switcher Button (/ vs /en) */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLanguageSwitch}
+              className={`px-3 py-2 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                isLight
+                  ? 'bg-amber-50 hover:bg-amber-100 text-stone-900 border-amber-200'
+                  : 'bg-stone-800 hover:bg-stone-700 text-[#FAF7F2] border-stone-700'
+              }`}
+              title={isEn ? t('navbar.langTitle', 'Switch language to Persian') : t('navbar.langTitle', 'تغییر زبان به انگلیسی')}
+            >
+              <Globe className="w-4 h-4 text-[#B87333]" />
+              <span>{t('navbar.langSwitch')}</span>
+            </motion.button>
+
             {/* Dark / Light Theme Toggle */}
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -125,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   ? 'bg-amber-100/80 border-amber-300 text-amber-800 hover:bg-amber-200' 
                   : 'bg-stone-800/80 border-stone-700 text-amber-400 hover:bg-stone-700'
               }`}
-              title={isLight ? 'تغییر به حالت تاریک (Dark Mode)' : 'تغییر به حالت روشن (Light Mode)'}
+              title={isLight ? t('navbar.switchThemeDark') : t('navbar.switchThemeLight')}
             >
               {isLight ? (
                 <Moon className="w-4 h-4 text-amber-900" />
@@ -146,7 +175,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <FileText className="w-4 h-4 text-[#B87333]" />
-              <span>نمونه رایگان</span>
+              <span>{t('navbar.samplePdfBtn')}</span>
             </motion.button>
 
             {/* Order Tracking Button */}
@@ -161,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <Truck className="w-4 h-4 text-emerald-500" />
-              <span>پیگیری سفارش</span>
+              <span>{t('navbar.orderTrackingBtn')}</span>
             </motion.button>
 
             {/* Cart Drawer Trigger */}
@@ -174,12 +203,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                   ? 'bg-white hover:bg-stone-100 text-stone-900 border-stone-300 shadow-sm'
                   : 'bg-[#1E2022] hover:bg-stone-800 text-[#FAF7F2] border-stone-700/80'
               }`}
-              aria-label="سبد خرید"
+              aria-label={t('navbar.cartTooltip')}
             >
               <ShoppingBag className="w-5 h-5 text-[#B87333]" />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#B87333] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
-                  {toPersianDigits(cartCount)}
+                  {isEn ? cartCount : toPersianDigits(cartCount)}
                 </span>
               )}
             </motion.button>
@@ -219,7 +248,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#B87333]/10 border border-[#B87333]/30 text-xs font-semibold text-[#B87333]"
             >
               <FileText className="w-4 h-4" />
-              <span>دانلود نمونه ۳۶ص</span>
+              <span>{t('navbar.samplePdfMobile')}</span>
             </button>
             <button
               onClick={() => {
@@ -229,7 +258,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-semibold text-emerald-500"
             >
               <Truck className="w-4 h-4" />
-              <span>پیگیری سفارش</span>
+              <span>{t('navbar.orderTrackingBtn')}</span>
             </button>
           </div>
 
@@ -241,7 +270,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleSelectTab(item.id)}
-                  className={`p-3 rounded-xl text-xs font-bold text-right transition-colors ${
+                  className={`p-3 rounded-xl text-xs font-bold text-right ltr:text-left transition-colors ${
                     isActive
                       ? 'bg-[#B87333] text-white shadow-md'
                       : isLight
@@ -249,7 +278,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         : 'bg-stone-900 text-stone-300 hover:bg-stone-800'
                   }`}
                 >
-                  {item.label}
+                  {t(`navbar.links.${item.key}`)}
                 </button>
               );
             })}

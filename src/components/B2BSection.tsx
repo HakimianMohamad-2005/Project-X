@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Building2, Users, FileText, CheckCircle2, PhoneCall, Send, Sparkles } from 'lucide-react';
+import { Building2, Users, FileText, CheckCircle2, Send, Sparkles } from 'lucide-react';
 import { B2BForm, ThemeMode } from '../types';
 import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { saveB2BInquiryToApi } from '../lib/api';
+import { useTranslation } from 'react-i18next';
 
 interface B2BSectionProps {
   theme?: ThemeMode;
 }
 
 export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
+  const { t } = useTranslation();
   const [form, setForm] = useState<B2BForm>({
     companyName: '',
     contactPerson: '',
@@ -49,17 +51,17 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
               isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
             }`}>
               <Building2 className="w-4 h-4 text-[#B87333]" />
-              <span>ویژه سازمان‌ها، کارخانجات و هدیه مدیریتی</span>
+              <span>{t('b2b.badge')}</span>
             </div>
 
             <h2 className={`text-3xl sm:text-4xl font-extrabold leading-tight ${
               isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
             }`}>
-              خرید عمده سازمانی و <span className="text-[#B87333]">درخواست نشست مدیریتی</span>
+              {t('b2b.title')}
             </h2>
 
             <p className={`text-sm sm:text-base leading-relaxed ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-              کتاب «اورانگوتان +۳» یک هدیه ارزشمند و تحول‌آفرین برای مدیران ارشد، سرپرستان خطوط تولید، اعضای هیئت مدیره و مشتریان کلیدی سازمان شماست.
+              {t('b2b.subtitle')}
             </p>
 
             <div className="space-y-4 pt-2">
@@ -68,9 +70,9 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
               }`}>
                 <FileText className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
                 <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>فاکتور رسمی حقوقی</h3>
+                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>{t('b2b.features.f1Title')}</h3>
                   <p className="text-xs text-stone-400 mt-1">
-                    صدور فاکتور رسمی معتبر سازمان امور مالیاتی با ارزش افزوده جهت پذیرش در هزینه‌های آموزش و مشاوره.
+                    {t('b2b.features.f1Desc')}
                   </p>
                 </div>
               </div>
@@ -80,9 +82,9 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
               }`}>
                 <Users className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
                 <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>نشست مدیریتی با دکتر علی‌اصغر حکیمیان</h3>
+                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>{t('b2b.features.f2Title')}</h3>
                   <p className="text-xs text-stone-400 mt-1">
-                    امکان هماهنگی جلسه تحلیلی حضوری یا آنلاین با نویسنده (دکترای مدیریت استراتژیک، متخصص نرم‌افزار و حسابداری) برای سفارش‌های بالای ۲۰ دوره.
+                    {t('b2b.features.f2Desc')}
                   </p>
                 </div>
               </div>
@@ -92,9 +94,9 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
               }`}>
                 <Sparkles className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
                 <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>تخفیف پله‌ای سازمانی</h3>
+                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>{t('b2b.features.f3Title')}</h3>
                   <p className="text-xs text-stone-400 mt-1">
-                    تخفیف‌های پلکانی ویژه سفارش‌های ۱۰ دوره به بالا همراه با بسته‌بندی نفیس سازمانی.
+                    {t('b2b.features.f3Desc')}
                   </p>
                 </div>
               </div>
@@ -112,20 +114,20 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                   <h3 className={`text-lg font-bold pb-2 border-b border-stone-500/20 ${
                     isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
                   }`}>
-                    فرم درخواست خرید سازمانی و پیش‌فاکتور
+                    {t('b2b.formTitle')}
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        نام سازمان / شرکت:*
+                        {t('b2b.companyNameLabel')}
                       </label>
                       <input
                         type="text"
                         required
                         value={form.companyName}
                         onChange={(e) => setForm({ ...form, companyName: e.target.value })}
-                        placeholder="مثلاً: شرکت تولیدی صنعتی مپنا"
+                        placeholder={t('b2b.companyNamePlaceholder')}
                         className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
                           isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
                         }`}
@@ -134,14 +136,14 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
 
                     <div>
                       <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        نام رابط / مسئول خریدهای آموزشی:*
+                        {t('b2b.contactPersonLabel')}
                       </label>
                       <input
                         type="text"
                         required
                         value={form.contactPerson}
                         onChange={(e) => setForm({ ...form, contactPerson: e.target.value })}
-                        placeholder="مثلاً: مهندس رضایی"
+                        placeholder={t('b2b.contactPersonPlaceholder')}
                         className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
                           isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
                         }`}
@@ -152,14 +154,14 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        شماره همراه تماس:*
+                        {t('b2b.phoneLabel')}
                       </label>
                       <input
                         type="tel"
                         required
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        placeholder="۰۹۱۲..."
+                        placeholder={t('b2b.phonePlaceholder')}
                         className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
                           isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
                         }`}
@@ -168,7 +170,7 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
 
                     <div>
                       <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        تعداد دوره مورد نیاز (حداقل ۱۰):
+                        {t('b2b.quantityLabel')}
                       </label>
                       <input
                         type="number"
@@ -190,7 +192,7 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                         onChange={(e) => setForm({ ...form, requestLegalInvoice: e.target.checked })}
                         className="w-4 h-4 rounded text-[#B87333] bg-[#121314] border-stone-700"
                       />
-                      <span>نیازمند صدور فاکتور رسمی حقوقی با ارزش افزوده هستم.</span>
+                      <span>{t('b2b.taxInvoiceCheckbox')}</span>
                     </label>
 
                     <label className={`flex items-center gap-2 cursor-pointer text-xs ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
@@ -200,17 +202,17 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                         onChange={(e) => setForm({ ...form, requestAuthorMeeting: e.target.checked })}
                         className="w-4 h-4 rounded text-[#B87333] bg-[#121314] border-stone-700"
                       />
-                      <span>مایل به درخواست جلسه تحلیلی حضوری/آنلاین با علی‌اصغر حکیمیان هستم.</span>
+                      <span>{t('b2b.meetingCheckbox')}</span>
                     </label>
                   </div>
 
                   <div>
-                    <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>توضیحات تکمیلی:</label>
+                    <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>{t('b2b.notesLabel')}</label>
                     <textarea
                       rows={3}
                       value={form.notes}
                       onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                      placeholder="اگر نیاز به زمان‌بندی یا شرایط خاصی دارید بنویسید..."
+                      placeholder={t('b2b.notesPlaceholder')}
                       className={`w-full px-3.5 py-2 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
                         isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
                       }`}
@@ -224,7 +226,7 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                     className="w-full py-3.5 rounded-2xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
-                    <span>ثبت درخواست پیش‌فاکتور سازمانی</span>
+                    <span>{t('b2b.submitBtn')}</span>
                   </motion.button>
                 </form>
               ) : (
@@ -237,10 +239,10 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className={`text-xl font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                    درخواست سازمانی شما با موفقیت ثبت شد
+                    {t('b2b.successTitle')}
                   </h3>
                   <p className="text-xs text-stone-400 leading-relaxed max-w-md mx-auto">
-                    همکاران ما در واحد فروش سازمانی انتشارات ظرف کمتر از ۲ ساعت کاری جهت ارسال پیش‌فاکتور رسمی با شماره ثبت‌شده تماس خواهند گرفت.
+                    {t('b2b.successSubtitle')}
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
@@ -248,7 +250,7 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
                       isLight ? 'bg-stone-200 text-stone-800 hover:bg-stone-300' : 'bg-stone-800 text-white hover:bg-stone-700'
                     }`}
                   >
-                    ارسال درخواست جدید
+                    {t('b2b.resetBtn')}
                   </button>
                 </motion.div>
               )}
@@ -262,3 +264,4 @@ export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
     </section>
   );
 };
+

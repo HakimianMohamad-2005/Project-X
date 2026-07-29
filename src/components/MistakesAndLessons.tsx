@@ -1,35 +1,53 @@
 import React, { useState } from 'react';
-import { BookOpen, Search, AlertTriangle, CheckCircle2, Bookmark, Sparkles, Filter } from 'lucide-react';
-import { MISTAKES_AND_LESSONS } from '../data/bookData';
-import { CategoryTag, MistakeLesson, ThemeMode } from '../types';
+import { BookOpen, Search, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { CategoryTag, ThemeMode } from '../types';
 import { toPersianDigits } from '../utils/persian';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 interface MistakesAndLessonsProps {
   theme?: ThemeMode;
 }
 
+const CATEGORY_MAP: Record<string, CategoryTag> = {
+  'm-1': 'view',
+  'm-2': 'system',
+  'm-3': 'market',
+  'm-4': 'people',
+  'm-5': 'decision',
+  'l-1': 'system',
+  'l-2': 'decision',
+  'l-3': 'people',
+  'l-4': 'market',
+  'l-5': 'view'
+};
+
 export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 'light' }) => {
+  const { t, i18n } = useTranslation();
+  const isPersian = i18n.language === 'fa';
   const [activeType, setActiveType] = useState<'mistake' | 'lesson'>('mistake');
   const [selectedTag, setSelectedTag] = useState<CategoryTag | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const isLight = theme === 'light';
 
   const categoryTags: { key: CategoryTag | 'all'; label: string }[] = [
-    { key: 'all', label: 'همه دسته‌ها' },
-    { key: 'view', label: 'دیدن واقعیت' },
-    { key: 'decision', label: 'تصمیم‌گیری' },
-    { key: 'people', label: 'آدم‌ها و فرهنگ' },
-    { key: 'system', label: 'سیستم و فرایند' },
-    { key: 'market', label: 'فروش و بازار' }
+    { key: 'all', label: t('mistakesLessons.categories.all') },
+    { key: 'view', label: t('mistakesLessons.categories.view') },
+    { key: 'decision', label: t('mistakesLessons.categories.decision') },
+    { key: 'people', label: t('mistakesLessons.categories.people') },
+    { key: 'system', label: t('mistakesLessons.categories.system') },
+    { key: 'market', label: t('mistakesLessons.categories.market') }
   ];
 
-  const filteredItems = MISTAKES_AND_LESSONS.filter(item => {
+  const translatedItems = (t('mistakesLessons.items', { returnObjects: true }) as any[]) || [];
+
+  const filteredItems = translatedItems.filter(item => {
+    const itemCategory = CATEGORY_MAP[item.id];
     const matchesType = item.type === activeType;
-    const matchesTag = selectedTag === 'all' || item.category === selectedTag;
+    const matchesTag = selectedTag === 'all' || itemCategory === selectedTag;
     const matchesSearch = searchQuery === '' ||
-      item.title.includes(searchQuery) ||
-      item.description.includes(searchQuery);
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchesType && matchesTag && matchesSearch;
   });
@@ -46,13 +64,13 @@ export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 
             isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
           }`}>
             <BookOpen className="w-4 h-4 text-[#B87333]" />
-            <span>خلاصه فصل‌های ۳۹ و ۴۰ (جلد دوم)</span>
+            <span>{t('mistakesLessons.badge')}</span>
           </div>
           <h2 className={`text-3xl sm:text-4xl font-extrabold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-            تالار چهل اشتباه و <span className="text-[#B87333]">چهل درس ۴۰ ساله</span>
+            {t('mistakesLessons.title')}
           </h2>
           <p className={`text-sm sm:text-base leading-relaxed ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-            مجموعه‌ای نایاب از ۴۰ اشتباه بزرگ که نباید تکرار کنید و ۴۰ درس کلیدی حاصل ۴ دهه مدیریت علی‌اصغر حکیمیان.
+            {t('mistakesLessons.subtitle')}
           </p>
         </div>
 
@@ -72,7 +90,7 @@ export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 
               }`}
             >
               <AlertTriangle className="w-4 h-4" />
-              <span>چهل اشتباه بزرگ</span>
+              <span>{t('mistakesLessons.toggleMistakes')}</span>
             </button>
 
             <button
@@ -84,19 +102,19 @@ export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 
               }`}
             >
               <CheckCircle2 className="w-4 h-4" />
-              <span>چهل درس ۴۰ ساله</span>
+              <span>{t('mistakesLessons.toggleLessons')}</span>
             </button>
           </div>
 
           {/* Search Input Bar */}
           <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+            <Search className={`w-4 h-4 text-stone-400 absolute top-3.5 ${isPersian ? 'right-3.5' : 'left-3.5'}`} />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="جستجو در عنوان یا توضیحات..."
-              className={`w-full pr-10 pl-4 py-2.5 rounded-2xl border text-xs font-medium focus:outline-none ${
+              placeholder={t('mistakesLessons.searchPlaceholder')}
+              className={`w-full ${isPersian ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2.5 rounded-2xl border text-xs font-medium focus:outline-none ${
                 isLight
                   ? 'bg-white border-stone-300 text-stone-900 placeholder-stone-400 focus:border-[#B87333]'
                   : 'bg-[#1E2022] border-stone-800 text-[#FAF7F2] placeholder-stone-500 focus:border-[#B87333]'
@@ -152,7 +170,7 @@ export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 
                         ? 'bg-red-500/10 text-red-600 border border-red-300'
                         : 'bg-emerald-500/10 text-emerald-600 border border-emerald-300'
                     }`}>
-                      #{toPersianDigits(item.number)}
+                      #{isPersian ? toPersianDigits(item.number) : item.number}
                     </span>
                     <span className="text-xs font-bold text-stone-400">
                       {item.categoryLabel}
@@ -180,7 +198,7 @@ export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 
 
         {filteredItems.length === 0 && (
           <div className="text-center py-12 text-stone-400 text-sm">
-            موردی با این عبارت جستجو یا دسته‌بندی یافت نشد.
+            {t('mistakesLessons.noResults')}
           </div>
         )}
 
@@ -188,3 +206,4 @@ export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 
     </section>
   );
 };
+
