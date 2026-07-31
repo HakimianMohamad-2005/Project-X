@@ -169,7 +169,7 @@ export default function App() {
   const isLight = theme === 'light';
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 font-['Vazirmatn',sans-serif] selection:bg-[#B87333] selection:text-white antialiased ${
+    <div className={`min-h-screen w-full max-w-full overflow-x-hidden transition-colors duration-300 selection:bg-[#B87333] selection:text-white antialiased ${
       isLight ? 'bg-[#FAF8F5] text-stone-900' : 'bg-[#121314] text-[#FAF7F2]'
     }`}>
       

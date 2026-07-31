@@ -41,6 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     syncDocumentDirAndLang(targetLang);
   };
 
+  // All 9 navigation links directly in one list
   const navItems: { id: ActiveTab; key: string }[] = [
     { id: 'books', key: 'books' },
     { id: 'framework', key: 'framework' },
@@ -65,44 +66,44 @@ export const Navbar: React.FC<NavbarProps> = ({
         ? 'bg-[#FAF8F5]/90 border-stone-300 text-stone-900 shadow-sm' 
         : 'bg-[#121314]/90 border-stone-800 text-[#FAF7F2]'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-4">
+      <div className="w-full max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6">
+        <div className="flex items-center justify-between h-20 gap-2 xl:gap-3">
           
           {/* Logo & Brand */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3 shrink-0">
             <button
               onClick={() => handleSelectTab('books')}
-              className="flex items-center gap-3 text-right group focus:outline-none shrink-0"
+              className="flex items-center gap-1.5 sm:gap-2.5 text-start group focus:outline-none shrink-0"
             >
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#B87333] to-[#8B4513] p-0.5 shadow-lg shadow-[#B87333]/20 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 xl:w-10 xl:h-10 2xl:w-11 2xl:h-11 rounded-xl bg-gradient-to-br from-[#B87333] to-[#8B4513] p-0.5 shadow-lg shadow-[#B87333]/20 flex items-center justify-center shrink-0">
                 <div className={`w-full h-full rounded-[10px] flex items-center justify-center transition-colors ${
                   isLight ? 'bg-white group-hover:bg-amber-50' : 'bg-[#121314] group-hover:bg-[#1E2022]'
                 }`}>
-                  <span className="text-[#B87333] font-black text-xl tracking-tighter">{t('navbar.highlight')}</span>
+                  <span className="text-[#B87333] font-black text-base sm:text-lg xl:text-lg 2xl:text-xl tracking-tighter">{t('navbar.highlight')}</span>
                 </div>
               </div>
-              <div className="flex flex-col text-right ltr:text-left whitespace-nowrap shrink-0">
-                <span className={`font-extrabold text-lg sm:text-xl tracking-tight transition-colors ${
+              <div className="flex flex-col text-start whitespace-nowrap shrink-0">
+                <span className={`font-extrabold text-sm sm:text-base xl:text-base 2xl:text-lg tracking-tight transition-colors ${
                   isLight ? 'text-stone-900 group-hover:text-[#B87333]' : 'text-[#FAF7F2] group-hover:text-[#B87333]'
                 }`}>
                   {t('navbar.title')} <span className="text-[#B87333]">{t('navbar.highlight')}</span>
                 </span>
-                <span className={`text-[11px] font-medium leading-tight ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
+                <span className={`hidden 2xl:block text-[10px] sm:text-[11px] font-medium leading-tight ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
                   {t('navbar.subtitle')}
                 </span>
               </div>
             </button>
           </div>
 
-          {/* Center Navigation Tabs (Desktop) */}
-          <nav className="hidden xl:flex items-center gap-1 p-1.5 rounded-2xl bg-stone-500/10 border border-stone-500/20 text-xs font-semibold shrink">
+          {/* Center Navigation Tabs (Desktop - All 9 items visible directly without scroll/clipping) */}
+          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1 p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 text-[11px] 2xl:text-xs font-semibold shrink-0">
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleSelectTab(item.id)}
-                  className={`relative px-2.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap ${
+                  className={`relative px-1.5 py-1 2xl:px-2.5 2xl:py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap shrink-0 ${
                     isActive
                       ? isLight
                         ? 'bg-white text-[#B87333] font-bold shadow-md'
@@ -116,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {isActive && (
                     <motion.div
                       layoutId="activeTabIndicator"
-                      className="absolute -bottom-1 left-2.5 right-2.5 h-0.5 bg-[#B87333] rounded-full"
+                      className="absolute -bottom-1 start-1.5 end-1.5 h-0.5 bg-[#B87333] rounded-full"
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -125,22 +126,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Left Action Controls */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          {/* Action Controls */}
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0 flex-shrink-0">
             
             {/* Language Switcher Button (/ vs /en) */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleLanguageSwitch}
-              className={`px-3 py-2 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+              className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1 shrink-0 flex-shrink-0 ${
                 isLight
                   ? 'bg-amber-50 hover:bg-amber-100 text-stone-900 border-amber-200'
                   : 'bg-stone-800 hover:bg-stone-700 text-[#FAF7F2] border-stone-700'
               }`}
               title={isEn ? t('navbar.langTitle', 'Switch language to Persian') : t('navbar.langTitle', 'تغییر زبان به انگلیسی')}
             >
-              <Globe className="w-4 h-4 text-[#B87333]" />
+              <Globe className="w-3.5 h-3.5 text-[#B87333]" />
               <span>{t('navbar.langSwitch')}</span>
             </motion.button>
 
@@ -149,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onToggleTheme}
-              className={`p-2.5 rounded-xl border transition-all flex items-center justify-center ${
+              className={`p-1.5 sm:p-2 rounded-xl border transition-all flex items-center justify-center shrink-0 flex-shrink-0 ${
                 isLight 
                   ? 'bg-amber-100/80 border-amber-300 text-amber-800 hover:bg-amber-200' 
                   : 'bg-stone-800/80 border-stone-700 text-amber-400 hover:bg-stone-700'
@@ -168,13 +169,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenSamplePdf}
-              className={`hidden lg:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
+              className={`hidden 2xl:flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] 2xl:text-xs font-semibold border transition-all shrink-0 flex-shrink-0 ${
                 isLight
                   ? 'bg-stone-100 hover:bg-stone-200 text-stone-800 border-stone-300'
                   : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border-stone-700/60'
               }`}
             >
-              <FileText className="w-4 h-4 text-[#B87333]" />
+              <FileText className="w-3.5 h-3.5 text-[#B87333]" />
               <span>{t('navbar.samplePdfBtn')}</span>
             </motion.button>
 
@@ -183,13 +184,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenTracking}
-              className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
+              className={`hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] 2xl:text-xs font-semibold border transition-all shrink-0 flex-shrink-0 ${
                 isLight
                   ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300'
                   : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border-stone-700/60'
               }`}
             >
-              <Truck className="w-4 h-4 text-emerald-500" />
+              <Truck className="w-3.5 h-3.5 text-emerald-500" />
               <span>{t('navbar.orderTrackingBtn')}</span>
             </motion.button>
 
@@ -198,16 +199,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenCart}
-              className={`relative flex items-center justify-center p-2.5 rounded-xl border transition-all ${
+              className={`relative flex items-center justify-center p-1.5 sm:p-2 rounded-xl border transition-all shrink-0 flex-shrink-0 ${
                 isLight
                   ? 'bg-white hover:bg-stone-100 text-stone-900 border-stone-300 shadow-sm'
                   : 'bg-[#1E2022] hover:bg-stone-800 text-[#FAF7F2] border-stone-700/80'
               }`}
               aria-label={t('navbar.cartTooltip')}
             >
-              <ShoppingBag className="w-5 h-5 text-[#B87333]" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#B87333]" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#B87333] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
+                <span className="absolute -top-2 -end-2 bg-[#B87333] text-white text-[10px] sm:text-[11px] font-bold w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
                   {isEn ? cartCount : toPersianDigits(cartCount)}
                 </span>
               )}
@@ -216,11 +217,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Mobile Hamburger Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`xl:hidden p-2 rounded-xl border ${
+              className={`xl:hidden p-1.5 sm:p-2 rounded-xl border shrink-0 flex-shrink-0 ${
                 isLight ? 'bg-stone-100 border-stone-300 text-stone-800' : 'bg-stone-800 border-stone-700 text-stone-200'
               }`}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
           </div>
@@ -270,7 +271,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleSelectTab(item.id)}
-                  className={`p-3 rounded-xl text-xs font-bold text-right ltr:text-left transition-colors ${
+                  className={`p-3 rounded-xl text-xs font-bold text-start transition-colors ${
                     isActive
                       ? 'bg-[#B87333] text-white shadow-md'
                       : isLight
@@ -288,3 +289,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+

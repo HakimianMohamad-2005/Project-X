@@ -53,7 +53,7 @@ export const Hero: React.FC<HeroProps> = ({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 space-y-6 text-right ltr:text-left"
+            className="lg:col-span-7 space-y-6 text-start"
           >
             
             {/* Top Milestone Badge */}
@@ -213,7 +213,7 @@ export const Hero: React.FC<HeroProps> = ({
                     className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#B87333] shrink-0 shadow-lg"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="space-y-1 text-right ltr:text-left">
+                  <div className="space-y-1 text-start">
                     <span className={`text-sm font-bold block ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
                       {t('hero.authorCardName')}
                     </span>
@@ -227,7 +227,7 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
                 <button
                   onClick={() => onTabChange('author')}
-                  className="text-xs text-[#B87333] hover:text-amber-400 font-bold underline shrink-0 transition-colors text-left sm:text-right ltr:text-right"
+                  className="text-xs text-[#B87333] hover:text-amber-400 font-bold underline shrink-0 transition-colors text-end"
                 >
                   {t('hero.authorResumeBtn')}
                 </button>
@@ -268,7 +268,7 @@ export const Hero: React.FC<HeroProps> = ({
           
           <button
             onClick={() => onTabChange('framework')}
-            className={`p-4 rounded-2xl border text-right ltr:text-left transition-all group ${
+            className={`p-4 rounded-2xl border text-start transition-all group ${
               isLight 
                 ? 'bg-white hover:bg-amber-50 border-stone-200 shadow-sm' 
                 : 'bg-[#1E2022] hover:bg-stone-800 border-stone-800'
@@ -285,7 +285,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           <button
             onClick={() => onTabChange('quiz')}
-            className={`p-4 rounded-2xl border text-right ltr:text-left transition-all group ${
+            className={`p-4 rounded-2xl border text-start transition-all group ${
               isLight 
                 ? 'bg-white hover:bg-amber-50 border-stone-200 shadow-sm' 
                 : 'bg-[#1E2022] hover:bg-stone-800 border-stone-800'
@@ -302,7 +302,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           <button
             onClick={() => onTabChange('case-studies')}
-            className={`p-4 rounded-2xl border text-right ltr:text-left transition-all group ${
+            className={`p-4 rounded-2xl border text-start transition-all group ${
               isLight 
                 ? 'bg-white hover:bg-amber-50 border-stone-200 shadow-sm' 
                 : 'bg-[#1E2022] hover:bg-stone-800 border-stone-800'
@@ -319,7 +319,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           <button
             onClick={() => onTabChange('mistakes-lessons')}
-            className={`p-4 rounded-2xl border text-right ltr:text-left transition-all group ${
+            className={`p-4 rounded-2xl border text-start transition-all group ${
               isLight 
                 ? 'bg-white hover:bg-amber-50 border-stone-200 shadow-sm' 
                 : 'bg-[#1E2022] hover:bg-stone-800 border-stone-800'

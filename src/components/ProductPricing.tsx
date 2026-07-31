@@ -140,7 +140,7 @@ export const ProductPricing: React.FC<ProductPricingProps> = ({ onAddToCart, the
             isLight ? 'bg-amber-50/40' : 'bg-gradient-to-b from-[#1E2022] via-[#242629] to-[#1E2022]'
           }`}>
             
-            <div className="absolute -top-3.5 right-6 ltr:left-6 ltr:right-auto bg-[#B87333] text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-lg flex items-center gap-1">
+            <div className="absolute -top-3.5 end-6 bg-[#B87333] text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-lg flex items-center gap-1">
               <Award className="w-3.5 h-3.5" />
               <span>{t('books.bundle.badge')}</span>
             </div>
