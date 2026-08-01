@@ -3,12 +3,14 @@ import { initReactI18next } from 'react-i18next';
 import faTranslation from './locales/fa.json';
 import enTranslation from './locales/en.json';
 import esTranslation from './locales/es.json';
+import deTranslation from './locales/de.json';
 
 // Detect initial language based on URL path
 const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+const isDePath = pathname === '/de' || pathname.startsWith('/de/');
 const isEsPath = pathname === '/es' || pathname.startsWith('/es/');
 const isEnPath = pathname === '/en' || pathname.startsWith('/en/');
-const initialLang = isEsPath ? 'es' : isEnPath ? 'en' : 'fa';
+const initialLang = isDePath ? 'de' : isEsPath ? 'es' : isEnPath ? 'en' : 'fa';
 
 // Helper function to sync document direction and lang attribute
 export const syncDocumentDirAndLang = (lang: string) => {
@@ -28,6 +30,7 @@ i18n
       fa: { translation: faTranslation },
       en: { translation: enTranslation },
       es: { translation: esTranslation },
+      de: { translation: deTranslation },
     },
     lng: initialLang,
     fallbackLng: 'fa',
