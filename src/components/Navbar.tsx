@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Center Navigation Tabs (Desktop - All 9 items visible directly without scroll/clipping) */}
           <nav className={`hidden xl:flex items-center p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 font-semibold shrink-0 ${
-            isDeOrEs ? 'gap-[2px]' : 'gap-0.5 2xl:gap-1 text-[11px] 2xl:text-xs'
+            isDe ? 'gap-1' : isEs ? 'gap-[2px]' : 'gap-0.5 2xl:gap-1 text-[11px] 2xl:text-xs'
           }`}>
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleSelectTab(item.id)}
                   className={`relative rounded-xl transition-all duration-200 whitespace-nowrap shrink-0 ${
                     isDe
-                      ? 'px-[4px] py-0.5 text-[10.5px] xl:text-[11px]'
+                      ? 'px-2 py-1 text-xs xl:text-[12.5px] font-medium'
                       : isEs 
                         ? 'px-[5px] py-0.5 text-[11px] xl:text-[11.5px]' 
                         : 'px-1.5 py-1 2xl:px-2.5 2xl:py-1.5'
@@ -147,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Action Controls */}
-          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDeOrEs ? 'gap-1 me-2 pe-1 sm:pe-2 xl:pe-3' : 'gap-1 sm:gap-2'}`}>
+          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDe ? 'gap-1 me-2 pe-2 sm:pe-3' : isEs ? 'gap-1 me-2 pe-1 sm:pe-2 xl:pe-3' : 'gap-1 sm:gap-2'}`}>
             
             {/* 4-Language Dropdown Switcher */}
             <div className="relative shrink-0 flex-shrink-0">
@@ -241,7 +241,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenSamplePdf}
-              className={`hidden 2xl:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
+              className={`${isDe ? 'hidden 3xl:flex' : 'hidden 2xl:flex'} items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
                 isDeOrEs 
                   ? 'px-2 py-1 text-[11px]' 
                   : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
