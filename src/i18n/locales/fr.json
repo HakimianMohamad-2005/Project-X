@@ -1,0 +1,754 @@
+{
+  "navbar": {
+    "title": "Orang-outan",
+    "highlight": "+3",
+    "subtitle": "Ouvrage en deux volumes par Ali Asghar Hakimian",
+    "links": {
+      "books": "Achat & Présentation",
+      "framework": "Framework 3+",
+      "quiz": "Test de Gestion",
+      "caseStudies": "Cas Industriels",
+      "cards": "Cartes de Décision",
+      "mistakesLessons": "40 Erreurs & Leçons",
+      "faq": "Foire aux Questions",
+      "b2b": "Commandes Entreprises",
+      "author": "À propos de l'Auteur",
+      "more": "Plus..."
+    },
+    "samplePdfBtn": "Extrait Gratuit",
+    "samplePdfMobile": "Extrait (36 pages)",
+    "orderTrackingBtn": "Suivi Colis",
+    "cartTooltip": "Panier",
+    "switchThemeDark": "Activer le mode sombre",
+    "switchThemeLight": "Activer le mode clair",
+    "langSwitch": "FR",
+    "langTitle": "Changer de langue"
+  },
+  "hero": {
+    "badge": "Basé sur 40 ans d'expérience de direction dans l'industrie manufacturière",
+    "title": "Orang-outan",
+    "highlight": "+3",
+    "subtitle": "De la Gestion Instinctive à une organisation qui apprend, corrige et dure",
+    "authorInfoPart1": "Écrit par ",
+    "authorName": "Ali Asghar Hakimian",
+    "authorInfoPart2": " • Une critique réaliste des modèles de gestion superficiels et des solutions pratiques pour usines, entrepôts, lignes de production et factures toxiques.",
+    "features": {
+      "f1": "Analyse de 7 cas industriels réels (poudre de sérum, PVC, roulements)",
+      "f2": "Formules contre l'hémorragie interne et les profits d'inflation",
+      "f3": "Chapitre spécial : 40 erreurs majeures & 40 leçons de 40 ans de gestion",
+      "f4": "Transition de la mémoire individuelle vers des systèmes documentés"
+    },
+    "ctaBundle": "Acheter la Collection Complète (Vol. 1 & 2)",
+    "discountBadge": "20% DE RÉDUCTION",
+    "ctaSamplePdf": "Télécharger l'Extrait Gratuit de 36 pages (PDF)",
+    "quickJumpQuiz": "Test en ligne : Gestion Instinctive (5 questions)",
+    "quickJumpCases": "Consulter les cas industriels réels",
+    "showcaseTitle": "Design des Couvertures & Nouvelle Édition",
+    "totalPagesBadge": "728 Pages",
+    "authorCardName": "Auteur : Ali Asghar Hakimian",
+    "authorCardDegree": "Doctorat en Gestion Stratégique des Entreprises",
+    "authorCardSpec": "Spécialiste en Logiciels & Comptabilité Industrielle",
+    "authorResumeBtn": "Biographie complète →",
+    "bundlePriceLabel": "Prix du Coffret 2 Volumes :",
+    "addBundleBtn": "Ajouter le Coffret au Panier",
+    "tabs": {
+      "tab2Badge": "Onglet 2",
+      "tab2Title": "Simulateur du Framework 3+ →",
+      "tab2Desc": "Observer, diagnostiquer et appliquer les leviers",
+      "tab3Badge": "Onglet 3",
+      "tab3Title": "Test en ligne de 5 questions →",
+      "tab3Desc": "Mesurer le degré de gestion instinctive",
+      "tab4Badge": "Onglet 4",
+      "tab4Title": "7 cas industriels réels →",
+      "tab4Desc": "Poudre de sérum, PVC, roulements et lait scolaire",
+      "tab6Badge": "Onglet 6",
+      "tab6Title": "40 erreurs & 40 leçons →",
+      "tab6Desc": "Archive complète de leçons pratiques de gestion"
+    }
+  },
+  "books": {
+    "sectionBadge": "Commande directe auprès de l'éditeur",
+    "sectionTitle": "Commander l'édition imprimée de",
+    "sectionTitleHighlight": "Orang-outan +3",
+    "sectionSubtitle": "Achetez le Volume 1 et le Volume 2 séparément ou optez pour le coffret complet avec dédicace personnalisée et signature d'Ali Asghar Hakimian.",
+    "addedToCart": "Ajouté au panier",
+    "vol1": {
+      "id": "vol-1",
+      "badge": "Volume Un",
+      "title": "De la Gestion Instinctive à la Prise de Conscience",
+      "subtitle": "Mise au jour des pièges décisionnels, du gaspillage invisible et diagnostic des comportements instinctifs",
+      "price": 380000,
+      "pageCount": 390,
+      "summary": "Le Volume Un analyse les modèles de comportement instinctif dans la direction d'entreprise et démontre comment les décisions impulsives génèrent des coûts cachés et des pertes de ressources.",
+      "keyTopicsTitle": "Sujets clés du Volume 1 :",
+      "keyTopics": [
+        "Détection des pièges de comportements instinctifs en gestion",
+        "Formule de calcul des coûts cachés des décisions",
+        "Analyse des comportements réactifs en situation de crise",
+        "Identification des points d'hémorragie interne de l'organisation"
+      ],
+      "ctaBtn": "Commander le Volume 1 (390 pages)"
+    },
+    "vol2": {
+      "id": "vol-2",
+      "badge": "Volume Deux",
+      "title": "Pérennité & Feuille de Route de Croissance +3",
+      "subtitle": "Outils, leviers triples, cartes de décision et architecture d'une organisation apprenante",
+      "price": 480000,
+      "pageCount": 510,
+      "summary": "Le Volume Deux offre des outils opérationnels, des leviers triples (observation de la réalité, décisions scientifiques, exécution systématique) et 40 cartes de décision pour affranchir l'entreprise de la dépendance humaine.",
+      "keyTopicsTitle": "Sujets clés du Volume 2 :",
+      "keyTopics": [
+        "Leviers triples pour la stabilité et la pérennité",
+        "Architecture d'organisations apprenantes et auto-correctrices",
+        "Quatorze cartes de décision interactives pour dirigeants",
+        "Galerie des 40 erreurs et 40 leçons de 40 ans d'expérience"
+      ],
+      "ctaBtn": "Commander le Volume 2 (510 pages)"
+    },
+    "bundle": {
+      "id": "bundle-full",
+      "badge": "Offre Spéciale • Choix le plus populaire",
+      "title": "Coffret Complet 2 Volumes (Pack Pérennité +3)",
+      "subtitle": "Comprend le Volume 1 et le Volume 2 dans une édition reliée de qualité",
+      "originalPrice": 860000,
+      "bundlePrice": 688000,
+      "totalPages": 900,
+      "totalPagesLabel": "Total de 900 pages",
+      "signatureTitle": "Dédicace personnelle & Signature d'Ali Asghar Hakimian",
+      "signatureLabel": "Nom du destinataire ou de l'organisation pour la dédicace :",
+      "signaturePlaceholder": "ex. Dr. Martin / Groupe Industriel",
+      "ctaBtn": "Commander le coffret complet avec 20% de réduction",
+      "addedSuccess": "Pack complet ajouté au panier",
+      "features": [
+        "20% de réduction spéciale par rapport à l'achat individuel",
+        "Signature manuscrite et dédicace personnalisée de l'auteur",
+        "Livraison express gratuite",
+        "Accès à toutes les cartes de décision et listes de contrôle de diagnostic"
+      ]
+    }
+  },
+  "author": {
+    "badge": "Plus de 40 ans d'expérience industrielle et de gestion",
+    "imageBadgeYears": "40+ ans d'expérience industrielle & de direction",
+    "imageName": "Ali Asghar Hakimian",
+    "imageTitle": "Directeur Industriel & Architecte de Systèmes d'Entreprise",
+    "sectionTitle": "À propos de l'Auteur",
+    "name": "Ali Asghar Hakimian",
+    "tag1": "Directeur Industriel & Expert en Optimisation des Systèmes",
+    "tag2": "Architecte de Systèmes d'Entreprise & ERP",
+    "tag3": "Spécialiste en Systèmes Financiers & Comptabilité Industrielle",
+    "degree": "Doctorat en Gestion Stratégique des Entreprises – Université de Téhéran",
+    "subtitle": "Du terrain de l'usine à l'architecture organisationnelle",
+    "quote": "« L'expérience ne se mesure pas au nombre d'années passées dans un fauteuil de direction, mais à la capacité de transformer les erreurs réelles en méthodes qui empêchent leur réapparition. »",
+    "bioParagraph1": "Depuis plus de quatre décennies, Ali Asghar Hakimian observe les organisations non seulement depuis les bureaux de direction, mais directement sur le terrain : des machines et de la production à la comptabilité de prix de revient, aux logiciels, aux ventes et aux décisions stratégiques.",
+    "bioParagraph2": "Il a fondé une entreprise de logiciels comptant près de 1 500 entreprises clientes, conseillé plus de 40 usines de fabrication et continue de diriger des transformations opérationnelles. Son expertise réside exactement là où convergent machines, capital humain, données, processus et décisions.",
+    "bioParagraph3": "« Orang-outan +3 » est le fruit de ce parcours : la transformation d'expériences de terrain, d'erreurs et de corrections en un framework pour une organisation qui apprend et développe sa mémoire organisationnelle.",
+    "card1Title": "Directeur Industriel",
+    "card1Desc": "Production, productivité, élimination des goulots d'étranglement, qualité et restructuration opérationnelle",
+    "card2Title": "Architecte de Systèmes d'Entreprise",
+    "card2Desc": "ERP, logiciels financiers, fabrication, ventes, entrepôt et flux de travail",
+    "card3Title": "Spécialiste en Comptabilité Financière & Industrielle",
+    "card3Desc": "Comptabilité analytique, prix de revient, contrôle financier et prise de décision éclairée",
+    "stats": {
+      "clientsCount": "1 500+",
+      "clientsLabel": "Près de 1 500 entreprises clientes",
+      "clientsSub": "Fondateur d'un éditeur de logiciels de gestion",
+      "factoriesCount": "40+",
+      "factoriesLabel": "Plus de 40 usines & sites industriels conseillés",
+      "factoriesSub": "Transformation opérationnelle",
+      "yearsCount": "40+ ans",
+      "yearsLabel": "Plus de quatre décennies d'expérience de terrain",
+      "yearsSub": "Du terrain de l'usine au conseil d'administration"
+    }
+  },
+  "faq": {
+    "headerBadge": "Guide complet avant l'achat",
+    "headerTitle": "Tout ce qu'il faut savoir avant de lire",
+    "headerSubtitle": "Réponses claires à vos questions sur le public cible, l'utilité pratique, les modes de livraison et la facturation d'entreprise pour l'ouvrage Orang-outan +3.",
+    "ctaSamplePdf": "Télécharger l'extrait gratuit de 36 pages",
+    "ctaBuyBooks": "Consulter & commander le livre imprimé",
+    "categoryAll": "Toutes les questions",
+    "categoryAudience": "Public cible & Prérequis",
+    "categoryContent": "Contenu & Chapitres",
+    "categoryPurchase": "Extrait & Dédicace",
+    "categoryShipping": "Livraison & Facturation",
+    "highlightsTitle": "Points clés :",
+    "bottomBoxTitle": "Vous avez d'autres questions ou souhaitez un conseil ?",
+    "bottomBoxSubtitle": "L'équipe d'assistance de l'éditeur Orang-outan +3 est à votre disposition.",
+    "supportPhoneBtn": "Ligne directe : +98 21 88990011",
+    "items": [
+      {
+        "id": "faq-1",
+        "category": "audience",
+        "question": "À qui s'adresse concrètement ce livre en deux volumes ?",
+        "answer": "« Orang-outan +3 » s'adresse aux directeurs généraux, propriétaires d'usines, fondateurs d'entreprises et directeurs techniques. Si vous sentez que toute la charge des décisions repose sur vos épaules ou que la performance chute dès que vous vous absentez, ce livre est votre feuille de route.",
+        "highlights": [
+          "Directeurs généraux et propriétaires d'entreprises industrielles et de services",
+          "Membres du conseil d'administration, directeurs financiers et commerciaux",
+          "Entrepreneurs cherchant la transition d'une gestion émotionnelle à une structure pérenne"
+        ]
+      },
+      {
+        "id": "faq-2",
+        "category": "content",
+        "question": "Un diplôme universitaire de type MBA est-il requis ?",
+        "answer": "Non ! Le langage est accessible, direct et exempt de jargon théorique inefficace. Tous les modèles, formules et cartes de décision sont issus d'une expérience réelle du terrain industriel.",
+        "highlights": [
+          "Langage clair sans surcharge théorique",
+          "Focus sur les défis réels du marché et des solutions éprouvées",
+          "Listes de contrôle et protocoles étape par étape"
+        ]
+      },
+      {
+        "id": "faq-3",
+        "category": "content",
+        "question": "Quelle est la différence principale entre le Volume 1 et le Volume 2 ?",
+        "answer": "Le Volume 1 (De la Gestion Instinctive à la Prise de Conscience) diagnostique les pièges de la gestion instinctive et révèle les causes des pertes cachées. Le Volume 2 (Pérennité & Feuille de Route +3) fournit les outils opérationnels, leviers triples, cartes de décision et mémoire organisationnelle.",
+        "highlights": [
+          "Volume 1 : Pathologie et détection des pièges de gestion instinctive",
+          "Volume 2 : Boîte à outils, formules anti-perte et structures pérennes"
+        ]
+      },
+      {
+        "id": "faq-4",
+        "category": "content",
+        "question": "En quoi ce livre se distingue-t-il des ouvrages occidentaux de gestion ?",
+        "answer": "La plupart des livres de management sont des traductions d'ouvrages occidentaux qui ignorent les conditions locales de marché, l'inflation élevée et les spécificités culturelles. Orang-outan +3 est directement issu de 40 ans de pratique industrielle réelle.",
+        "highlights": [
+          "Adapté à l'inflation et aux marchés volatils",
+          "Analyse approfondie de la culture d'entreprise et des comportements",
+          "Contient des études de cas réelles de l'industrie manufacturière"
+        ]
+      },
+      {
+        "id": "faq-5",
+        "category": "purchase",
+        "question": "Puis-je lire un extrait avant de commander ?",
+        "answer": "Oui ! Vous pouvez télécharger gratuitement un extrait PDF de 36 pages contenant des chapitres clés des deux volumes.",
+        "highlights": [
+          "Accès immédiat à un extrait PDF de 36 pages",
+          "Entièrement gratuit"
+        ]
+      },
+      {
+        "id": "faq-6",
+        "category": "purchase",
+        "question": "Puis-je demander une dédicace et une signature personnalisées ?",
+        "answer": "Oui, lors de l'ajout du coffret au panier, vous pouvez cocher l'option dédicace et saisir le nom du destinataire.",
+        "highlights": [
+          "Signature manuscrite de l'auteur sur la page de garde",
+          "Idéal comme cadeau de prestige pour dirigeants et partenaires"
+        ]
+      },
+      {
+        "id": "faq-7",
+        "category": "shipping",
+        "question": "Quels sont les délais et modalités de livraison ?",
+        "answer": "Toutes les commandes sont emballées et expédiées par transporteur express dans un délai de 24 heures ouvrées. Le numéro de suivi est transmis par SMS.",
+        "highlights": [
+          "Livraison express rapide",
+          "Livraison gratuite pour le coffret complet",
+          "Suivi en ligne immédiat"
+        ]
+      },
+      {
+        "id": "faq-8",
+        "category": "shipping",
+        "question": "Les commandes groupées d'entreprises et factures officielles sont-elles possibles ?",
+        "answer": "Oui ! Pour les entreprises et usines commandant plusieurs coffrets, nous émettons des factures officielles. Des sessions de conseil avec l'auteur peuvent également être organisées.",
+        "highlights": [
+          "Émission de factures officielles d'entreprise",
+          "Remises dégressives à partir de 5 coffrets",
+          "Possibilité de planifier des rencontres avec l'auteur"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "title": "Orang-outan",
+    "highlight": "+3",
+    "desc": "L'ouvrage en deux volumes « De la Gestion Instinctive à une organisation qui apprend, corrige et dure » par Ali Asghar Hakimian.",
+    "domain": "orangutanplus3.com",
+    "navSectionsTitle": "Rubriques du Site",
+    "navToolsTitle": "Outils & Services",
+    "navSupportTitle": "Support & Commandes",
+    "navSupportText": "Livraison express rapide. Factures officielles d'entreprise disponibles pour commandes groupées.",
+    "supportPhone": "Ligne Support : +98 21 88990011",
+    "badges": {
+      "shipping": "Livraison Express Rapide",
+      "authenticity": "Édition imprimée originale garantie",
+      "invoice": "Facture officielle d'entreprise disponible"
+    },
+    "links": {
+      "books": "Présentation des Livres",
+      "framework": "Simulateur Modèle 3+",
+      "caseStudies": "Cas Industriels Réels",
+      "quiz": "Test de Gestion en Ligne",
+      "cards": "Cartes de Décision",
+      "mistakesLessons": "40 Erreurs & Leçons",
+      "faq": "Foire aux Questions",
+      "b2b": "Commandes Entreprises",
+      "author": "À propos d'Ali Asghar Hakimian"
+    },
+    "copyright": "Tous droits réservés sur cette plateforme et le contenu des livres par Ali Asghar Hakimian (orangutanplus3.com).",
+    "devInfo": "Conçu selon les normes de gestion industrielle d'entreprise."
+  },
+  "framework": {
+    "badge": "Modèle conceptuel d'« Orang-outan +3 »",
+    "title": "Simulateur Interactif du Framework 3+",
+    "subtitle": "La formule en 3 étapes d'Ali Asghar Hakimian pour sauver les organisations de la gestion instinctive, des erreurs répétées et de la dépendance humaine.",
+    "stepLabel": "Étape {{num}}",
+    "aftershockLabel": "+1 Effet Secondaire",
+    "orangutanTitle": "Gestion Instinctive (Mode Orang-outan)",
+    "plus3Title": "Approche Systémique 3+ (Ali Asghar Hakimian)",
+    "bottomLabel": "Application pratique :",
+    "bottomText": "Toutes les phases du Framework 3+ avec formules et listes de contrôle sont détaillées dans le Volume 1 et le Volume 2.",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Observation de la réalité sans filtre",
+        "subtitle": "Regard direct sur le terrain de l'usine au lieu de rapports embellis",
+        "description": "De nombreux dirigeants observent leur entreprise uniquement depuis leur bureau. Les rapports financiers arrivent souvent en retard ou retouchés. À l'Étape 1, les dirigeants apprennent à analyser des données en direct directement dans les ateliers et les entrepôts.",
+        "orangutanDiff": "En mode instinctif, le manager réagit avec émotion et rejet de responsabilité sans données.",
+        "plus3Diff": "Dans le Framework 3+, le dirigeant identifie les causes réelles sur le terrain à l'aide de données.",
+        "tag": "Étape 1 • Observation"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Intervention sur le point de levier",
+        "subtitle": "Focalisation sur le goulot d'étranglement principal (Théorie des Contraintes - TOC)",
+        "description": "Mettre la pression sur tous les services simultanément épuise l'organisation. Le point de levier est le goulot d'étranglement où une amélioration de 10% double la capacité globale.",
+        "orangutanDiff": "En mode instinctif, le manager met la pression sur tous les départements et surcharge les équipes productives.",
+        "plus3Diff": "Dans le Framework 3+, toutes les ressources sont concentrées pour éliminer le goulot d'étranglement réel.",
+        "tag": "Étape 2 • Focalisation"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Ancrage dans la mémoire organisationnelle",
+        "subtitle": "Transformation des solutions en fiches de contrôle, normes et formations",
+        "description": "Si une solution s'évapore au départ d'un collaborateur clé, ce n'était pas une solution. L'ancrage consiste à créer des fiches de contrôle, affiner les formules de stock et bâtir une mémoire organisationnelle.",
+        "orangutanDiff": "En mode instinctif, le savoir et les processus s'en vont lorsqu'un collaborateur clé quitte l'entreprise.",
+        "plus3Diff": "Dans le Framework 3+, la connaissance est ancrée dans les processus et l'organisation reste apprenante.",
+        "tag": "Étape 3 • Ancrage"
+      },
+      {
+        "stepNumber": 4,
+        "title": "+ Effet Secondaire Positif (+1)",
+        "subtitle": "Effets positifs en cascade d'une décision correcte",
+        "description": "Lorsque le point de levier est corrigé, des ondes positives se propagent : le moral augmente, le gaspillage diminue, l'hémorragie interne s'arrête et de vrais profits émergent.",
+        "orangutanDiff": "En mode instinctif, des décisions hâtives créent des effets secondaires négatifs et de nouvelles crises.",
+        "plus3Diff": "Dans le Framework 3+, une correction structurelle déclenche une vague de création de valeur.",
+        "tag": "Effets Secondaires des Décisions"
+      }
+    ]
+  },
+  "quiz": {
+    "badge": "Auto-évaluation pour dirigeants",
+    "title": "Test : Gestion Instinctive",
+    "subtitle": "Répondez à 5 scénarios de gestion réels pour évaluer votre degré de gestion instinctive.",
+    "progressText": "Question {{num}} sur {{total}}",
+    "chapterRefPrefix": "Référence du livre :",
+    "prevBtn": "Précédent",
+    "nextBtn": "Question suivante",
+    "viewResultsBtn": "Afficher les résultats",
+    "retakeBtn": "Refaire le test",
+    "orderBundleBtn": "Commander le coffret 2 volumes avec réduction",
+    "resultScoreTitle": "Votre degré de systématisation : {{percentage}}%",
+    "resultAnalysisTitle": "Analyse du comportement organisationnel :",
+    "resultSolutionTitle": "Solution recommandée par Ali Asghar Hakimian :",
+    "tiers": {
+      "t1": {
+        "title": "Mode Orang-outan marqué (Gestion émotionnelle & instinctive)",
+        "description": "Votre organisation subit de la pression mais peine à identifier les causes. Les décisions reposent sur l'intuition et la mémoire personnelle.",
+        "recommendation": "Lecture indispensable : Volume 1 (Chapitres 1 à 4 : Observation de la réalité sans filtre)."
+      },
+      "t2": {
+        "title": "Gestion instinctive fluctuante (Partiellement systémique)",
+        "description": "Des formulaires existent, mais le départ d'une personne clé entraîne des dysfonctionnements. Les bénéfices s'échappent par des failles dans les stocks.",
+        "recommendation": "Étudiez le Volume 1 & 2 (Codage des stocks, élimination des factures toxiques)."
+      },
+      "t3": {
+        "title": "En route vers la systématisation 3+ (Organisation en croissance)",
+        "description": "La plupart des processus sont transparents. Pour un succès durable, tous les flux doivent être traduits en listes de contrôle et formations.",
+        "recommendation": "Étudiez le Volume 2 (Chapitres 39 & 40 : Galerie des 40 erreurs et 40 leçons)."
+      },
+      "t4": {
+        "title": "Organisation 3+ auto-apprenante & pérenne (Excellente)",
+        "description": "Félicitations ! Votre organisation dispose d'une mémoire organisationnelle, utilise des données en direct et fonctionne indépendamment de la présence du patron.",
+        "recommendation": "Utilisez le Volume 2 pour maintenir l'excellence."
+      }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "question": "Comment réagit la direction en cas de retard de production ?",
+        "chapterRef": "Volume 1 • Chap. 1 & 2 (Mode Orang-outan)",
+        "options": [
+          { "text": "Convocation d'une réunion de crise, haussement de ton et blâme des équipes.", "feedback": "Comportement instinctif : Réaction émotionnelle sans analyse de données." },
+          { "text": "Imposition d'heures supplémentaires à tous les services sans vérifier la cause.", "feedback": "Une pression uniforme épuise les équipes productives." },
+          { "text": "Descente directe dans l'atelier, vérification du goulot d'étranglement et des entrées de stock.", "feedback": "Observation de la réalité sans filtre (Étape 1 du Framework 3+)." }
+        ]
+      },
+      {
+        "id": 2,
+        "question": "Comment sont gérées les données de stock et de commandes clients ?",
+        "chapterRef": "Volume 1 • Chap. 3 (Audit du stock de roulements)",
+        "options": [
+          { "text": "Principalement dans la tête du chef magasinier ou sur des notes manuscrites.", "feedback": "Dépendance dangereuse à la mémoire individuelle sans mémoire organisationnelle." },
+          { "text": "Dans plusieurs fichiers Excel dont chaque manager possède une version différente.", "feedback": "Des données contradictoires créent la confusion." },
+          { "text": "Dans un système intégré codé avec adresses précises sur le plan de stockage.", "feedback": "Saisie transparente et mémoire organisationnelle (Framework 3+)." }
+        ]
+      },
+      {
+        "id": 3,
+        "question": "Quel est votre indicateur principal pour évaluer l'équipe commerciale ?",
+        "chapterRef": "Volume 2 • Chap. 3 (Factures toxiques & Chiffre d'affaires)",
+        "options": [
+          { "text": "Le nombre d'appels quotidiens et l'activité pure.", "feedback": "Récompenser l'agitation plutôt que le résultat conduit à un gaspillage de temps." },
+          { "text": "Le volume total facturé, même avec des délais de paiement incertains.", "feedback": "Génération de factures toxiques sans rentrée d'argent réelle." },
+          { "text": "Les encaissements effectifs sur le compte bancaire et les réarmements de commandes.", "feedback": "Indicateur orienté résultat assurant la trésorerie (Framework 3+)." }
+        ]
+      },
+      {
+        "id": 4,
+        "question": "Que se passe-t-il lorsqu'une personne clé démissionne ?",
+        "chapterRef": "Volume 1 • Chap. 6 (Le dirigeant comme formateur)",
+        "options": [
+          { "text": "Paralysie du service et chantage salarial pour retenir le collaborateur.", "feedback": "Vulnérabilité de l'organisation par manque de standards." },
+          { "text": "Recrutement précipité et des mois d'erreurs coûteuses.", "feedback": "Absence de transfert de connaissances systématique." },
+          { "text": "Sérénité relative car tous les processus disposent de listes de contrôle et de fiches explicatives.", "feedback": "Organisation apprenante selon le Framework 3+." }
+        ]
+      },
+      {
+        "id": 5,
+        "question": "Comment est calculé le bénéfice annuel de votre entreprise ?",
+        "chapterRef": "Volume 2 • Chap. 4 (Profit et inflation)",
+        "options": [
+          { "text": "Sur le solde bancaire en fin d'année sans tenir compte des coûts de réapprovisionnement.", "feedback": "Illusion dangereuse en période d'inflation." },
+          { "text": "Selon la comptabilité classique qui prend la réévaluation d'actifs pour du profit.", "feedback": "Confusion entre plus-value d'actifs et résultat opérationnel." },
+          { "text": "Séparation stricte entre plus-values d'évaluation et résultat net opérationnel.", "feedback": "Intelligence financière préservant la capacité de réapprovisionnement (Framework 3+)." }
+        ]
+      }
+    ]
+  },
+  "caseStudies": {
+    "badge": "Expérience de terrain issue de 40 ans d'industrie",
+    "title": "Archive des Études de Cas Industriels",
+    "subtitle": "Cas documentés tels que l'aiguille de vapeur, les 68 ans de stock de roulements, les fuites de PVC et les factures toxiques.",
+    "problemLabel": "Problématique :",
+    "keyMetricLabel": "Résultat clé :",
+    "viewCaseBtn": "Étude de cas complète",
+    "modalProblemTitle": "1. Problématique & Crise :",
+    "modalLeverTitle": "2. Intervention sur le point de levier (3+) :",
+    "modalResultTitle": "3. Résultat opérationnel & financier :",
+    "closeModalBtn": "Fermer la fenêtre",
+    "categories": {
+      "all": "Tous les cas",
+      "production": "Production & Industrie",
+      "finance": "Finance & Stocks",
+      "sales": "Ventes & Marché",
+      "ai": "IA & Technologie"
+    },
+    "items": [
+      {
+        "id": "case-steam-needle",
+        "title": "Aiguille de vapeur & Poudre de sérum",
+        "subtitle": "Augmentation de la capacité d'évaporation de 2,5 à 6,135 tonnes/heure",
+        "categoryLabel": "Production & Industrie",
+        "volumeRef": "Volume 2 • Chap. 1",
+        "problem": "L'usine de poudre de sérum stagnais à 2,5 t/h. Tout le monde accusait la chaudière.",
+        "leverIntervention": "Mise en lumière de l'impact de l'altitude (2 143 m) sur les points d'ébullition, ajustement des tours de refroidissement et recalibrage de l'aiguille de vapeur.",
+        "results": "Capacité multipliée par 2,4 à 6,135 t/h sans investissements matériels en millions.",
+        "keyMetric": "+145% de capacité",
+        "quote": "« Le problème n'était pas la chaudière à plusieurs millions, mais le réglage d'une simple aiguille. »"
+      },
+      {
+        "id": "case-pvc-leak",
+        "title": "Fuite de 8 tonnes de PVC & Hémorragie interne",
+        "subtitle": "Détection d'une perte silencieuse de matière première dans l'entrepôt",
+        "categoryLabel": "Finance & Stocks",
+        "volumeRef": "Volume 2 • Chap. 2",
+        "problem": "Lors de l'inventaire annuel, 8 tonnes de PVC manquaient malgré des documents conformes.",
+        "leverIntervention": "Rapprochement des formules standards avec les bilans de rejets et pesées réelles sur balance.",
+        "results": "Arrêt des pertes annuelles et colmatage des points de fuite par suivi en temps réel.",
+        "keyMetric": "8 t de fuites stoppées",
+        "quote": "« L'hémorragie interne de l'organisation est insidieuse car elle affaiblit l'entreprise à bas bruit. »"
+      },
+      {
+        "id": "case-bearing-68y",
+        "title": "Audit du stock de roulements de 68 ans",
+        "subtitle": "Surmonter la dépendance à la mémoire individuelle",
+        "categoryLabel": "Finance & Stocks",
+        "volumeRef": "Volume 1 • Chap. 3",
+        "problem": "Une entreprise de 68 ans possédant des milliers de pièces enregistrées uniquement dans la tête du magasinier.",
+        "leverIntervention": "Mise en place d'audits ouverts, d'un codage unique des pièces et d'adresses d'alvéoles 3D.",
+        "results": "Baisse drastique des arrêts machines et libération de la dépendance humaine.",
+        "keyMetric": "100% pièces codées",
+        "quote": "« Si la mémoire organisationnelle réside dans la tête d'une seule personne, l'entreprise frôle la paralysie pendant ses vacances. »"
+      },
+      {
+        "id": "case-milk-4am",
+        "title": "Enregistrement du lait brut à 4 heures du matin",
+        "subtitle": "La règle : D'abord enregistrer, ensuite livrer",
+        "categoryLabel": "Production & Industrie",
+        "volumeRef": "Volume 1 & 2",
+        "problem": "Les livraisons verbales de lait à 4 heures du matin provoquaient des écarts constants.",
+        "leverIntervention": "Adoption de la règle stricte : 'Saisir numériquement/par écrit d'abord, livrer ensuite' – même à 4h du matin.",
+        "results": "Élimination totale des écarts de quantité et transparence des décomptes.",
+        "keyMetric": "0% d'écart",
+        "quote": "« La discipline d'un système se mesure à 4 heures du matin dans l'atelier. »"
+      },
+      {
+        "id": "case-kabab-soda",
+        "title": "Faux profits et illusion d'inflation",
+        "subtitle": "Distinction entre résultat opérationnel et plus-value d'actifs",
+        "categoryLabel": "Ventes & Marché",
+        "volumeRef": "Volume 2 • Chap. 4",
+        "problem": "La direction fêtait des bénéfices qui ne provenaient que de la hausse de valeur des stocks sous inflation.",
+        "leverIntervention": "Séparation des plus-values latentes et de la marge opérationnelle, révision de la politique de remise.",
+        "results": "Protection du pouvoir de réapprovisionnement en matières premières sous forte inflation.",
+        "keyMetric": "Clarté du vrai profit",
+        "quote": "« Si votre profit est inférieur à l'inflation des matières premières, vous consommez le capital de l'entreprise. »"
+      },
+      {
+        "id": "case-sales-toxic",
+        "title": "Équipe commerciale & Factures toxiques",
+        "subtitle": "Critique de la rémunération basée sur la seule agitation",
+        "categoryLabel": "Ventes & Marché",
+        "volumeRef": "Volume 2 • Chap. 3",
+        "problem": "Une équipe commerciale de 24 personnes accumulait les appels mais laissait des créances irrécouvrables.",
+        "leverIntervention": "Passage des commissions à 'l'encaissement effectif sur le compte bancaire'.",
+        "results": "Triplement de la trésorerie et élimination des impayés.",
+        "keyMetric": "3x trésorerie",
+        "quote": "« Une vente n'est qu'une promesse coûteuse tant que l'argent n'est pas sur le compte. »"
+      },
+      {
+        "id": "case-school-milk",
+        "title": "Logistique du lait scolaire & Gestion de crise",
+        "subtitle": "Gestion de crise 24 heures avant l'événement",
+        "categoryLabel": "IA & Technologie",
+        "volumeRef": "Volume 1 & 2",
+        "problem": "Une menace de grève mettait en péril 10 tonnes de lait frais destiné aux écoles.",
+        "leverIntervention": "Élaboration anticipée de scénarios de distribution alternatifs avec des unités locales.",
+        "results": "100% du lait livré à temps sans aucune perte.",
+        "keyMetric": "0% de perte",
+        "quote": "« Gérer une crise signifie ouvrir le parapluie avant que la tempête ne se déchaîne. »"
+      }
+    ]
+  },
+  "decisionCards": {
+    "badge": "Outils opérationnels pour le bureau",
+    "title": "Cartes de Décision Interactives",
+    "subtitle": "4 outils opérationnels et fiches de contrôle pour évaluer les coûts cachés des décisions, détecter l'hémorragie interne et piloter les crises.",
+    "viewChecklistBtn": "Voir la fiche de contrôle",
+    "closeProtocolBtn": "Fermer le protocole",
+    "costCalc": {
+      "title": "Calculateur du coût réel des décisions :",
+      "directCostLabel": "Coûts directs du projet (Toman/Euro) :",
+      "totalEstimatedLabel": "Coût total estimé avec pertes cachées :",
+      "disclaimer": "*Inclut les coûts d'opportunité, erreurs d'apprentissage et effets secondaires."
+    },
+    "bleedAudit": {
+      "title": "Fiche de contrôle : Hémorragie interne de l'organisation :",
+      "countIdentified": "{{count}} points sur 6 identifiés"
+    },
+    "cards": [
+      {
+        "id": "card-cost-calc",
+        "title": "Carte de Décision : Vrai Prix",
+        "subtitle": "Évaluation de 4 coûts cachés avant de donner des instructions",
+        "categoryLabel": "Coûts Cachés",
+        "frontSummary": "Toute décision de gestion évaluée uniquement selon ses coûts financiers directs génère au moins 3 coûts secondaires cachés.",
+        "backProtocol": "Posez ces 4 questions avant de valider un projet :",
+        "actionableSteps": [
+          "1. Coût direct (Achat d'équipements & matières premières)",
+          "2. Coût d'opportunité (Quelles tâches essentielles prennent du retard ?)",
+          "3. Coût d'apprentissage & d'erreurs (Combien de temps avant la maîtrise ?)",
+          "4. Coût de correction des effets secondaires (Combien coûte le retour en arrière ?)"
+        ]
+      },
+      {
+        "id": "card-bleed-audit",
+        "title": "Carte Diagnostic : Hémorragie Interne",
+        "subtitle": "Identification de 6 points de perte silencieuse dans l'exploitation",
+        "categoryLabel": "Audits Financiers",
+        "frontSummary": "L'hémorragie interne de l'organisation est la fuite silencieuse de bénéfices invisible dans les rapports classiques.",
+        "backProtocol": "Liste de contrôle à 6 points pour éliminer les fuites :",
+        "actionableSteps": [
+          "1. Écart de poids au pont bascule à l'entrée du stock",
+          "2. Déchets de réglage et d'ajustement des machines",
+          "3. Micro-remises non enregistrées par les commerciaux",
+          "4. Pièces détachées non codées dans l'entrepôt",
+          "5. Documentation des micro-arrêt non planifiés en ligne",
+          "6. Coûts de retouche et de reprise de production"
+        ]
+      },
+      {
+        "id": "card-crisis-72h",
+        "title": "Carte de Crise 72 Heures",
+        "subtitle": "Protocole de priorisation lors d'une pénurie soudaine de ressources",
+        "categoryLabel": "Gestion de Crise",
+        "frontSummary": "Dans les 72 premières heures d'une crise, les réactions émotionnelles détruisent l'organisation. Ce protocole protège les lignes vitales.",
+        "backProtocol": "Mesures d'urgence des 72 premières heures par ordre de priorité :",
+        "actionableSteps": [
+          "Heures 1-12 : Gel des dépenses non critiques & audit des stocks.",
+          "Heures 12-24 : Communication directe avec clients & fournisseurs clés.",
+          "Heures 24-48 : Activation du Plan B (logistique alternative).",
+          "Heures 48-72 : Rédaction de fiches de contrôle pour éviter la récidive."
+        ]
+      },
+      {
+        "id": "card-key-person",
+        "title": "Carte Risque : Démission d'éléments clés",
+        "subtitle": "Évaluation de la dépendance humaine par rapport au système",
+        "categoryLabel": "Ressources Humaines",
+        "frontSummary": "Si la démission d'une personne peut paralyser un service, il n'y a pas de système – il y a dépendance humaine.",
+        "backProtocol": "Formule en 3 étapes pour sécuriser les départs :",
+        "actionableSteps": [
+          "1. Identification des 3 personnes détenant le plus de savoir non écrit.",
+          "2. Rédaction de listes de contrôle pour leurs 10 tâches principales.",
+          "3. Réalisation d'un test de congé de 7 jours pour tester le système."
+        ]
+      }
+    ]
+  },
+  "mistakesLessons": {
+    "badge": "Synthèse des chapitres 39 & 40 (Volume 2)",
+    "title": "Galerie des 40 Erreurs & 40 Leçons",
+    "subtitle": "Une collection de 40 erreurs majeures de gestion et 40 leçons essentielles issues de 4 décennies d'expérience de direction d'Ali Asghar Hakimian.",
+    "toggleMistakes": "40 Erreurs Majeures",
+    "toggleLessons": "40 Leçons Essentielles",
+    "searchPlaceholder": "Rechercher par titre ou description...",
+    "noResults": "Aucun résultat trouvé pour votre recherche.",
+    "categories": {
+      "all": "Toutes les catégories",
+      "view": "Observation de la réalité",
+      "decision": "Prise de décision",
+      "people": "Hommes & Culture",
+      "system": "Système & Processus",
+      "market": "Ventes & Marché"
+    },
+    "items": [
+      {
+        "id": "m-1",
+        "number": 1,
+        "type": "mistake",
+        "title": "Gérer uniquement depuis le bureau",
+        "description": "Faire aveuglément confiance aux rapports écrits embellis sans se rendre régulièrement dans l'atelier et échanger avec les opérateurs.",
+        "categoryLabel": "Observation de la réalité",
+        "bookRef": "Volume 2 • Chap. 39 (Erreur 1)"
+      },
+      {
+        "id": "m-2",
+        "number": 12,
+        "type": "mistake",
+        "title": "Acheter de nouvelles machines pour masquer les fautes de gestion",
+        "description": "Acquisition d'équipements coûteux alors que les machines existantes nécessitaient seulement un réglage à 5% de l'aiguille ou des tours.",
+        "categoryLabel": "Système & Processus",
+        "bookRef": "Volume 2 • Chap. 39 (Erreur 12)"
+      },
+      {
+        "id": "m-3",
+        "number": 24,
+        "type": "mistake",
+        "title": "Récompenser l'agitation au lieu des ventes réelles",
+        "description": "Féliciter un commercial effectuant 100 appels mais générant des créances impayées.",
+        "categoryLabel": "Ventes & Marché",
+        "bookRef": "Volume 2 • Chap. 39 (Erreur 24)"
+      },
+      {
+        "id": "m-4",
+        "number": 31,
+        "type": "mistake",
+        "title": "Céder au chantage de collaborateurs indispensables",
+        "description": "Maintien d'éléments destructeurs uniquement parce que le savoir des stocks ou de la production reste dans leur tête.",
+        "categoryLabel": "Hommes & Culture",
+        "bookRef": "Volume 2 • Chap. 39 (Erreur 31)"
+      },
+      {
+        "id": "m-5",
+        "number": 38,
+        "type": "mistake",
+        "title": "Confondre les gains d'inflation avec l'efficacité opérationnelle",
+        "description": "Célébrer 50% de hausse du chiffre d'affaires alors que le volume réel produit a chuté de 20%.",
+        "categoryLabel": "Prise de décision",
+        "bookRef": "Volume 2 • Chap. 39 (Erreur 38)"
+      },
+      {
+        "id": "l-1",
+        "number": 1,
+        "type": "lesson",
+        "title": "Enregistrer d'abord, livrer ensuite – sans exception",
+        "description": "La clarté financière et systémique commence à 4 heures du matin au magasin, pas dans la salle de réunion.",
+        "categoryLabel": "Système & Processus",
+        "bookRef": "Volume 2 • Chap. 40 (Leçon 1)"
+      },
+      {
+        "id": "l-2",
+        "number": 15,
+        "type": "lesson",
+        "title": "Identifier le goulot d'étranglement et aligner l'organisation",
+        "description": "Pousser tous les services épuise les forces productives. Agissez sur le levier réel.",
+        "categoryLabel": "Prise de décision",
+        "bookRef": "Volume 2 • Chap. 40 (Leçon 15)"
+      },
+      {
+        "id": "l-3",
+        "number": 27,
+        "type": "lesson",
+        "title": "Les dirigeants doivent bâtir des systèmes, pas un call center",
+        "description": "Si les équipes vous appellent pour le moindre détail, vous n'avez pas construit un système, mais un centre d'appels personnel.",
+        "categoryLabel": "Hommes & Culture",
+        "bookRef": "Volume 2 • Chap. 40 (Leçon 27)"
+      },
+      {
+        "id": "l-4",
+        "number": 33,
+        "type": "lesson",
+        "title": "Une vente ne vaut rien sans l'argent sur le compte",
+        "description": "Le meilleur client est celui qui règle ses factures à temps, pas celui qui passe d'immenses commandes à crédit.",
+        "categoryLabel": "Ventes & Marché",
+        "bookRef": "Volume 2 • Chap. 40 (Leçon 33)"
+      },
+      {
+        "id": "l-5",
+        "number": 40,
+        "type": "lesson",
+        "title": "L'expérience est bien plus que l'ancienneté",
+        "description": "L'expérience est le nombre d'erreurs identifiées dont vous empêchez efficacement la réapparition.",
+        "categoryLabel": "Observation de la réalité",
+        "bookRef": "Volume 2 • Chap. 40 (Leçon 40)"
+      }
+    ]
+  },
+  "b2b": {
+    "badge": "Commandes d'Entreprises & Cadeaux pour Dirigeants",
+    "title": "Commandes Groupées & Demandes de Conseils de Direction",
+    "subtitle": "Le coffret de livres « Orang-outan +3 » est un cadeau de prestige pour directeurs, responsables d'usines et partenaires clés.",
+    "features": {
+      "f1Title": "Facture Officielle d'Entreprise",
+      "f1Desc": "Émission de factures officielles pour déduction fiscale des frais de formation.",
+      "f2Title": "Session de Conseil avec le Dr. Ali Asghar Hakimian",
+      "f2Desc": "Rencontres en présentiel ou en ligne avec l'auteur pour les commandes à partir de 20 coffrets.",
+      "f3Title": "Tarifs Dégressifs pour Entreprises",
+      "f3Desc": "Remises quantitatives attractives à partir de 10 coffrets avec coffret cadeau inclus."
+    },
+    "formTitle": "Formulaire de demande de devis pour entreprises",
+    "companyNameLabel": "Nom de l'entreprise / Organisation :*",
+    "companyNamePlaceholder": "ex. Groupe Industriel / SAS",
+    "contactPersonLabel": "Nom du responsable / Directeur de formation :*",
+    "contactPersonPlaceholder": "ex. M. Dupont / Mme Laurent",
+    "phoneLabel": "Téléphone / Mobile :*",
+    "phonePlaceholder": "06... ou +33...",
+    "quantityLabel": "Quantité souhaitée (Minimum 10) :",
+    "taxInvoiceCheckbox": "Je souhaite une facture officielle d'entreprise.",
+    "meetingCheckbox": "Je souhaite planifier une rencontre de conseil avec le Dr. Ali Asghar Hakimian.",
+    "notesLabel": "Remarques complémentaires :",
+    "notesPlaceholder": "Préciser vos besoins ou contraintes de calendrier...",
+    "submitBtn": "Demander un devis entreprise",
+    "successTitle": "Votre demande a été transmise avec succès",
+    "successSubtitle": "Notre équipe commerciale vous contactera sous 2 heures ouvrées pour vous transmettre un devis officiel.",
+    "resetBtn": "Envoyer une autre demande"
+  }
+}

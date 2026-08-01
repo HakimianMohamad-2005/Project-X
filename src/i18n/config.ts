@@ -4,13 +4,15 @@ import faTranslation from './locales/fa.json';
 import enTranslation from './locales/en.json';
 import esTranslation from './locales/es.json';
 import deTranslation from './locales/de.json';
+import frTranslation from './locales/fr.json';
 
 // Detect initial language based on URL path
 const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+const isFrPath = pathname === '/fr' || pathname.startsWith('/fr/');
 const isDePath = pathname === '/de' || pathname.startsWith('/de/');
 const isEsPath = pathname === '/es' || pathname.startsWith('/es/');
 const isEnPath = pathname === '/en' || pathname.startsWith('/en/');
-const initialLang = isDePath ? 'de' : isEsPath ? 'es' : isEnPath ? 'en' : 'fa';
+const initialLang = isFrPath ? 'fr' : isDePath ? 'de' : isEsPath ? 'es' : isEnPath ? 'en' : 'fa';
 
 // Helper function to sync document direction and lang attribute
 export const syncDocumentDirAndLang = (lang: string) => {
@@ -31,6 +33,7 @@ i18n
       en: { translation: enTranslation },
       es: { translation: esTranslation },
       de: { translation: deTranslation },
+      fr: { translation: frTranslation },
     },
     lng: initialLang,
     fallbackLng: 'fa',
