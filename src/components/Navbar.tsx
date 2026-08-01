@@ -39,6 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const isLight = theme === 'light';
   const isFa = i18n.language === 'fa';
+  const isEs = i18n.language === 'es';
   const currentLangObj = languages.find((l) => l.code === i18n.language) || languages[0];
 
   const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es') => {
@@ -104,14 +105,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Center Navigation Tabs (Desktop - All 9 items visible directly without scroll/clipping) */}
-          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1 p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 text-[11px] 2xl:text-xs font-semibold shrink-0">
+          <nav className={`hidden xl:flex items-center p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 font-semibold shrink-0 ${
+            isEs ? 'gap-[2px]' : 'gap-0.5 2xl:gap-1 text-[11px] 2xl:text-xs'
+          }`}>
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleSelectTab(item.id)}
-                  className={`relative px-1.5 py-1 2xl:px-2.5 2xl:py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap shrink-0 ${
+                  className={`relative rounded-xl transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    isEs 
+                      ? 'px-[5px] py-0.5 text-[11px] xl:text-[11.5px]' 
+                      : 'px-1.5 py-1 2xl:px-2.5 2xl:py-1.5'
+                  } ${
                     isActive
                       ? isLight
                         ? 'bg-white text-[#B87333] font-bold shadow-md'
@@ -135,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Action Controls */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0 flex-shrink-0">
+          <div className={`flex items-center shrink-0 flex-shrink-0 ${isEs ? 'gap-1 me-2 pe-1 sm:pe-2 xl:pe-3' : 'gap-1 sm:gap-2'}`}>
             
             {/* 3-Language Dropdown Switcher */}
             <div className="relative shrink-0 flex-shrink-0">
@@ -143,7 +150,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 flex-shrink-0 ${
+                className={`rounded-xl border font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 flex-shrink-0 ${
+                  isEs 
+                    ? 'px-2 py-1 text-[11px]' 
+                    : 'px-2 py-1 sm:px-2.5 sm:py-1.5 text-[11px] sm:text-xs'
+                } ${
                   isLight
                     ? 'bg-amber-50 hover:bg-amber-100 text-stone-900 border-amber-200 shadow-sm'
                     : 'bg-stone-800 hover:bg-stone-700 text-[#FAF7F2] border-stone-700'
@@ -225,7 +236,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenSamplePdf}
-              className={`hidden 2xl:flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] 2xl:text-xs font-semibold border transition-all shrink-0 flex-shrink-0 ${
+              className={`hidden 2xl:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
+                isEs 
+                  ? 'px-2 py-1 text-[11px]' 
+                  : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
+              } ${
                 isLight
                   ? 'bg-stone-100 hover:bg-stone-200 text-stone-800 border-stone-300'
                   : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border-stone-700/60'
@@ -240,7 +255,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenTracking}
-              className={`hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] 2xl:text-xs font-semibold border transition-all shrink-0 flex-shrink-0 ${
+              className={`hidden lg:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
+                isEs 
+                  ? 'px-2 py-1 text-[11px]' 
+                  : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
+              } ${
                 isLight
                   ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300'
                   : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border-stone-700/60'
