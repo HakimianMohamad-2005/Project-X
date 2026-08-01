@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { syncDocumentDirAndLang } from './i18n/config';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { FrameworkExplorer } from './components/FrameworkExplorer';
@@ -22,8 +24,29 @@ import { motion, AnimatePresence } from 'motion/react';
 import { saveOrderToApi, fetchRecentOrdersFromApi } from './lib/api';
 
 export default function App() {
+  const { i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState<ActiveTab>('books');
   const [theme, setTheme] = useState<ThemeMode>('light');
+
+  // Handle popstate for / /en /es navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const pathname = window.location.pathname;
+      let targetLang = 'fa';
+      if (pathname === '/es' || pathname.startsWith('/es/')) {
+        targetLang = 'es';
+      } else if (pathname === '/en' || pathname.startsWith('/en/')) {
+        targetLang = 'en';
+      }
+      if (i18n.language !== targetLang) {
+        i18n.changeLanguage(targetLang);
+        syncDocumentDirAndLang(targetLang);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [i18n]);
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);

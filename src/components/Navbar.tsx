@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Menu, X, Sun, Moon, Truck, FileText, Globe } from 'lucide-react';
+import { ShoppingBag, Menu, X, Sun, Moon, Truck, FileText, Globe, ChevronDown, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ActiveTab, ThemeMode } from '../types';
 import { toPersianDigits } from '../utils/persian';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { syncDocumentDirAndLang } from '../i18n/config';
 
 interface NavbarProps {
@@ -17,6 +17,12 @@ interface NavbarProps {
   onOpenSamplePdf: () => void;
 }
 
+const languages = [
+  { code: 'fa', name: 'فارسی', label: 'FA', path: '/' },
+  { code: 'en', name: 'English', label: 'EN', path: '/en' },
+  { code: 'es', name: 'Español', label: 'ES', path: '/es' },
+];
+
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   onTabChange,
@@ -29,16 +35,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isLight = theme === 'light';
-  const isEn = i18n.language === 'en';
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
-  const handleLanguageSwitch = () => {
-    const targetLang = isEn ? 'fa' : 'en';
-    const targetPath = targetLang === 'en' ? '/en' : '/';
-    
+  const isLight = theme === 'light';
+  const isFa = i18n.language === 'fa';
+  const currentLangObj = languages.find((l) => l.code === i18n.language) || languages[0];
+
+  const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es') => {
+    const targetObj = languages.find((l) => l.code === targetLang) || languages[0];
     i18n.changeLanguage(targetLang);
-    window.history.pushState({}, '', targetPath);
+    window.history.pushState({}, '', targetObj.path);
     syncDocumentDirAndLang(targetLang);
+    setLangDropdownOpen(false);
   };
 
   // All 9 navigation links directly in one list
@@ -129,21 +137,69 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Action Controls */}
           <div className="flex items-center gap-1 sm:gap-2 shrink-0 flex-shrink-0">
             
-            {/* Language Switcher Button (/ vs /en) */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleLanguageSwitch}
-              className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1 shrink-0 flex-shrink-0 ${
-                isLight
-                  ? 'bg-amber-50 hover:bg-amber-100 text-stone-900 border-amber-200'
-                  : 'bg-stone-800 hover:bg-stone-700 text-[#FAF7F2] border-stone-700'
-              }`}
-              title={isEn ? t('navbar.langTitle', 'Switch language to Persian') : t('navbar.langTitle', 'تغییر زبان به انگلیسی')}
-            >
-              <Globe className="w-3.5 h-3.5 text-[#B87333]" />
-              <span>{t('navbar.langSwitch')}</span>
-            </motion.button>
+            {/* 3-Language Dropdown Switcher */}
+            <div className="relative shrink-0 flex-shrink-0">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 flex-shrink-0 ${
+                  isLight
+                    ? 'bg-amber-50 hover:bg-amber-100 text-stone-900 border-amber-200 shadow-sm'
+                    : 'bg-stone-800 hover:bg-stone-700 text-[#FAF7F2] border-stone-700'
+                }`}
+                title={t('navbar.langTitle', 'تغییر زبان / Language')}
+              >
+                <Globe className="w-3.5 h-3.5 text-[#B87333]" />
+                <span>{currentLangObj.label}</span>
+                <ChevronDown className={`w-3 h-3 text-stone-400 transition-transform duration-200 ${langDropdownOpen ? 'rotate-180' : ''}`} />
+              </motion.button>
+
+              <AnimatePresence>
+                {langDropdownOpen && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-40"
+                      onClick={() => setLangDropdownOpen(false)}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.15 }}
+                      className={`absolute end-0 mt-2 w-36 rounded-2xl p-1.5 border shadow-xl z-50 overflow-hidden ${
+                        isLight ? 'bg-white border-amber-200/80 text-stone-900' : 'bg-[#1E2022] border-stone-700 text-[#FAF7F2]'
+                      }`}
+                    >
+                      {languages.map((lang) => {
+                        const isSelected = i18n.language === lang.code;
+                        return (
+                          <button
+                            key={lang.code}
+                            onClick={() => changeLanguageTo(lang.code as 'fa' | 'en' | 'es')}
+                            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
+                              isSelected
+                                ? isLight
+                                  ? 'bg-amber-100/70 text-[#B87333]'
+                                  : 'bg-[#B87333]/20 text-[#B87333]'
+                                : isLight
+                                  ? 'hover:bg-stone-100 text-stone-700'
+                                  : 'hover:bg-stone-800 text-stone-300'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="font-extrabold">{lang.label}</span>
+                              <span className="text-[11px] opacity-80 font-normal">({lang.name})</span>
+                            </div>
+                            {isSelected && <Check className="w-3.5 h-3.5 text-[#B87333]" />}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Dark / Light Theme Toggle */}
             <motion.button
@@ -209,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#B87333]" />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -end-2 bg-[#B87333] text-white text-[10px] sm:text-[11px] font-bold w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
-                  {isEn ? cartCount : toPersianDigits(cartCount)}
+                  {isFa ? toPersianDigits(cartCount) : cartCount}
                 </span>
               )}
             </motion.button>
@@ -239,6 +295,36 @@ export const Navbar: React.FC<NavbarProps> = ({
             isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
           }`}
         >
+          {/* Mobile Language Switcher Bar */}
+          <div className={`p-2.5 rounded-xl border flex items-center justify-between gap-2 mb-2 ${
+            isLight ? 'bg-amber-50/70 border-amber-200' : 'bg-stone-900 border-stone-800'
+          }`}>
+            <div className="flex items-center gap-1.5 text-xs font-bold text-stone-700 dark:text-stone-300">
+              <Globe className="w-4 h-4 text-[#B87333]" />
+              <span>زبان / Language</span>
+            </div>
+            <div className="flex gap-1">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => {
+                    changeLanguageTo(lang.code as 'fa' | 'en' | 'es');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    i18n.language === lang.code
+                      ? 'bg-[#B87333] text-white shadow-sm'
+                      : isLight
+                        ? 'bg-white text-stone-700 hover:bg-stone-100 border border-stone-200'
+                        : 'bg-stone-800 text-stone-300 hover:bg-stone-700 border border-stone-700'
+                  }`}
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Quick Action Triggers in Mobile */}
           <div className="grid grid-cols-2 gap-2 mb-4 pb-4 border-b border-stone-500/20">
             <button

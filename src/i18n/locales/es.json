@@ -1,0 +1,754 @@
+{
+  "navbar": {
+    "title": "Orangután",
+    "highlight": "+3",
+    "subtitle": "Libro de dos volúmenes por Ali Asghar Hakimian",
+    "links": {
+      "books": "Descripción y Compra",
+      "framework": "Marco 3+",
+      "quiz": "Test de Gestión",
+      "caseStudies": "Casos Industriales",
+      "cards": "Tarjetas de Decisión",
+      "mistakesLessons": "40 Errores y Lecciones",
+      "faq": "Preguntas Frecuentes",
+      "b2b": "Pedidos Corporativos",
+      "author": "Sobre el Autor",
+      "more": "Más..."
+    },
+    "samplePdfBtn": "Muestra Gratuita",
+    "samplePdfMobile": "Descargar Muestra de 36p",
+    "orderTrackingBtn": "Rastreo de Pedido",
+    "cartTooltip": "Carrito de Compras",
+    "switchThemeDark": "Cambiar a Modo Oscuro",
+    "switchThemeLight": "Cambiar a Modo Claro",
+    "langSwitch": "ES",
+    "langTitle": "Cambiar idioma"
+  },
+  "hero": {
+    "badge": "Basado en 40 Años de Experiencia Directiva en Industrias de Manufactura",
+    "title": "Orangután",
+    "highlight": "+3",
+    "subtitle": "De la Gestión Instintiva a una Organización que Aprende, Corrige y Perdura",
+    "authorInfoPart1": "Escrito por ",
+    "authorName": "Ali Asghar Hakimian",
+    "authorInfoPart2": " • Una crítica realista a los modelos de gestión superficiales y soluciones prácticas para fábricas, almacenes, líneas de producción y facturas tóxicas.",
+    "features": {
+      "f1": "Análisis de 7 casos reales de la industria (Suero en polvo, PVC, Rodamientos)",
+      "f2": "Fórmulas para detener la hemorragia financiera de inventario y ganancias inflacionarias",
+      "f3": "Capítulo especial: 40 grandes errores y 40 lecciones de 40 años de gestión",
+      "f4": "Transición de decisiones basadas en memoria individual a sistemas documentados"
+    },
+    "ctaBundle": "Comprar Colección Completa (Vol. 1 y 2)",
+    "discountBadge": "20% DTO.",
+    "ctaSamplePdf": "Descargar Muestra Gratuita de 36 Páginas (PDF)",
+    "quickJumpQuiz": "Test Online de Gestión Instintiva (5 Preguntas)",
+    "quickJumpCases": "Ver Casos Reales de la Industria",
+    "showcaseTitle": "Muestra de Portadas y Nueva Edición",
+    "totalPagesBadge": "728 Páginas",
+    "authorCardName": "Autor: Ali Asghar Hakimian",
+    "authorCardDegree": "Doctorado en Gestión Estratégica",
+    "authorCardSpec": "Especialista en Software y Contabilidad Industrial",
+    "authorResumeBtn": "Biografía Completa →",
+    "bundlePriceLabel": "Precio de la Colección de 2 Volúmenes:",
+    "addBundleBtn": "Añadir Colección al Carrito",
+    "tabs": {
+      "tab2Badge": "Pestaña 2",
+      "tab2Title": "Simulador del Marco 3+ →",
+      "tab2Desc": "Observar, diagnosticar y aplicar palancas",
+      "tab3Badge": "Pestaña 3",
+      "tab3Title": "Test Online de 5 Preguntas →",
+      "tab3Desc": "Medir el nivel de instinto organizacional",
+      "tab4Badge": "Pestaña 4",
+      "tab4Title": "7 Casos Reales de la Industria →",
+      "tab4Desc": "Suero en polvo, PVC, Rodamientos y Leche escolar",
+      "tab6Badge": "Pestaña 6",
+      "tab6Title": "40 Errores y 40 Lecciones →",
+      "tab6Desc": "Archivo completo de lecciones de gestión"
+    }
+  },
+  "books": {
+    "sectionBadge": "Pedido Directo de la Editorial",
+    "sectionTitle": "Pedir Ediciones Físicas de",
+    "sectionTitleHighlight": "Orangután +3",
+    "sectionSubtitle": "Adquiera los Volúmenes 1 y 2 por separado o la colección completa con firma personalizada y dedicatoria del autor Ali Asghar Hakimian.",
+    "addedToCart": "Añadido al Carrito",
+    "vol1": {
+      "id": "vol-1",
+      "badge": "Volumen Uno",
+      "title": "De la Gestión Instintiva a la Autoconciencia",
+      "subtitle": "Descubriendo trampas de decisión, exponiendo desperdicios invisibles y diagnosticando la Gestión Instintiva",
+      "price": 380000,
+      "pageCount": 390,
+      "summary": "El Volumen Uno analiza los comportamientos de la gestión instintiva, mostrando a los líderes cómo las decisiones impulsivas sin metodología generan costos ocultos y pérdidas de recursos.",
+      "keyTopicsTitle": "Temas Clave del Volumen 1:",
+      "keyTopics": [
+        "Desenmascarando trampas de comportamiento instintivo en la gestión",
+        "Fórmula para calcular los costos invisibles de las decisiones",
+        "Análisis del comportamiento reactivo en situaciones de crisis",
+        "Identificación de puntos de hemorragia financiera en plantas industriales"
+      ],
+      "ctaBtn": "Pedir Volumen 1 (390 páginas)"
+    },
+    "vol2": {
+      "id": "vol-2",
+      "badge": "Volumen Dos",
+      "title": "Hoja de Ruta de Sostenibilidad y Crecimiento 3+",
+      "subtitle": "Herramientas, triples palancas, tarjetas de decisión y arquitectura de la organización que aprende",
+      "price": 480000,
+      "pageCount": 510,
+      "summary": "El Volumen Dos proporciona herramientas operativas, triples palancas (observar la realidad, tomar decisiones científicas, ejecución sistemática) y tarjetas de decisión para liberar a la organización de la dependencia personal.",
+      "keyTopicsTitle": "Temas Clave del Volumen 2:",
+      "keyTopics": [
+        "Triples palancas de estabilidad y longevidad",
+        "Arquitectura de organizaciones de aprendizaje autocorrectoras",
+        "Tarjetas de decisión gerenciales interactivas",
+        "Galería de 40 errores y 40 lecciones de 40 años"
+      ],
+      "ctaBtn": "Pedir Volumen 2 (510 páginas)"
+    },
+    "bundle": {
+      "id": "bundle-full",
+      "badge": "Ofert Especial • Más Popular",
+      "title": "Colección Completa de 2 Volúmenes (Paquete Sostenibilidad 3+)",
+      "subtitle": "Incluye el Volumen 1 y el Volumen 2 en encuadernación de lujo",
+      "originalPrice": 860000,
+      "bundlePrice": 688000,
+      "totalPages": 900,
+      "totalPagesLabel": "Total 900 Páginas",
+      "signatureTitle": "Firma Personalizada y Dedicatoria de Ali Asghar Hakimian",
+      "signatureLabel": "Nombre del Destinatario u Organización para la Firma:",
+      "signaturePlaceholder": "Ej. Dr. Alavi / Corporación Industrial",
+      "ctaBtn": "Pedir Colección Completa con 20% de Descuento",
+      "addedSuccess": "Paquete Completo Añadido al Carrito",
+      "features": [
+        "Descuento especial del 20% en comparación con la compra por separado",
+        "Firma manuscrita y dedicatoria personalizada del autor",
+        "Envío express gratuito a nivel nacional",
+        "Acceso a todas las tarjetas de decisión y listas de diagnóstico"
+      ]
+    }
+  },
+  "author": {
+    "badge": "40+ Años de Experiencia Industrial y Directiva",
+    "imageBadgeYears": "40+ Años de Experiencia Industrial y Directiva",
+    "imageName": "Ali Asghar Hakimian",
+    "imageTitle": "Director Industrial y Arquitecto de Sistemas Organizacionales",
+    "sectionTitle": "Sobre el Autor del Libro",
+    "name": "Ali Asghar Hakimian",
+    "tag1": "Director Industrial y Experto en Optimización de Sistemas",
+    "tag2": "Arquitecto de Sistemas Empresariales y ERP",
+    "tag3": "Especialista en Sistemas Financieros y Contabilidad Industrial",
+    "degree": "Doctorado en Gestión Estratégica – Universidad de Teherán",
+    "subtitle": "De la Planta Industrial a la Arquitectura Empresarial",
+    "quote": "“La experiencia no es solo el número de años que has gestionado; es la capacidad de transformar errores reales en métodos que eviten que el mismo fallo vuelva a repetirse.”",
+    "bioParagraph1": "Durante más de cuatro décadas, Ali Asghar Hakimian ha observado las organizaciones no solo desde la dirección ejecutiva, sino a pie de planta: desde la maquinaria y la producción hasta la contabilidad de costos, el software, las ventas, los recursos humanos y las decisiones directivas.",
+    "bioParagraph2": "Fundó una empresa de software empresarial que atiende a casi 1.500 empresas clientes, asesoró a más de 40 plantas de fabricación y continúa guiando transformaciones operativas. Su experiencia reside exactamente donde convergen la maquinaria, el capital humano, el capital financiero, los datos, los procesos y las decisiones.",
+    "bioParagraph3": "“Orangután 3+” es el fruto de este recorrido: convertir la experiencia de campo real, el ensayo, el error y la corrección en un marco conceptual para construir una organización con Memoria Organizacional que no repita errores a ciegas.",
+    "card1Title": "Director Industrial",
+    "card1Desc": "Producción, productividad, eliminación de cuellos de botella, calidad y reestructuración operativa",
+    "card2Title": "Arquitecto de Sistemas Empresariales",
+    "card2Desc": "ERP, software financiero, manufactura, ventas, inventario y flujos de trabajo",
+    "card3Title": "Especialista Financiero y de Contabilidad Industrial",
+    "card3Desc": "Contabilidad de costos, costo de mercancías vendidas, controles financieros y toma de decisiones",
+    "stats": {
+      "clientsCount": "1.500+",
+      "clientsLabel": "Casi 1.500 Empresas Clientes",
+      "clientsSub": "Fundador de Empresa de Software Empresarial",
+      "factoriesCount": "40+",
+      "factoriesLabel": "Asesoró a 40+ Fábricas e Instalaciones Industriales",
+      "factoriesSub": "Transformación Operativa",
+      "yearsCount": "40+ Años",
+      "yearsLabel": "Más de Cuatro Décadas de Experiencia de Campo",
+      "yearsSub": "Desde la Planta de Producción hasta el Consejo de Administración"
+    }
+  },
+  "faq": {
+    "headerBadge": "Guía Completa Pre-Compra",
+    "headerTitle": "Todo lo que Debe Saber Antes de Leer el Libro",
+    "headerSubtitle": "Respuestas claras a sus preguntas clave sobre el público objetivo, aplicaciones prácticas, métodos de envío y servicios posteriores a la compra del libro Orangután 3+.",
+    "ctaSamplePdf": "Descargar Muestra Gratuita PDF de 36 Páginas",
+    "ctaBuyBooks": "Ver y Comprar Libro Físico",
+    "categoryAll": "Todas las Preguntas",
+    "categoryAudience": "Público y Requisitos",
+    "categoryContent": "Contenido y Capítulos",
+    "categoryPurchase": "Muestra y Firma",
+    "categoryShipping": "Envío y Facturación",
+    "highlightsTitle": "Puntos Clave:",
+    "bottomBoxTitle": "¿Tiene más preguntas o necesita asesoramiento antes de comprar?",
+    "bottomBoxSubtitle": "El equipo de soporte de la editorial Orangután 3+ está listo para ayudarle.",
+    "supportPhoneBtn": "Línea de Atención: +98 21 88990011",
+    "items": [
+      {
+        "id": "faq-1",
+        "category": "audience",
+        "question": "¿Para quién está escrito específicamente este libro de dos volúmenes?",
+        "answer": "“Orangután 3+” está escrito específicamente para directores ejecutivos, propietarios de fábricas, fundadores de talleres, directores de operaciones y empresarios en mercados en desarrollo. Si siente que todo el peso de las decisiones recae sobre sus hombros, este libro es su hoja de ruta.",
+        "highlights": [
+          "Directores ejecutivos y propietarios de industrias de fabricación y servicios",
+          "Directores ejecutivos, financieros y comerciales senior",
+          "Emprendedores que buscan pasar de la gestión emocional a una estructura sostenible"
+        ]
+      },
+      {
+        "id": "faq-2",
+        "category": "content",
+        "question": "¿Se requiere un MBA o formación académica para comprender el contenido?",
+        "answer": "¡No! El lenguaje es práctico, directo y libre de jerga excesivamente académica. Todos los modelos, fórmulas y tarjetas de decisión nacen de la experiencia real en plantas industriales y empresas.",
+        "highlights": [
+          "Lenguaje sencillo, libre de teorías imprácticas",
+          "Centrado en ejemplos reales y desafíos cotidianos del mercado",
+          "Listas de verificación y protocolos aplicables paso a paso"
+        ]
+      },
+      {
+        "id": "faq-3",
+        "category": "content",
+        "question": "¿Cuál es la diferencia principal entre el Volumen 1 y el Volumen 2?",
+        "answer": "El Volumen 1 (De la Gestión Instintiva a la Autoconciencia) diagnostica las trampas de la Gestión Instintiva, revelando las causas raíz de las fugas financieras. El Volumen 2 (Hoja de Ruta de Sostenibilidad y Crecimiento 3+) proporciona herramientas operativas, triples palancas, Tarjetas de Decisión y arquitectura de aprendizaje.",
+        "highlights": [
+          "Vol. 1: Patología y reconocimiento de trampas de decisión instintivas",
+          "Vol. 2: Construcción de herramientas, fórmulas de desperdicio y estructura sostenible"
+        ]
+      },
+      {
+        "id": "faq-4",
+        "category": "content",
+        "question": "¿Por qué este libro es diferente de los libros de gestión traducidos del occidente?",
+        "answer": "La mayoría de los libros de gestión traducidos ignoran las condiciones económicas locales, la alta inflación y la cultura laboral práctica. Orangután 3+ proviene directamente de 40 años de práctica industrial directa.",
+        "highlights": [
+          "Adaptado a la inflación y entornos de mercado volátiles",
+          "Análisis profundo de la cultura laboral y comportamiento organizacional",
+          "Cubre casos de estudio reales de sectores manufactureros"
+        ]
+      },
+      {
+        "id": "faq-5",
+        "category": "purchase",
+        "question": "¿Es posible leer una muestra antes de realizar el pedido?",
+        "answer": "¡Sí! Puede descargar una muestra gratuita en PDF de 36 páginas con capítulos clave seleccionados de ambos volúmenes para familiarizarse con el estilo y la profundidad del contenido.",
+        "highlights": [
+          "Acceso instantáneo a una muestra en PDF de 36 páginas",
+          "Completamente gratuito"
+        ]
+      },
+      {
+        "id": "faq-6",
+        "category": "purchase",
+        "question": "¿Puedo solicitar una firma y dedicatoria personalizada del autor?",
+        "answer": "Sí, al añadir la colección al carrito, puede marcar la opción 'Solicitar firma personalizada del autor' e ingresar el nombre del destinatario para recibir un ejemplar firmado por Ali Asghar Hakimian.",
+        "highlights": [
+          "Firma manuscrita del autor en la página de título",
+          "Opción ideal para obsequiar a ejecutivos, socios y colegas"
+        ]
+      },
+      {
+        "id": "faq-7",
+        "category": "shipping",
+        "question": "¿Cuál es el plazo de entrega y el procedimiento de envío?",
+        "answer": "Todos los pedidos se empaquetan en un plazo de 24 horas laborables y se envían a nivel nacional mediante mensajería express. Los números de seguimiento se envían por SMS y se pueden consultar en el sitio.",
+        "highlights": [
+          "Envío express rápido a nivel nacional",
+          "Envío gratuito para colecciones completas y pedidos calificados",
+          "Rastreo de pedido en línea instantáneo"
+        ]
+      },
+      {
+        "id": "faq-8",
+        "category": "shipping",
+        "question": "¿Están disponibles las compras corporativas al por mayor y facturas fiscales oficiales?",
+        "answer": "¡Sí! Para empresas y fábricas que adquieren múltiples colecciones para equipos directivos, se emiten facturas fiscales corporativas oficiales. También se pueden programar reuniones ejecutivas con el autor.",
+        "highlights": [
+          "Emisión de facturas fiscales corporativas oficiales",
+          "Descuentos escalonados especiales para pedidos de 5+ colecciones",
+          "Opción de programar sesiones de consultoría con el autor"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "title": "Orangután",
+    "highlight": "+3",
+    "desc": "El libro de dos volúmenes “De la Gestión Instintiva a una Organización que Aprende, Corrige y Perdura” por Ali Asghar Hakimian.",
+    "domain": "orangutanplus3.com",
+    "navSectionsTitle": "Secciones del Sitio",
+    "navToolsTitle": "Herramientas y Servicios",
+    "navSupportTitle": "Soporte y Pedidos",
+    "navSupportText": "Envío express rápido a nivel nacional. Pedidos corporativos disponibles con factura fiscal oficial.",
+    "supportPhone": "Línea de Atención: +98 21 88990011",
+    "badges": {
+      "shipping": "Envío Express Rápido a Nivel Nacional",
+      "authenticity": "Garantía de Autenticidad de Impresión Física",
+      "invoice": "Facturación Corporativa Oficial Disponible"
+    },
+    "links": {
+      "books": "Descripción del Libro",
+      "framework": "Simulador del Modelo 3+",
+      "caseStudies": "Casos de Estudio de Fábrica",
+      "quiz": "Test de Gestión Instintiva",
+      "cards": "Tarjetas de Decisión",
+      "mistakesLessons": "40 Errores y Lecciones",
+      "faq": "Preguntas Frecuentes Pre-Compra",
+      "b2b": "Pedidos Corporativos al Por Mayor",
+      "author": "Sobre Ali Asghar Hakimian"
+    },
+    "copyright": "Todos los derechos reservados para esta plataforma y el contenido del libro por Ali Asghar Hakimian (orangutanplus3.com).",
+    "devInfo": "Diseñado y desarrollado según estándares de gestión ejecutiva e industrial."
+  },
+  "framework": {
+    "badge": "Modelo Conceptual Exclusivo de \"Orangután +3\"",
+    "title": "Simulador Interactivo del Marco 3+",
+    "subtitle": "La fórmula de 3 pasos de Ali Asghar Hakimian para rescatar a las organizaciones de comportamientos de Gestión Instintiva, errores repetidos y dependencia de la memoria personal.",
+    "stepLabel": "Paso {{num}}",
+    "aftershockLabel": "+1 Réplicas de la Decisión",
+    "orangutanTitle": "Enfoque Instintivo (Modo Orangután)",
+    "plus3Title": "Enfoque Sistémico del Marco 3+ (Ali Asghar Hakimian)",
+    "bottomLabel": "Implementación en Fábrica:",
+    "bottomText": "Todas las etapas del Marco 3+ con fórmulas reales y listas de verificación operativas se detallan en el Volumen 1 y el Volumen 2.",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Observación Real sin Filtros",
+        "subtitle": "Ir más allá de los informes maquillados hacia la observación directa en planta",
+        "description": "La mayoría de los gerentes observan su organización desde detrás de ventanas ahumadas. Los informes financieros y estadísticos suelen llegar retrasados e imprecisos. En el Paso 1 de 3+, los gerentes van directamente a la producción, al almacén y a la realidad operativa.",
+        "orangutanDiff": "En la Gestión Instintiva, el gerente se limita a gritar y culpar basándose en corazonadas.",
+        "plus3Diff": "En el Marco 3+, el gerente identifica las causas raíz mediante datos observados en primera persona.",
+        "tag": "Paso 1 • Observación"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Intervención en el Punto de Palanca",
+        "subtitle": "Enfocarse en el cuello de botella principal (Teoría de las Restricciones - TOC)",
+        "description": "Presionar a todos los departamentos simultáneamente agota la energía organizacional. La palanca es el cuello de botella donde una mejora del 10% duplica la capacidad total, como descubrir el efecto de la altitud a 2.143 m en el caso del suero en polvo.",
+        "orangutanDiff": "En la Gestión Instintiva, el gerente presiona a todos por igual, agotando a los empleados productivos.",
+        "plus3Diff": "En el Marco 3+, todos los recursos organizacionales se concentran en resolver el cuello de botella real.",
+        "tag": "Paso 2 • Enfoque"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Institucionalización en la Memoria Organizacional",
+        "subtitle": "Convertir soluciones en métodos, listas de verificación y capacitación continua",
+        "description": "Si una solución desaparece cuando un empleado clave se marcha, no es una solución, sino un analgésico temporal. La institucionalización significa crear listas de verificación, estandarizar la Memoria Organizacional y convertir a los gerentes en educadores de sistemas.",
+        "orangutanDiff": "En la Gestión Instintiva, cuando un empleado clave se marcha, todo el conocimiento se pierde.",
+        "plus3Diff": "En el Marco 3+, el conocimiento queda arraigado en los procesos, manteniendo a la organización en aprendizaje constante.",
+        "tag": "Paso 3 • Memoria Organizacional"
+      },
+      {
+        "stepNumber": 4,
+        "title": "+ Réplicas Positivas de la Decisión (+1)",
+        "subtitle": "Efectos positivos en cadena de una decisión correcta a lo largo de la cadena de valor",
+        "description": "Cuando un punto de palanca se corrige adecuadamente, genera ondas positivas: la moral aumenta, el desperdicio disminuye, la Hemorragia Interna Organizacional se detiene y surgen ganancias reales.",
+        "orangutanDiff": "En la Gestión Instintiva, las decisiones precipitadas generan Réplicas de la Decisión negativas y nuevas crisis.",
+        "plus3Diff": "En el Marco 3+, una corrección estructural desata una ola de creación de valor en toda la organización.",
+        "tag": "Réplicas de la Decisión Positivas"
+      }
+    ]
+  },
+  "quiz": {
+    "badge": "Test de Autoevaluación Ejecutiva",
+    "title": "Test de Gestión Instintiva",
+    "subtitle": "Responda a 5 escenarios reales de gestión para evaluar su índice de 'Modo Orangután' junto con soluciones recomendadas del libro.",
+    "progressText": "Pregunta {{num}} de {{total}}",
+    "chapterRefPrefix": "Referencia del Libro:",
+    "prevBtn": "Anterior",
+    "nextBtn": "Siguiente Pregunta",
+    "viewResultsBtn": "Ver Resultado de Diagnóstico",
+    "retakeBtn": "Repetir Test",
+    "orderBundleBtn": "Pedir Colección Completa de 2 Volúmenes con Descuento",
+    "resultScoreTitle": "Puntuación de Sistematización Organizacional: {{percentage}}%",
+    "resultAnalysisTitle": "Análisis de Comportamiento Organizacional:",
+    "resultSolutionTitle": "Solución Recomendada por Ali Asghar Hakimian:",
+    "tiers": {
+      "t1": {
+        "title": "Modo Orangután Severo (Gestión Emocional e Instintiva)",
+        "description": "Su organización siente el dolor y la presión, pero no logra identificar las causas raíz. Las decisiones dependen del sexto sentido, gritos y memoria personal. Los errores repetidos generan costos elevados.",
+        "recommendation": "Lectura esencial: Volumen 1 (Capítulos 1-4: Observación directa y registros operativos)."
+      },
+      "t2": {
+        "title": "Gestión Instintiva Fluctuante (Semisistémica con Alta Dependencia)",
+        "description": "Cuenta con algunos formularios y herramientas, pero la ausencia de personal clave causa interrupciones graves. Las ganancias se escapan por las fugas del almacén y las facturas tóxicas.",
+        "recommendation": "Estudie los Volúmenes 1 y 2 (Codificación de almacén, eliminación de facturas tóxicas y fórmulas de ganancias reales)."
+      },
+      "t3": {
+        "title": "En Camino hacia la Sistematización 3+ (Organización en Crecimiento)",
+        "description": "La mayoría de los procesos son transparentes, pero el éxito duradero requiere convertir todo el conocimiento en listas de verificación activas y capacitar a gerentes-educadores en todos los niveles.",
+        "recommendation": "Estudie el Volumen 2 (Capítulos 39 y 40: Galería de 40 Errores y 40 Lecciones)."
+      },
+      "t4": {
+        "title": "Organización 3+ de Aprendizaje Continuo y Duradera (Excelente)",
+        "description": "¡Felicitaciones! Su organización posee Memoria Organizacional, utiliza datos en tiempo real y no depende de la presencia física del director ejecutivo. Ha implementado con éxito los conceptos del Marco 3+.",
+        "recommendation": "Utilice el Volumen 2 para implementar la IA como asistente en la toma de decisiones."
+      }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "question": "Cuando una línea de producción o proyecto sufre retrasos, ¿cuál es la reacción inicial de la alta dirección?",
+        "chapterRef": "Vol. 1 • Cap. 1 y 2 (Modo Orangután)",
+        "options": [
+          { "text": "Convocar una reunión de emergencia, gritar a los supervisores y sancionar a los operadores.", "feedback": "Gestión Instintiva: Reacción emocional sin análisis de datos en planta." },
+          { "text": "Exigir horas extras a todos los departamentos sin inspeccionar la causa raíz del retraso.", "feedback": "Presión uniforme sobre todos los departamentos que agota a los empleados productivos." },
+          { "text": "Ir directamente a la planta de producción, examinar el cuello de botella y revisar el almacén.", "feedback": "Observación real sin filtros (Paso 1 de 3+): Observación directa basada en datos." }
+        ]
+      },
+      {
+        "id": 2,
+        "question": "¿Cómo se mantienen los datos del inventario de almacén y pedidos de clientes en su organización?",
+        "chapterRef": "Vol. 1 • Cap. 3 (Auditoría de Almacén de Rodamientos de 68 Años)",
+        "options": [
+          { "text": "Mayoritariamente en la cabeza del jefe de almacén o en cuadernos manuales que solo él entiende.", "feedback": "Peligrosa dependencia de la memoria individual sin Memoria Organizacional." },
+          { "text": "En múltiples hojas de cálculo de Excel donde cada gerente tiene una versión contradictoria.", "feedback": "Deuda de datos y múltiples versiones contradictorias de la verdad." },
+          { "text": "En un sistema codificado integrado con direcciones precisas en estantes y conteo cíclico.", "feedback": "Registro transparente y Memoria Organizacional duradera (Marco 3+)." }
+        ]
+      },
+      {
+        "id": 3,
+        "question": "¿Cuál es su métrica principal para evaluar y recompensar al equipo de ventas?",
+        "chapterRef": "Vol. 2 • Cap. 3 (Facturas Tóxicas y Ventas Recurrentes)",
+        "options": [
+          { "text": "Número de llamadas telefónicas diarias y pura actividad rutinaria.", "feedback": "Recompensar la actividad sobre los resultados, lo que genera pérdida de tiempo." },
+          { "text": "Monto total facturado, incluso si se basa en créditos a largo plazo y cheques de riesgo.", "feedback": "Crear facturas tóxicas y no distinguir las ventas reales de las deudas." },
+          { "text": "Efectivo real cobrado en la cuenta bancaria y compras de clientes recurrentes.", "feedback": "Métrica orientada a resultados que garantiza la salud del flujo de caja (Marco 3+)." }
+        ]
+      },
+      {
+        "id": 4,
+        "question": "¿Qué ocurre cuando renuncia un empleado clave (ej. gerente técnico o jefe de almacén)?",
+        "chapterRef": "Vol. 1 • Cap. 6 (El Gerente como Educador)",
+        "options": [
+          { "text": "Parálisis total del departamento y concesión de aumentos excesivos para retenerlo a toda costa.", "feedback": "Organización rehén de un individuo debido a la falta de procedimientos estándar." },
+          { "text": "Contratar apresuradamente a un reemplazo y soportar meses de errores costosos.", "feedback": "Falta de transferencia sistemática de conocimientos y experiencia." },
+          { "text": "Relativa calma, ya que todos los procesos cuentan con listas de verificación y documentación.", "feedback": "Organización de aprendizaje documentada según el Marco 3+." }
+        ]
+      },
+      {
+        "id": 5,
+        "question": "¿Cómo se calculan las ganancias anuales de su empresa?",
+        "chapterRef": "Vol. 2 • Cap. 4 (Ganancias Inflacionarias y Márgenes Reales)",
+        "options": [
+          { "text": "Según el saldo bancario de fin de año, ignorando la inflación de reposición de materia prima.", "feedback": "Autoengaño financiero fatal en economías inflacionarias." },
+          { "text": "Según la contabilidad tradicional que confunde la inflación de propiedades con ganancias.", "feedback": "Incapacidad para separar las ganancias por inflación de las ganancias operativas reales." },
+          { "text": "Separando estrictamente las ganancias por inflación de activos de la ganancia operativa neta real.", "feedback": "Inteligencia financiera calculando el poder real de reposición de materia prima (Marco 3+)." }
+        ]
+      }
+    ]
+  },
+  "caseStudies": {
+    "badge": "Experiencia Directa de 40 Años en la Industria",
+    "title": "Bóveda de Casos de Estudio Industriales",
+    "subtitle": "Análisis documentados de la aguja de vapor, el almacén de rodamientos de 68 años, la pérdida de PVC y las facturas tóxicas detalladas en los Volúmenes 1 y 2.",
+    "problemLabel": "Planteamiento del Problema:",
+    "keyMetricLabel": "Resultado Clave:",
+    "viewCaseBtn": "Ver Caso Completo",
+    "modalProblemTitle": "1. Problema y Crisis Inicial:",
+    "modalLeverTitle": "2. Intervención en el Punto de Palanca (3+):",
+    "modalResultTitle": "3. Resultado Operativo y Financiero:",
+    "closeModalBtn": "Cerrar Ventana",
+    "categories": {
+      "all": "Todos los Casos",
+      "production": "Producción e Industria",
+      "finance": "Finanzas y Almacén",
+      "sales": "Ventas y Mercado",
+      "ai": "IA y Tecnología"
+    },
+    "items": [
+      {
+        "id": "case-steam-needle",
+        "title": "Aguja de Vapor y Suero en Polvo",
+        "subtitle": "Aumento de la capacidad de la línea de evaporación de 2,5 a 6,135 toneladas/hora",
+        "categoryLabel": "Producción e Industria",
+        "volumeRef": "Vol. 2 • Cap. 1",
+        "problem": "La fábrica de suero en polvo estaba estancada en una baja capacidad de 2,5 toneladas/hora, culpando a la caldera.",
+        "leverIntervention": "Descubrimiento del impacto de los 2.143 m de altitud en los puntos de ebullición, ajuste de torres de enfriamiento y calibración de la aguja de vapor.",
+        "results": "La capacidad de la línea se multiplicó por 2,4 hasta alcanzar las 6,135 toneladas/hora sin comprar equipos multimillonarios.",
+        "keyMetric": "+145% Aumento de Capacidad",
+        "quote": "“El problema no era una caldera costosa; era el ajuste de una aguja de vapor y no considerar la altitud de la fábrica.”"
+      },
+      {
+        "id": "case-pvc-leak",
+        "title": "Pérdida de 8 Toneladas de PVC y Hemorragia Interna Organizacional",
+        "subtitle": "Exponiendo fugas silenciosas de materia prima en el almacén",
+        "categoryLabel": "Finanzas y Almacén",
+        "volumeRef": "Vol. 2 • Cap. 2",
+        "problem": "Durante la auditoría de fin de año, faltaron 8 toneladas de materia prima de PVC a pesar de que la documentación coincidía.",
+        "leverIntervention": "Reconciliación de fórmulas de producción con registros de desperdicio y peso real producido, revelando errores de báscula.",
+        "results": "Prevención de pérdidas anuales multimillonarias y sellado de fugas con registros en tiempo real.",
+        "keyMetric": "Fuga de 8T Recalibrada",
+        "quote": "“La Hemorragia Interna Organizacional es fatal porque la empresa no siente dolor inmediato mientras muere lentamente.”"
+      },
+      {
+        "id": "case-bearing-68y",
+        "title": "Auditoría del Almacén de Rodamientos de 68 Años",
+        "subtitle": "Superando la dependencia absoluta de la memoria personal",
+        "categoryLabel": "Finanzas y Almacén",
+        "volumeRef": "Vol. 1 • Cap. 3",
+        "problem": "Una empresa de 68 años con miles de piezas de rodamientos guardadas únicamente en la memoria de un veterano almacenista.",
+        "leverIntervention": "Implementación de auditorías abiertas de almacén, codificación unificada de piezas, direcciones 3D y conteo cíclico.",
+        "results": "El tiempo de inactividad de la línea cayó a cero, liberando a la fábrica de la dependencia de personas específicas.",
+        "keyMetric": "100% Piezas Codificadas",
+        "quote": "“Una organización cuya memoria reside en la cabeza de una persona sufre un colapso cuando esa persona se ausenta.”"
+      },
+      {
+        "id": "case-milk-4am",
+        "title": "El Colador de Leche a las 4 AM",
+        "subtitle": "La regla: Registrar primero, entregar después",
+        "categoryLabel": "Producción e Industria",
+        "volumeRef": "Vol. 1 y 2",
+        "problem": "Las entregas verbales de leche cruda a las 4 AM creaban discrepancias contables masivas entre productores, choferes y silos.",
+        "leverIntervention": "Aplicar la regla inquebrantable: 'Registrar digitalmente/en papel primero, descargar la leche después' incluso a las 4 AM.",
+        "results": "Eliminación total de faltantes de leche y registros de pago transparentes.",
+        "keyMetric": "0 Discrepancias",
+        "quote": "“La transparencia se pone a prueba verdaderamente cuando se aplica a las 4 AM en la oscuridad de la fábrica.”"
+      },
+      {
+        "id": "case-kabab-soda",
+        "title": "Ganancias Inflacionarias y Descuentos",
+        "subtitle": "Distinguiendo la ganancia operativa de la ganancia por inflación",
+        "categoryLabel": "Ventas y Mercado",
+        "volumeRef": "Vol. 2 • Cap. 4",
+        "problem": "Los ejecutivos celebraban ingresos de caja, sin percatarse de que la ganancia provenía de la inflación de activos y no de la eficiencia.",
+        "leverIntervention": "Separar las ganancias por inflación de inventario del margen de ventas real y reestructurar políticas de descuento.",
+        "results": "Prevención del autoengaño ejecutivo y protección del poder de compra de materia prima bajo inflación.",
+        "keyMetric": "Claridad de Ganancia Real",
+        "quote": "“Si su ganancia es menor que la inflación de materias primas, no ha ganado dinero; ha subastado la fábrica.”"
+      },
+      {
+        "id": "case-sales-toxic",
+        "title": "Equipo de Ventas de 24 Personas y Facturas Tóxicas",
+        "subtitle": "Crítica de la recompensa a la actividad frente a los resultados reales",
+        "categoryLabel": "Ventas y Mercado",
+        "volumeRef": "Vol. 2 • Cap. 3",
+        "problem": "Un equipo de ventas registraba miles de llamadas diarias pero emitía facturas a crédito incobrables (facturas tóxicas).",
+        "leverIntervention": "Cambiar comisiones de 'factura emitida' a 'efectivo cobrado en banco' y filtrar clientes de crédito.",
+        "results": "Se triplicó el flujo de efectivo y se eliminaron las facturas incobrables.",
+        "keyMetric": "3x Cobro en Efectivo",
+        "quote": "“Una venta es solo una broma costosa hasta que el dinero entra en la cuenta bancaria.”"
+      },
+      {
+        "id": "case-school-milk",
+        "title": "Distribución de 10 Toneladas de Leche Escolar",
+        "subtitle": "Gestión de crisis 24 horas antes del desastre",
+        "categoryLabel": "IA y Tecnología",
+        "volumeRef": "Vol. 1 y 2",
+        "problem": "Amenazas de huelga de transportistas ponían en peligro 10 toneladas de leche pasteurizada bajo calor extremo.",
+        "leverIntervention": "Diseño de escenarios de distribución alternativos con transporte local 24 horas antes de la huelga.",
+        "results": "100% de la leche entregada con cero pérdidas, convirtiendo la crisis en confianza regional.",
+        "keyMetric": "0% Desperdicio de Leche",
+        "quote": "“La gestión de crisis significa abrir el paraguas antes de la tormenta, no mientras se ahoga bajo la inundación.”"
+      }
+    ]
+  },
+  "decisionCards": {
+    "badge": "Herramientas de Acción Ejecutiva para el Escritorio",
+    "title": "Tarjetas de Decisión Ejecutivas Interactivas",
+    "subtitle": "4 herramientas operativas y listas de verificación de los Volúmenes 1 y 2 para evaluar costos ocultos, detectar Hemorragias Internas Organizacionales y gestionar crisis.",
+    "viewChecklistBtn": "Ver Lista de Verificación",
+    "closeProtocolBtn": "Cerrar Protocolo",
+    "costCalc": {
+      "title": "Calculadora del Costo Real de Decisiones:",
+      "directCostLabel": "Costo Directo del Proyecto:",
+      "totalEstimatedLabel": "Costo Real Mínimo Estimado con Fugas Ocultas:",
+      "disclaimer": "*Incluye costo de oportunidad, errores de aprendizaje iniciales y remediación de efectos secundarios."
+    },
+    "bleedAudit": {
+      "title": "Lista de Verificación de Hemorragia Interna Organizacional en Almacén:",
+      "countIdentified": "{{count}} de 6 elementos identificados"
+    },
+    "cards": [
+      {
+        "id": "card-cost-calc",
+        "title": "Tarjeta de Precio de Decisión (Tarjeta de Decisión)",
+        "subtitle": "Evaluación de 4 costos ocultos antes de emitir órdenes ejecutivas",
+        "categoryLabel": "Costos Ocultos",
+        "frontSummary": "Cualquier decisión ejecutiva evaluada únicamente por el costo monetario directo impone al menos 3 costos invisibles en la organización.",
+        "backProtocol": "Antes de aprobar cualquier proyecto o cambio de proceso, formule estas 4 preguntas:",
+        "actionableSteps": [
+          "1. Costo Directo (Adquisición de equipos y materia prima)",
+          "2. Costo de Oportunidad (¿Qué tareas vitales se retrasan mientras el personal trabaja en esto?)",
+          "3. Costo de Aprendizaje y Error (¿Cuánto tiempo pasará hasta que los operadores ejecuten sin fallas?)",
+          "4. Costo de Remediación de Réplicas de la Decisión (Si falla, ¿cuál es el costo de reversión?)"
+        ]
+      },
+      {
+        "id": "card-bleed-audit",
+        "title": "Hoja de Diagnóstico de Hemorragia Interna Organizacional",
+        "subtitle": "Identificación de los 6 puntos silenciosos principales de fuga de ganancias en fábricas",
+        "categoryLabel": "Auditorías Financieras",
+        "frontSummary": "La Hemorragia Interna Organizacional es la pérdida lenta de ganancias a través de vacíos invisibles en los estados financieros.",
+        "backProtocol": "Lista de verificación de 6 puntos para identificar fugas silenciosas en almacén y producción:",
+        "actionableSteps": [
+          "1. Peso de entrada a almacén vs. variaciones en la guía de remisión",
+          "2. Desperdicio en calibración de maquinaria (Setup Waste)",
+          "3. Microdescuentos no registrados concedidos por vendedores",
+          "4. Repuestos no codificados abandonados en los estantes",
+          "5. Microparadas no planificadas de 5 minutos en la línea",
+          "6. Costos de reprocesamiento por mercancías devueltas"
+        ]
+      },
+      {
+        "id": "card-crisis-72h",
+        "title": "Tarjeta de Gestión de Crisis de 72 Horas (Tarjeta de Decisión)",
+        "subtitle": "Protocolo de priorización durante cortes abruptos de recursos",
+        "categoryLabel": "Gestión de Crisis",
+        "frontSummary": "En las primeras 72 horas de una crisis, las decisiones emocionales destruyen las organizaciones. El protocolo 3+ se enfoca en proteger las líneas vitales.",
+        "backProtocol": "Acciones inmediatas de 72 horas en orden de prioridad:",
+        "actionableSteps": [
+          "Horas 1-12: Congelar salidas de efectivo no esenciales y verificar el inventario real.",
+          "Horas 12-24: Comunicación directa y transparente con los 3 principales clientes y proveedores.",
+          "Horas 24-48: Activar el Plan B (ej. red logística alternativa).",
+          "Horas 48-72: Evaluación inicial y redacción de listas de verificación para evitar la reincidencia."
+        ]
+      },
+      {
+        "id": "card-key-person",
+        "title": "Tarjeta de Riesgo de Salida de Personal Clave (Tarjeta de Decisión)",
+        "subtitle": "Evaluación de la dependencia organizacional en individuos sobre sistemas",
+        "categoryLabel": "Recursos Humanos",
+        "frontSummary": "Si la salida de un empleado puede paralizar un departamento, no tiene un sistema; tiene una dependencia personal.",
+        "backProtocol": "Fórmula de 3 pasos para protegerse de la dependencia individual:",
+        "actionableSteps": [
+          "1. Identificar a las 3 personas clave que poseen conocimiento operativo no escrito.",
+          "2. Exigir documentación en video y listas de verificación para sus 10 procesos principales.",
+          "3. Realizar una prueba de 'Vacaciones sin Teléfono' de 7 días para evaluar la estabilidad del sistema."
+        ]
+      }
+    ]
+  },
+  "mistakesLessons": {
+    "badge": "Resumen de los Capítulos 39 y 40 (Volumen 2)",
+    "title": "Galería de 40 Errores y 40 Lecciones",
+    "subtitle": "Una colección inestimable de 40 grandes errores ejecutivos a evitar y 40 lecciones clave de 4 décadas de gestión de Ali Asghar Hakimian.",
+    "toggleMistakes": "40 Errores Principales",
+    "toggleLessons": "40 Lecciones Clave",
+    "searchPlaceholder": "Buscar por título o descripción...",
+    "noResults": "No se encontraron elementos que coincidan con su búsqueda o categoría.",
+    "categories": {
+      "all": "Todas las Categorías",
+      "view": "Observación Real",
+      "decision": "Toma de Decisiones",
+      "people": "Personas y Cultura",
+      "system": "Sistema y Proceso",
+      "market": "Ventas y Mercado"
+    },
+    "items": [
+      {
+        "id": "m-1",
+        "number": 1,
+        "type": "mistake",
+        "title": "Gestionar desde Detrás de Ventanas Ahumadas",
+        "description": "Confiar ciegamente en informes escritos maquillados sin realizar visitas regulares a la planta de producción.",
+        "categoryLabel": "Observación Real",
+        "bookRef": "Vol. 2 • Cap. 39 (Error 1)"
+      },
+      {
+        "id": "m-2",
+        "number": 12,
+        "type": "mistake",
+        "title": "Comprar Equipos Nuevos para Corregir Errores de Gestión",
+        "description": "Adquirir maquinaria costosa cuando los equipos existentes solo requerían un reajuste del 5% o recalibración de aguja.",
+        "categoryLabel": "Sistema y Proceso",
+        "bookRef": "Vol. 2 • Cap. 39 (Error 12)"
+      },
+      {
+        "id": "m-3",
+        "number": 24,
+        "type": "mistake",
+        "title": "Recompensar el Exceso de Actividad sobre las Ventas Reales",
+        "description": "Elogiar a los vendedores que realizan 100 llamadas pero dejan facturas a crédito incobrables (facturas tóxicas).",
+        "categoryLabel": "Ventas y Mercado",
+        "bookRef": "Vol. 2 • Cap. 39 (Error 24)"
+      },
+      {
+        "id": "m-4",
+        "number": 31,
+        "type": "mistake",
+        "title": "Ceder a Exigencias Excesivas de Personal Clave",
+        "description": "Retener a empleados tóxicos simplemente porque el conocimiento del almacén o producción reside únicamente en sus cabezas.",
+        "categoryLabel": "Personas y Cultura",
+        "bookRef": "Vol. 2 • Cap. 39 (Error 31)"
+      },
+      {
+        "id": "m-5",
+        "number": 38,
+        "type": "mistake",
+        "title": "Confundir Ganancias Inflacionarias con Eficiencia Operativa",
+        "description": "Celebrar un crecimiento de ingresos del 50% cuando el volumen de producción real cayó un 20%.",
+        "categoryLabel": "Toma de Decisiones",
+        "bookRef": "Vol. 2 • Cap. 39 (Error 38)"
+      },
+      {
+        "id": "l-1",
+        "number": 1,
+        "type": "lesson",
+        "title": "Registrar Primero, Entregar Después; Sin Excepción",
+        "description": "La claridad financiera y sistémica comienza a las 4 AM en el rincón más oscuro del almacén, no en las salas de reuniones.",
+        "categoryLabel": "Sistema y Proceso",
+        "bookRef": "Vol. 2 • Cap. 40 (Lección 1)"
+      },
+      {
+        "id": "l-2",
+        "number": 15,
+        "type": "lesson",
+        "title": "Identificar el Cuello de Botella Principal y Alinearse",
+        "description": "Presionar a todos los departamentos agota al personal productivo. Enfoque la verdadera palanca.",
+        "categoryLabel": "Toma de Decisiones",
+        "bookRef": "Vol. 2 • Cap. 40 (Lección 15)"
+      },
+      {
+        "id": "l-3",
+        "number": 27,
+        "type": "lesson",
+        "title": "Los Gerentes Deben Ser Arquitectos de Preguntas, No Operadores de Call Center",
+        "description": "Si el personal le llama para cada duda trivial, no ha construido un sistema; ha creado un centro de llamadas personal.",
+        "categoryLabel": "Personas y Cultura",
+        "bookRef": "Vol. 2 • Cap. 40 (Lección 27)"
+      },
+      {
+        "id": "l-4",
+        "number": 33,
+        "type": "lesson",
+        "title": "Una Venta es una Pérdida hasta Cobrar el Dinero",
+        "description": "El mejor cliente es aquel que liquida sus facturas puntualmente, no el que realiza pedidos a crédito masivos.",
+        "categoryLabel": "Ventas y Mercado",
+        "bookRef": "Vol. 2 • Cap. 40 (Lección 33)"
+      },
+      {
+        "id": "l-5",
+        "number": 40,
+        "type": "lesson",
+        "title": "La Experiencia No es Simplemente Años de Gestión",
+        "description": "La experiencia es el número de errores que ha identificado y evitado que vuelvan a repetirse a ciegas.",
+        "categoryLabel": "Observación Real",
+        "bookRef": "Vol. 2 • Cap. 40 (Lección 40)"
+      }
+    ]
+  },
+  "b2b": {
+    "badge": "Pedidos Corporativos al Por Mayor y Obsequios Ejecutivos",
+    "title": "Pedidos Corporativos y Solicitud de Sesión Ejecutiva",
+    "subtitle": "La colección “Orangután 3+” es un obsequio transformador para altos ejecutivos, jefes de producción, miembros de junta directiva y clientes clave.",
+    "features": {
+      "f1Title": "Factura Fiscal Oficial",
+      "f1Desc": "Emisión de facturas fiscales oficiales conformes con el IVA para deducción de gastos de capacitación corporativa.",
+      "f2Title": "Sesión Ejecutiva con el Dr. Ali Asghar Hakimian",
+      "f2Desc": "Sesiones analíticas presenciales o en línea con el autor (Doctor en Gestión Estratégica) para pedidos superiores a 20 colecciones.",
+      "f3Title": "Descuentos Corporativos Escalonados",
+      "f3Desc": "Descuentos escalonados por volumen para pedidos de 10+ colecciones con empaque de regalo corporativo elegante."
+    },
+    "formTitle": "Formulario de Solicitud de Pedido Corporativo y Factura Proforma",
+    "companyNameLabel": "Nombre de la Organización / Empresa:*",
+    "companyNamePlaceholder": "Ej. Grupo Industrial / Empresa S.A.",
+    "contactPersonLabel": "Persona de Contacto / Director de Capacitación:*",
+    "contactPersonPlaceholder": "Ej. Juan Pérez / Sra. García",
+    "phoneLabel": "Teléfono / Número de Móvil:*",
+    "phonePlaceholder": "0912... o +34...",
+    "quantityLabel": "Cantidad Requerida (Mín. 10):",
+    "taxInvoiceCheckbox": "Requiero una factura fiscal oficial conforme con el IVA.",
+    "meetingCheckbox": "Deseo solicitar una sesión ejecutiva con el Dr. Ali Asghar Hakimian.",
+    "notesLabel": "Notas Adicionales:",
+    "notesPlaceholder": "Especifique cualquier requisito de programación o detalle...",
+    "submitBtn": "Enviar Solicitud de Factura Proforma Corporativa",
+    "successTitle": "Su Solicitud Corporativa Ha Sido Enviada con Éxito",
+    "successSubtitle": "Nuestro equipo de ventas corporativas le contactará en un plazo de 2 horas laborables para entregarle la factura proforma oficial.",
+    "resetBtn": "Enviar Otra Solicitud"
+  }
+}

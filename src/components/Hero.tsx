@@ -26,10 +26,10 @@ export const Hero: React.FC<HeroProps> = ({
   const isEn = i18n.language === 'en';
 
   const formatPrice = (amount: number) => {
-    if (isEn) {
-      return `${amount.toLocaleString()} Toman`;
+    if (i18n.language === 'fa') {
+      return formatCurrency(amount);
     }
-    return formatCurrency(amount);
+    return `${amount.toLocaleString()} Toman`;
   };
 
   return (

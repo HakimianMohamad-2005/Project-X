@@ -14,7 +14,7 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   const isLight = theme === 'light';
-  const isEn = i18n.language === 'en';
+  const isLtr = i18n.language !== 'fa';
 
   const containerSizes = {
     sm: 'w-48 h-64',
@@ -41,7 +41,7 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent pointer-events-none" />
 
           {/* Top Badge */}
-          <div className={`absolute top-3 right-3 left-3 flex items-center justify-between z-10 pointer-events-none ${isEn ? 'flex-row-reverse' : ''}`}>
+          <div className={`absolute top-3 right-3 left-3 flex items-center justify-between z-10 pointer-events-none ${isLtr ? 'flex-row-reverse' : ''}`}>
             <span className="text-[10px] font-bold text-amber-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-amber-500/30 shadow-lg">
               {t('author.imageBadgeYears')}
             </span>
@@ -51,7 +51,7 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
           </div>
 
           {/* Bottom Info Overlay */}
-          <div className={`absolute bottom-3 right-3 left-3 ${isEn ? 'text-left' : 'text-right'} z-10 space-y-0.5 pointer-events-none`}>
+          <div className={`absolute bottom-3 right-3 left-3 ${isLtr ? 'text-left' : 'text-right'} z-10 space-y-0.5 pointer-events-none`}>
             <h3 className="text-base font-extrabold text-[#FAF7F2] drop-shadow-md">
               {t('author.imageName')}
             </h3>
