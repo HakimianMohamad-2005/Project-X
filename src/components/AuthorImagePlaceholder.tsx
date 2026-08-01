@@ -1,6 +1,6 @@
 import React from 'react';
 import { Award } from 'lucide-react';
-import { toPersianDigits } from '../utils/persian';
+import { useTranslation } from 'react-i18next';
 import authorImg from '../assets/author_ali.jpg';
 
 interface AuthorImagePlaceholderProps {
@@ -12,7 +12,9 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
   theme = 'light',
   size = 'md'
 }) => {
+  const { t, i18n } = useTranslation();
   const isLight = theme === 'light';
+  const isEn = i18n.language === 'en';
 
   const containerSizes = {
     sm: 'w-48 h-64',
@@ -30,7 +32,7 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
         <div className="relative w-full h-full overflow-hidden">
           <img
             src={authorImg}
-            alt="علی‌اصغر حکیمیان - نویسنده کتاب اورانگوتان +۳"
+            alt={t('author.imageName')}
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
             referrerPolicy="no-referrer"
           />
@@ -39,9 +41,9 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent pointer-events-none" />
 
           {/* Top Badge */}
-          <div className="absolute top-3 right-3 left-3 flex items-center justify-between z-10 pointer-events-none">
+          <div className={`absolute top-3 right-3 left-3 flex items-center justify-between z-10 pointer-events-none ${isEn ? 'flex-row-reverse' : ''}`}>
             <span className="text-[10px] font-bold text-amber-300 bg-stone-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-amber-500/30 shadow-lg">
-              ۴۰+ سال تجربه صنعتی و مدیریتی
+              {t('author.imageBadgeYears')}
             </span>
             <div className="p-1.5 rounded-full bg-stone-950/80 border border-amber-500/30 text-[#B87333] shadow-lg">
               <Award className="w-3.5 h-3.5" />
@@ -49,12 +51,12 @@ export const AuthorImagePlaceholder: React.FC<AuthorImagePlaceholderProps> = ({
           </div>
 
           {/* Bottom Info Overlay */}
-          <div className="absolute bottom-3 right-3 left-3 text-right z-10 space-y-0.5 pointer-events-none">
+          <div className={`absolute bottom-3 right-3 left-3 ${isEn ? 'text-left' : 'text-right'} z-10 space-y-0.5 pointer-events-none`}>
             <h3 className="text-base font-extrabold text-[#FAF7F2] drop-shadow-md">
-              علی‌اصغر حکیمیان
+              {t('author.imageName')}
             </h3>
             <p className="text-[11px] text-amber-300 font-bold drop-shadow">
-              مدیر صنعتی و معمار سیستم‌های سازمانی
+              {t('author.imageTitle')}
             </p>
           </div>
         </div>
