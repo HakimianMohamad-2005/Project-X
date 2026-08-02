@@ -25,6 +25,7 @@ const languages = [
   { code: 'fr', name: 'Français', label: 'FR', path: '/fr' },
   { code: 'zh', name: '中文', label: 'ZH', path: '/zh' },
   { code: 'ja', name: '日本語', label: 'JA', path: '/ja' },
+  { code: 'hi', name: 'हिन्दी', label: 'HI', path: '/hi' },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -48,10 +49,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isFr = i18n.language === 'fr';
   const isZh = i18n.language === 'zh';
   const isJa = i18n.language === 'ja';
-  const isDeOrEsOrFrOrZhOrJa = isDe || isEs || isFr || isZh || isJa;
+  const isHi = i18n.language === 'hi';
+  const isDeOrEsOrFrOrZhOrJaOrHi = isDe || isEs || isFr || isZh || isJa || isHi;
   const currentLangObj = languages.find((l) => l.code === i18n.language) || languages[0];
 
-  const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja') => {
+  const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi') => {
     const targetObj = languages.find((l) => l.code === targetLang) || languages[0];
     i18n.changeLanguage(targetLang);
     window.history.pushState({}, '', targetObj.path);
@@ -115,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Center Navigation Tabs (Desktop - All 9 items visible directly without scroll/clipping) */}
           <nav className={`hidden xl:flex items-center p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 font-semibold shrink-0 ${
-            isZh || isJa ? 'gap-1.5 xl:gap-2' : isDe ? 'gap-1' : isFr ? 'gap-0.5' : isEs ? 'gap-[2px]' : 'gap-0.5 2xl:gap-1 text-[11px] 2xl:text-xs'
+            isHi ? 'gap-1' : isZh || isJa ? 'gap-1.5 xl:gap-2' : isDe ? 'gap-1' : isFr ? 'gap-0.5' : isEs ? 'gap-[2px]' : 'gap-0.5 2xl:gap-1 text-[11px] 2xl:text-xs'
           }`}>
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
@@ -124,15 +126,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={item.id}
                   onClick={() => handleSelectTab(item.id)}
                   className={`relative rounded-xl transition-all duration-200 whitespace-nowrap shrink-0 ${
-                    isZh || isJa
-                      ? 'px-2.5 py-1.5 text-xs xl:text-sm font-semibold'
-                      : isDe
-                        ? 'px-2 py-1 text-xs xl:text-[12.5px] font-medium'
-                        : isFr
-                          ? 'px-1.5 py-1 text-[11.5px] xl:text-[11.8px] font-medium'
-                          : isEs 
-                            ? 'px-[5px] py-0.5 text-[11px] xl:text-[11.5px]' 
-                            : 'px-1.5 py-1 2xl:px-2.5 2xl:py-1.5'
+                    isHi
+                      ? 'px-2 py-1 text-xs xl:text-[12.5px] font-semibold'
+                      : isZh || isJa
+                        ? 'px-2.5 py-1.5 text-xs xl:text-sm font-semibold'
+                        : isDe
+                          ? 'px-2 py-1 text-xs xl:text-[12.5px] font-medium'
+                          : isFr
+                            ? 'px-1.5 py-1 text-[11.5px] xl:text-[11.8px] font-medium'
+                            : isEs 
+                              ? 'px-[5px] py-0.5 text-[11px] xl:text-[11.5px]' 
+                              : 'px-1.5 py-1 2xl:px-2.5 2xl:py-1.5'
                   } ${
                     isActive
                       ? isLight
@@ -157,16 +161,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Action Controls */}
-          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDe ? 'gap-1 me-2 pe-4' : isFr ? 'gap-1 me-2 pe-4 sm:pe-6' : isZh || isJa ? 'gap-1 me-2 pe-4' : isEs ? 'gap-1 me-2 pe-4' : isFa ? 'gap-1 sm:gap-2' : 'gap-1 sm:gap-2 pe-4'}`}>
+          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDe ? 'gap-1 me-2 pe-4' : isFr ? 'gap-1 me-2 pe-4 sm:pe-6' : isZh || isJa || isHi ? 'gap-1 me-2 pe-4' : isEs ? 'gap-1 me-2 pe-4' : isFa ? 'gap-1 sm:gap-2' : 'gap-1 sm:gap-2 pe-4'}`}>
             
-            {/* 7-Language Dropdown Switcher */}
+            {/* 8-Language Dropdown Switcher */}
             <div className="relative shrink-0 flex-shrink-0">
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
                 className={`rounded-xl border font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 flex-shrink-0 ${
-                  isDeOrEsOrFrOrZhOrJa 
+                  isDeOrEsOrFrOrZhOrJaOrHi 
                     ? 'px-2 py-1 text-[11px]' 
                     : 'px-2 py-1 sm:px-2.5 sm:py-1.5 text-[11px] sm:text-xs'
                 } ${
@@ -202,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         return (
                           <button
                             key={lang.code}
-                            onClick={() => changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja')}
+                            onClick={() => changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi')}
                             className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                               isSelected
                                 ? isLight
@@ -252,7 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileTap={{ scale: 0.97 }}
               onClick={onOpenSamplePdf}
               className={`${isDe ? 'hidden 3xl:flex' : 'hidden 2xl:flex'} items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
-                isDeOrEsOrFrOrZhOrJa 
+                isDeOrEsOrFrOrZhOrJaOrHi 
                   ? 'px-2 py-1 text-[11px]' 
                   : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
               } ${
@@ -271,7 +275,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileTap={{ scale: 0.97 }}
               onClick={onOpenTracking}
               className={`hidden lg:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
-                isDeOrEsOrFrOrZhOrJa 
+                isDeOrEsOrFrOrZhOrJaOrHi 
                   ? 'px-2 py-1 text-[11px]' 
                   : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
               } ${
@@ -342,7 +346,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={lang.code}
                   onClick={() => {
-                    changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja');
+                    changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi');
                     setMobileMenuOpen(false);
                   }}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${

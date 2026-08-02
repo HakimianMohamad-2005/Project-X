@@ -28,12 +28,14 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('books');
   const [theme, setTheme] = useState<ThemeMode>('light');
 
-  // Handle popstate for / /en /es /de /fr /zh /ja navigation
+  // Handle popstate for / /en /es /de /fr /zh /ja /hi navigation
   useEffect(() => {
     const handlePopState = () => {
       const pathname = window.location.pathname;
       let targetLang = 'fa';
-      if (pathname === '/ja' || pathname.startsWith('/ja/')) {
+      if (pathname === '/hi' || pathname.startsWith('/hi/')) {
+        targetLang = 'hi';
+      } else if (pathname === '/ja' || pathname.startsWith('/ja/')) {
         targetLang = 'ja';
       } else if (pathname === '/zh' || pathname.startsWith('/zh/')) {
         targetLang = 'zh';
