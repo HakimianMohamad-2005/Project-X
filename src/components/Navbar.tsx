@@ -26,6 +26,7 @@ const languages = [
   { code: 'zh', name: '中文', label: 'ZH', path: '/zh' },
   { code: 'ja', name: '日本語', label: 'JA', path: '/ja' },
   { code: 'hi', name: 'हिन्दी', label: 'HI', path: '/hi' },
+  { code: 'ar', name: 'العربية', label: 'AR', path: '/ar' },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -44,6 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const isLight = theme === 'light';
   const isFa = i18n.language === 'fa';
+  const isAr = i18n.language === 'ar';
   const isEs = i18n.language === 'es';
   const isDe = i18n.language === 'de';
   const isFr = i18n.language === 'fr';
@@ -53,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isDeOrEsOrFrOrZhOrJaOrHi = isDe || isEs || isFr || isZh || isJa || isHi;
   const currentLangObj = languages.find((l) => l.code === i18n.language) || languages[0];
 
-  const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi') => {
+  const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar') => {
     const targetObj = languages.find((l) => l.code === targetLang) || languages[0];
     i18n.changeLanguage(targetLang);
     window.history.pushState({}, '', targetObj.path);
@@ -161,9 +163,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Action Controls */}
-          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDe ? 'gap-1 me-2 pe-4' : isFr ? 'gap-1 me-2 pe-4 sm:pe-6' : isZh || isJa || isHi ? 'gap-1 me-2 pe-4' : isEs ? 'gap-1 me-2 pe-4' : isFa ? 'gap-1 sm:gap-2' : 'gap-1 sm:gap-2 pe-4'}`}>
+          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDe ? 'gap-1 me-2 pe-4' : isFr ? 'gap-1 me-2 pe-4 sm:pe-6' : isZh || isJa || isHi ? 'gap-1 me-2 pe-4' : isEs ? 'gap-1 me-2 pe-4' : isFa || isAr ? 'gap-1 sm:gap-2' : 'gap-1 sm:gap-2 pe-4'}`}>
             
-            {/* 8-Language Dropdown Switcher */}
+            {/* 9-Language Dropdown Switcher */}
             <div className="relative shrink-0 flex-shrink-0">
               <motion.button
                 whileHover={{ scale: 1.03 }}
@@ -206,7 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         return (
                           <button
                             key={lang.code}
-                            onClick={() => changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi')}
+                            onClick={() => changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar')}
                             className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                               isSelected
                                 ? isLight
@@ -346,7 +348,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={lang.code}
                   onClick={() => {
-                    changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi');
+                    changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar');
                     setMobileMenuOpen(false);
                   }}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
