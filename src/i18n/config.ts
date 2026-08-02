@@ -6,15 +6,17 @@ import esTranslation from './locales/es.json';
 import deTranslation from './locales/de.json';
 import frTranslation from './locales/fr.json';
 import zhTranslation from './locales/zh.json';
+import jaTranslation from './locales/ja.json';
 
 // Detect initial language based on URL path
 const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+const isJaPath = pathname === '/ja' || pathname.startsWith('/ja/');
 const isZhPath = pathname === '/zh' || pathname.startsWith('/zh/');
 const isFrPath = pathname === '/fr' || pathname.startsWith('/fr/');
 const isDePath = pathname === '/de' || pathname.startsWith('/de/');
 const isEsPath = pathname === '/es' || pathname.startsWith('/es/');
 const isEnPath = pathname === '/en' || pathname.startsWith('/en/');
-const initialLang = isZhPath ? 'zh' : isFrPath ? 'fr' : isDePath ? 'de' : isEsPath ? 'es' : isEnPath ? 'en' : 'fa';
+const initialLang = isJaPath ? 'ja' : isZhPath ? 'zh' : isFrPath ? 'fr' : isDePath ? 'de' : isEsPath ? 'es' : isEnPath ? 'en' : 'fa';
 
 // Helper function to sync document direction and lang attribute
 export const syncDocumentDirAndLang = (lang: string) => {
@@ -37,6 +39,7 @@ i18n
       de: { translation: deTranslation },
       fr: { translation: frTranslation },
       zh: { translation: zhTranslation },
+      ja: { translation: jaTranslation },
     },
     lng: initialLang,
     fallbackLng: 'fa',
