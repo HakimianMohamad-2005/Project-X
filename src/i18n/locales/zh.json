@@ -1,0 +1,754 @@
+{
+  "navbar": {
+    "title": "红毛猩猩",
+    "highlight": "3+",
+    "subtitle": "Ali Asghar Hakimian 著（全两册）",
+    "links": {
+      "books": "书籍介绍与购买",
+      "framework": "3+ 框架",
+      "quiz": "管理测评",
+      "caseStudies": "工业案例",
+      "cards": "决策卡",
+      "mistakesLessons": "40个错误与教训",
+      "faq": "常见问题",
+      "b2b": "企业采购",
+      "author": "关于作者",
+      "more": "更多..."
+    },
+    "samplePdfBtn": "免费试读",
+    "samplePdfMobile": "免费试读 (36页)",
+    "orderTrackingBtn": "订单查询",
+    "cartTooltip": "购物车",
+    "switchThemeDark": "切换至暗黑模式",
+    "switchThemeLight": "切换至明亮模式",
+    "langSwitch": "ZH",
+    "langTitle": "切换语言"
+  },
+  "hero": {
+    "badge": "基于制造业40年高管实战经验",
+    "title": "红毛猩猩",
+    "highlight": "3+",
+    "subtitle": "从本能式管理走向可持续、自我纠错的学习型组织",
+    "authorInfoPart1": "作者：",
+    "authorName": "Ali Asghar Hakimian",
+    "authorInfoPart2": " • 深刻剖析表面化管理模型，针对工厂、仓库、生产线及有毒账单提供实用解决方案。",
+    "features": {
+      "f1": "剖析7个真实工业案例（血清粉、PVC、轴承等）",
+      "f2": "停止组织内部流血与应对通胀利润的实用公式",
+      "f3": "特别章节：40年管理生涯总结的40个重大错误与40条教训",
+      "f4": "实现从个人记忆到系统化组织记忆的转变"
+    },
+    "ctaBundle": "购买全套（第1卷 & 第2卷）",
+    "discountBadge": "立享 20% 折扣",
+    "ctaSamplePdf": "下载36页免费试读版 (PDF)",
+    "quickJumpQuiz": "在线测试：本能式管理程度（5题）",
+    "quickJumpCases": "查看真实工业案例",
+    "showcaseTitle": "封面设计与新版展示",
+    "totalPagesBadge": "共 728 页",
+    "authorCardName": "作者：Ali Asghar Hakimian",
+    "authorCardDegree": "企业战略管理博士",
+    "authorCardSpec": "工业会计与管理软件专家",
+    "authorResumeBtn": "完整个人履历 →",
+    "bundlePriceLabel": "全套（两册）价格：",
+    "addBundleBtn": "将全套加入购物车",
+    "tabs": {
+      "tab2Badge": "标签 2",
+      "tab2Title": "3+ 框架模拟器 →",
+      "tab2Desc": "观察、诊断并运用杠杆点",
+      "tab3Badge": "标签 3",
+      "tab3Title": "5题在线测试 →",
+      "tab3Desc": "评估组织的本能式管理程度",
+      "tab4Badge": "标签 4",
+      "tab4Title": "7个真实工业案例 →",
+      "tab4Desc": "血清粉、PVC、轴承与学生牛奶",
+      "tab6Badge": "标签 6",
+      "tab6Title": "40个错误与40条教训 →",
+      "tab6Desc": "实用管理经验的完整归档"
+    }
+  },
+  "books": {
+    "sectionBadge": "出版商直营订购",
+    "sectionTitle": "订购纸质版",
+    "sectionTitleHighlight": "红毛猩猩 3+",
+    "sectionSubtitle": "您可以单独购买第1卷或第2卷，或选择附带 Ali Asghar Hakimian 亲笔签名及专属赠言的完整套装。",
+    "addedToCart": "已加入购物车",
+    "vol1": {
+      "id": "vol-1",
+      "badge": "第一卷",
+      "title": "从本能式管理到意识型管理",
+      "subtitle": "揭示决策陷阱、隐形浪费并诊断本能式行为",
+      "price": 380000,
+      "pageCount": 390,
+      "summary": "第一卷深入剖析企业管理中的本能式行为模式，揭示冲动与经验主义决策如何导致隐性成本增加与资源浪费。",
+      "keyTopicsTitle": "第1卷核心主题：",
+      "keyTopics": [
+        "识别管理中的本能式行为陷阱",
+        "计算决策隐性成本的实用公式",
+        "危机中的反应式与本能式行为分析",
+        "诊断并定位组织内部流血点"
+      ],
+      "ctaBtn": "订购第1卷 (390页)"
+    },
+    "vol2": {
+      "id": "vol-2",
+      "badge": "第二卷",
+      "title": "可持续性与 3+ 增长路线图",
+      "subtitle": "三大杠杆、决策卡与学习型组织架构",
+      "price": 480000,
+      "pageCount": 510,
+      "summary": "第二卷提供具体操作工具、三大杠杆（无过滤观察现实、科学决策、系统化执行）以及40张决策卡，助力企业摆脱对个人的过度依赖。",
+      "keyTopicsTitle": "第2卷核心主题：",
+      "keyTopics": [
+        "实现组织稳定性与可持续性的三大杠杆",
+        "构建自我纠错的学习型组织架构",
+        "面向管理者与决策者的互动式决策卡",
+        "40年管理生涯中的40个错误与40条教训"
+      ],
+      "ctaBtn": "订购第2卷 (510页)"
+    },
+    "bundle": {
+      "id": "bundle-full",
+      "badge": "特惠套装 • 最受欢迎的选择",
+      "title": "全套组合（3+ 可持续发展全集）",
+      "subtitle": "包含第1卷和第2卷精装纸质图书",
+      "originalPrice": 860000,
+      "bundlePrice": 688000,
+      "totalPages": 900,
+      "totalPagesLabel": "共 900 页",
+      "signatureTitle": "Ali Asghar Hakimian 亲笔签名与专属赠言",
+      "signatureLabel": "请输入题词赠言接收人或企业名称：",
+      "signaturePlaceholder": "例如：张总 / 某某集团",
+      "ctaBtn": "以 8 折优惠订购全套",
+      "addedSuccess": "已成功将全套加入购物车",
+      "features": [
+        "相比单独购买立享 20% 专属优惠",
+        "作者手写签名及个性化赠言",
+        "免费快递送货上门",
+        "免费获取所有决策卡及诊断检查表"
+      ]
+    }
+  },
+  "author": {
+    "badge": "40余年工业与管理实战积淀",
+    "imageBadgeYears": "40+ 年工业与管理经验",
+    "imageName": "Ali Asghar Hakimian",
+    "imageTitle": "工业管理专家与企业系统架构师",
+    "sectionTitle": "关于作者",
+    "name": "Ali Asghar Hakimian",
+    "tag1": "工业管理专家与系统优化顾问",
+    "tag2": "企业 ERP 与软件系统架构师",
+    "tag3": "财务系统与工业成本会计专家",
+    "degree": "德黑兰大学企业战略管理博士",
+    "subtitle": "从车间一线到组织架构设计",
+    "quote": "“经验不取决于在管理椅子上坐了多少年，而在于能否将真实的错误转化为防止其再次发生的制度与方法。”",
+    "bioParagraph1": "四十多年来，Ali Asghar Hakimian 不仅在管理层办公室，更深耕于生产一线：从机械设备与生产线，到成本会计、软件系统、销售与战略决策。",
+    "bioParagraph2": "他曾创立服务近1,500家企业客户的软件公司，为40多家制造工厂提供顾问指导，并持续推进企业运营变革。他的核心优势在于精准连接机械、人力资源、数据、流程与战略决策。",
+    "bioParagraph3": "《红毛猩猩 3+》正是这一历程的结晶：将一线经验、错误与纠错转化为一套框架，帮助企业构建组织记忆，转型为持续学习的组织。",
+    "card1Title": "工业管理者",
+    "card1Desc": "专注于生产效率、瓶颈消除、质量控制及运营重组",
+    "card2Title": "企业系统架构师",
+    "card2Desc": "精通 ERP、财务、生产、销售及仓库工作流系统",
+    "card3Title": "财务与工业成本会计专家",
+    "card3Desc": "精通成本核算、成本控制与数据驱动的理性决策",
+    "stats": {
+      "clientsCount": "1,500+",
+      "clientsLabel": "服务近 1,500 家企业客户",
+      "clientsSub": "管理软件公司创始人",
+      "factoriesCount": "40+",
+      "factoriesLabel": "指导 40+ 家工厂与工业基地",
+      "factoriesSub": "运营变革与系统重构",
+      "yearsCount": "40+ 年",
+      "yearsLabel": "四十余年一线实战经验",
+      "yearsSub": "从生产车间到董事会"
+    }
+  },
+  "faq": {
+    "headerBadge": "购买前完整指南",
+    "headerTitle": "阅读前需要了解的一切",
+    "headerSubtitle": "关于适用人群、实用价值、配送方式以及企业发票的清晰解答。",
+    "ctaSamplePdf": "下载36页免费试读版",
+    "ctaBuyBooks": "查看并订购纸质版图书",
+    "categoryAll": "所有问题",
+    "categoryAudience": "适用人群与先决条件",
+    "categoryContent": "内容与章节",
+    "categoryPurchase": "试读与签名",
+    "categoryShipping": "配送与发票",
+    "highlightsTitle": "核心要点：",
+    "bottomBoxTitle": "还有其他疑问或需要采购咨询？",
+    "bottomBoxSubtitle": "《红毛猩猩 3+》出版支持团队随时为您服务。",
+    "supportPhoneBtn": "服务热线：+98 21 88990011",
+    "items": [
+      {
+        "id": "faq-1",
+        "category": "audience",
+        "question": "这套书具体适合哪些读者？",
+        "answer": "《红毛猩猩 3+》专门面向总经理、工厂主、企业创始人及技术总监。如果您感觉所有决策压力都集中在自己身上，或者一旦离开公司业绩就下滑，本书将是您的系统路线图。",
+        "highlights": [
+          "制造业和服务业企业总经理及企业主",
+          "董事会成员、财务总监与销售总监",
+          "希望从感性管理转向可持续架构的企业家"
+        ]
+      },
+      {
+        "id": "faq-2",
+        "category": "content",
+        "question": "阅读本书需要具备 MBA 等学术背景吗？",
+        "answer": "不需要！本书语言通俗直白，毫无晦涩空洞的理论。所有模型、公式和决策卡均源于真实工业生产中的实战经验。",
+        "highlights": [
+          "通俗易懂，无空洞理论",
+          "聚焦真实市场挑战与切实可行的方案",
+          "提供一步一步的检查表与标准流程"
+        ]
+      },
+      {
+        "id": "faq-3",
+        "category": "content",
+        "question": "第1卷和第2卷的主要区别是什么？",
+        "answer": "第1卷（从本能式管理到意识型管理）侧重诊断本能式管理的陷阱并揭示隐性损耗的原因；第2卷（可持续性与 3+ 路线图）提供具体操作工具、三大杠杆、决策卡与组织记忆构建方法。",
+        "highlights": [
+          "第1卷：病理分析与本能式管理陷阱识别",
+          "第2卷：实战工具箱、防损公式与可持续架构"
+        ]
+      },
+      {
+        "id": "faq-4",
+        "category": "content",
+        "question": "本书与西方传统管理书籍有何不同？",
+        "answer": "许多管理译著忽略了高通胀、高波动性市场环境及本土文化特征。《红毛猩猩 3+》直接提炼自40年真实的工业本土实践。",
+        "highlights": [
+          "适应高通胀与高波动市场环境",
+          "深入剖析企业文化与员工行为特点",
+          "包含制造业领域的真实案例研究"
+        ]
+      },
+      {
+        "id": "faq-5",
+        "category": "purchase",
+        "question": "可以在购买前先试读部分内容吗？",
+        "answer": "当然可以！您可以免费下载包含两卷核心章节精选的36页试读版 PDF。",
+        "highlights": [
+          "立即获取 36 页试读版 PDF",
+          "完全免费下载"
+        ]
+      },
+      {
+        "id": "faq-6",
+        "category": "purchase",
+        "question": "是否可以申请作者亲笔签名及专属赠言？",
+        "answer": "可以！在将全套组合加入购物车时，您可以勾选签名选项并填写赠言接收人姓名。",
+        "highlights": [
+          "作者在扉页手写签名",
+          "非常适合作为赠送高管与合作伙伴的高尊礼品"
+        ]
+      },
+      {
+        "id": "faq-7",
+        "category": "shipping",
+        "question": "发货配送流程与时效如何？",
+        "answer": "所有订单均在24个工作小时内精心包装并打包发货，运单号将通过短信发送给您。",
+        "highlights": [
+          "快速快递配送",
+          "全套组合免运费",
+          "支持实时在线查询物流"
+        ]
+      },
+      {
+        "id": "faq-8",
+        "category": "shipping",
+        "question": "是否支持企业大宗采购及开具正式发票？",
+        "answer": "支持！对于采购多套图书的企业和工厂，我们开具正式发票，并可为大宗采购安排与作者的咨询会议。",
+        "highlights": [
+          "开具正式企业发票",
+          "采购5套以上享受梯度折扣",
+          "可预约作者面对面交流与咨询"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "title": "红毛猩猩",
+    "highlight": "3+",
+    "desc": "Ali Asghar Hakimian 著作《从本能式管理走向可持续、自我纠错的学习型组织》（全两册）。",
+    "domain": "orangutanplus3.com",
+    "navSectionsTitle": "网站导航",
+    "navToolsTitle": "工具与服务",
+    "navSupportTitle": "支持与采购",
+    "navSupportText": "快速快递发货。大宗采购提供正式企业发票。",
+    "supportPhone": "服务热线：+98 21 88990011",
+    "badges": {
+      "shipping": "快速快递送达",
+      "authenticity": "原版纸质图书保障",
+      "invoice": "提供正式企业发票"
+    },
+    "links": {
+      "books": "书籍介绍",
+      "framework": "3+ 框架模拟器",
+      "caseStudies": "真实工业案例",
+      "quiz": "在线管理测评",
+      "cards": "决策卡",
+      "mistakesLessons": "40个错误与教训",
+      "faq": "常见问题",
+      "b2b": "企业采购",
+      "author": "关于 Ali Asghar Hakimian"
+    },
+    "copyright": "本平台及图书内容的所有权利均归 Ali Asghar Hakimian 所有 (orangutanplus3.com)。",
+    "devInfo": "遵循工业管理标准精心打造。"
+  },
+  "framework": {
+    "badge": "《红毛猩猩 3+》核心概念模型",
+    "title": "3+ 框架互动模拟器",
+    "subtitle": "Ali Asghar Hakimian 提出的三步法公式，拯救企业于本能式管理、重复性错误及对个人的过度依赖。",
+    "stepLabel": "步骤 {{num}}",
+    "aftershockLabel": "+1 决策余震效应",
+    "orangutanTitle": "本能式管理（红毛猩猩模式）",
+    "plus3Title": "3+ 系统化方法（Ali Asghar Hakimian）",
+    "bottomLabel": "实践应用：",
+    "bottomText": "3+ 框架的所有阶段及其配套公式与检查表均在第1卷和第2卷中有详尽讲解。",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "无过滤观察现实",
+        "subtitle": "直面车间一线，而非依赖粉饰的汇报",
+        "description": "许多管理者仅在办公室里审视企业，财务报告往往滞后或被加工。在步骤1中，管理者学会直接在车间和仓库中分析一手实时数据。",
+        "orangutanDiff": "在本能式管理中，管理者凭情绪反应并互相推诿，缺乏数据支持。",
+        "plus3Diff": "在 3+ 框架中，管理者基于现场数据精准定位真实原因。",
+        "tag": "步骤 1 • 观察"
+      },
+      {
+        "stepNumber": 2,
+        "title": "在杠杆点精准干预",
+        "subtitle": "聚焦于核心瓶颈（约束理论 - TOC）",
+        "description": "同时对所有部门施压会使组织不堪重负。杠杆点是关键瓶颈，在此处改善10%就能使整体产能翻倍。",
+        "orangutanDiff": "在本能式管理中，管理者对所有部门盲目施压，累垮高效团队。",
+        "plus3Diff": "在 3+ 框架中，所有资源集中用于消除真正的瓶颈。",
+        "tag": "步骤 2 • 聚焦"
+      },
+      {
+        "stepNumber": 3,
+        "title": "固化至组织记忆",
+        "subtitle": "将解决方案转化为检查表、标准与培训",
+        "description": "如果关键员工离职后解决方案随之消失，那这就不是真正的方案。固化意味着创建检查表、完善库存公式并构建组织记忆。",
+        "orangutanDiff": "在本能式管理中，知识与流程随核心员工离职而流失。",
+        "plus3Diff": "在 3+ 框架中，知识沉淀于流程，组织保持持续学习。",
+        "tag": "步骤 3 • 固化"
+      },
+      {
+        "stepNumber": 4,
+        "title": "+ 正向决策余震效应 (+1)",
+        "subtitle": "正确决策带来的连锁正向效应",
+        "description": "当关键杠杆点得到纠正，正向效应就会扩散：士气提升、浪费减少、组织内部流血停止，真正的利润随之显现。",
+        "orangutanDiff": "在本能式管理中，仓促决策带来负向余震效应与新危机。",
+        "plus3Diff": "在 3+ 框架中，结构性纠错引发持续的价值创造波浪。",
+        "tag": "决策余震效应"
+      }
+    ]
+  },
+  "quiz": {
+    "badge": "管理者自测工具",
+    "title": "测试：本能式管理程度",
+    "subtitle": "回答5个真实管理场景题，评估您的组织在多大程度上处于本能式管理状态。",
+    "progressText": "第 {{num}} 题 / 共 {{total}} 题",
+    "chapterRefPrefix": "书籍章节参考：",
+    "prevBtn": "上一题",
+    "nextBtn": "下一题",
+    "viewResultsBtn": "查看测评结果",
+    "retakeBtn": "重新测试",
+    "orderBundleBtn": "以折扣价订购全套图书",
+    "resultScoreTitle": "您的系统化程度得分：{{percentage}}%",
+    "resultAnalysisTitle": "组织行为分析：",
+    "resultSolutionTitle": "Ali Asghar Hakimian 推荐的解决方案：",
+    "tiers": {
+      "t1": {
+        "title": "显著的红毛猩猩模式（感性与本能式管理）",
+        "description": "您的组织处于高压状态，但难以找到根本原因。决策严重依赖直觉和个人记忆。",
+        "recommendation": "必读指南：第1卷（第1-4章：无过滤观察现实）。"
+      },
+      "t2": {
+        "title": "波动中的本能式管理（部分系统化）",
+        "description": "虽然有表单制度，但关键人员离职仍会导致混乱。利润正通过库存漏洞偷偷流失。",
+        "recommendation": "建议研读第1卷及第2卷（库存编码、消除有毒账单）。"
+      },
+      "t3": {
+        "title": "迈向 3+ 系统化（成长型组织）",
+        "description": "大部分流程透明规范。为取得持久成功，所有流程都需要转化为检查表与标准培训。",
+        "recommendation": "建议研读第2卷（第39 & 40章：40个错误与40条教训）。"
+      },
+      "t4": {
+        "title": "自我学习与可持续的 3+ 组织（优秀）",
+        "description": "恭喜！您的组织拥有完善的组织记忆，使用一手实时数据，且能在没有老板盯守的情况下高效运转。",
+        "recommendation": "继续运用第2卷保持卓越运营。"
+      }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "question": "当生产出现延误时，管理层通常如何反应？",
+        "chapterRef": "第1卷 • 第1 & 2章（红毛猩猩模式）",
+        "options": [
+          { "text": "召开紧急会议、大发雷霆并互相指责。", "feedback": "本能式行为：缺乏数据支撑的情绪化反应。" },
+          { "text": "在未查明原因的情况下强制所有部门加班。", "feedback": "无差别施压会累垮高效部门。" },
+          { "text": "直接深入车间现场，核查产能瓶颈与物料进库情况。", "feedback": "无过滤观察现实（3+ 框架步骤 1）。" }
+        ]
+      },
+      {
+        "id": 2,
+        "question": "公司的库存和客户订单数据是如何管理的？",
+        "chapterRef": "第1卷 • 第3章（轴承库存审计）",
+        "options": [
+          { "text": "主要凭主管头脑记忆或手写便签记录。", "feedback": "对个人记忆的危险依赖，缺乏组织记忆。" },
+          { "text": "散落于多个 Excel 表格中，各部门版本不一。", "feedback": "矛盾的数据会导致沟通混乱。" },
+          { "text": "在集成系统中统一编码，并在货位图上有精准记录。", "feedback": "透明录入与组织记忆（3+ 框架）。" }
+        ]
+      },
+      {
+        "id": 3,
+        "question": "您评估销售团队绩效的主要指标是什么？",
+        "chapterRef": "第2卷 • 第3章（有毒账单与营业额）",
+        "options": [
+          { "text": "每日电话拜访数量和表面忙碌程度。", "feedback": "奖赏盲目忙碌而非实际结果会导致时间浪费。" },
+          { "text": "总开票金额，即使回款期限并不明确。", "feedback": "产生有毒账单，缺乏实际现金流入。" },
+          { "text": "银行账户实际到账金额与续订情况。", "feedback": "结果导向指标，保障资金链安全（3+ 框架）。" }
+        ]
+      },
+      {
+        "id": 4,
+        "question": "当核心员工提出离职时会发生什么？",
+        "chapterRef": "第1卷 • 第6章（管理者即培训师）",
+        "options": [
+          { "text": "部门陷入瘫痪，只能接受薪酬绑架来留人。", "feedback": "因缺乏标准化而导致组织极为脆弱。" },
+          { "text": "仓促招聘新员工，陷入长达数月且代价高昂的试错期。", "feedback": "缺乏系统化的知识传承。" },
+          { "text": "相对从容，因为所有流程都有检查表和操作说明。", "feedback": "符合 3+ 框架的学习型组织。" }
+        ]
+      },
+      {
+        "id": 5,
+        "question": "您如何计算公司的年度净利润？",
+        "chapterRef": "第2卷 • 第4章（利润与通货膨胀）",
+        "options": [
+          { "text": "根据年末银行余额计算，未考虑原材料补货成本。", "feedback": "通胀环境下的危险错觉。" },
+          { "text": "按照传统会计账面价值，将资产重估升值当作利润。", "feedback": "混淆资产升值与实际经营利润。" },
+          { "text": "严格区分资产升值与经营净利润。", "feedback": "保持理性财务智慧，保障原材料再采购能力（3+ 框架）。" }
+        ]
+      }
+    ]
+  },
+  "caseStudies": {
+    "badge": "提炼自40年工业一线实战",
+    "title": "真实工业案例库",
+    "subtitle": "归档案例包括蒸汽针阀、68年轴承库存、PVC泄露与有毒账单等。",
+    "problemLabel": "问题症结：",
+    "keyMetricLabel": "核心成果：",
+    "viewCaseBtn": "查看完整案例",
+    "modalProblemTitle": "1. 问题症结与危机：",
+    "modalLeverTitle": "2. 杠杆点干预 (3+)：",
+    "modalResultTitle": "3. 运营与财务成果：",
+    "closeModalBtn": "关闭窗口",
+    "categories": {
+      "all": "所有案例",
+      "production": "生产与工业",
+      "finance": "财务与库存",
+      "sales": "销售与市场",
+      "ai": "AI与技术应用"
+    },
+    "items": [
+      {
+        "id": "case-steam-needle",
+        "title": "蒸汽针阀与血清粉工厂",
+        "subtitle": "蒸发产能从 2.5 吨/小时提升至 6.135 吨/小时",
+        "categoryLabel": "生产与工业",
+        "volumeRef": "第2卷 • 第1章",
+        "problem": "血清粉工厂产能停滞在 2.5 吨/小时，众人皆归咎于锅炉设备。",
+        "leverIntervention": "揭示高海拔（2,143米）对沸点的影响，调整冷却塔并重新校准蒸汽针阀。",
+        "results": "在无需数百万巨额设备投资的情况下，产能提升 2.4 倍至 6.135 吨/小时。",
+        "keyMetric": "产能提升 +145%",
+        "quote": "“问题不在于价值数百万的锅炉，而在于对一枚简单针阀的精准调节。”"
+      },
+      {
+        "id": "case-pvc-leak",
+        "title": "8 吨 PVC 泄露与组织内部流血",
+        "subtitle": "查明仓库中原料默默流失的隐形漏洞",
+        "categoryLabel": "财务与库存",
+        "volumeRef": "第2卷 • 第2章",
+        "problem": "年度盘点时，尽管单据齐全，仍有 8 吨 PVC 莫名缺失。",
+        "leverIntervention": "将标准配方与废品比率、电子秤实际称重数据进行对账核查。",
+        "results": "彻底止住年度损耗，通过实时监控封堵泄漏点。",
+        "keyMetric": "封堵 8 吨损耗",
+        "quote": "“组织内部流血最危险之处在于，它无声无息地削弱了企业的根基。”"
+      },
+      {
+        "id": "case-bearing-68y",
+        "title": "68年历史的轴承库存审计",
+        "subtitle": "摆脱对个人记忆的过度依赖",
+        "categoryLabel": "财务与库存",
+        "volumeRef": "第1卷 • 第3章",
+        "problem": "一家拥有68年历史的企业，数千种零件仅凭仓管员一人头脑记忆。",
+        "leverIntervention": "推行公开审计、零部件唯一编码及 3D 货位地址管理。",
+        "results": "停机时间大幅减少，彻底摆脱对个别人员的依赖。",
+        "keyMetric": "100% 零件编码化",
+        "quote": "“如果组织的记忆只存在于某一个人的脑子里，那他休假时企业就会陷入瘫痪。”"
+      },
+      {
+        "id": "case-milk-4am",
+        "title": "凌晨 4 点的原奶交接记录",
+        "subtitle": "铁律：先登记，后交接",
+        "categoryLabel": "生产与工业",
+        "volumeRef": "第1 & 2卷",
+        "problem": "凌晨 4 点口头交接原奶导致账实长期严重不符。",
+        "leverIntervention": "确立铁律：“先完成数字/书面登记，再进行物理交接”——即便是凌晨 4 点。",
+        "results": "彻底消除数量偏差，实现结算完全透明。",
+        "keyMetric": "损耗偏差 0%",
+        "quote": "“一个系统的纪律性，体现在车间凌晨 4 点的执行细节中。”"
+      },
+      {
+        "id": "case-kabab-soda",
+        "title": "虚假利润与通胀幻象",
+        "subtitle": "区分经营利润与资产升值",
+        "categoryLabel": "销售与市场",
+        "volumeRef": "第2卷 • 第4章",
+        "problem": "管理层为高额利润庆祝，实则利润完全源于通胀下库存资产的升值。",
+        "leverIntervention": "严格剥离未实现升值与经营利润，重新调整折扣策略。",
+        "results": "在高通胀环境下有效保障了原材料再采购与资金链安全。",
+        "keyMetric": "真实利润清晰化",
+        "quote": "“如果您的利润赶不上原材料的通胀率，您实际上是在吃本金。”"
+      },
+      {
+        "id": "case-sales-toxic",
+        "title": "销售团队与有毒账单",
+        "subtitle": "批判仅基于盲目忙碌的薪酬激励",
+        "categoryLabel": "销售与市场",
+        "volumeRef": "第2卷 • 第3章",
+        "problem": "24 人的销售团队频繁电话拜访，却留下了大量坏账。",
+        "leverIntervention": "将销售提成调整为“以银行账户实际到账为准”。",
+        "results": "现金流提升至 3 倍，坏账率归零。",
+        "keyMetric": "现金流提升 3 倍",
+        "quote": "“在资金到账之前，任何销售都只是一张昂贵的空头支票。”"
+      },
+      {
+        "id": "case-school-milk",
+        "title": "学生牛奶配送与危机处理",
+        "subtitle": "提前 24 小时预案的危机管理",
+        "categoryLabel": "AI与技术应用",
+        "volumeRef": "第1 & 2卷",
+        "problem": "罢工威胁危及供应给学校的 10 吨鲜牛奶。",
+        "leverIntervention": "提前制定应急替代配送方案并联络本地单位。",
+        "results": "100% 牛奶按时送达，零损失。",
+        "keyMetric": "零损失配送",
+        "quote": "“危机管理意味着在暴风雨来临前就撑好伞。”"
+      }
+    ]
+  },
+  "decisionCards": {
+    "badge": "管理者案头实战工具",
+    "title": "互动式决策卡",
+    "subtitle": "4款实战工具与检查表，用于评估决策隐性成本、诊断组织内部流血及应对危机。",
+    "viewChecklistBtn": "查看检查表",
+    "closeProtocolBtn": "关闭方案",
+    "costCalc": {
+      "title": "决策真实成本计算器：",
+      "directCostLabel": "项目直接成本（元/Tomans）：",
+      "totalEstimatedLabel": "含隐性损耗的预估总成本：",
+      "disclaimer": "*包含机会成本、学习试错成本及决策余震效应。"
+    },
+    "bleedAudit": {
+      "title": "组织内部流血诊断检查表：",
+      "countIdentified": "已识别 6 项中的 {{count}} 项"
+    },
+    "cards": [
+      {
+        "id": "card-cost-calc",
+        "title": "决策卡：真实成本",
+        "subtitle": "下达指令前评估 4 项隐性成本",
+        "categoryLabel": "隐性成本",
+        "frontSummary": "任何仅按直接财务成本评估的管理决策，都会带来至少 3 项隐性的二次成本。",
+        "backProtocol": "批准项目前必问的 4 个问题：",
+        "actionableSteps": [
+          "1. 直接成本（采购设备与原材料）",
+          "2. 机会成本（哪些关键任务被推迟？）",
+          "3. 学习与试错成本（达到熟练需要多久？）",
+          "4. 决策余震修正成本（撤回或纠错需要花多少钱？）"
+        ]
+      },
+      {
+        "id": "card-bleed-audit",
+        "title": "诊断卡：组织内部流血",
+        "subtitle": "查明运营中 6 个默默失血的隐形漏洞",
+        "categoryLabel": "财务审计",
+        "frontSummary": "组织内部流血是传统财务报表中无法察觉的利润默默流失。",
+        "backProtocol": "封堵漏洞的 6 项检查清单：",
+        "actionableSteps": [
+          "1. 入库地磅重量偏差",
+          "2. 设备调试与试机损耗",
+          "3. 销售人员未经登记的微小折扣",
+          "4. 仓库中未编码的备品备件",
+          "5. 生产线上未经记录的微小停机",
+          "6. 返工与二次加工成本"
+        ]
+      },
+      {
+        "id": "card-crisis-72h",
+        "title": "72小时危机决策卡",
+        "subtitle": "资源突发短缺时的优先级应对方案",
+        "categoryLabel": "危机管理",
+        "frontSummary": "在危机发生的前 72 小时内，情绪化反应会毁掉组织。本方案旨在保护核心生命线。",
+        "backProtocol": "前 72 小时按优先级排列的紧急措施：",
+        "actionableSteps": [
+          "0-12小时：冻结非关键支出并盘点库存。",
+          "12-24小时：与核心客户和供应商直接沟通。",
+          "24-48小时：启动 B 计划（替代物流方案）。",
+          "48-72小时：编写检查表以防再次发生。"
+        ]
+      },
+      {
+        "id": "card-key-person",
+        "title": "风险卡：核心人员离职",
+        "subtitle": "评估对个人的依赖与系统化程度",
+        "categoryLabel": "人力资源",
+        "frontSummary": "如果一个人的离职会导致部门瘫痪，这就不是系统——而是危险的个人依赖。",
+        "backProtocol": "应对人员离职风险的三步法：",
+        "actionableSteps": [
+          "1. 找出掌握最多未书面化知识的 3 个人。",
+          "2. 为他们的 10 项核心职责编写标准检查表。",
+          "3. 进行为期 7 天的离岗测试以检验系统运转。"
+        ]
+      }
+    ]
+  },
+  "mistakesLessons": {
+    "badge": "第 39 & 40 章总结（第2卷）",
+    "title": "40个错误与40条教训展厅",
+    "subtitle": "Ali Asghar Hakimian 提炼自 40 年管理生涯的 40 个重大管理错误与 40 条核心教训。",
+    "toggleMistakes": "40个重大错误",
+    "toggleLessons": "40条核心教训",
+    "searchPlaceholder": "按标题或描述搜索...",
+    "noResults": "未找到符合搜索条件的结果。",
+    "categories": {
+      "all": "所有类别",
+      "view": "观察现实",
+      "decision": "决策制定",
+      "people": "人员与文化",
+      "system": "系统与流程",
+      "market": "销售与市场"
+    },
+    "items": [
+      {
+        "id": "m-1",
+        "number": 1,
+        "type": "mistake",
+        "title": "仅在办公室里进行管理",
+        "description": "盲目相信经过粉饰的书面汇报，而不亲自深入车间与一线人员面对面交流。",
+        "categoryLabel": "观察现实",
+        "bookRef": "第2卷 • 第39章（错误 1）"
+      },
+      {
+        "id": "m-2",
+        "number": 12,
+        "type": "mistake",
+        "title": "买新设备来掩盖管理失误",
+        "description": "采购昂贵的新设备，而现有设备其实只需要对针阀或塔体进行 5% 的微调。",
+        "categoryLabel": "系统与流程",
+        "bookRef": "第2卷 • 第39章（错误 12）"
+      },
+      {
+        "id": "m-3",
+        "number": 24,
+        "type": "mistake",
+        "title": "奖赏表面忙碌而非实际销售",
+        "description": "表扬打了 100 个拜访电话却带来一屁股坏账的销售员。",
+        "categoryLabel": "销售与市场",
+        "bookRef": "第2卷 • 第39章（错误 24）"
+      },
+      {
+        "id": "m-4",
+        "number": 31,
+        "type": "mistake",
+        "title": "妥协于不可替代员工的绑架",
+        "description": "忍受破坏性员工，仅仅因为库存或生产的知识全都留在他个人的脑子里。",
+        "categoryLabel": "人员与文化",
+        "bookRef": "第2卷 • 第39章（错误 31）"
+      },
+      {
+        "id": "m-5",
+        "number": 38,
+        "type": "mistake",
+        "title": "将通胀带来的收益误认为经营效率",
+        "description": "为营业额增长 50% 欢呼，而实际生产出来的产品数量却下降了 20%。",
+        "categoryLabel": "决策制定",
+        "bookRef": "第2卷 • 第39章（错误 38）"
+      },
+      {
+        "id": "l-1",
+        "number": 1,
+        "type": "lesson",
+        "title": "先登记，后交接——绝无例外",
+        "description": "财务与系统的清晰透明始于凌晨 4 点的车间仓库，而不是会议室。",
+        "categoryLabel": "系统与流程",
+        "bookRef": "第2卷 • 第40章（教训 1）"
+      },
+      {
+        "id": "l-2",
+        "number": 15,
+        "type": "lesson",
+        "title": "找到瓶颈并协同全公司资源",
+        "description": "盲目对所有部门施压只会累垮高效团队。在真正的杠杆点干预。",
+        "categoryLabel": "决策制定",
+        "bookRef": "第2卷 • 第40章（教训 15）"
+      },
+      {
+        "id": "l-3",
+        "number": 27,
+        "type": "lesson",
+        "title": "管理者打造的是系统，而非呼叫中心",
+        "description": "如果团队事事都要打电话向您请示，您建立的不是企业系统，而是一个个人呼叫中心。",
+        "categoryLabel": "人员与文化",
+        "bookRef": "第2卷 • 第40章（教训 27）"
+      },
+      {
+        "id": "l-4",
+        "number": 33,
+        "type": "lesson",
+        "title": "钱没到账，销售就不算完成",
+        "description": "最好的客户是按时付款的人，而不是赊账下大单的人。",
+        "categoryLabel": "销售与市场",
+        "bookRef": "第2卷 • 第40章（教训 33）"
+      },
+      {
+        "id": "l-5",
+        "number": 40,
+        "type": "lesson",
+        "title": "经验远不止工龄本身",
+        "description": "经验取决于您识别出了多少错误，并成功建立机制防止其再次发生。",
+        "categoryLabel": "观察现实",
+        "bookRef": "第2卷 • 第40章（教训 40）"
+      }
+    ]
+  },
+  "b2b": {
+    "badge": "企业采购与管理者高尊礼品",
+    "title": "企业大宗采购与高管咨询",
+    "subtitle": "《红毛猩猩 3+》套装是赠送管理者、工厂负责人及核心合作伙伴的高尊礼品。",
+    "features": {
+      "f1Title": "正式企业发票",
+      "f1Desc": "提供可用于培训与咨询费用报销抵扣的正式发票。",
+      "f2Title": "Ali Asghar Hakimian 博士高管咨询会",
+      "f2Desc": "采购 20 套以上即可安排与作者面对面或在线咨询交流。",
+      "f3Title": "企业阶梯采购优惠",
+      "f3Desc": "采购 10 套以上立享大宗采购优惠并赠送精美礼盒。"
+    },
+    "formTitle": "企业采购报价申请表",
+    "companyNameLabel": "公司 / 组织名称：*",
+    "companyNamePlaceholder": "例如：某某集团有限公司",
+    "contactPersonLabel": "联系人 / 培训负责人：*",
+    "contactPersonPlaceholder": "例如：张经理 / 李总",
+    "phoneLabel": "联系电话 / 手机：*",
+    "phonePlaceholder": "请输入联系电话",
+    "quantityLabel": "意向采购数量（最少10套）：",
+    "taxInvoiceCheckbox": "需要开具正式企业发票",
+    "meetingCheckbox": "希望预约 Ali Asghar Hakimian 博士的咨询交流",
+    "notesLabel": "其他备注事项：",
+    "notesPlaceholder": "请输入您的具体需求或交付时间要求...",
+    "submitBtn": "提交企业采购申请",
+    "successTitle": "您的申请已成功提交",
+    "successSubtitle": "我们的商务团队将在 2 个工作小时内与您联系并发送正式报价单。",
+    "resetBtn": "提交另一份申请"
+  }
+}
