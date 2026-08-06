@@ -16,6 +16,7 @@ import { CartDrawer } from './components/CartDrawer';
 import { SamplePdfModal } from './components/SamplePdfModal';
 import { PaymentGatewayModal } from './components/PaymentGatewayModal';
 import { OrderTrackingModal } from './components/OrderTrackingModal';
+import { SeoManager } from './components/SeoManager';
 import { Footer } from './components/Footer';
 
 import { CartItem, Order, OrderCustomerInfo, ActiveTab, ThemeMode } from './types';
@@ -208,6 +209,9 @@ export default function App() {
       isLight ? 'bg-[#FAF8F5] text-stone-900' : 'bg-[#121314] text-[#FAF7F2]'
     }`}>
       
+      {/* Dynamic SEO Manager for Title, Meta, Canonical & Open Graph */}
+      <SeoManager />
+
       {/* Sticky Top Navigation with Theme Toggle and Tab Switcher */}
       <Navbar
         activeTab={activeTab}
