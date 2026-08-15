@@ -24,42 +24,78 @@ import { BOOKS_DATA, BUNDLE_DATA } from './data/bookData';
 import { motion, AnimatePresence } from 'motion/react';
 import { saveOrderToApi, fetchRecentOrdersFromApi } from './lib/api';
 
+function parseRouteFromPath(pathname: string) {
+  let targetLang = 'fa';
+  if (pathname === '/ar' || pathname.startsWith('/ar/')) {
+    targetLang = 'ar';
+  } else if (pathname === '/hi' || pathname.startsWith('/hi/')) {
+    targetLang = 'hi';
+  } else if (pathname === '/ja' || pathname.startsWith('/ja/')) {
+    targetLang = 'ja';
+  } else if (pathname === '/zh' || pathname.startsWith('/zh/')) {
+    targetLang = 'zh';
+  } else if (pathname === '/fr' || pathname.startsWith('/fr/')) {
+    targetLang = 'fr';
+  } else if (pathname === '/de' || pathname.startsWith('/de/')) {
+    targetLang = 'de';
+  } else if (pathname === '/es' || pathname.startsWith('/es/')) {
+    targetLang = 'es';
+  } else if (pathname === '/en' || pathname.startsWith('/en/')) {
+    targetLang = 'en';
+  }
+
+  let tab: ActiveTab = 'books';
+  if (pathname.includes('/manager-assessment') || pathname.includes('/quiz')) {
+    tab = 'quiz';
+  }
+
+  return { targetLang, tab };
+}
+
 export default function App() {
   const { i18n } = useTranslation();
-  const [activeTab, setActiveTab] = useState<ActiveTab>('books');
+  
+  // Initialize tab and language from URL pathname
+  const initialRoute = parseRouteFromPath(typeof window !== 'undefined' ? window.location.pathname : '/');
+  const [activeTab, setActiveTab] = useState<ActiveTab>(initialRoute.tab);
   const [theme, setTheme] = useState<ThemeMode>('light');
 
-  // Handle popstate for / /en /es /de /fr /zh /ja /hi /ar navigation
+  // Handle popstate for / /en /es /de /fr /zh /ja /hi /ar and /manager-assessment navigation
   useEffect(() => {
     const handlePopState = () => {
-      const pathname = window.location.pathname;
-      let targetLang = 'fa';
-      if (pathname === '/ar' || pathname.startsWith('/ar/')) {
-        targetLang = 'ar';
-      } else if (pathname === '/hi' || pathname.startsWith('/hi/')) {
-        targetLang = 'hi';
-      } else if (pathname === '/ja' || pathname.startsWith('/ja/')) {
-        targetLang = 'ja';
-      } else if (pathname === '/zh' || pathname.startsWith('/zh/')) {
-        targetLang = 'zh';
-      } else if (pathname === '/fr' || pathname.startsWith('/fr/')) {
-        targetLang = 'fr';
-      } else if (pathname === '/de' || pathname.startsWith('/de/')) {
-        targetLang = 'de';
-      } else if (pathname === '/es' || pathname.startsWith('/es/')) {
-        targetLang = 'es';
-      } else if (pathname === '/en' || pathname.startsWith('/en/')) {
-        targetLang = 'en';
-      }
+      const { targetLang, tab } = parseRouteFromPath(window.location.pathname);
       if (i18n.language !== targetLang) {
         i18n.changeLanguage(targetLang);
         syncDocumentDirAndLang(targetLang);
       }
+      setActiveTab(tab);
     };
+
+    // Also sync on initial mount if URL had language prefix
+    if (initialRoute.targetLang !== i18n.language) {
+      i18n.changeLanguage(initialRoute.targetLang);
+      syncDocumentDirAndLang(initialRoute.targetLang);
+    }
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [i18n]);
+
+  const handleTabSelect = (tab: ActiveTab) => {
+    setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const currentLang = i18n.language || 'fa';
+    const langPrefix = currentLang === 'fa' ? '' : `/${currentLang}`;
+    let newPath = langPrefix || '/';
+    if (tab === 'quiz') {
+      newPath = currentLang === 'fa' ? '/manager-assessment' : `${langPrefix}/manager-assessment`;
+    }
+
+    if (window.location.pathname !== newPath) {
+      window.history.pushState({}, '', newPath);
+    }
+  };
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -210,15 +246,12 @@ export default function App() {
     }`}>
       
       {/* Dynamic SEO Manager for Title, Meta, Canonical & Open Graph */}
-      <SeoManager />
+      <SeoManager activeTab={activeTab} />
 
       {/* Sticky Top Navigation with Theme Toggle and Tab Switcher */}
       <Navbar
         activeTab={activeTab}
-        onTabChange={(tab) => {
-          setActiveTab(tab);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
+        onTabChange={handleTabSelect}
         theme={theme}
         onToggleTheme={handleToggleTheme}
         cartCount={cartItems.reduce((a, b) => a + b.quantity, 0)}
@@ -233,10 +266,7 @@ export default function App() {
           theme={theme}
           onAddToCart={handleAddToCart}
           onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
-          onTabChange={(tab) => {
-            setActiveTab(tab);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          onTabChange={handleTabSelect}
         />
       )}
 
@@ -277,10 +307,7 @@ export default function App() {
             {activeTab === 'faq' && (
               <FAQSection
                 theme={theme}
-                onSelectTab={(tab) => {
-                  setActiveTab(tab);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+                onSelectTab={handleTabSelect}
                 onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
               />
             )}
@@ -299,10 +326,7 @@ export default function App() {
       {/* Footer */}
       <Footer
         theme={theme}
-        onTabChange={(tab) => {
-          setActiveTab(tab);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
+        onTabChange={handleTabSelect}
       />
 
       {/* Slide-over Cart Drawer */}

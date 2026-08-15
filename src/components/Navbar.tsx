@@ -58,7 +58,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar') => {
     const targetObj = languages.find((l) => l.code === targetLang) || languages[0];
     i18n.changeLanguage(targetLang);
-    window.history.pushState({}, '', targetObj.path);
+    const basePath = targetObj.path;
+    const newPath = activeTab === 'quiz' 
+      ? (targetLang === 'fa' ? '/manager-assessment' : `${basePath}/manager-assessment`)
+      : basePath;
+    window.history.pushState({}, '', newPath);
     syncDocumentDirAndLang(targetLang);
     setLangDropdownOpen(false);
   };
