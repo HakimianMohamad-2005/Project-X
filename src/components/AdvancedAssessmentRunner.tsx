@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AssessmentOption } from '../data/managerAssessment';
+import { getLocalizedQuestions } from '../data/assessmentQuestionsI18n';
 import {
-  ADVANCED_ASSESSMENT_QUESTIONS,
-  AssessmentQuestion,
-  AssessmentOption,
-  DIMENSION_METAS
-} from '../data/managerAssessment';
+  getIntakeFormOptions,
+  getIntakeFormLabels,
+  getAssessmentUILabels,
+  getLocalizedDimensionMetas
+} from '../data/assessmentMetadataI18n';
 import {
   AssessmentRespondentProfile,
   AdvancedAssessmentResult,
@@ -34,7 +37,6 @@ import {
   Flame,
   ShieldCheck,
   CheckCircle2,
-  ArrowUpDown,
   History
 } from 'lucide-react';
 
@@ -49,7 +51,19 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
   onBackToModeSelect,
   theme = 'light'
 }) => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language || 'fa';
+  const isPersian = lang === 'fa';
+  const isArabic = lang === 'ar';
+  const isRTL = isPersian || isArabic;
   const isLight = theme === 'light';
+
+  // Localized metadata and questions
+  const formLabels = useMemo(() => getIntakeFormLabels(lang), [lang]);
+  const formOptions = useMemo(() => getIntakeFormOptions(lang), [lang]);
+  const uiLabels = useMemo(() => getAssessmentUILabels(lang), [lang]);
+  const dimensionMetas = useMemo(() => getLocalizedDimensionMetas(lang), [lang]);
+  const questions = useMemo(() => getLocalizedQuestions(lang), [lang]);
 
   // Step management: 'profile' | 'quiz' | 'result'
   const [step, setStep] = useState<'profile' | 'quiz' | 'result'>('profile');
@@ -76,6 +90,14 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
   // Result object after completion
   const [result, setResult] = useState<AdvancedAssessmentResult | null>(null);
 
+  // Re-evaluate result if language changes while viewing results
+  useEffect(() => {
+    if (result && step === 'result') {
+      const updated = evaluateAdvancedAssessment(result.profile, result.answers, lang);
+      setResult(updated);
+    }
+  }, [lang]);
+
   // Comparison toggle & previous result from history
   const [previousResult, setPreviousResult] = useState<AdvancedAssessmentResult | null>(null);
   const [showComparison, setShowComparison] = useState(false);
@@ -99,10 +121,9 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
 
   // Initialize shuffled options if not set
   useEffect(() => {
-    if (Object.keys(shuffledOptionsMap).length === 0) {
+    if (Object.keys(shuffledOptionsMap).length === 0 && questions.length > 0) {
       const map: Record<number, AssessmentOption[]> = {};
-      ADVANCED_ASSESSMENT_QUESTIONS.forEach((q) => {
-        // Deterministic or seeded shuffle for this session
+      questions.forEach((q) => {
         const opts = [...q.options];
         for (let i = opts.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -112,7 +133,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
       });
       setShuffledOptionsMap(map);
     }
-  }, [shuffledOptionsMap]);
+  }, [shuffledOptionsMap, questions]);
 
   // Autosave draft on change
   useEffect(() => {
@@ -156,11 +177,11 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
   };
 
   const handleNextQuestion = () => {
-    if (currentIdx < ADVANCED_ASSESSMENT_QUESTIONS.length - 1) {
+    if (currentIdx < questions.length - 1) {
       setCurrentIdx(currentIdx + 1);
     } else {
-      // Calculate final results
-      const res = evaluateAdvancedAssessment(profile, answers);
+      // Calculate final results with current active language
+      const res = evaluateAdvancedAssessment(profile, answers, lang);
       setResult(res);
       saveAssessmentResultToHistory(res);
       clearAssessmentDraft();
@@ -193,13 +214,35 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
     window.print();
   };
 
-  const currentQ: AssessmentQuestion = ADVANCED_ASSESSMENT_QUESTIONS[currentIdx] || ADVANCED_ASSESSMENT_QUESTIONS[0];
-  const currentOptions = shuffledOptionsMap[currentQ.id] || currentQ.options;
+  const formatNumber = (n: number | string) => {
+    if (isPersian || isArabic) return toPersianDigits(n);
+    return `${n}`;
+  };
+
+  const formatPct = (pct: number) => {
+    if (isPersian) return `%${toPersianDigits(pct)}`;
+    if (isArabic) return `٪${toPersianDigits(pct)}`;
+    return `${pct}%`;
+  };
+
+  const currentQ = questions[currentIdx] || questions[0];
+  const currentOptions = useMemo(() => {
+    const rawSaved = shuffledOptionsMap[currentQ.id];
+    if (!rawSaved || rawSaved.length === 0) return currentQ.options;
+    // Map order by id to guarantee active language texts are always rendered
+    return rawSaved.map((item) => {
+      const localizedMatch = currentQ.options.find((o) => o.id === item.id);
+      return localizedMatch || item;
+    });
+  }, [shuffledOptionsMap, currentQ]);
   const currentSelected = answers[currentQ.id];
-  const currentDimMeta = DIMENSION_METAS[currentQ.dimension];
+  const currentDimMeta = dimensionMetas[currentQ.dimension];
+
+  const NextIcon = isRTL ? ChevronLeft : ChevronRight;
+  const PrevIcon = isRTL ? ChevronRight : ChevronLeft;
 
   return (
-    <div className="space-y-6">
+    <div dir={isRTL ? 'rtl' : 'ltr'} className="space-y-6">
       
       {/* ---------------------------------------------------- */}
       {/* STEP 1: 5-FIELD INTAKE FORM */}
@@ -214,19 +257,19 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
           <div className="flex items-center justify-between pb-4 border-b border-stone-500/20">
             <div>
               <h3 className={`text-xl font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                مشخصات سازمانی و مدیریتی
+                {formLabels.title}
               </h3>
               <p className={`text-xs sm:text-sm mt-1 ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-                جهت تطبیق تحلیل رفتار سازمانی با ابعاد کسب‌وکار شما، تکمیل ۵ فیلد زیر الزامی است.
+                {formLabels.subtitle}
               </p>
             </div>
             <button
               onClick={onBackToModeSelect}
-              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-colors ${
+              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer ${
                 isLight ? 'border-stone-300 hover:bg-stone-100 text-stone-700' : 'border-stone-700 hover:bg-stone-800 text-stone-300'
               }`}
             >
-              بازگشت به انتخاب آزمون
+              {formLabels.backBtn}
             </button>
           </div>
 
@@ -237,7 +280,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               <div className="space-y-1.5">
                 <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
                   <Briefcase className="w-3.5 h-3.5 text-[#B87333]" />
-                  <span>۱. سمت یا جایگاه سازمانی</span>
+                  <span>{formLabels.roleLabel}</span>
                   <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -248,13 +291,12 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                     isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
                   }`}
                 >
-                  <option value="">-- انتخاب سمت سازمانی --</option>
-                  <option value="مدیرعامل / مالک کسب‌وکار">مدیرعامل / مؤسس / مالک کسب‌وکار</option>
-                  <option value="عضو هیئت‌مدیره / سهامدار">عضو هیئت‌مدیره / سهامدار ارشد</option>
-                  <option value="مدیر کارخانه / مدیر عملیات">مدیر کارخانه / مدیر ارشد عملیات و تولید</option>
-                  <option value="مدیر میانی (فروش، مالی، انبار، منابع انسانی، کیفیت)">مدیر میانی (فروش، مالی، انبار، منابع انسانی، کیفیت)</option>
-                  <option value="سرپرست خط / کارشناس ارشد">سرپرست خط / کارشناس ارشد اجرایی</option>
-                  <option value="مشاور مدیریت / ارزیاب">مشاور مدیریت / مدرس / ارزیاب سازمانی</option>
+                  <option value="">{formLabels.rolePlaceholder}</option>
+                  {formOptions.roles.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -262,7 +304,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               <div className="space-y-1.5">
                 <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
                   <Building2 className="w-3.5 h-3.5 text-[#B87333]" />
-                  <span>۲. صنعت / نوع سازمان</span>
+                  <span>{formLabels.industryLabel}</span>
                   <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -273,13 +315,12 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                     isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
                   }`}
                 >
-                  <option value="">-- انتخاب حوزه فعالیت --</option>
-                  <option value="تولیدی / صنعتی / کارخانجات">تولیدی / صنعتی / کارخانجات و فرآوری</option>
-                  <option value="بازرگانی / پخش و توزیع">بازرگانی / واردات / صادرات / پخش و توزیع</option>
-                  <option value="خدماتی / فناوری و IT / استارتاپ">خدماتی / فناوری اطلاعات و نرم‌افزار / پلتفرم</option>
-                  <option value="پیمانکاری / عمرانی / ساختمانی">پیمانکاری / مهندسی / نفت، گاز و پتروشیمی / عمران</option>
-                  <option value="بهداشتی / دارویی / مواد غذایی">صنایع غذایی / دارویی / آرایشی و بهداشتی</option>
-                  <option value="فروشگاهی / خرده‌فروشی / زنجیره‌ای">فروشگاهی / خرده‌فروشی / هایپرمارکت</option>
+                  <option value="">{formLabels.industryPlaceholder}</option>
+                  {formOptions.industries.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -287,7 +328,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               <div className="space-y-1.5">
                 <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
                   <Users className="w-3.5 h-3.5 text-[#B87333]" />
-                  <span>۳. تعداد کل کارکنان</span>
+                  <span>{formLabels.headcountLabel}</span>
                   <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -298,12 +339,12 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                     isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
                   }`}
                 >
-                  <option value="">-- انتخاب تعداد پرسنل --</option>
-                  <option value="۱ تا ۱۰ نفر (میکرو / تیم کوچک)">۱ تا ۱۰ نفر (تیم کوچک)</option>
-                  <option value="۱۱ تا ۵۰ نفر (کسب‌وکار کوچک)">۱۱ تا ۵۰ نفر (کسب‌وکار کوچک)</option>
-                  <option value="۵۱ تا ۲۰۰ نفر (سازمان متوسط)">۵۱ تا ۲۰۰ نفر (سازمان متوسط)</option>
-                  <option value="۲۰۱ تا ۵۰۰ نفر (صنایع بزرگ)">۲۰۱ تا ۵۰۰ نفر (سازمان بزرگ)</option>
-                  <option value="بیش از ۵۰۰ نفر (صنایع هلدینگی)">بیش از ۵۰۰ نفر (سازمان‌های بزرگ و هلدینگ)</option>
+                  <option value="">{formLabels.headcountPlaceholder}</option>
+                  {formOptions.headcounts.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -311,7 +352,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               <div className="space-y-1.5">
                 <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
                   <Award className="w-3.5 h-3.5 text-[#B87333]" />
-                  <span>۴. سابقه مدیریت شما</span>
+                  <span>{formLabels.experienceLabel}</span>
                   <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -322,12 +363,12 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                     isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
                   }`}
                 >
-                  <option value="">-- سابقه مدیریتی --</option>
-                  <option value="کمتر از ۲ سال">کمتر از ۲ سال (مدیر نوپا)</option>
-                  <option value="۲ تا ۵ سال">۲ تا ۵ سال</option>
-                  <option value="۶ تا ۱۰ سال">۶ تا ۱۰ سال</option>
-                  <option value="۱۱ تا ۲۰ سال">۱۱ تا ۲۰ سال</option>
-                  <option value="بیش از ۲۰ سال">بیش از ۲۰ سال (مدیر باسابقه و پیشکسوت)</option>
+                  <option value="">{formLabels.experiencePlaceholder}</option>
+                  {formOptions.experiences.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -337,7 +378,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             <div className="space-y-1.5">
               <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
                 <Layers className="w-3.5 h-3.5 text-[#B87333]" />
-                <span>۵. محدوده ارزیابی (پاسخ‌های شما بازتاب کدام بخش است؟)</span>
+                <span>{formLabels.scopeLabel}</span>
                 <span className="text-red-500">*</span>
               </label>
               <select
@@ -348,10 +389,12 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                   isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
                 }`}
               >
-                <option value="">-- انتخاب محدوده ارزیابی --</option>
-                <option value="کل شرکت / کارخانه (نگاه هلی‌کوپتری)">کل سازمان / شرکت / کارخانه (نگاه هلی‌کوپتری به تمام واحدها)</option>
-                <option value="واحد تحت مدیریت مستقیم من">واحد یا کارخانه تحت مدیریت مستقیم من</option>
-                <option value="سبک و عادات تصمیم‌گیری شخصی من به عنوان مدیر">سبک و عادات تصمیم‌گیری شخصی من به عنوان مدیر</option>
+                <option value="">{formLabels.scopePlaceholder}</option>
+                {formOptions.scopes.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -360,14 +403,14 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               <button
                 type="submit"
                 disabled={!isProfileValid}
-                className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2 shadow-lg ${
+                className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer ${
                   isProfileValid
-                    ? 'bg-[#B87333] hover:bg-amber-600 text-white shadow-[#B87333]/25 cursor-pointer'
+                    ? 'bg-[#B87333] hover:bg-amber-600 text-white shadow-[#B87333]/25'
                     : 'bg-stone-400 text-stone-200 cursor-not-allowed opacity-60'
                 }`}
               >
-                <span>ورود به آزمون ۲۴ سناریویی</span>
-                <ChevronLeft className="w-4 h-4" />
+                <span>{formLabels.submitBtn}</span>
+                <NextIcon className="w-4 h-4" />
               </button>
             </div>
 
@@ -393,12 +436,12 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-black bg-[#B87333]/15 text-[#B87333] border border-[#B87333]/30">
-                  سؤال {toPersianDigits(currentIdx + 1)} از ۲۴
+                  {uiLabels.questionCount(formatNumber(currentIdx + 1), formatNumber(24))}
                 </span>
                 <span className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
                   isLight ? 'bg-stone-100 text-stone-600' : 'bg-stone-800 text-stone-300'
                 }`}>
-                  بُعد: {currentDimMeta?.titleFa}
+                  {uiLabels.dimensionLabel(currentDimMeta?.title || '')}
                 </span>
               </div>
 
@@ -411,7 +454,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                   />
                 </div>
                 <span className="text-[11px] font-mono font-bold text-stone-400">
-                  %{toPersianDigits(Math.round(((currentIdx + 1) / 24) * 100))}
+                  {formatPct(Math.round(((currentIdx + 1) / 24) * 100))}
                 </span>
               </div>
 
@@ -423,7 +466,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             }`}>
               <div className="flex items-center gap-2 text-xs font-extrabold text-[#B87333]">
                 <span className="w-2 h-2 rounded-full bg-[#B87333]" />
-                <span>سناریوی شماره {toPersianDigits(currentIdx + 1)}: {currentQ.title}</span>
+                <span>{uiLabels.scenarioNumber(formatNumber(currentIdx + 1), currentQ.title)}</span>
               </div>
               <p className={`text-sm sm:text-base leading-relaxed font-semibold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
                 {currentQ.scenario}
@@ -433,10 +476,10 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             {/* 4 Options */}
             <div className="space-y-3">
               <span className={`text-xs font-bold block ${isLight ? 'text-stone-500' : 'text-stone-400'}`}>
-                پاسخ یا شیوه مداخله معمول شما کدام است؟ (یک گزینه را انتخاب کنید):
+                {uiLabels.userResponseLabel}
               </span>
 
-              {currentOptions.map((opt, idx) => {
+              {currentOptions.map((opt) => {
                 const isSelected = currentSelected?.optionId === opt.id;
                 const optionLetter = opt.id.toUpperCase();
 
@@ -485,8 +528,8 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                       : 'border-stone-700 text-stone-300 hover:bg-stone-800 cursor-pointer'
                 }`}
               >
-                <ChevronRight className="w-4 h-4" />
-                <span>سؤال قبلی</span>
+                <PrevIcon className="w-4 h-4" />
+                <span>{uiLabels.prevBtn}</span>
               </button>
 
               <button
@@ -499,8 +542,8 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                     : 'bg-[#B87333] hover:bg-amber-600 text-white shadow-[#B87333]/25 cursor-pointer'
                 }`}
               >
-                <span>{currentIdx === 23 ? 'محاسبه گزارش جامع و اکشن‌پلان' : 'سؤال بعدی'}</span>
-                <ChevronLeft className="w-4 h-4" />
+                <span>{currentIdx === 23 ? uiLabels.calcResultsBtn : uiLabels.nextBtn}</span>
+                <NextIcon className="w-4 h-4" />
               </button>
             </div>
 
@@ -521,7 +564,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
           {/* Main Score Header */}
           <div className="text-center space-y-4 pb-6 border-b border-stone-500/20">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-[#B87333]/15 text-[#B87333] border border-[#B87333]/30">
-              گزارش جامع ۲۴ سناریویی و نقشه راه اختصاصی
+              {uiLabels.resultBadge}
             </div>
 
             <div className="flex flex-col items-center justify-center gap-2">
@@ -530,14 +573,14 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                   isLight ? 'bg-white' : 'bg-[#121314]'
                 }`}>
                   <span className="text-2xl sm:text-3xl font-black text-[#B87333]">
-                    %{toPersianDigits(result.engagementPercentage)}
+                    {formatPct(result.engagementPercentage)}
                   </span>
-                  <span className="text-[10px] text-stone-500 font-bold">از ۱۰۰٪</span>
+                  <span className="text-[10px] text-stone-500 font-bold">{uiLabels.of100}</span>
                 </div>
               </div>
 
               <h3 className={`text-xl sm:text-2xl font-black ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                درصد درگیری با وضعیت اورانگوتانی: %{toPersianDigits(result.engagementPercentage)}
+                {uiLabels.resultTitle(formatPct(result.engagementPercentage))}
               </h3>
             </div>
 
@@ -545,14 +588,14 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             <div className={`p-4 sm:p-5 rounded-2xl border max-w-2xl mx-auto space-y-2 ${result.tier.cardColor}`}>
               <div className="flex items-center justify-center gap-2">
                 <span className={`px-2.5 py-0.5 rounded-full text-xs font-black ${result.tier.badgeColor}`}>
-                  {result.tier.shortDescFa}
+                  {result.tier.shortDesc}
                 </span>
                 <span className="font-extrabold text-sm sm:text-base">
-                  {result.tier.titleFa}
+                  {result.tier.title}
                 </span>
               </div>
               <p className="text-xs sm:text-sm leading-relaxed font-medium">
-                {result.tier.descriptionFa}
+                {result.tier.description}
               </p>
             </div>
 
@@ -566,11 +609,11 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             }`}>
               <div className="flex items-center gap-1.5 font-bold">
                 <ShieldCheck className="w-4 h-4 shrink-0" />
-                <span>شاخص سازگاری پاسخ‌ها:</span>
-                <span className="font-mono">({toPersianDigits(result.consistency.score)}) {result.consistency.titleFa}</span>
+                <span>{uiLabels.consistencyTitle}</span>
+                <span className="font-mono">({formatNumber(result.consistency.score)}) {result.consistency.title}</span>
               </div>
               <span className="text-[11px] font-normal text-stone-600 dark:text-stone-400">
-                {result.consistency.descriptionFa}
+                {result.consistency.description}
               </span>
             </div>
 
@@ -582,17 +625,17 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
           }`}>
             <div className="text-center space-y-1">
               <h4 className={`text-base font-extrabold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                نمودار راداری ابعاد هشت‌گانه رفتار مدیریتی
+                {uiLabels.radarTitle}
               </h4>
               <p className="text-xs text-stone-500">
-                فاصله بیشتر هر بُعد از مرکز، نشان‌دهنده غلبه رفتارهای تکانشی و غریزی در آن حوزه است.
+                {uiLabels.radarDesc}
               </p>
             </div>
 
             <RadarDimensionChart
               dimensions={result.dimensionResults}
               isLight={isLight}
-              isPersian={true}
+              isPersian={isPersian}
             />
           </div>
 
@@ -605,7 +648,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             }`}>
               <div className="flex items-center gap-2 text-red-600 font-extrabold text-sm">
                 <Flame className="w-4 h-4" />
-                <span>۳ نقطه داغ و اولویت‌های اصلی مداخله:</span>
+                <span>{uiLabels.hotspotsTitle}</span>
               </div>
               <div className="space-y-2.5">
                 {result.hotspots.map((item, idx) => (
@@ -615,16 +658,16 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                     <div className="space-y-1">
                       <div className="font-bold flex items-center gap-1.5">
                         <span className="w-4 h-4 rounded-full bg-red-500 text-white flex items-center justify-center text-[10px]">
-                          {toPersianDigits(idx + 1)}
+                          {formatNumber(idx + 1)}
                         </span>
-                        <span>{item.titleFa}</span>
+                        <span>{item.title}</span>
                       </div>
                       <p className="text-[11px] text-stone-500 leading-relaxed">
-                        {item.shortDescFa}
+                        {item.shortDesc}
                       </p>
                     </div>
                     <span className="font-bold font-mono text-red-600 bg-red-100 dark:bg-red-950 px-2 py-0.5 rounded shrink-0">
-                      %{toPersianDigits(item.percentage)}
+                      {formatPct(item.percentage)}
                     </span>
                   </div>
                 ))}
@@ -637,24 +680,24 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             }`}>
               <div className="flex items-center gap-2 text-teal-600 font-extrabold text-sm">
                 <CheckCircle2 className="w-4 h-4" />
-                <span>نقطه قوت و پایداری سازمانی شما:</span>
+                <span>{uiLabels.keyStrengthTitle}</span>
               </div>
               <div className={`p-4 rounded-xl border space-y-2 text-xs ${
                 isLight ? 'bg-white border-teal-100 text-stone-800' : 'bg-stone-900 border-stone-800 text-stone-200'
               }`}>
                 <div className="flex items-center justify-between">
                   <span className="font-black text-sm text-teal-700 dark:text-teal-400">
-                    {result.keyStrength.titleFa}
+                    {result.keyStrength.title}
                   </span>
                   <span className="font-bold font-mono text-teal-600 bg-teal-100 dark:bg-teal-950 px-2 py-0.5 rounded">
-                    درگیری اندک: %{toPersianDigits(result.keyStrength.percentage)}
+                    {uiLabels.keyStrengthBadge(formatPct(result.keyStrength.percentage))}
                   </span>
                 </div>
                 <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-relaxed">
-                  {result.keyStrength.shortDescFa}
+                  {result.keyStrength.shortDesc}
                 </p>
                 <div className="pt-2 text-[10px] text-teal-600 dark:text-teal-400 font-bold border-t border-teal-100 dark:border-stone-800">
-                  این بُعد ستون اصلی پایداری فعلی شماست؛ از ابزارهای آن برای الگوبرداری در سایر بخش‌ها بهره بگیرید.
+                  {uiLabels.keyStrengthFooter}
                 </div>
               </div>
             </div>
@@ -665,7 +708,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
           <div className="p-6 rounded-3xl bg-[#B87333]/10 border border-[#B87333]/30 space-y-4">
             <div className="flex items-center gap-2 text-[#B87333] font-black text-base">
               <Award className="w-5 h-5" />
-              <span>اکشن‌پلان سه گام «برنامه ثابت +۳» (فرمول علی‌اصغر حکیمیان)</span>
+              <span>{uiLabels.actionPlanTitle}</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -678,20 +721,20 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                 >
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-[#B87333] text-white flex items-center justify-center text-xs font-black">
-                      {toPersianDigits(stepPlan.stepNumber)}
+                      {formatNumber(stepPlan.stepNumber)}
                     </span>
                     <span className="text-xs font-bold text-[#B87333]">
-                      {stepPlan.phaseTitleFa}
+                      {stepPlan.phaseTitle}
                     </span>
                   </div>
                   <h5 className="text-xs font-extrabold leading-snug">
-                    {stepPlan.actionTitleFa}
+                    {stepPlan.actionTitle}
                   </h5>
                   <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-relaxed">
-                    {stepPlan.descriptionFa}
+                    {stepPlan.description}
                   </p>
                   <div className="pt-2 border-t border-stone-200 dark:border-stone-800 text-[10px] font-bold text-amber-700 dark:text-amber-400">
-                    {stepPlan.keyRuleFa}
+                    {stepPlan.keyRule}
                   </div>
                 </div>
               ))}
@@ -705,13 +748,13 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2 text-stone-900 dark:text-[#FAF7F2] font-black text-sm">
                 <BookOpen className="w-5 h-5 text-[#B87333]" />
-                <span>فصل‌های پیشنهادی از کتاب اورانگوتان +۳ برای ۳ بُعد ضعیف‌تر شما:</span>
+                <span>{uiLabels.recommendedChaptersTitle}</span>
               </div>
               <button
                 onClick={() => onAddToCart('bundle-full')}
                 className="text-xs font-bold text-[#B87333] hover:underline cursor-pointer"
               >
-                سفارش پکیج کامل ۲ جلدی
+                {uiLabels.orderBundleBtn}
               </button>
             </div>
 
@@ -724,10 +767,10 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                   }`}
                 >
                   <div className="font-extrabold text-[#B87333]">
-                    {bookRec.chapterRefFa}
+                    {bookRec.chapterRef}
                   </div>
                   <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-relaxed">
-                    {bookRec.whyNeededFa}
+                    {bookRec.whyNeeded}
                   </p>
                 </div>
               ))}
@@ -746,11 +789,11 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                 >
                   <History className="w-4 h-4" />
                   <span>
-                    {showComparison ? 'بستن مقایسه با ارزیابی پیشین' : 'مقایسه این نتیجه با آخرین ارزیابی ذخیره‌شده شما'}
+                    {showComparison ? uiLabels.closeCompareBtn : uiLabels.compareBtn}
                   </span>
                 </button>
                 <span className="text-[10px] text-stone-500 font-mono">
-                  ارزیابی قبلی: %{toPersianDigits(previousResult.engagementPercentage)} درگیری
+                  {uiLabels.prevAssessmentScore(formatPct(previousResult.engagementPercentage))}
                 </span>
               </div>
 
@@ -763,13 +806,13 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                       <div key={dim.dimension} className={`p-2.5 rounded-xl border ${
                         isLight ? 'bg-white border-stone-200' : 'bg-stone-800 border-stone-700'
                       }`}>
-                        <span className="font-bold block truncate">{dim.titleFa}</span>
+                        <span className="font-bold block truncate">{dim.title}</span>
                         <div className="flex items-center justify-between mt-1">
-                          <span className="font-mono">فعلی: %{toPersianDigits(dim.percentage)}</span>
+                          <span className="font-mono">{uiLabels.currentLabel(formatPct(dim.percentage))}</span>
                           <span className={`font-mono font-bold ${
                             diff < 0 ? 'text-teal-600' : diff > 0 ? 'text-red-500' : 'text-stone-400'
                           }`}>
-                            {diff > 0 ? `+${toPersianDigits(diff)}%` : `${toPersianDigits(diff)}%`}
+                            {diff > 0 ? `+${formatPct(diff)}` : `${formatPct(diff)}`}
                           </span>
                         </div>
                       </div>
@@ -791,7 +834,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                 }`}
               >
                 <Printer className="w-3.5 h-3.5" />
-                <span>چاپ و ذخیره گزارش (PDF)</span>
+                <span>{uiLabels.printBtn}</span>
               </button>
 
               <button
@@ -801,7 +844,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
                 }`}
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>تکرار آزمون</span>
+                <span>{uiLabels.retakeBtn}</span>
               </button>
             </div>
 
@@ -809,7 +852,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               onClick={() => onAddToCart('bundle-full')}
               className="px-6 py-3 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white font-black text-xs shadow-xl flex items-center gap-2 cursor-pointer transition-transform hover:scale-105"
             >
-              <span>سفارش دوره کامل کتاب (جلد ۱ و ۲)</span>
+              <span>{uiLabels.orderBundleBtn}</span>
               <BookOpen className="w-4 h-4" />
             </button>
 

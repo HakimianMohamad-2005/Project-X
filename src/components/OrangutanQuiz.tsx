@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, RefreshCw, BookOpen, ArrowLeft, ArrowRight, Sparkles, Layers, Zap } from 'lucide-react';
+import { HelpCircle, RefreshCw, BookOpen, ArrowLeft, ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { toPersianDigits } from '../utils/persian';
 import { ThemeMode } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
@@ -115,7 +115,7 @@ export const OrangutanQuiz: React.FC<OrangutanQuizProps> = ({ onAddToCart, theme
     }`}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header - Strict Title: "آزمون غریزی" */}
+        {/* Section Header - Strict Title in Persian: "آزمون غریزی" */}
         <div className="text-center space-y-4 mb-8">
           <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-xs font-bold ${
             isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
@@ -184,7 +184,7 @@ export const OrangutanQuiz: React.FC<OrangutanQuizProps> = ({ onAddToCart, theme
                   {t('quiz.modeSelectorTitle', 'انتخاب نوع آزمون')}
                 </h3>
                 <p className={`text-xs sm:text-sm ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-                  برای ارزیابی الگوهای تصمیم‌گیری و وضعیت اورانگوتانی، یکی از دو آزمون زیر را انتخاب کنید:
+                  {t('quiz.modeSelectorSubtitle', 'برای ارزیابی الگوهای تصمیم‌گیری و وضعیت اورانگوتانی، یکی از دو آزمون زیر را انتخاب کنید:')}
                 </p>
               </div>
 
@@ -295,7 +295,7 @@ export const OrangutanQuiz: React.FC<OrangutanQuizProps> = ({ onAddToCart, theme
                           })}
                         </span>
                         <span className="text-[11px] text-stone-400">
-                          (آزمون ساده)
+                          ({t('quiz.simpleBadgeLabel', 'آزمون ساده')})
                         </span>
                       </div>
 
@@ -435,17 +435,17 @@ export const OrangutanQuiz: React.FC<OrangutanQuizProps> = ({ onAddToCart, theme
                     <div className="space-y-1 text-center sm:text-start">
                       <span className="text-xs font-black text-[#B87333] flex items-center gap-1.5 justify-center sm:justify-start">
                         <Sparkles className="w-4 h-4" />
-                        <span>می‌خواهید عارضه‌یابی جامع‌تر ۸ بُعدی دریافت کنید؟</span>
+                        <span>{t('quiz.promoAdvancedTitle', 'می‌خواهید عارضه‌یابی جامع‌تر ۸ بُعدی دریافت کنید؟')}</span>
                       </span>
                       <p className="text-[11px] text-stone-500">
-                        آزمون پیشرفته ۲۴ سناریویی، نقاط داغ و اکشن‌پلان اختصاصی +۳ را ارائه می‌دهد.
+                        {t('quiz.promoAdvancedDesc', 'آزمون پیشرفته ۲۴ سناریویی، نقاط داغ و اکشن‌پلان اختصاصی +۳ را ارائه می‌دهد.')}
                       </p>
                     </div>
                     <button
                       onClick={() => setActiveMode('advanced')}
                       className="px-4 py-2 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shrink-0 cursor-pointer"
                     >
-                      ورود به آزمون ۲۴ سناریویی
+                      {t('quiz.promoAdvancedBtn', 'ورود به آزمون ۲۴ سناریویی')}
                     </button>
                   </div>
 

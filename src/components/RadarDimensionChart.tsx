@@ -1,6 +1,7 @@
 import React from 'react';
 import { DimensionResult } from '../lib/managerAssessment';
 import { toPersianDigits } from '../utils/persian';
+import { useTranslation } from 'react-i18next';
 
 interface RadarDimensionChartProps {
   dimensions: DimensionResult[];
@@ -11,8 +12,12 @@ interface RadarDimensionChartProps {
 export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
   dimensions,
   isLight = true,
-  isPersian = true
+  isPersian: propIsPersian
 }) => {
+  const { i18n, t } = useTranslation();
+  const isPersian = propIsPersian !== undefined ? propIsPersian : i18n.language === 'fa';
+  const isArabic = i18n.language === 'ar';
+  
   const size = 380;
   const center = size / 2;
   const radius = size * 0.36;
@@ -37,6 +42,18 @@ export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
     const { x, y } = getCoordinates(i, ratio);
     return `${x},${y}`;
   }).join(' ');
+
+  const formatPercentage = (num: number) => {
+    if (isPersian) return `%${toPersianDigits(num)}`;
+    if (isArabic) return `٪${toPersianDigits(num)}`;
+    return `${num}%`;
+  };
+
+  const formatEngagementLabel = (num: number) => {
+    if (isPersian) return `%${toPersianDigits(num)} درگیری`;
+    if (isArabic) return `٪${toPersianDigits(num)} نمط غريزي`;
+    return `${num}% Risk`;
+  };
 
   return (
     <div className="w-full">
@@ -73,7 +90,7 @@ export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
                   textAnchor="start"
                   className="font-mono font-medium"
                 >
-                  {isPersian ? `%${toPersianDigits(Math.round(lvl * 100))}` : `${Math.round(lvl * 100)}%`}
+                  {formatPercentage(Math.round(lvl * 100))}
                 </text>
               </g>
             );
@@ -112,13 +129,14 @@ export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
 
             // Determine text anchor based on X position
             let anchor: 'middle' | 'start' | 'end' = 'middle';
-            if (labelPt.x > center + 20) anchor = isPersian ? 'end' : 'start';
-            else if (labelPt.x < center - 20) anchor = isPersian ? 'start' : 'end';
+            if (labelPt.x > center + 20) anchor = (isPersian || isArabic) ? 'end' : 'start';
+            else if (labelPt.x < center - 20) anchor = (isPersian || isArabic) ? 'start' : 'end';
 
             const isHigh = dim.percentage >= 60;
             const isMedium = dim.percentage >= 35 && dim.percentage < 60;
 
             const pointColor = isHigh ? '#EF4444' : isMedium ? '#F59E0B' : '#14B8A6';
+            const displayTitle = dim.title || dim.titleFa;
 
             return (
               <g key={`vertex-${dim.dimension}`}>
@@ -143,7 +161,7 @@ export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
                   fill={isLight ? '#292524' : '#FAF7F2'}
                   className="select-none"
                 >
-                  {dim.titleFa}
+                  {displayTitle}
                 </text>
                 <text
                   x={labelPt.x}
@@ -154,7 +172,7 @@ export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
                   fill={pointColor}
                   className="select-none font-mono"
                 >
-                  {isPersian ? `%${toPersianDigits(dim.percentage)} درگیری` : `${dim.percentage}%`}
+                  {formatEngagementLabel(dim.percentage)}
                 </text>
               </g>
             );
@@ -182,10 +200,10 @@ export const RadarDimensionChart: React.FC<RadarDimensionChartProps> = ({
             <div key={dim.dimension} className="space-y-1.5">
               <div className="flex items-center justify-between text-xs font-bold">
                 <span className={isLight ? 'text-stone-800' : 'text-stone-200'}>
-                  {dim.titleFa}
+                  {dim.title || dim.titleFa}
                 </span>
                 <span className={`font-mono ${textColor}`}>
-                  {isPersian ? `%${toPersianDigits(dim.percentage)}` : `${dim.percentage}%`}
+                  {formatPercentage(dim.percentage)}
                 </span>
               </div>
               <div className={`w-full h-2.5 rounded-full overflow-hidden ${isLight ? 'bg-stone-200' : 'bg-stone-800'}`}>
