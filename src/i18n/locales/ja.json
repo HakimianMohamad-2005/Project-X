@@ -10,6 +10,7 @@
       "caseStudies": "産業事例",
       "cards": "意思決定カード",
       "mistakesLessons": "40の失敗と教訓",
+      "userExperiences": "読者の声・体験談",
       "faq": "よくある質問",
       "b2b": "法人購入",
       "author": "著者について",
@@ -286,7 +287,8 @@
       "caseStudies": "リアル産業事例",
       "quiz": "オンライン経営診断",
       "cards": "意思決定カード",
-      "mistakesLessons": "40の失敗と教訓",
+      "mistakesLessons": "40の失敗と教训",
+      "userExperiences": "読者の声・体験談",
       "faq": "よくある質問",
       "b2b": "法人購入",
       "author": "Ali Asghar Hakimian について"
@@ -765,5 +767,69 @@
     "successTitle": "申請が正常に送信されました",
     "successSubtitle": "2営業時間以内に担当チームより公式見積書をお送りいたします。",
     "resetBtn": "別の申請を送信する"
+  },
+  "userExperiences": {
+    "header": {
+      "badge": "産業界リーダーからの実践的推薦",
+      "title": "読者および産業界経営者のリアルな体験談",
+      "subtitle": "工場長、財務責任者、起業家が「3+」方法論を用いて見えないロスを抑え、インフレ時の架空利益を修正し、持続可能なシステムを構築した実績記録。",
+      "submitCta": "実践体験と成果を共有する",
+      "verifiedBadge": "すべてのレビューと成果データは編集チームにより確認済みです。"
+    },
+    "categories": {
+      "all": "すべての体験談",
+      "manufacturing": "製造業・工場管理",
+      "financeSystems": "財務・原価計算・システム構築",
+      "salesServices": "法人営業・物流・サービス"
+    },
+    "volume": {
+      "bundle": "全2巻コンプリートセット",
+      "vol1": "第1巻：本能的経営から自己認識へ",
+      "vol2": "第2巻：3+ 持続可能性と成長へのロードマップ",
+      "bundleShort": "全2巻読者",
+      "vol1Short": "第1巻読者",
+      "vol2Short": "第2巻読者"
+    },
+    "emptyState": {
+      "title": "投稿された体験談はまだありません",
+      "desc": "このセクションにはまだ実践体験談が投稿されていません。『オランウータン3+』の実践成果を最初に共有してみませんか！",
+      "btn": "あなたの体験談を投稿する"
+    },
+    "card": {
+      "executiveRole": "産業界エグゼクティブ",
+      "verifiedTooltip": "出版社認証済み"
+    },
+    "bottomCta": {
+      "title": "貴社の改善成果をぜひお聞かせください",
+      "subtitle": "『オランウータン 3+』の各章は、実際の経営課題を解決するために書かれています。意思決定カードや出血防止フォーミュラを実践された方の声をお待ちしています。",
+      "btn": "新しい体験談・成果を投稿する"
+    },
+    "modal": {
+      "badge": "実践知の共有と効果",
+      "title": "『オランウータン 3+』の実践体験を共有",
+      "subtitle": "ロス削減や原価管理、仕組み化における貴社の実践的成果は、他の産業リーダーにとって貴重な指針となります。",
+      "successTitle": "体験談が正常に送信されました！",
+      "successDesc": "貴社での実践成果をご共有いただきありがとうございます。編集部の確認後に掲載されます。",
+      "closeBtn": "了解"
+    },
+    "form": {
+      "fullName": "お名前",
+      "fullNamePlaceholder": "例：山田 太郎",
+      "roleAndCompany": "役職および会社名 / 工場名",
+      "roleAndCompanyPlaceholder": "例：工場長 - 株式会社アトラス精密",
+      "category": "事業分野",
+      "contact": "電話番号またはメール（認証専用）",
+      "contactPlaceholder": "email@company.jp",
+      "volumeRead": "どの巻をお読みになりましたか？",
+      "rating": "方法論の実用性に対する評価",
+      "achievementBadge": "主な成果または数値指標",
+      "achievementPlaceholder": "例：成形不良率を18%削減 / 売掛金回収日数を30日短縮",
+      "feedbackText": "実践内容、導入前の課題、および導入後の効果",
+      "feedbackPlaceholder": "導入前の課題と、どの章や意思決定カードが解決に役立ったかをお書きください...",
+      "privacyNotice": "連絡先情報は厳重に管理され、役職確認の目的以外には使用されません。",
+      "cancelBtn": "キャンセル",
+      "submitBtn": "体験談を送信する",
+      "validationError": "必須項目（氏名、組織名、主な成果、本文）をすべてご記入ください。"
+    }
   }
 }

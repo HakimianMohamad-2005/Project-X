@@ -10,6 +10,7 @@ import { DecisionCards } from './components/DecisionCards';
 import { MistakesAndLessons } from './components/MistakesAndLessons';
 import { FAQSection } from './components/FAQSection';
 import { ProductPricing } from './components/ProductPricing';
+import { UserExperiences } from './components/UserExperiences';
 import { B2BSection } from './components/B2BSection';
 import { AuthorBio } from './components/AuthorBio';
 import { CartDrawer } from './components/CartDrawer';
@@ -47,6 +48,8 @@ function parseRouteFromPath(pathname: string) {
   let tab: ActiveTab = 'books';
   if (pathname.includes('/manager-assessment') || pathname.includes('/quiz')) {
     tab = 'quiz';
+  } else if (pathname.includes('/user-experiences') || pathname.includes('/reviews')) {
+    tab = 'user-experiences';
   }
 
   return { targetLang, tab };
@@ -90,6 +93,8 @@ export default function App() {
     let newPath = langPrefix || '/';
     if (tab === 'quiz') {
       newPath = currentLang === 'fa' ? '/manager-assessment' : `${langPrefix}/manager-assessment`;
+    } else if (tab === 'user-experiences') {
+      newPath = currentLang === 'fa' ? '/user-experiences' : `${langPrefix}/user-experiences`;
     }
 
     if (window.location.pathname !== newPath) {
@@ -302,6 +307,10 @@ export default function App() {
 
             {activeTab === 'mistakes-lessons' && (
               <MistakesAndLessons theme={theme} />
+            )}
+
+            {activeTab === 'user-experiences' && (
+              <UserExperiences theme={theme} />
             )}
 
             {activeTab === 'faq' && (

@@ -10,6 +10,7 @@
       "caseStudies": "Casos Industriales",
       "cards": "Tarjetas de Decisión",
       "mistakesLessons": "40 Errores y Lecciones",
+      "userExperiences": "Experiencias de Lectores",
       "faq": "Preguntas Frecuentes",
       "b2b": "Pedidos Corporativos",
       "author": "Sobre el Autor",
@@ -287,6 +288,7 @@
       "quiz": "Test de Gestión Instintiva",
       "cards": "Tarjetas de Decisión",
       "mistakesLessons": "40 Errores y Lecciones",
+      "userExperiences": "Experiencias de Lectores",
       "faq": "Preguntas Frecuentes Pre-Compra",
       "b2b": "Pedidos Corporativos al Por Mayor",
       "author": "Sobre Ali Asghar Hakimian"
@@ -765,5 +767,69 @@
     "successTitle": "Su Solicitud Corporativa Ha Sido Enviada con Éxito",
     "successSubtitle": "Nuestro equipo de ventas corporativas le contactará en un plazo de 2 horas laborables para entregarle la factura proforma oficial.",
     "resetBtn": "Enviar Otra Solicitud"
+  },
+  "userExperiences": {
+    "header": {
+      "badge": "Respaldos Operativos de Líderes Industriales",
+      "title": "Experiencias Reales de Lectores y Directores de Industria",
+      "subtitle": "Logros documentados de directores de planta, directores financieros y empresarios que frenaron el desperdicio oculto, corrigieron ganancias inflacionarias y construyeron sistemas resilientes con el modelo 3+.",
+      "submitCta": "Comparta su Experiencia de Implementación",
+      "verifiedBadge": "Todas las reseñas y resultados son verificados por el consejo editorial."
+    },
+    "categories": {
+      "all": "Todas las Experiencias",
+      "manufacturing": "Manufactura y Fábricas",
+      "financeSystems": "Finanzas, Costos y Sistemas",
+      "salesServices": "Ventas B2B, Logística y Servicios"
+    },
+    "volume": {
+      "bundle": "Colección Completa de 2 Volúmenes",
+      "vol1": "Volumen 1: De la Gestión Instintiva a la Autoconciencia",
+      "vol2": "Volumen 2: Hoja de Ruta para la Sostenibilidad y el Crecimiento 3+",
+      "bundleShort": "Colección de 2 Volúmenes",
+      "vol1Short": "Lector Volumen 1",
+      "vol2Short": "Lector Volumen 2"
+    },
+    "emptyState": {
+      "title": "Aún no se han registrado experiencias",
+      "desc": "Aún no se han registrado experiencias de implementación para esta sección. ¡Sea el primero en compartir sus resultados reales con Orangután 3+!",
+      "btn": "Compartir su experiencia"
+    },
+    "card": {
+      "executiveRole": "Ejecutivo Industrial",
+      "verifiedTooltip": "Verificado por la editorial"
+    },
+    "bottomCta": {
+      "title": "Comparta los Resultados de su Organización",
+      "subtitle": "Cada capítulo de Orangután +3 fue creado para resolver retos operativos específicos. Si ha utilizado las tarjetas de decisión o las fórmulas de control de pérdidas, sus resultados son invaluables.",
+      "btn": "Registrar Nueva Experiencia y Logro"
+    },
+    "modal": {
+      "badge": "Transferencia de Conocimiento e Impacto Real",
+      "title": "Comparta su Experiencia con Orangután +3",
+      "subtitle": "Sus resultados prácticos en reducción de mermas, costeo real o creación de sistemas serán una guía valiosa para otros líderes industriales.",
+      "successTitle": "¡Su Experiencia Ha Sido Enviada con Éxito!",
+      "successDesc": "Gracias por compartir los resultados de la implementación en su empresa. Su testimonio se publicará tras una breve revisión editorial.",
+      "closeBtn": "Entendido"
+    },
+    "form": {
+      "fullName": "Nombre y Apellidos",
+      "fullNamePlaceholder": "Ej. Ing. Carlos Mendoza",
+      "roleAndCompany": "Cargo y Nombre de la Empresa / Fábrica",
+      "roleAndCompanyPlaceholder": "Ej. Director de Planta - Aceros del Norte",
+      "category": "Área Operativa",
+      "contact": "Teléfono o Correo Electrónico (solo para verificación)",
+      "contactPlaceholder": "correo@empresa.com",
+      "volumeRead": "¿Qué volumen ha estudiado?",
+      "rating": "Su valoración de la eficacia del método",
+      "achievementBadge": "Logro Clave o Métrica de Impacto Organizacional",
+      "achievementPlaceholder": "Ej. 18% de reducción de mermas / reducción de 30 días en cobros",
+      "feedbackText": "Detalles de la experiencia, reto previo e impacto de la aplicación",
+      "feedbackPlaceholder": "Explique el desafío operativo que enfrentaban y cómo los capítulos o tarjetas de decisión ayudaron a resolverlo...",
+      "privacyNotice": "Sus datos de contacto son estrictamente confidenciales y se emplean únicamente para verificar la autenticidad del cargo.",
+      "cancelBtn": "Cancelar",
+      "submitBtn": "Enviar Experiencia y Reseña",
+      "validationError": "Por favor complete todos los campos obligatorios (Nombre, Organización, Logro Clave y Reseña)."
+    }
   }
 }

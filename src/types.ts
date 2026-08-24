@@ -3,7 +3,40 @@
  * Author: Ali Asghar Hakimian
  */
 
-export type ActiveTab = 'home' | 'books' | 'framework' | 'quiz' | 'case-studies' | 'cards' | 'mistakes-lessons' | 'faq' | 'b2b' | 'author';
+export type ActiveTab = 'home' | 'books' | 'framework' | 'quiz' | 'case-studies' | 'cards' | 'mistakes-lessons' | 'user-experiences' | 'faq' | 'b2b' | 'author';
+
+export type ExperienceCategory = 'all' | 'manufacturing' | 'finance-systems' | 'sales-services';
+
+export type BookVolumeRead = 'vol1' | 'vol2' | 'bundle';
+
+export interface UserExperience {
+  id: string;
+  fullName: string;
+  role: string;
+  company: string;
+  industry: string;
+  category: ExperienceCategory;
+  rating: number; // 1 to 5
+  volumeRead: BookVolumeRead;
+  achievementBadge: string;
+  keyMetric: string;
+  feedback: string;
+  verified: boolean;
+  date: string;
+}
+
+export interface NewExperienceForm {
+  fullName: string;
+  role: string;
+  company: string;
+  industry: string;
+  category: ExperienceCategory;
+  phoneOrEmail: string;
+  rating: number;
+  volumeRead: BookVolumeRead;
+  achievementBadge: string;
+  feedback: string;
+}
 
 export type ThemeMode = 'dark' | 'light';
 

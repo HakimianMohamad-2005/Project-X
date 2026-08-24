@@ -134,6 +134,80 @@ export async function saveLeadSampleToApi(leadData: LeadForm): Promise<boolean> 
   return true;
 }
 
+const LOCAL_EXPERIENCES_KEY = 'orangutan_local_experiences';
+
+export function getLocalExperiences(): any[] {
+  try {
+    const saved = localStorage.getItem(LOCAL_EXPERIENCES_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveLocalExperience(exp: any) {
+  try {
+    const exps = getLocalExperiences();
+    const filtered = exps.filter((e) => e.id !== exp.id);
+    localStorage.setItem(LOCAL_EXPERIENCES_KEY, JSON.stringify([exp, ...filtered]));
+  } catch (e) {
+    console.error('Error saving local experience:', e);
+  }
+}
+
+// Fetch approved user experiences from MySQL backend API (/api/experiences.php)
+export async function fetchUserExperiencesFromApi(): Promise<{ success: boolean; experiences: any[] }> {
+  try {
+    const res = await fetch('/api/experiences.php');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.success && Array.isArray(data.experiences)) {
+        return { success: true, experiences: data.experiences };
+      }
+    }
+  } catch (err) {
+    console.warn('API experiences GET call failed, using local/default fallback:', err);
+  }
+  return { success: false, experiences: [] };
+}
+
+// Save user experience to MySQL backend API (/api/experiences.php)
+export async function saveUserExperienceToApi(expData: {
+  fullName: string;
+  role?: string;
+  company: string;
+  industry?: string;
+  category?: string;
+  phoneOrEmail?: string;
+  rating?: number;
+  volumeRead?: string;
+  achievementBadge: string;
+  keyMetric?: string;
+  feedback: string;
+}): Promise<{ success: boolean; id?: string; message?: string }> {
+  try {
+    const res = await fetch('/api/experiences.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(expData),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch (err: any) {
+    console.warn('API experiences POST call failed:', err);
+    return {
+      success: false,
+      message: err?.message || 'خطا در ارتباط با سرور'
+    };
+  }
+  return {
+    success: false,
+    message: 'خطا در ارسال اطلاعات به سرور'
+  };
+}
+
 export interface DbTestResult {
   success: boolean;
   message: string;

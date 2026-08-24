@@ -10,6 +10,7 @@
       "caseStudies": "Industry Cases",
       "cards": "Decision Cards",
       "mistakesLessons": "40 Mistakes & Lessons",
+      "userExperiences": "Reader Reviews",
       "faq": "FAQ",
       "b2b": "Corporate Orders",
       "author": "About Author",
@@ -287,6 +288,7 @@
       "quiz": "Online Instinct Test",
       "cards": "Decision Cards",
       "mistakesLessons": "40 Mistakes & Lessons",
+      "userExperiences": "Reader Reviews",
       "faq": "Pre-Purchase FAQ",
       "b2b": "Corporate Bulk Orders",
       "author": "About Ali Asghar Hakimian"
@@ -765,5 +767,69 @@
     "successTitle": "Your Corporate Request Has Been Successfully Submitted",
     "successSubtitle": "Our corporate sales team will contact you within 2 business hours to deliver the official proforma invoice.",
     "resetBtn": "Submit Another Request"
+  },
+  "userExperiences": {
+    "header": {
+      "badge": "Operational Endorsements from Industrial Leaders",
+      "title": "Real Experiences from Readers & Industry Executives",
+      "subtitle": "Documented achievements of factory directors, CFOs, and entrepreneurs who curbed hidden waste, adjusted inflationary profits, and built resilient systems using the +3 methodology.",
+      "submitCta": "Share Your Implementation Experience",
+      "verifiedBadge": "All reviews and outcomes are verified by our editorial board."
+    },
+    "categories": {
+      "all": "All Experiences",
+      "manufacturing": "Manufacturing & Factories",
+      "financeSystems": "Finance, Costing & Systems",
+      "salesServices": "B2B Sales, Logistics & Services"
+    },
+    "volume": {
+      "bundle": "Complete 2-Volume Bundle",
+      "vol1": "Volume 1: From Instinctive Management to Self-Awareness",
+      "vol2": "Volume 2: Roadmap to +3 Sustainability & Growth",
+      "bundleShort": "Complete 2-Volume Bundle",
+      "vol1Short": "Volume 1 Reader",
+      "vol2Short": "Volume 2 Reader"
+    },
+    "emptyState": {
+      "title": "No experiences submitted yet",
+      "desc": "No implementation experiences submitted for this section yet. Be the first to share your real results with Orangutan 3+!",
+      "btn": "Share Your Experience"
+    },
+    "card": {
+      "executiveRole": "Industrial Executive",
+      "verifiedTooltip": "Verified by publisher"
+    },
+    "bottomCta": {
+      "title": "Share Your Organization's Outcomes",
+      "subtitle": "Each chapter of Orangutan +3 is crafted to address concrete challenges. If you implemented decision cards or financial bleeding formulas, your feedback is invaluable.",
+      "btn": "Submit New Experience & Achievement"
+    },
+    "modal": {
+      "badge": "Knowledge Sharing & Real Impact",
+      "title": "Share Your Experience with Orangutan +3",
+      "subtitle": "Your practical outcomes in curbing scrap, real costing, or systems building will guide fellow industry leaders.",
+      "successTitle": "Your Experience Was Successfully Submitted!",
+      "successDesc": "Thank you for sharing the results of implementing Orangutan +3 solutions in your organization. Your experience will appear on the wall after editorial verification.",
+      "closeBtn": "Got It"
+    },
+    "form": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "e.g. John Doe / Eng. Smith",
+      "roleAndCompany": "Title & Company / Factory Name",
+      "roleAndCompanyPlaceholder": "e.g. Plant Director - Atlas Steel",
+      "category": "Operational Domain",
+      "contact": "Phone or Email (for verification only)",
+      "contactPlaceholder": "email@company.com or +1...",
+      "volumeRead": "Which volume did you study?",
+      "rating": "Your rating for methodology effectiveness",
+      "achievementBadge": "Key Metric or Main Organizational Breakthrough",
+      "achievementPlaceholder": "e.g. 18% scrap reduction / 30-day reduction in DSO",
+      "feedbackText": "Experience details, prior challenges & implementation impact",
+      "feedbackPlaceholder": "Explain the operational challenges faced before reading and how specific chapters or decision cards resolved them...",
+      "privacyNotice": "Your contact details are strictly confidential and used solely for professional title verification.",
+      "cancelBtn": "Cancel",
+      "submitBtn": "Submit Review & Experience",
+      "validationError": "Please fill in all required fields (Name, Organization, Key Achievement, and Review text)."
+    }
   }
 }

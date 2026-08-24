@@ -10,6 +10,7 @@
       "caseStudies": "Cas Industriels",
       "cards": "Cartes de Décision",
       "mistakesLessons": "40 Erreurs & Leçons",
+      "userExperiences": "Avis des Lecteurs",
       "faq": "Foire aux Questions",
       "b2b": "Commandes Entreprises",
       "author": "À propos de l'Auteur",
@@ -287,6 +288,7 @@
       "quiz": "Test de Gestion en Ligne",
       "cards": "Cartes de Décision",
       "mistakesLessons": "40 Erreurs & Leçons",
+      "userExperiences": "Avis des Lecteurs",
       "faq": "Foire aux Questions",
       "b2b": "Commandes Entreprises",
       "author": "À propos d'Ali Asghar Hakimian"
@@ -765,5 +767,69 @@
     "successTitle": "Votre demande a été transmise avec succès",
     "successSubtitle": "Notre équipe commerciale vous contactera sous 2 heures ouvrées pour vous transmettre un devis officiel.",
     "resetBtn": "Envoyer une autre demande"
+  },
+  "userExperiences": {
+    "header": {
+      "badge": "Retours d'Expérience de Dirigeants Industriels",
+      "title": "Témoignages Réels des Lecteurs & Dirigeants d'Industrie",
+      "subtitle": "Résultats concrets de directeurs d'usine, directeurs financiers et chefs d'entreprise ayant éliminé le gaspillage caché, corrigé les profits inflationnistes et bâti des systèmes résilients grâce au modèle 3+.",
+      "submitCta": "Partager Votre Expérience d'Application",
+      "verifiedBadge": "Tous les avis et résultats sont vérifiés par l'équipe éditoriale."
+    },
+    "categories": {
+      "all": "Tous les Témoignages",
+      "manufacturing": "Industrie & Usines",
+      "financeSystems": "Finance, Prix de Revient & Systèmes",
+      "salesServices": "Ventes B2B, Logistique & Services"
+    },
+    "volume": {
+      "bundle": "Coffret Complet 2 Volumes",
+      "vol1": "Volume 1 : Du Management Instinctif à la Conscience de Soi",
+      "vol2": "Volume 2 : Feuille de Route pour la Durabilité et la Croissance 3+",
+      "bundleShort": "Coffret 2 Volumes",
+      "vol1Short": "Lecteur Volume 1",
+      "vol2Short": "Lecteur Volume 2"
+    },
+    "emptyState": {
+      "title": "Aucun retour d'expérience enregistré",
+      "desc": "Aucun retour d'expérience n'a encore été enregistré pour cette section. Soyez le premier à partager vos résultats concrets avec Orang-outan 3+ !",
+      "btn": "Partager votre expérience"
+    },
+    "card": {
+      "executiveRole": "Cadre Dirigeant Industriel",
+      "verifiedTooltip": "Vérifié par l'éditeur"
+    },
+    "bottomCta": {
+      "title": "Partagez les Résultats de Votre Organisation",
+      "subtitle": "Chaque chapitre du livre Orang-outan +3 a été conçu pour résoudre des difficultés opérationnelles précises. Si vous avez appliqué les cartes de décision ou les calculs de fuites financières, votre retour est précieux.",
+      "btn": "Ajouter un Témoignage & Résultat"
+    },
+    "modal": {
+      "badge": "Partage d'Expérience & Impact Réel",
+      "title": "Partager Votre Expérience avec Orang-outan +3",
+      "subtitle": "Vos résultats pratiques en réduction de rebuts, calcul des coûts ou mise en place de processus guideront d'autres dirigeants.",
+      "successTitle": "Votre Témoignage a été Transmis avec Succès !",
+      "successDesc": "Merci d'avoir partagé les résultats obtenus dans votre entreprise. Votre avis sera publié après validation par notre équipe.",
+      "closeBtn": "J'ai compris"
+    },
+    "form": {
+      "fullName": "Nom et Prénom",
+      "fullNamePlaceholder": "ex. Jean Dupont",
+      "roleAndCompany": "Fonction et Entreprise / Usine",
+      "roleAndCompanyPlaceholder": "ex. Directeur d'Usine - Groupe Alpha",
+      "category": "Domaine d'Activité",
+      "contact": "Téléphone ou Email (pour vérification uniquement)",
+      "contactPlaceholder": "contact@entreprise.fr",
+      "volumeRead": "Quel volume avez-vous étudié ?",
+      "rating": "Votre évaluation de l'efficacité de la méthode",
+      "achievementBadge": "Résultat Clé ou Gain Mesurable dans l'Organisation",
+      "achievementPlaceholder": "ex. 15 % de réduction du gaspillage / délais de paiement réduits de 30 jours",
+      "feedbackText": "Détails de l'expérience, défi initial et impact des solutions",
+      "feedbackPlaceholder": "Décrivez les difficultés rencontrées avant la lecture et comment les chapitres ou cartes de décision y ont répondu...",
+      "privacyNotice": "Vos coordonnées sont strictement confidentielles et utilisées uniquement pour vérifier votre fonction.",
+      "cancelBtn": "Annuler",
+      "submitBtn": "Envoyer le Témoignage",
+      "validationError": "Veuillez remplir tous les champs obligatoires (Nom, Entreprise, Résultat Clé et Texte)."
+    }
   }
 }

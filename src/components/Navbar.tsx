@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     setLangDropdownOpen(false);
   };
 
-  // All 9 navigation links directly in one list
+  // All navigation links directly in one list
   const navItems: { id: ActiveTab; key: string }[] = [
     { id: 'books', key: 'books' },
     { id: 'framework', key: 'framework' },
@@ -75,6 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'case-studies', key: 'caseStudies' },
     { id: 'cards', key: 'cards' },
     { id: 'mistakes-lessons', key: 'mistakesLessons' },
+    { id: 'user-experiences', key: 'userExperiences' },
     { id: 'faq', key: 'faq' },
     { id: 'b2b', key: 'b2b' },
     { id: 'author', key: 'author' },

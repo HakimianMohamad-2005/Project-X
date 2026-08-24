@@ -10,6 +10,7 @@
       "caseStudies": "Industriefälle",
       "cards": "Entscheidungskarten",
       "mistakesLessons": "40 Fehler & Lektionen",
+      "userExperiences": "Lesererfahrungen",
       "faq": "Häufige Fragen",
       "b2b": "Firmenbestellungen",
       "author": "Über den Autor",
@@ -287,6 +288,7 @@
       "quiz": "Online-Führungstest",
       "cards": "Entscheidungskarten",
       "mistakesLessons": "40 Fehler & Lektionen",
+      "userExperiences": "Lesererfahrungen",
       "faq": "Häufige Fragen",
       "b2b": "Firmenbestellungen",
       "author": "Über Ali Asghar Hakimian"
@@ -765,5 +767,69 @@
     "successTitle": "Ihre Anfrage wurde erfolgreich übermittelt",
     "successSubtitle": "Unser Vertriebsteam wird Sie innerhalb von 2 Arbeitsstunden kontaktieren und ein offizielles Angebot zusenden.",
     "resetBtn": "Weitere Anfrage senden"
+  },
+  "userExperiences": {
+    "header": {
+      "badge": "Betriebliche Empfehlungen von Industrie-Führungskräften",
+      "title": "Echte Erfahrungen von Lesern & Industrie-Managern",
+      "subtitle": "Dokumentierte Erfolge von Werksleitern, Finanzchefs und Unternehmern, die verdeckte Verluste gestoppt, inflationäre Scheingewinne korrigiert und robuste Systeme aufgebaut haben.",
+      "submitCta": "Eigene Erfahrungen und Ergebnisse teilen",
+      "verifiedBadge": "Alle Erfahrungsberichte und Ergebnisse werden vom Verlag verifiziert."
+    },
+    "categories": {
+      "all": "Alle Erfahrungen",
+      "manufacturing": "Produktion & Fabriken",
+      "financeSystems": "Finanzen, Kostenrechnung & Systeme",
+      "salesServices": "B2B-Vertrieb, Logistik & Services"
+    },
+    "volume": {
+      "bundle": "Komplettes 2-Bände-Set",
+      "vol1": "Band 1: Vom instinktiven Management zur Selbstreflexion",
+      "vol2": "Band 2: Roadmap zu +3 Nachhaltigkeit und Wachstum",
+      "bundleShort": "Komplettes 2-Bände-Set",
+      "vol1Short": "Band 1 Leser",
+      "vol2Short": "Band 2 Leser"
+    },
+    "emptyState": {
+      "title": "Bisher wurden keine Erfahrungen eingereicht",
+      "desc": "Für diesen Bereich wurden noch keine Umsetzungserfahrungen eingereicht. Seien Sie der Erste, der seine realen Ergebnisse mit Orang-Utan 3+ teilt!",
+      "btn": "Ihre Erfahrung teilen"
+    },
+    "card": {
+      "executiveRole": "Industrie-Führungskraft",
+      "verifiedTooltip": "Vom Verlag verifiziert"
+    },
+    "bottomCta": {
+      "title": "Teilen Sie die Ergebnisse Ihrer Organisation",
+      "subtitle": "Jedes Kapitel von Orangutan +3 wurde zur Lösung konkreter operativer Probleme verfasst. Wenn Sie die Entscheidungskarten oder Verlust-Stopp-Formeln angewendet haben, ist Ihr Feedback von unschätzbarem Wert.",
+      "btn": "Neue Erfahrung & Erfolg einreichen"
+    },
+    "modal": {
+      "badge": "Praxistransfer & echte Wirkung",
+      "title": "Ihre Erfahrungen mit Orangutan +3 teilen",
+      "subtitle": "Ihre praktischen Ergebnisse bei der Ausschussreduktion oder Systembildung sind ein wertvoller Leitfaden für andere Führungskräfte.",
+      "successTitle": "Ihr Erfahrungsbericht wurde erfolgreich übermittelt!",
+      "successDesc": "Vielen Dank, dass Sie die Ergebnisse der Implementierung in Ihrem Unternehmen teilen. Ihr Bericht wird nach kurzer redaktioneller Prüfung veröffentlicht.",
+      "closeBtn": "Verstanden"
+    },
+    "form": {
+      "fullName": "Vollständiger Name",
+      "fullNamePlaceholder": "z. B. Dr.-Ing. Thomas Weber",
+      "roleAndCompany": "Position & Firmen- / Werksname",
+      "roleAndCompanyPlaceholder": "z. B. Werkleiter - Atlas Metallbau GmbH",
+      "category": "Fachbereich",
+      "contact": "Telefon oder E-Mail (nur zur Verifizierung)",
+      "contactPlaceholder": "email@unternehmen.de",
+      "volumeRead": "Welchen Band haben Sie gelesen?",
+      "rating": "Ihre Bewertung der Methodik",
+      "achievementBadge": "Wichtigster Erfolg oder messbare Kennzahl",
+      "achievementPlaceholder": "z. B. 15 % weniger Ausschuss / 30 Tage schnellere Forderungsbegleichung",
+      "feedbackText": "Erfahrungsbericht, frühere Herausforderung & Wirkung der Umsetzung",
+      "feedbackPlaceholder": "Beschreiben Sie die früheren Herausforderungen und welche Kapitel oder Entscheidungskarten zur Lösung beigetragen haben...",
+      "privacyNotice": "Ihre Kontaktdaten werden absolut vertraulich behandelt und dienen ausschließlich der Positionsverifizierung.",
+      "cancelBtn": "Abbrechen",
+      "submitBtn": "Erfahrungsbericht absenden",
+      "validationError": "Bitte füllen Sie alle erforderlichen Felder aus (Name, Unternehmen, Kern-Erfolg und Text)."
+    }
   }
 }

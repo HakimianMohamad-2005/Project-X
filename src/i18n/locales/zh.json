@@ -10,6 +10,7 @@
       "caseStudies": "工业案例",
       "cards": "决策卡",
       "mistakesLessons": "40个错误与教训",
+      "userExperiences": "读者心得",
       "faq": "常见问题",
       "b2b": "企业采购",
       "author": "关于作者",
@@ -287,6 +288,7 @@
       "quiz": "在线管理测评",
       "cards": "决策卡",
       "mistakesLessons": "40个错误与教训",
+      "userExperiences": "读者心得",
       "faq": "常见问题",
       "b2b": "企业采购",
       "author": "关于 Ali Asghar Hakimian"
@@ -765,5 +767,69 @@
     "successTitle": "您的申请已成功提交",
     "successSubtitle": "我们的商务团队将在 2 个工作小时内与您联系并发送正式报价单。",
     "resetBtn": "提交另一份申请"
+  },
+  "userExperiences": {
+    "header": {
+      "badge": "工业界企业家的实战反馈与背书",
+      "title": "读者与工业高管的真实实战经验",
+      "subtitle": "记录工厂厂长、财务总监与企业家应用 3+ 方法论遏制隐性损耗、修正通胀虚假利润、构建稳健系统的真实成果。",
+      "submitCta": "分享您的落地实践与成果",
+      "verifiedBadge": "所有评价与实战数据均通过出版团队严格审核与确认。"
+    },
+    "categories": {
+      "all": "全部心得",
+      "manufacturing": "生产制造与工业",
+      "financeSystems": "财务核算与流程体系",
+      "salesServices": "企业销售与供应链服务"
+    },
+    "volume": {
+      "bundle": "全两册典藏版",
+      "vol1": "第一卷：从本能管理到组织自省",
+      "vol2": "第二卷：3+ 可持续发展与增长路径",
+      "bundleShort": "两卷全集读者",
+      "vol1Short": "第一卷读者",
+      "vol2Short": "第二卷读者"
+    },
+    "emptyState": {
+      "title": "暂无已提交的实践心得",
+      "desc": "该板块暂无已提交的实践心得。成为第一位分享您应用《红毛猩猩 3+》真实成效的读者吧！",
+      "btn": "分享您的实践心得"
+    },
+    "card": {
+      "executiveRole": "工业企业高管",
+      "verifiedTooltip": "经出版社认证"
+    },
+    "bottomCta": {
+      "title": "欢迎分享您企业的实践与改善成果",
+      "subtitle": "《红毛猩猩 3+》的每一章节都致力于解决具体的工厂管理痛点。如果您使用了决策卡或止血公式，您的宝贵成果将启发更多同行。",
+      "btn": "提交新心得与改善成果"
+    },
+    "modal": {
+      "badge": "经验赋能与实战成果",
+      "title": "分享您阅读《红毛猩猩 3+》的实践体验",
+      "subtitle": "您在降低废品率、成本核算或系统化管理方面的实战经验将成为其他工业管理者的宝贵指引。",
+      "successTitle": "您的实战心得已成功提交！",
+      "successDesc": "非常感谢您分享在企业中应用书中方案的成果。审核通过后将展示在读者心得墙上。",
+      "closeBtn": "我知道了"
+    },
+    "form": {
+      "fullName": "姓名",
+      "fullNamePlaceholder": "例如：李建国 总经理",
+      "roleAndCompany": "职务与公司 / 工厂名称",
+      "roleAndCompanyPlaceholder": "例如：厂长 - 华东精密制造",
+      "category": "所属领域",
+      "contact": "联系电话或邮箱（仅供核实）",
+      "contactPlaceholder": "email@company.com",
+      "volumeRead": "您阅读了哪一卷？",
+      "rating": "您对该方法论实用性的评价",
+      "achievementBadge": "最重要的成果或关键量化指标",
+      "achievementPlaceholder": "例如：降低18%注塑废品率 / 应收账款回款周期缩短30天",
+      "feedbackText": "实战心得、过往痛点及落地后的改善效果",
+      "feedbackPlaceholder": "请描述阅读前遇到的管理挑战，以及具体哪个章节或决策卡帮助解决了该问题...",
+      "privacyNotice": "您的联系方式受到严格保密，仅用于核实职位真实性。",
+      "cancelBtn": "取消",
+      "submitBtn": "提交心得与评价",
+      "validationError": "请填写所有必填项（姓名、组织、核心成果及心得正文）。"
+    }
   }
 }

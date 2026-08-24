@@ -57,6 +57,7 @@ export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange }) 
               <li><button onClick={() => handleNav('books')} className="hover:text-[#B87333] transition-colors">{t('footer.links.books')}</button></li>
               <li><button onClick={() => handleNav('framework')} className="hover:text-[#B87333] transition-colors">{t('footer.links.framework')}</button></li>
               <li><button onClick={() => handleNav('case-studies')} className="hover:text-[#B87333] transition-colors">{t('footer.links.caseStudies')}</button></li>
+              <li><button onClick={() => handleNav('user-experiences')} className="hover:text-[#B87333] transition-colors">{t('footer.links.userExperiences', 'تجربیات خوانندگان')}</button></li>
               <li><button onClick={() => handleNav('quiz')} className="hover:text-[#B87333] transition-colors">{t('footer.links.quiz')}</button></li>
             </ul>
           </div>
