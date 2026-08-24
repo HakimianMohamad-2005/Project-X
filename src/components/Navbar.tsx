@@ -122,9 +122,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Center Navigation Tabs (Desktop - All 9 items visible directly without scroll/clipping) */}
-          <nav className={`hidden xl:flex items-center p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 font-semibold shrink-0 ${
-            isHi ? 'gap-1' : isZh || isJa ? 'gap-1.5 xl:gap-2' : isDe ? 'gap-1' : isFr ? 'gap-0.5' : isEs ? 'gap-[2px]' : 'gap-0.5 2xl:gap-1 text-[11px] 2xl:text-xs'
+          {/* Center Navigation Tabs (Desktop - visible on 2xl screens to avoid squeezing on laptops) */}
+          <nav className={`hidden 2xl:flex items-center p-1 rounded-2xl bg-stone-500/10 border border-stone-500/20 font-semibold shrink-0 ${
+            isHi ? 'gap-1' : isZh || isJa ? 'gap-1.5' : isDe ? 'gap-1' : isFr ? 'gap-0.5' : isEs ? 'gap-[2px]' : 'gap-1 text-xs'
           }`}>
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
@@ -134,16 +134,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleSelectTab(item.id)}
                   className={`relative rounded-xl transition-all duration-200 whitespace-nowrap shrink-0 ${
                     isHi
-                      ? 'px-2 py-1 text-xs xl:text-[12.5px] font-semibold'
+                      ? 'px-2 py-1 text-xs font-semibold'
                       : isZh || isJa
-                        ? 'px-2.5 py-1.5 text-xs xl:text-sm font-semibold'
+                        ? 'px-2.5 py-1.5 text-xs font-semibold'
                         : isDe
-                          ? 'px-2 py-1 text-xs xl:text-[12.5px] font-medium'
+                          ? 'px-2 py-1 text-xs font-medium'
                           : isFr
-                            ? 'px-1.5 py-1 text-[11.5px] xl:text-[11.8px] font-medium'
+                            ? 'px-1.5 py-1 text-[11.5px] font-medium'
                             : isEs 
-                              ? 'px-[5px] py-0.5 text-[11px] xl:text-[11.5px]' 
-                              : 'px-1.5 py-1 2xl:px-2.5 2xl:py-1.5'
+                              ? 'px-1.5 py-0.5 text-[11px]' 
+                              : 'px-2.5 py-1.5'
                   } ${
                     isActive
                       ? isLight
@@ -167,11 +167,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Action Controls */}
-          <div className={`flex items-center shrink-0 flex-shrink-0 ${isDe ? 'gap-1 me-2 pe-4' : isFr ? 'gap-1 me-2 pe-4 sm:pe-6' : isZh || isJa || isHi ? 'gap-1 me-2 pe-4' : isEs ? 'gap-1 me-2 pe-4' : isFa || isAr ? 'gap-1 sm:gap-2' : 'gap-1 sm:gap-2 pe-4'}`}>
+          {/* Action Controls - Strictly non-wrapping and fixed */}
+          <div className="flex items-center shrink-0 flex-shrink-0 flex-nowrap gap-1.5 sm:gap-2">
             
             {/* 9-Language Dropdown Switcher */}
-            <div className="relative shrink-0 flex-shrink-0">
+            <div className="relative shrink-0 flex-shrink-0 z-50">
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
@@ -204,7 +204,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className={`absolute end-0 mt-2 w-36 rounded-2xl p-1.5 border shadow-xl z-50 overflow-hidden ${
+                      className={`absolute end-0 mt-2 w-40 rounded-2xl p-1.5 border shadow-2xl z-50 overflow-hidden ${
                         isLight ? 'bg-white border-amber-200/80 text-stone-900' : 'bg-[#1E2022] border-stone-700 text-[#FAF7F2]'
                       }`}
                     >
@@ -262,7 +262,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenSamplePdf}
-              className={`${isDe ? 'hidden 3xl:flex' : 'hidden 2xl:flex'} items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
+              className={`hidden 2xl:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
                 isDeOrEsOrFrOrZhOrJaOrHi 
                   ? 'px-2 py-1 text-[11px]' 
                   : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
@@ -281,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenTracking}
-              className={`hidden lg:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
+              className={`hidden 2xl:flex items-center gap-1 rounded-xl font-semibold border transition-all shrink-0 flex-shrink-0 ${
                 isDeOrEsOrFrOrZhOrJaOrHi 
                   ? 'px-2 py-1 text-[11px]' 
                   : 'px-2.5 py-1.5 text-[11px] 2xl:text-xs'
@@ -315,10 +315,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </motion.button>
 
-            {/* Mobile Hamburger Menu Toggle */}
+            {/* Mobile / Tablet / Laptop Hamburger Menu Toggle (active under 2xl) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`xl:hidden p-1.5 sm:p-2 rounded-xl border shrink-0 flex-shrink-0 ${
+              className={`2xl:hidden p-1.5 sm:p-2 rounded-xl border shrink-0 flex-shrink-0 ${
                 isLight ? 'bg-stone-100 border-stone-300 text-stone-800' : 'bg-stone-800 border-stone-700 text-stone-200'
               }`}
             >
@@ -336,7 +336,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className={`xl:hidden border-b px-4 pt-4 pb-6 space-y-3 max-h-[80vh] overflow-y-auto ${
+          className={`2xl:hidden border-b px-4 pt-4 pb-6 space-y-3 max-h-[80vh] overflow-y-auto ${
             isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
           }`}
         >

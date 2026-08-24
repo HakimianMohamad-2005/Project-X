@@ -45,15 +45,15 @@ export const Hero: React.FC<HeroProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Main Grid: Info + Book & Author Visuals */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        {/* Main Grid: Info + Book & Author Visuals (stacks smoothly under 2xl) */}
+        <div className="grid grid-cols-1 2xl:grid-cols-12 gap-10 2xl:gap-8 items-center">
           
           {/* Main Info Column */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 space-y-6 text-start"
+            className="2xl:col-span-7 space-y-6 text-start"
           >
             
             {/* Top Milestone Badge */}
@@ -171,12 +171,12 @@ export const Hero: React.FC<HeroProps> = ({
 
           </motion.div>
 
-          {/* Left Column: Visual Book Covers & Author Portrait */}
+          {/* Left/Showcase Column: Visual Book Covers & Author Portrait */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-5 relative space-y-6"
+            className="2xl:col-span-5 relative space-y-6 max-w-xl mx-auto 2xl:max-w-none w-full"
           >
             
             {/* Visual Boxset & Covers Showcase */}
