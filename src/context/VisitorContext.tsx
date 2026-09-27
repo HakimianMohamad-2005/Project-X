@@ -323,8 +323,8 @@ export const VisitorProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // 5. Admin Authentication Gate
   const loginAdmin = useCallback((passcode: string): boolean => {
-    // Accepted passcodes: default 'admin123' or '3plus@admin' or 'orangutan40'
-    const validCodes = ['admin123', '3plus@admin', 'orangutan40', '13401403'];
+    // Accepted passcodes: strictly configured by admin
+    const validCodes = ['3plus@admin', 'orangutan40', '4430929292'];
     if (validCodes.includes(passcode.trim())) {
       setIsAdminAuthenticated(true);
       try {

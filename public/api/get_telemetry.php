@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 $passcode = $_GET['passcode'] ?? $_POST['passcode'] ?? '';
-$validCodes = array('admin123', '3plus@admin', 'orangutan40', '13401403');
+$validCodes = array('3plus@admin', 'orangutan40', '4430929292');
 
 if (!in_array(trim($passcode), $validCodes)) {
     http_response_code(403);

@@ -240,7 +240,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBackToSite, th
           </button>
 
           <button
-            onClick={logoutAdmin}
+            onClick={() => {
+              logoutAdmin();
+              onBackToSite();
+            }}
             className="px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 text-xs font-bold flex items-center gap-1 transition-all"
           >
             <Unlock className="w-4 h-4" />
