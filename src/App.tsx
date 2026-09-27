@@ -19,6 +19,8 @@ import { PaymentGatewayModal } from './components/PaymentGatewayModal';
 import { OrderTrackingModal } from './components/OrderTrackingModal';
 import { SeoManager } from './components/SeoManager';
 import { Footer } from './components/Footer';
+import { AdminDashboard } from './components/AdminDashboard';
+import { VisitorProvider, useVisitor } from './context/VisitorContext';
 
 import { CartItem, Order, OrderCustomerInfo, ActiveTab, ThemeMode } from './types';
 import { BOOKS_DATA, BUNDLE_DATA } from './data/bookData';
@@ -46,7 +48,9 @@ function parseRouteFromPath(pathname: string) {
   }
 
   let tab: ActiveTab = 'books';
-  if (pathname.includes('/manager-assessment') || pathname.includes('/quiz')) {
+  if (pathname.includes('/admin') || pathname.endsWith('/admin')) {
+    tab = 'admin';
+  } else if (pathname.includes('/manager-assessment') || pathname.includes('/quiz')) {
     tab = 'quiz';
   } else if (pathname.includes('/user-experiences') || pathname.includes('/reviews')) {
     tab = 'user-experiences';
@@ -55,15 +59,16 @@ function parseRouteFromPath(pathname: string) {
   return { targetLang, tab };
 }
 
-export default function App() {
+function MainAppContent() {
   const { i18n } = useTranslation();
-  
+  const { recordNavigation } = useVisitor();
+
   // Initialize tab and language from URL pathname
   const initialRoute = parseRouteFromPath(typeof window !== 'undefined' ? window.location.pathname : '/');
   const [activeTab, setActiveTab] = useState<ActiveTab>(initialRoute.tab);
   const [theme, setTheme] = useState<ThemeMode>('light');
 
-  // Handle popstate for / /en /es /de /fr /zh /ja /hi /ar and /manager-assessment navigation
+  // Handle popstate for / /en /es /de /fr /zh /ja /hi /ar and /manager-assessment /admin navigation
   useEffect(() => {
     const handlePopState = () => {
       const { targetLang, tab } = parseRouteFromPath(window.location.pathname);
@@ -72,6 +77,7 @@ export default function App() {
         syncDocumentDirAndLang(targetLang);
       }
       setActiveTab(tab);
+      recordNavigation(window.location.pathname, tab);
     };
 
     // Also sync on initial mount if URL had language prefix
@@ -82,7 +88,7 @@ export default function App() {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [i18n]);
+  }, [i18n, recordNavigation, initialRoute.targetLang]);
 
   const handleTabSelect = (tab: ActiveTab) => {
     setActiveTab(tab);
@@ -91,7 +97,9 @@ export default function App() {
     const currentLang = i18n.language || 'fa';
     const langPrefix = currentLang === 'fa' ? '' : `/${currentLang}`;
     let newPath = langPrefix || '/';
-    if (tab === 'quiz') {
+    if (tab === 'admin') {
+      newPath = currentLang === 'fa' ? '/admin' : `${langPrefix}/admin`;
+    } else if (tab === 'quiz') {
       newPath = currentLang === 'fa' ? '/manager-assessment' : `${langPrefix}/manager-assessment`;
     } else if (tab === 'user-experiences') {
       newPath = currentLang === 'fa' ? '/user-experiences' : `${langPrefix}/user-experiences`;
@@ -100,6 +108,7 @@ export default function App() {
     if (window.location.pathname !== newPath) {
       window.history.pushState({}, '', newPath);
     }
+    recordNavigation(newPath, tab);
   };
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -204,7 +213,7 @@ export default function App() {
     setIsCartOpen(true);
   };
 
-  const handleUpdateQuantity = (id: string, delta: number) => {
+  const handleUpdateCartQuantity = (id: string, delta: number) => {
     setCartItems((prev) =>
       prev
         .map((item) => {
@@ -218,15 +227,14 @@ export default function App() {
     );
   };
 
-  const handleRemoveItem = (id: string) => {
+  const handleRemoveCartItem = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const handleProceedToPayment = (customerInfo: OrderCustomerInfo, promoDiscountPercent: number) => {
+  const handleCheckout = (customerInfo: OrderCustomerInfo) => {
     const rawTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const promoDiscountAmount = Math.round(rawTotal * (promoDiscountPercent / 100));
-    const hasBundle = cartItems.some((item) => item.bookId === 'bundle-full');
-    const shippingCost = hasBundle || rawTotal > 600000 ? 0 : 35000;
+    const promoDiscountAmount = 0;
+    const shippingCost = 0;
     const finalTotal = Math.max(0, rawTotal - promoDiscountAmount + shippingCost);
 
     setPayableAmount(finalTotal);
@@ -249,7 +257,7 @@ export default function App() {
     <div className={`min-h-screen w-full max-w-full overflow-x-hidden transition-colors duration-300 selection:bg-[#B87333] selection:text-white antialiased ${
       isLight ? 'bg-[#FAF8F5] text-stone-900' : 'bg-[#121314] text-[#FAF7F2]'
     }`}>
-      
+
       {/* Dynamic SEO Manager for Title, Meta, Canonical & Open Graph */}
       <SeoManager activeTab={activeTab} />
 
@@ -328,53 +336,67 @@ export default function App() {
             {activeTab === 'author' && (
               <AuthorBio theme={theme} />
             )}
+
+            {/* Confidential Admin Telemetry Dashboard */}
+            {activeTab === 'admin' && (
+              <AdminDashboard
+                onBackToSite={() => handleTabSelect('books')}
+                theme={theme}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* Footer */}
+      {/* Footer with Public-Only Visitor Counter and Secret Admin Gate */}
       <Footer
         theme={theme}
         onTabChange={handleTabSelect}
+        onOpenAdmin={() => handleTabSelect('admin')}
       />
 
-      {/* Slide-over Cart Drawer */}
+      {/* Global Interactive Modals & Drawers */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onProceedToPayment={handleProceedToPayment}
+        items={cartItems}
+        onUpdateQuantity={handleUpdateCartQuantity}
+        onRemoveItem={handleRemoveCartItem}
+        onCheckout={handleCheckout}
         theme={theme}
       />
 
-      {/* Sample PDF Download Modal */}
       <SamplePdfModal
         isOpen={isSamplePdfOpen}
         onClose={() => setIsSamplePdfOpen(false)}
         theme={theme}
       />
 
-      {/* Payment Gateway Simulator */}
       <PaymentGatewayModal
         isOpen={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
-        amount={payableAmount}
+        payableAmount={payableAmount}
         customerInfo={pendingCustomerInfo}
         cartItems={cartItems}
         onPaymentSuccess={handlePaymentSuccess}
         theme={theme}
       />
 
-      {/* Order Tracking Modal */}
       <OrderTrackingModal
         isOpen={isTrackingOpen}
         onClose={() => setIsTrackingOpen(false)}
-        recentOrders={recentOrders}
         theme={theme}
+        recentOrders={recentOrders}
       />
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <VisitorProvider>
+      <MainAppContent />
+    </VisitorProvider>
   );
 }

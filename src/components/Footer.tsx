@@ -2,13 +2,15 @@ import React from 'react';
 import { ShieldCheck, Truck, FileText, Phone, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ActiveTab, ThemeMode } from '../types';
+import { PublicVisitorCounter } from './PublicVisitorCounter';
 
 interface FooterProps {
   theme?: ThemeMode;
   onTabChange?: (tab: ActiveTab) => void;
+  onOpenAdmin?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange }) => {
+export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange, onOpenAdmin }) => {
   const { t } = useTranslation();
   const isLight = theme === 'light';
 
@@ -19,14 +21,22 @@ export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange }) 
     }
   };
 
+  const handleAdminTrigger = () => {
+    if (onOpenAdmin) {
+      onOpenAdmin();
+    } else if (onTabChange) {
+      onTabChange('admin' as any);
+    }
+  };
+
   return (
     <footer className={`border-t pt-16 pb-12 transition-colors duration-300 text-xs ${
       isLight ? 'bg-stone-100 border-stone-300 text-stone-600' : 'bg-[#0D0E0F] border-stone-800 text-stone-400'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          
+
           {/* Brand & Author Info */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -91,19 +101,26 @@ export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange }) 
 
         </div>
 
-        {/* Trust Badges */}
-        <div className="pt-8 border-t border-stone-500/20 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-          <div className="flex items-center justify-center gap-2">
-            <Truck className="w-4 h-4 text-[#B87333]" />
-            <span>{t('footer.badges.shipping')}</span>
+        {/* Public Visitor Counter Row (Clean, Industrial, Public-Only) */}
+        <div className="pt-8 border-t border-stone-500/20 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <PublicVisitorCounter onOpenAdmin={handleAdminTrigger} theme={theme} />
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-500" />
-            <span>{t('footer.badges.authenticity')}</span>
-          </div>
-          <div className="flex items-center justify-center gap-2">
-            <FileText className="w-4 h-4 text-[#B87333]" />
-            <span>{t('footer.badges.invoice')}</span>
+
+          {/* Trust Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-stone-500 text-xs">
+            <div className="flex items-center gap-2">
+              <Truck className="w-4 h-4 text-[#B87333]" />
+              <span>{t('footer.badges.shipping')}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+              <span>{t('footer.badges.authenticity')}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#B87333]" />
+              <span>{t('footer.badges.invoice')}</span>
+            </div>
           </div>
         </div>
 

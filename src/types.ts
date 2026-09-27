@@ -3,7 +3,7 @@
  * Author: Ali Asghar Hakimian
  */
 
-export type ActiveTab = 'home' | 'books' | 'framework' | 'quiz' | 'case-studies' | 'cards' | 'mistakes-lessons' | 'user-experiences' | 'faq' | 'b2b' | 'author';
+export type ActiveTab = 'home' | 'books' | 'framework' | 'quiz' | 'case-studies' | 'cards' | 'mistakes-lessons' | 'user-experiences' | 'faq' | 'b2b' | 'author' | 'admin';
 
 export type ExperienceCategory = 'all' | 'manufacturing' | 'finance-systems' | 'sales-services';
 
