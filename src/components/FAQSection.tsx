@@ -345,7 +345,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
 
         <div className="flex items-center gap-3 shrink-0">
           <a
-            href="tel:02188990011"
+            href="tel:09130440143"
             className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md flex items-center gap-2"
           >
             <Phone className="w-4 h-4" />

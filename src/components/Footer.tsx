@@ -93,10 +93,13 @@ export const Footer: React.FC<FooterProps> = ({ theme = 'light', onTabChange, on
             <p className="leading-relaxed">
               {t('footer.navSupportText')}
             </p>
-            <div className="pt-2 flex items-center gap-2 text-[#B87333] font-bold">
+            <a
+              href="tel:09130440143"
+              className="pt-2 inline-flex items-center gap-2 text-[#B87333] hover:text-[#d48b48] font-bold transition-colors"
+            >
               <Phone className="w-4 h-4" />
               <span>{t('footer.supportPhone')}</span>
-            </div>
+            </a>
           </div>
 
         </div>

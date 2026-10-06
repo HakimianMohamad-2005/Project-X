@@ -215,8 +215,33 @@ export interface DbTestResult {
   user?: string;
   tables?: string[];
   orderCount?: number;
+  experienceCount?: number;
+  assessmentCount?: number;
   serverTime?: string;
   rawError?: string;
+}
+
+// Save Advanced Assessment submission to MySQL backend API (/api/save_assessment.php)
+export async function saveAssessmentToApi(payload: {
+  profile?: any;
+  result?: any;
+  assessmentId?: number | null;
+  status?: 'started' | 'completed';
+}): Promise<{ success: boolean; id?: number; message?: string }> {
+  try {
+    const res = await fetch('/api/save_assessment.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch (err: any) {
+    console.warn('API save_assessment call failed:', err);
+  }
+  return { success: false };
 }
 
 // Test PHP PDO database connection

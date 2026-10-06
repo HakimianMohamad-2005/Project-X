@@ -58,6 +58,16 @@ if (in_array('user_experiences', $tables)) {
     }
 }
 
+// Count records in advanced_assessments table if present
+$assessmentCount = 0;
+if (in_array('advanced_assessments', $tables)) {
+    $resAss = $conn->query("SELECT COUNT(*) AS total FROM advanced_assessments");
+    if ($resAss) {
+        $rowA = $resAss->fetch_assoc();
+        $assessmentCount = (int)$rowA['total'];
+    }
+}
+
 echo json_encode(array(
     'success'         => true,
     'message'         => 'اتصال به دیتابیس MySQL روی cPanel کاملاً صحیح و فعال است.',
@@ -66,5 +76,6 @@ echo json_encode(array(
     'tables'          => $tables,
     'orderCount'      => $orderCount,
     'experienceCount' => $experienceCount,
+    'assessmentCount' => $assessmentCount,
     'serverTime'      => date('Y-m-d H:i:s')
 ), JSON_UNESCAPED_UNICODE);

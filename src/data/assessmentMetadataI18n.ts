@@ -1540,60 +1540,125 @@ export function getIntakeFormOptions(lang: string = 'fa') {
 
 export function getIntakeFormLabels(lang: string = 'fa') {
   const opts = LOCALIZED_INTAKE_OPTIONS[lang] || LOCALIZED_INTAKE_OPTIONS['fa'];
-  const titles: Record<string, { title: string; subtitle: string; backBtn: string; submitBtn: string }> = {
+  const titles: Record<string, {
+    title: string;
+    subtitle: string;
+    backBtn: string;
+    submitBtn: string;
+    fullNameLabel: string;
+    fullNamePlaceholder: string;
+    phoneLabel: string;
+    phonePlaceholder: string;
+    phoneOptionalBadge: string;
+    defaultFullName: string;
+  }> = {
     fa: {
       title: 'مشخصات اولیه سازمان و مدیر پاسخ‌دهنده',
       subtitle: 'جهت شخصی‌سازی گزارش تحلیلی، نقاط داغ و توصیه‌های فصل‌های کتاب، اطلاعات زیر را تکمیل فرمایید.',
       backBtn: 'بازگشت به انتخاب آزمون',
-      submitBtn: 'شروع ارزیابی ۲۴ سناریویی'
+      submitBtn: 'شروع ارزیابی ۲۴ سناریویی',
+      fullNameLabel: 'نام و نام خانوادگی',
+      fullNamePlaceholder: 'مثال: علی رضایی',
+      phoneLabel: 'شماره تماس',
+      phonePlaceholder: 'مثال: ۰۹۱۲۳۴۵۶۷۸۹',
+      phoneOptionalBadge: '(اختیاری)',
+      defaultFullName: 'مدیر ارشد سازمان'
     },
     en: {
       title: 'Respondent & Organization Profile',
       subtitle: 'To tailor the diagnostic report, hotspots, and book chapter recommendations, please fill in the details below.',
       backBtn: 'Back to Mode Select',
-      submitBtn: 'Start 24-Scenario Assessment'
+      submitBtn: 'Start 24-Scenario Assessment',
+      fullNameLabel: 'Full Name',
+      fullNamePlaceholder: 'e.g. John Doe',
+      phoneLabel: 'Phone Number',
+      phonePlaceholder: 'e.g. +98 912 345 6789',
+      phoneOptionalBadge: '(Optional)',
+      defaultFullName: 'Senior Executive'
     },
     es: {
       title: 'Perfil del Directivo y la Organización',
       subtitle: 'Para personalizar el informe diagnóstico, los puntos críticos y las recomendaciones, complete los siguientes datos.',
       backBtn: 'Volver a Selección',
-      submitBtn: 'Iniciar Evaluación de 24 Escenarios'
+      submitBtn: 'Iniciar Evaluación de 24 Escenarios',
+      fullNameLabel: 'Nombre y Apellido',
+      fullNamePlaceholder: 'ej. Carlos García',
+      phoneLabel: 'Número de Teléfono',
+      phonePlaceholder: 'ej. +34 612 345 678',
+      phoneOptionalBadge: '(Opcional)',
+      defaultFullName: 'Director Ejecutivo'
     },
     de: {
       title: 'Profil der Führungskraft & Organisation',
       subtitle: 'Um den Diagnosebericht, Hotspots und Buchempfehlungen anzupassen, füllen Sie bitte die folgenden Felder aus.',
       backBtn: 'Zurück zur Modusauswahl',
-      submitBtn: '24-Szenarien-Test starten'
+      submitBtn: '24-Szenarien-Test starten',
+      fullNameLabel: 'Vor- und Nachname',
+      fullNamePlaceholder: 'z.B. Markus Weber',
+      phoneLabel: 'Telefonnummer',
+      phonePlaceholder: 'z.B. +49 170 1234567',
+      phoneOptionalBadge: '(Optional)',
+      defaultFullName: 'Geschäftsführer'
     },
     fr: {
       title: 'Profil du Dirigeant & de l\'Organisation',
       subtitle: 'Pour personnaliser le rapport de diagnostic, les points chauds et les recommandations de chapitres, veuillez renseigner les détails ci-dessous.',
       backBtn: 'Retour à la sélection',
-      submitBtn: 'Lancer l\'évaluation en 24 scénarios'
+      submitBtn: 'Lancer l\'évaluation en 24 scénarios',
+      fullNameLabel: 'Nom et Prénom',
+      fullNamePlaceholder: 'ex. Pierre Martin',
+      phoneLabel: 'Numéro de Téléphone',
+      phonePlaceholder: 'ex. +33 6 12 34 56 78',
+      phoneOptionalBadge: '(Optionnel)',
+      defaultFullName: 'Cadre Dirigeant'
     },
     zh: {
       title: '受测管理者与组织基本信息',
       subtitle: '为定制专属诊断报告、热点痛点及书籍章节建议，请填写以下基本信息。',
       backBtn: '返回模式选择',
-      submitBtn: '开始24场景进阶测评'
+      submitBtn: '开始24场景进阶测评',
+      fullNameLabel: '姓名',
+      fullNamePlaceholder: '例如：张伟',
+      phoneLabel: '联系电话',
+      phonePlaceholder: '例如：13800138000',
+      phoneOptionalBadge: '(选填)',
+      defaultFullName: '高级管理者'
     },
     ja: {
       title: '回答者および組織の基本情報',
       subtitle: '診断レポート、弱点領域、書籍の推奨章を個別にカスタマイズするため、以下の項目をご入力ください。',
       backBtn: 'モード選択に戻る',
-      submitBtn: '24シナリオ総合診断を開始'
+      submitBtn: '24シナリオ総合診断を開始',
+      fullNameLabel: '氏名',
+      fullNamePlaceholder: '例：山田 太郎',
+      phoneLabel: '電話番号',
+      phonePlaceholder: '例：090-1234-5678',
+      phoneOptionalBadge: '(任意)',
+      defaultFullName: '経営管理者'
     },
     hi: {
       title: 'प्रबंधक एवं संगठन की प्रारंभिक जानकारी',
       subtitle: 'निदान रिपोर्ट, हॉटस्पॉट और पुस्तक अनुशंसाओं को अनुकूलित करने के लिए कृपया नीचे दी गई जानकारी भरें।',
       backBtn: 'मोड चयन पर वापस जाएं',
-      submitBtn: '24-परिदृश्य मूल्यांकन शुरू करें'
+      submitBtn: '24-परिदृश्य मूल्यांकन शुरू करें',
+      fullNameLabel: 'पूरा नाम',
+      fullNamePlaceholder: 'उदा. अमित शर्मा',
+      phoneLabel: 'फ़ोन नंबर',
+      phonePlaceholder: 'उदा. 9876543210',
+      phoneOptionalBadge: '(वैकल्पिक)',
+      defaultFullName: 'वरिष्ठ प्रबंधक'
     },
     ar: {
       title: 'البيانات الأولية للمؤسسة والمدير المجيب',
       subtitle: 'لتخصيص تقرير التشخيص ونقاط الاختناق والتوصيات بفصول الكتاب، يرجى تعبئة الحقول أدناه.',
       backBtn: 'العودة لاختيار التقييم',
-      submitBtn: 'بدء تقييم ۲٤ سيناريو'
+      submitBtn: 'بدء تقييم ۲٤ سيناريو',
+      fullNameLabel: 'الاسم واللقب',
+      fullNamePlaceholder: 'مثال: أحمد المحمد',
+      phoneLabel: 'رقم الهاتف',
+      phonePlaceholder: 'مثال: 09123456789',
+      phoneOptionalBadge: '(اختياري)',
+      defaultFullName: 'المدير التنفيذي'
     }
   };
 
@@ -1603,6 +1668,12 @@ export function getIntakeFormLabels(lang: string = 'fa') {
     subtitle: t.subtitle,
     backBtn: t.backBtn,
     submitBtn: t.submitBtn,
+    fullNameLabel: t.fullNameLabel,
+    fullNamePlaceholder: t.fullNamePlaceholder,
+    phoneLabel: t.phoneLabel,
+    phonePlaceholder: t.phonePlaceholder,
+    phoneOptionalBadge: t.phoneOptionalBadge,
+    defaultFullName: t.defaultFullName,
     roleLabel: opts.roleLabel,
     rolePlaceholder: opts.rolePlaceholder,
     industryLabel: opts.industryLabel,

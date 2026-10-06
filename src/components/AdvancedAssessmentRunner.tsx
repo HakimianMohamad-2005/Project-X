@@ -37,8 +37,11 @@ import {
   Flame,
   ShieldCheck,
   CheckCircle2,
-  History
+  History,
+  User,
+  Phone
 } from 'lucide-react';
+import { saveAssessmentToApi } from '../lib/api';
 
 interface AdvancedAssessmentRunnerProps {
   onAddToCart: (bookId: string) => void;
@@ -68,15 +71,37 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
   // Step management: 'profile' | 'quiz' | 'result'
   const [step, setStep] = useState<'profile' | 'quiz' | 'result'>('profile');
 
-  // Intake Form Profile State
-  const [profile, setProfile] = useState<AssessmentRespondentProfile>({
-    role: '',
-    industry: '',
-    headcount: '',
-    experience: '',
-    scope: '',
-    createdAt: ''
+  // Intake Form Profile State with Pre-Loaded sensible defaults
+  const [profile, setProfile] = useState<AssessmentRespondentProfile>(() => {
+    return {
+      fullName: formLabels.defaultFullName || 'مدیر ارشد سازمان',
+      phone: '',
+      role: formOptions.roles[0]?.value || '',
+      industry: formOptions.industries[0]?.value || '',
+      headcount: formOptions.headcounts[2]?.value || formOptions.headcounts[0]?.value || '',
+      experience: formOptions.experiences[2]?.value || formOptions.experiences[0]?.value || '',
+      scope: formOptions.scopes[0]?.value || '',
+      createdAt: ''
+    };
   });
+
+  // Track database assessment record ID for updating results upon quiz completion
+  const [assessmentRecordId, setAssessmentRecordId] = useState<number | null>(null);
+
+  // Pre-load default values when language or form options change (if fields are unselected)
+  useEffect(() => {
+    setProfile((prev) => {
+      return {
+        ...prev,
+        fullName: prev.fullName?.trim() ? prev.fullName : (formLabels.defaultFullName || 'مدیر ارشد سازمان'),
+        role: prev.role?.trim() ? prev.role : (formOptions.roles[0]?.value || ''),
+        industry: prev.industry?.trim() ? prev.industry : (formOptions.industries[0]?.value || ''),
+        headcount: prev.headcount?.trim() ? prev.headcount : (formOptions.headcounts[2]?.value || formOptions.headcounts[0]?.value || ''),
+        experience: prev.experience?.trim() ? prev.experience : (formOptions.experiences[2]?.value || formOptions.experiences[0]?.value || ''),
+        scope: prev.scope?.trim() ? prev.scope : (formOptions.scopes[0]?.value || '')
+      };
+    });
+  }, [formLabels, formOptions]);
 
   // Current Question Index in 24 questions (0..23)
   const [currentIdx, setCurrentIdx] = useState<number>(0);
@@ -111,10 +136,17 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
 
     const draft = loadAssessmentDraft();
     if (draft && draft.step) {
-      if (draft.profile) setProfile(draft.profile);
+      if (draft.profile) {
+        setProfile((prev) => ({
+          ...prev,
+          ...draft.profile,
+          fullName: (draft.profile.fullName && draft.profile.fullName.trim()) ? draft.profile.fullName : prev.fullName
+        }));
+      }
       if (draft.answers) setAnswers(draft.answers);
       if (typeof draft.currentIdx === 'number') setCurrentIdx(draft.currentIdx);
       if (draft.shuffledOptionsMap) setShuffledOptionsMap(draft.shuffledOptionsMap);
+      if (typeof draft.assessmentRecordId === 'number') setAssessmentRecordId(draft.assessmentRecordId);
       if (draft.step === 'quiz') setStep('quiz');
     }
   }, []);
@@ -143,27 +175,44 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
         profile,
         answers,
         currentIdx,
-        shuffledOptionsMap
+        shuffledOptionsMap,
+        assessmentRecordId
       });
     }
-  }, [step, profile, answers, currentIdx, shuffledOptionsMap]);
+  }, [step, profile, answers, currentIdx, shuffledOptionsMap, assessmentRecordId]);
 
-  // Form validation for Profile Step
+  // Form validation for Profile Step (fullName is required; phone is optional; select fields are pre-loaded)
   const isProfileValid = useMemo(() => {
     return (
-      profile.role.trim() !== '' &&
-      profile.industry.trim() !== '' &&
-      profile.headcount.trim() !== '' &&
-      profile.experience.trim() !== '' &&
-      profile.scope.trim() !== ''
+      (profile.fullName || '').trim() !== '' &&
+      (profile.role || '').trim() !== '' &&
+      (profile.industry || '').trim() !== '' &&
+      (profile.headcount || '').trim() !== '' &&
+      (profile.experience || '').trim() !== '' &&
+      (profile.scope || '').trim() !== ''
     );
   }, [profile]);
 
-  const handleStartQuiz = (e: React.FormEvent) => {
+  const handleStartQuiz = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isProfileValid) return;
-    setProfile((prev) => ({ ...prev, createdAt: new Date().toISOString() }));
+    const nowIso = new Date().toISOString();
+    const updatedProfile = { ...profile, createdAt: nowIso };
+    setProfile(updatedProfile);
     setStep('quiz');
+
+    // Save lead/assessment immediately to MySQL database (status: started)
+    try {
+      const resp = await saveAssessmentToApi({
+        profile: updatedProfile,
+        status: 'started'
+      });
+      if (resp && resp.success && resp.id) {
+        setAssessmentRecordId(resp.id);
+      }
+    } catch (err) {
+      console.warn('Initial assessment save warning:', err);
+    }
   };
 
   const handleSelectOption = (questionId: number, option: AssessmentOption) => {
@@ -186,7 +235,17 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
       saveAssessmentResultToHistory(res);
       clearAssessmentDraft();
       setStep('result');
-      
+
+      // Save/update final assessment report in MySQL database (status: completed)
+      saveAssessmentToApi({
+        profile,
+        result: res,
+        assessmentId: assessmentRecordId,
+        status: 'completed'
+      }).catch((err) => {
+        console.warn('Final assessment save error:', err);
+      });
+
       confetti({
         particleCount: 100,
         spread: 80,
@@ -207,6 +266,7 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
     setCurrentIdx(0);
     setResult(null);
     setShowComparison(false);
+    setAssessmentRecordId(null);
     setStep('profile');
   };
 
@@ -275,7 +335,49 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
 
           <form onSubmit={handleStartQuiz} className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
+
+              {/* Field A: Full Name (نام و نام خانوادگی) - Required & Pre-Loaded */}
+              <div className="space-y-1.5">
+                <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
+                  <User className="w-3.5 h-3.5 text-[#B87333]" />
+                  <span>{formLabels.fullNameLabel}</span>
+                  <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={profile.fullName || ''}
+                  onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
+                  placeholder={formLabels.fullNamePlaceholder}
+                  required
+                  className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#B87333] ${
+                    isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
+                  }`}
+                />
+              </div>
+
+              {/* Field B: Phone (شماره تماس) - Optional (اختیاری) */}
+              <div className="space-y-1.5">
+                <label className={`text-xs font-bold flex items-center justify-between gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
+                  <span className="flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-[#B87333]" />
+                    <span>{formLabels.phoneLabel}</span>
+                  </span>
+                  <span className="text-[11px] font-normal text-stone-400">
+                    {formLabels.phoneOptionalBadge}
+                  </span>
+                </label>
+                <input
+                  type="tel"
+                  dir="ltr"
+                  value={profile.phone || ''}
+                  onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                  placeholder={formLabels.phonePlaceholder}
+                  className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#B87333] text-start ${
+                    isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#181A1C] border-stone-700 text-stone-100'
+                  }`}
+                />
+              </div>
+
               {/* Field 1: Role */}
               <div className="space-y-1.5">
                 <label className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-stone-800' : 'text-stone-200'}`}>
@@ -582,6 +684,14 @@ export const AdvancedAssessmentRunner: React.FC<AdvancedAssessmentRunnerProps> =
               <h3 className={`text-xl sm:text-2xl font-black ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
                 {uiLabels.resultTitle(formatPct(result.engagementPercentage))}
               </h3>
+
+              {result.profile?.fullName && (
+                <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-stone-500 pt-1">
+                  <span className="font-bold text-[#B87333]">{result.profile.fullName}</span>
+                  {result.profile.role && <span>• {result.profile.role}</span>}
+                  {result.profile.industry && <span>• {result.profile.industry}</span>}
+                </div>
+              )}
             </div>
 
             {/* Tier Badge & Summary */}

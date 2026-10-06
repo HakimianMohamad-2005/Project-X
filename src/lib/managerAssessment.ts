@@ -12,6 +12,8 @@ import {
 import { getLocalizedQuestions } from '../data/assessmentQuestionsI18n';
 
 export interface AssessmentRespondentProfile {
+  fullName: string;
+  phone?: string;
   role: string;
   industry: string;
   headcount: string;
