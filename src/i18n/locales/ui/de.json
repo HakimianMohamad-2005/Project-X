@@ -1,0 +1,165 @@
+{
+  "common": {
+    "close": "Schließen",
+    "optional": "Optional",
+    "clear": "Löschen",
+    "sending": "Wird gesendet..."
+  },
+  "nav": {
+    "menu": "Menü",
+    "language": "Sprache"
+  },
+  "footer": {
+    "ctaTitle": "Wählen Sie die 3 %.",
+    "ctaText": "Zwei Bände, 728 Seiten und vierzig Jahre Praxiserfahrung – mit persönlicher Widmung des Autors und kostenlosem Versand im ganzen Land.",
+    "ctaBuy": "Buch bestellen",
+    "ctaQuiz": "Erst selbst testen"
+  },
+  "pricing": {
+    "add": "In den Warenkorb",
+    "save": "{{amount}} sparen"
+  },
+  "cart": {
+    "title": "Ihr Warenkorb",
+    "itemsCount": "{{n}} Buch/Bücher im Warenkorb",
+    "shippingTitle": "Versanddaten",
+    "shippingSubtitle": "Wohin sollen wir Ihre Bücher senden?",
+    "stepCart": "Warenkorb",
+    "stepShipping": "Versand",
+    "stepPayment": "Zahlung",
+    "emptyTitle": "Ihr Warenkorb ist leer",
+    "emptyText": "Zwei Bände und 728 Seiten Managementerfahrung warten auf Sie.",
+    "browse": "Bücher ansehen",
+    "signatureFor": "Signiert für: {{name}}",
+    "noName": "Ohne Namen",
+    "increase": "Menge erhöhen",
+    "decrease": "Menge verringern",
+    "remove": "Aus dem Warenkorb entfernen",
+    "promoLabel": "Haben Sie einen Gutscheincode?",
+    "promoPlaceholder": "z. B. PLUS3",
+    "apply": "Einlösen",
+    "promoOk": "{{percent}} Rabatt angewendet.",
+    "promoBad": "Dieser Gutscheincode ist ungültig.",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "z. B. Anna Weber",
+    "phone": "Mobilnummer",
+    "phoneHint": "Für die Sendungs-SMS",
+    "province": "Provinz",
+    "city": "Stadt",
+    "address": "Vollständige Postanschrift",
+    "addressPlaceholder": "Straße, Hausnummer, Wohnung...",
+    "postal": "Postleitzahl",
+    "postalPlaceholder": "10 Ziffern ohne Leerzeichen",
+    "invoice": "Rechnungsart",
+    "invoiceReal": "Privat",
+    "invoiceLegal": "Offizielle Firmenrechnung",
+    "company": "Firmenname",
+    "nationalId": "Firmen-Steuernummer",
+    "subtotal": "Zwischensumme",
+    "discount": "Rabatt",
+    "shipping": "Expressversand",
+    "free": "Kostenlos",
+    "total": "Zu zahlender Betrag",
+    "toShipping": "Weiter zum Versand",
+    "back": "Zurück",
+    "toPayment": "Sicher bezahlen",
+    "secure": "Sichere Zahlung",
+    "fastShipping": "Schneller Expressversand"
+  },
+  "pay": {
+    "title": "Sichere Zahlungsseite",
+    "merchant": "Händler: Orang-Utan +3 Verlag",
+    "amount": "Zu zahlender Betrag",
+    "card": "Kartennummer",
+    "cvv": "CVV2",
+    "expiry": "Ablaufdatum",
+    "month": "MM",
+    "year": "JJ",
+    "otp": "Einmalpasswort",
+    "getOtp": "Code anfordern",
+    "resendOtp": "Erneut senden",
+    "otpSent": "Das Einmalpasswort wurde an das Telefon des Karteninhabers gesendet.",
+    "pay": "{{amount}} bezahlen",
+    "processing": "Warte auf Bankfreigabe...",
+    "cancel": "Abbrechen und zur Website zurückkehren",
+    "successTitle": "Zahlung erfolgreich",
+    "successText": "Ihre Bestellung ist registriert und auf dem Weg zur Verpackung.",
+    "code": "Sendungsnummer",
+    "recipient": "Empfänger",
+    "paid": "Bezahlter Betrag",
+    "track": "Bestellung verfolgen"
+  },
+  "track": {
+    "title": "Bestellung verfolgen",
+    "subtitle": "Der aktuelle Verpackungs- und Versandstatus Ihrer Sendung",
+    "placeholder": "Sendungsnummer oder Mobilnummer",
+    "search": "Suchen",
+    "searching": "Suche läuft...",
+    "notFound": "Zu dieser Sendungs- oder Mobilnummer wurde keine Bestellung gefunden.",
+    "empty": "Geben Sie die Sendungsnummer oder die Mobilnummer Ihrer Bestellung ein.",
+    "code": "Sendungsnummer:",
+    "date": "Bestellt am:",
+    "stepRegistered": "Bestellt",
+    "stepPacked": "Verpackt & signiert",
+    "stepShipped": "An die Post übergeben",
+    "stepDelivered": "Zugestellt",
+    "recipient": "Empfänger",
+    "address": "Lieferadresse",
+    "postal": "Postleitzahl:",
+    "items": "Artikel",
+    "qty": "Menge: {{n}}",
+    "total": "Gesamt"
+  },
+  "sample": {
+    "badge": "36 Seiten gratis",
+    "title": "Lesen Sie 36 Seiten des Buches kostenlos",
+    "subtitle": "Eine Auswahl der besten Kapitel und Fallakten aus beiden Bänden als PDF.",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "z. B. Anna Weber",
+    "phone": "Mobilnummer",
+    "organization": "Organisation / Werk",
+    "position": "Position",
+    "positionPlaceholder": "z. B. Geschäftsführer",
+    "submit": "PDF jetzt erhalten",
+    "privacy": "Ihre Daten bleiben bei uns vertraulich.",
+    "readyTitle": "Ihre Leseprobe ist bereit",
+    "readyText": "Der Download hat automatisch begonnen. Falls nicht, nutzen Sie die Schaltfläche unten.",
+    "download": "PDF herunterladen (1,4 MB)",
+    "read": "Im Browser lesen"
+  },
+  "framework": {
+    "keyboardHint": "Sie können auch mit den Pfeiltasten zwischen den Schritten wechseln."
+  },
+  "cases": {
+    "file": "Akte"
+  },
+  "cards": {
+    "direct": "Direkte Kosten",
+    "opportunity": "Entgangene Chance",
+    "learning": "Lernen & Fehler",
+    "side": "Nebenwirkungen",
+    "hint": "Die tatsächlichen Kosten einer Entscheidung liegen meist bei etwa {{pct}} ihrer direkten Kosten. Drehen Sie die Karten um und testen Sie die Werkzeuge."
+  },
+  "lessons": {
+    "showing": "{{n}} ausgewählte Einträge",
+    "note": "Diese Seite ist eine Auswahl aus den Kapiteln 39 und 40; die vollständige Liste der vierzig Fehler und vierzig Lektionen steht in Band 2."
+  },
+  "faq": {
+    "search": "Fragen durchsuchen...",
+    "noResults": "Keine Frage passt zu dieser Suche."
+  },
+  "b2b": {
+    "perksTitle": "Vorteile Ihrer Firmenbestellung",
+    "perksHint": "Ändern Sie die Anzahl der Sets, um zu sehen, welche Vorteile freigeschaltet werden.",
+    "unlocked": "Freigeschaltet",
+    "from": "Ab {{n}} Sets"
+  },
+  "reviews": {
+    "average": "Durchschnittsbewertung {{rating}} / 5",
+    "syncing": "Wird synchronisiert..."
+  },
+  "quiz": {
+    "systemScore": "Systemdenken-Wert",
+    "scoreNote": "Ihr Systemdenken-Wert liegt bei {{pct}}. Je näher die Nadel am Grün steht, desto stärker prägen diese 3 % Ihre Führung."
+  }
+}

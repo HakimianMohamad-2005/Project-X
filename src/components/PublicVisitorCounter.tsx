@@ -21,7 +21,6 @@ interface PublicVisitorCounterProps {
 export const PublicVisitorCounter: React.FC<PublicVisitorCounterProps> = ({ onOpenAdmin, theme = 'light' }) => {
   const { t, i18n } = useTranslation();
   const { totalVisitors } = useVisitor();
-  const isLight = theme === 'light';
   const isFa = i18n.language === 'fa';
 
   // Global Keyboard Shortcut: Ctrl + Shift + A to open Admin Gate
@@ -42,11 +41,7 @@ export const PublicVisitorCounter: React.FC<PublicVisitorCounterProps> = ({ onOp
     : totalVisitors.toLocaleString('en-US');
 
   return (
-    <div className={`inline-flex items-center gap-3 px-3.5 py-2 rounded-2xl border transition-all ${
-      isLight
-        ? 'bg-white/80 border-stone-300 text-stone-800 shadow-sm'
-        : 'bg-[#181A1B] border-stone-800 text-stone-200'
-    }`}>
+    <div className="inline-flex items-center gap-3 rounded-2xl border border-line bg-surface px-3.5 py-2 text-ink">
       {/* Live Blue Pulsing Indicator (Strictly for Public Counter) */}
       <div className="relative flex items-center justify-center w-3 h-3 shrink-0">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
@@ -55,11 +50,11 @@ export const PublicVisitorCounter: React.FC<PublicVisitorCounterProps> = ({ onOp
 
       {/* Label and Formatted Count */}
       <div className="flex items-center gap-2 text-xs font-semibold">
-        <Users className="w-3.5 h-3.5 text-[#B87333] shrink-0" />
-        <span className={isLight ? 'text-stone-600' : 'text-stone-400'}>
+        <Users className="w-3.5 h-3.5 text-copper-hi shrink-0" />
+        <span className="text-ink-2">
           {t('telemetry.totalVisitorsLabel', 'مجموع مراجعین رسمی سایت:')}
         </span>
-        <span className="font-mono font-extrabold text-[#B87333] text-sm tracking-wide">
+        <span className="font-extrabold text-copper-hi text-sm tabular-nums">
           {formattedCount}
         </span>
         <span className="text-[11px] opacity-75">
@@ -70,7 +65,7 @@ export const PublicVisitorCounter: React.FC<PublicVisitorCounterProps> = ({ onOp
       {/* Secret Subtle Link to Admin Gate */}
       <button
         onClick={onOpenAdmin}
-        className="opacity-30 hover:opacity-100 transition-opacity p-1 text-stone-400 hover:text-[#B87333] focus:outline-none"
+        className="opacity-30 hover:opacity-100 transition-opacity p-1 text-ink-3 hover:text-copper-hi"
         title="دسترسی مدیریت سامانه (Ctrl + Shift + A)"
         aria-label="Admin Access"
       >

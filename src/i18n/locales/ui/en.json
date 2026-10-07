@@ -1,0 +1,165 @@
+{
+  "common": {
+    "close": "Close",
+    "optional": "Optional",
+    "clear": "Clear",
+    "sending": "Sending..."
+  },
+  "nav": {
+    "menu": "Menu",
+    "language": "Language"
+  },
+  "footer": {
+    "ctaTitle": "Choose the 3%.",
+    "ctaText": "Two volumes, 728 pages and forty years of field experience — with a personal inscription from the author and free nationwide shipping.",
+    "ctaBuy": "Get the book",
+    "ctaQuiz": "Test yourself first"
+  },
+  "pricing": {
+    "add": "Add to cart",
+    "save": "Save {{amount}}"
+  },
+  "cart": {
+    "title": "Your cart",
+    "itemsCount": "{{n}} book(s) in your cart",
+    "shippingTitle": "Shipping details",
+    "shippingSubtitle": "Where should we send your books?",
+    "stepCart": "Cart",
+    "stepShipping": "Shipping",
+    "stepPayment": "Payment",
+    "emptyTitle": "Your cart is empty",
+    "emptyText": "Two volumes and 728 pages of management experience are waiting for you.",
+    "browse": "Browse the books",
+    "signatureFor": "Signed for: {{name}}",
+    "noName": "No name",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "remove": "Remove from cart",
+    "promoLabel": "Have a promo code?",
+    "promoPlaceholder": "e.g. PLUS3",
+    "apply": "Apply",
+    "promoOk": "{{percent}} discount applied.",
+    "promoBad": "This promo code is not valid.",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "e.g. Alex Morgan",
+    "phone": "Mobile number",
+    "phoneHint": "For your tracking SMS",
+    "province": "Province",
+    "city": "City",
+    "address": "Full postal address",
+    "addressPlaceholder": "Street, building, unit...",
+    "postal": "Postal code",
+    "postalPlaceholder": "10 digits, no spaces",
+    "invoice": "Invoice type",
+    "invoiceReal": "Personal",
+    "invoiceLegal": "Official company invoice",
+    "company": "Company name",
+    "nationalId": "Company national ID",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "shipping": "Express post",
+    "free": "Free",
+    "total": "Total to pay",
+    "toShipping": "Continue to shipping",
+    "back": "Back",
+    "toPayment": "Secure payment",
+    "secure": "Secure payment",
+    "fastShipping": "Fast express post"
+  },
+  "pay": {
+    "title": "Secure payment gateway",
+    "merchant": "Merchant: Orangutan +3 Publishing",
+    "amount": "Amount to pay",
+    "card": "Card number",
+    "cvv": "CVV2",
+    "expiry": "Expiry date",
+    "month": "MM",
+    "year": "YY",
+    "otp": "One-time password",
+    "getOtp": "Get code",
+    "resendOtp": "Resend",
+    "otpSent": "The one-time password was sent to the cardholder's phone.",
+    "pay": "Pay {{amount}}",
+    "processing": "Waiting for bank approval...",
+    "cancel": "Cancel and return to the site",
+    "successTitle": "Payment successful",
+    "successText": "Your order is registered and on its way to packing.",
+    "code": "Tracking code",
+    "recipient": "Recipient",
+    "paid": "Amount paid",
+    "track": "Track my order"
+  },
+  "track": {
+    "title": "Track your order",
+    "subtitle": "The latest packing and shipping status of your parcel",
+    "placeholder": "Tracking code or mobile number",
+    "search": "Search",
+    "searching": "Searching...",
+    "notFound": "No order was found for this tracking code or mobile number.",
+    "empty": "Enter the tracking code or the mobile number you ordered with.",
+    "code": "Tracking code:",
+    "date": "Ordered on:",
+    "stepRegistered": "Order placed",
+    "stepPacked": "Packed & signed",
+    "stepShipped": "Handed to post",
+    "stepDelivered": "Delivered",
+    "recipient": "Recipient",
+    "address": "Shipping address",
+    "postal": "Postal code:",
+    "items": "Items",
+    "qty": "Qty: {{n}}",
+    "total": "Total"
+  },
+  "sample": {
+    "badge": "36 free pages",
+    "title": "Read 36 pages of the book for free",
+    "subtitle": "A selection of the best chapters and case files from both volumes, as a PDF.",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "e.g. Alex Morgan",
+    "phone": "Mobile number",
+    "organization": "Organization / factory",
+    "position": "Role",
+    "positionPlaceholder": "e.g. CEO",
+    "submit": "Get the PDF now",
+    "privacy": "Your details stay private with us.",
+    "readyTitle": "Your sample is ready",
+    "readyText": "The download has started automatically. If it didn't, use the button below.",
+    "download": "Download the PDF (1.4 MB)",
+    "read": "Read in your browser"
+  },
+  "framework": {
+    "keyboardHint": "You can also move between steps with the arrow keys."
+  },
+  "cases": {
+    "file": "File"
+  },
+  "cards": {
+    "direct": "Direct cost",
+    "opportunity": "Lost opportunity",
+    "learning": "Learning & errors",
+    "side": "Side effects",
+    "hint": "The real cost of a decision is usually around {{pct}} of its direct cost. Flip the cards and try the tools."
+  },
+  "lessons": {
+    "showing": "{{n}} selected items",
+    "note": "This page is a selection from chapters 39 and 40; the full list of forty mistakes and forty lessons is in Volume 2."
+  },
+  "faq": {
+    "search": "Search the questions...",
+    "noResults": "No question matches this search."
+  },
+  "b2b": {
+    "perksTitle": "Your corporate order benefits",
+    "perksHint": "Change the number of sets to see which benefits unlock.",
+    "unlocked": "Unlocked",
+    "from": "From {{n}} sets"
+  },
+  "reviews": {
+    "average": "Average rating {{rating}} / 5",
+    "syncing": "Syncing..."
+  },
+  "quiz": {
+    "systemScore": "Systems-thinking score",
+    "scoreNote": "Your systems-thinking score is {{pct}}. The closer the needle sits to green, the stronger that 3% is in the way you manage."
+  }
+}

@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
-import { BookOpen, Search, AlertTriangle, CheckCircle2 } from 'lucide-react';
-import { CategoryTag, ThemeMode } from '../types';
-import { toPersianDigits } from '../utils/persian';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useMemo, useState } from 'react';
+import { AlertTriangle, BookOpen, CheckCircle2, Search, SearchX, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'motion/react';
+import { CategoryTag, ThemeMode } from '../types';
+import { Container, FilterTabs, PageHeader, inputClass } from './ui/kit';
+import { useLocaleFormat } from './ui/format';
 
 interface MistakesAndLessonsProps {
   theme?: ThemeMode;
+}
+
+interface Item {
+  id: string;
+  number: number;
+  type: 'mistake' | 'lesson';
+  title: string;
+  description: string;
+  categoryLabel: string;
+  bookRef: string;
 }
 
 const CATEGORY_MAP: Record<string, CategoryTag> = {
@@ -19,191 +30,163 @@ const CATEGORY_MAP: Record<string, CategoryTag> = {
   'l-2': 'decision',
   'l-3': 'people',
   'l-4': 'market',
-  'l-5': 'view'
+  'l-5': 'view',
 };
 
-export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = ({ theme = 'light' }) => {
-  const { t, i18n } = useTranslation();
-  const isPersian = i18n.language === 'fa';
-  const [activeType, setActiveType] = useState<'mistake' | 'lesson'>('mistake');
-  const [selectedTag, setSelectedTag] = useState<CategoryTag | 'all'>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const isLight = theme === 'light';
+export const MistakesAndLessons: React.FC<MistakesAndLessonsProps> = () => {
+  const { t } = useTranslation();
+  const { num } = useLocaleFormat();
+  const [type, setType] = useState<'mistake' | 'lesson'>('mistake');
+  const [tag, setTag] = useState<CategoryTag | 'all'>('all');
+  const [query, setQuery] = useState('');
 
-  const categoryTags: { key: CategoryTag | 'all'; label: string }[] = [
-    { key: 'all', label: t('mistakesLessons.categories.all') },
-    { key: 'view', label: t('mistakesLessons.categories.view') },
-    { key: 'decision', label: t('mistakesLessons.categories.decision') },
-    { key: 'people', label: t('mistakesLessons.categories.people') },
-    { key: 'system', label: t('mistakesLessons.categories.system') },
-    { key: 'market', label: t('mistakesLessons.categories.market') }
-  ];
+  const raw = t('mistakesLessons.items', { returnObjects: true });
+  const items = (Array.isArray(raw) ? raw : []) as Item[];
 
-  const translatedItems = (t('mistakesLessons.items', { returnObjects: true }) as any[]) || [];
+  const counts = {
+    mistake: items.filter((i) => i.type === 'mistake').length,
+    lesson: items.filter((i) => i.type === 'lesson').length,
+  };
 
-  const filteredItems = translatedItems.filter(item => {
-    const itemCategory = CATEGORY_MAP[item.id];
-    const matchesType = item.type === activeType;
-    const matchesTag = selectedTag === 'all' || itemCategory === selectedTag;
-    const matchesSearch = searchQuery === '' ||
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return matchesType && matchesTag && matchesSearch;
+  const filtered = items.filter((item) => {
+    const q = query.trim().toLowerCase();
+    return (
+      item.type === type &&
+      (tag === 'all' || CATEGORY_MAP[item.id] === tag) &&
+      (!q || item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q))
+    );
   });
 
+  const tagOptions = useMemo(
+    () =>
+      (['all', 'view', 'decision', 'people', 'system', 'market'] as const).map((k) => ({
+        value: k as CategoryTag | 'all',
+        label: t(`mistakesLessons.categories.${k}`),
+      })),
+    [t]
+  );
+
+  const isMistake = type === 'mistake';
+
   return (
-    <section id="mistakes-lessons" className={`py-16 md:py-20 transition-colors duration-300 border-b ${
-      isLight ? 'bg-[#FAF8F5] border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-800 text-[#FAF7F2]'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
-          <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-xs font-bold ${
-            isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
-          }`}>
-            <BookOpen className="w-4 h-4 text-[#B87333]" />
-            <span>{t('mistakesLessons.badge')}</span>
-          </div>
-          <h2 className={`text-3xl sm:text-4xl font-extrabold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-            {t('mistakesLessons.title')}
-          </h2>
-          <p className={`text-sm sm:text-base leading-relaxed ${isLight ? 'text-stone-600' : 'text-stone-400'}`}>
-            {t('mistakesLessons.subtitle')}
-          </p>
-        </div>
+    <>
+      <PageHeader icon={BookOpen} kicker={t('mistakesLessons.badge')} title={t('mistakesLessons.title')} subtitle={t('mistakesLessons.subtitle')} />
 
-        {/* Top Controls: Type Toggle & Search Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-          
-          {/* Mistakes vs Lessons Toggle */}
-          <div className={`p-1.5 rounded-2xl border flex items-center w-full md:w-auto ${
-            isLight ? 'bg-stone-100 border-stone-300' : 'bg-[#1E2022] border-stone-800'
-          }`}>
-            <button
-              onClick={() => setActiveType('mistake')}
-              className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
-                activeType === 'mistake'
-                  ? 'bg-red-600 text-white shadow-md'
-                  : isLight ? 'text-stone-700 hover:text-stone-900' : 'text-stone-400 hover:text-white'
-              }`}
-            >
-              <AlertTriangle className="w-4 h-4" />
-              <span>{t('mistakesLessons.toggleMistakes')}</span>
-            </button>
-
-            <button
-              onClick={() => setActiveType('lesson')}
-              className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
-                activeType === 'lesson'
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : isLight ? 'text-stone-700 hover:text-stone-900' : 'text-stone-400 hover:text-white'
-              }`}
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>{t('mistakesLessons.toggleLessons')}</span>
-            </button>
-          </div>
-
-          {/* Search Input Bar */}
-          <div className="relative w-full md:w-80">
-            <Search className={`w-4 h-4 text-stone-400 absolute top-3.5 ${isPersian ? 'right-3.5' : 'left-3.5'}`} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t('mistakesLessons.searchPlaceholder')}
-              className={`w-full ${isPersian ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2.5 rounded-2xl border text-xs font-medium focus:outline-none ${
-                isLight
-                  ? 'bg-white border-stone-300 text-stone-900 placeholder-stone-400 focus:border-[#B87333]'
-                  : 'bg-[#1E2022] border-stone-800 text-[#FAF7F2] placeholder-stone-500 focus:border-[#B87333]'
-              }`}
-            />
-          </div>
-
-        </div>
-
-        {/* Category Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-8">
-          {categoryTags.map((tag) => (
-            <button
-              key={tag.key}
-              onClick={() => setSelectedTag(tag.key)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
-                selectedTag === tag.key
-                  ? 'bg-[#B87333] text-white border-[#B87333]'
-                  : isLight
-                    ? 'bg-white text-stone-700 border-stone-300 hover:bg-stone-100'
-                    : 'bg-[#181A1C] text-stone-400 border-stone-800 hover:border-stone-700'
-              }`}
-            >
-              {tag.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Items List Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeType + selectedTag}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.25 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {filteredItems.map((item) => (
-              <motion.div
-                key={item.id}
-                whileHover={{ scale: 1.01 }}
-                className={`p-6 rounded-3xl border transition-all space-y-4 relative group shadow-sm ${
-                  isLight
-                    ? 'bg-white border-stone-200 hover:border-[#B87333]/80'
-                    : 'bg-[#1E2022] border-stone-800 hover:border-stone-700'
+      <Container className="py-12 sm:py-16 space-y-8">
+        {/* Mistakes / lessons switch */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
+          {(['mistake', 'lesson'] as const).map((k) => {
+            const active = type === k;
+            const red = k === 'mistake';
+            const Icon = red ? AlertTriangle : CheckCircle2;
+            return (
+              <button
+                key={k}
+                onClick={() => setType(k)}
+                aria-pressed={active}
+                className={`relative overflow-hidden rounded-3xl border p-4 sm:p-6 text-start transition-all duration-300 ${
+                  active
+                    ? red
+                      ? 'border-red-500/60 bg-red-500/10 shadow-[0_20px_50px_-25px_rgba(239,68,68,0.6)]'
+                      : 'border-emerald-500/60 bg-emerald-500/10 shadow-[0_20px_50px_-25px_rgba(16,185,129,0.6)]'
+                    : 'border-line bg-surface opacity-70 hover:opacity-100'
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className={`w-7 h-7 rounded-lg text-xs font-black flex items-center justify-center ${
-                      item.type === 'mistake'
-                        ? 'bg-red-500/10 text-red-600 border border-red-300'
-                        : 'bg-emerald-500/10 text-emerald-600 border border-emerald-300'
-                    }`}>
-                      #{isPersian ? toPersianDigits(item.number) : item.number}
-                    </span>
-                    <span className="text-xs font-bold text-stone-400">
-                      {item.categoryLabel}
-                    </span>
-                  </div>
+                <span
+                  className={`absolute -bottom-6 -end-2 text-[5.5rem] sm:text-[7rem] font-black leading-none ${
+                    red ? 'text-red-500/10' : 'text-emerald-500/10'
+                  }`}
+                  dir="ltr"
+                  aria-hidden="true"
+                >
+                  {num(40)}
+                </span>
+                <Icon className={`relative w-6 h-6 ${red ? 'text-red-500' : 'text-emerald-500'}`} />
+                <span className="relative mt-3 block text-base sm:text-xl font-black text-ink">
+                  {red ? t('mistakesLessons.toggleMistakes') : t('mistakesLessons.toggleLessons')}
+                </span>
+                <span className="relative mt-1 block text-xs text-ink-3">{t('ui.lessons.showing', { n: num(counts[k]) })}</span>
+              </button>
+            );
+          })}
+        </div>
 
-                  <span className="text-[10px] font-semibold text-stone-400">
-                    {item.bookRef}
+        {/* Search + tags */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4">
+          <div className="relative lg:w-80 shrink-0">
+            <Search className="pointer-events-none absolute top-1/2 -translate-y-1/2 start-3.5 w-4 h-4 text-ink-3" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={t('mistakesLessons.searchPlaceholder')}
+              className={`${inputClass} ps-10 pe-9`}
+            />
+            {query && (
+              <button
+                onClick={() => setQuery('')}
+                aria-label={t('ui.common.clear')}
+                className="absolute top-1/2 -translate-y-1/2 end-2.5 flex h-6 w-6 items-center justify-center rounded-full text-ink-3 hover:bg-surface-2 hover:text-ink"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+          <FilterTabs<CategoryTag | 'all'> options={tagOptions} value={tag} onChange={setTag} tone={isMistake ? 'red' : 'green'} className="lg:flex-1" />
+        </div>
+
+        {/* Items */}
+        <motion.div layout className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((item, idx) => (
+              <motion.article
+                layout
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: idx * 0.05 } }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                className="group relative overflow-hidden rounded-3xl border border-line bg-surface p-6 sm:p-7 transition-colors hover:border-line-strong"
+              >
+                <span
+                  className={`absolute inset-y-6 start-0 w-1 rounded-e-full ${item.type === 'mistake' ? 'bg-red-500' : 'bg-emerald-500'}`}
+                  aria-hidden="true"
+                />
+                <span
+                  className={`pointer-events-none absolute -top-4 end-3 text-[6rem] font-black leading-none transition-colors ${
+                    item.type === 'mistake' ? 'text-red-500/[0.07] group-hover:text-red-500/15' : 'text-emerald-500/[0.07] group-hover:text-emerald-500/15'
+                  }`}
+                  dir="ltr"
+                  aria-hidden="true"
+                >
+                  {num(item.number)}
+                </span>
+                <div className="relative flex flex-wrap items-center gap-2 text-[11px] font-bold">
+                  <span
+                    className={`rounded-lg px-2 py-0.5 ${
+                      item.type === 'mistake' ? 'bg-red-500/12 text-red-500' : 'bg-emerald-500/12 text-emerald-500'
+                    }`}
+                  >
+                    {item.type === 'mistake' ? t('story.marquee.mistake') : t('story.marquee.lesson')} {num(item.number)}
                   </span>
+                  <span className="text-ink-3">{item.categoryLabel}</span>
                 </div>
-
-                <h3 className={`text-base font-bold group-hover:text-[#B87333] transition-colors leading-snug ${
-                  isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-                }`}>
-                  {item.title}
-                </h3>
-
-                <p className={`text-xs leading-relaxed font-normal ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                  {item.description}
-                </p>
-              </motion.div>
+                <h3 className="relative mt-4 text-lg font-black leading-8 text-ink">{item.title}</h3>
+                <p className="relative mt-2 text-sm leading-7 text-ink-2">{item.description}</p>
+                <p className="relative mt-5 border-t border-line pt-3 text-[11px] font-semibold text-ink-3">{item.bookRef}</p>
+              </motion.article>
             ))}
-          </motion.div>
-        </AnimatePresence>
+          </AnimatePresence>
+        </motion.div>
 
-        {filteredItems.length === 0 && (
-          <div className="text-center py-12 text-stone-400 text-sm">
-            {t('mistakesLessons.noResults')}
+        {filtered.length === 0 && (
+          <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-line-strong py-14 text-center">
+            <SearchX className="w-10 h-10 text-ink-3" />
+            <p className="text-sm text-ink-2">{t('mistakesLessons.noResults')}</p>
           </div>
         )}
 
-      </div>
-    </section>
+        <p className="text-center text-xs leading-6 text-ink-3">{t('ui.lessons.note')}</p>
+      </Container>
+    </>
   );
 };
-

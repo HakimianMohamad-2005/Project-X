@@ -1,0 +1,165 @@
+{
+  "common": {
+    "close": "关闭",
+    "optional": "选填",
+    "clear": "清除",
+    "sending": "发送中..."
+  },
+  "nav": {
+    "menu": "菜单",
+    "language": "语言"
+  },
+  "footer": {
+    "ctaTitle": "选择那 3%。",
+    "ctaText": "两卷、728 页、四十年一线经验——附作者亲笔题签，全国包邮。",
+    "ctaBuy": "购买本书",
+    "ctaQuiz": "先测测自己"
+  },
+  "pricing": {
+    "add": "加入购物车",
+    "save": "节省 {{amount}}"
+  },
+  "cart": {
+    "title": "购物车",
+    "itemsCount": "购物车中有 {{n}} 本书",
+    "shippingTitle": "收货信息",
+    "shippingSubtitle": "我们应把书寄到哪里？",
+    "stepCart": "购物车",
+    "stepShipping": "配送",
+    "stepPayment": "付款",
+    "emptyTitle": "购物车是空的",
+    "emptyText": "两卷书、728 页管理经验正在等你。",
+    "browse": "浏览图书",
+    "signatureFor": "题签给：{{name}}",
+    "noName": "未填写姓名",
+    "increase": "增加数量",
+    "decrease": "减少数量",
+    "remove": "从购物车移除",
+    "promoLabel": "有优惠码吗？",
+    "promoPlaceholder": "例如 PLUS3",
+    "apply": "使用",
+    "promoOk": "已享受 {{percent}} 折扣。",
+    "promoBad": "该优惠码无效。",
+    "fullName": "姓名",
+    "fullNamePlaceholder": "例如：王明",
+    "phone": "手机号码",
+    "phoneHint": "用于接收物流短信",
+    "province": "省份",
+    "city": "城市",
+    "address": "详细地址",
+    "addressPlaceholder": "街道、门牌号、单元...",
+    "postal": "邮政编码",
+    "postalPlaceholder": "10 位数字，无空格",
+    "invoice": "发票类型",
+    "invoiceReal": "个人",
+    "invoiceLegal": "企业正式发票",
+    "company": "公司名称",
+    "nationalId": "公司税号",
+    "subtotal": "小计",
+    "discount": "折扣",
+    "shipping": "快递",
+    "free": "免费",
+    "total": "应付金额",
+    "toShipping": "继续填写配送信息",
+    "back": "返回",
+    "toPayment": "安全支付",
+    "secure": "安全支付",
+    "fastShipping": "快速发货"
+  },
+  "pay": {
+    "title": "安全支付网关",
+    "merchant": "收款方：红毛猩猩 +3 出版",
+    "amount": "应付金额",
+    "card": "卡号",
+    "cvv": "CVV2",
+    "expiry": "有效期",
+    "month": "月",
+    "year": "年",
+    "otp": "动态密码",
+    "getOtp": "获取验证码",
+    "resendOtp": "重新发送",
+    "otpSent": "动态密码已发送至持卡人手机。",
+    "pay": "支付 {{amount}}",
+    "processing": "正在等待银行确认...",
+    "cancel": "取消并返回网站",
+    "successTitle": "支付成功",
+    "successText": "您的订单已登记，正在进入包装环节。",
+    "code": "跟踪码",
+    "recipient": "收件人",
+    "paid": "已付金额",
+    "track": "跟踪我的订单"
+  },
+  "track": {
+    "title": "订单跟踪",
+    "subtitle": "您包裹的最新包装与发货状态",
+    "placeholder": "跟踪码或手机号",
+    "search": "搜索",
+    "searching": "搜索中...",
+    "notFound": "未找到与该跟踪码或手机号对应的订单。",
+    "empty": "请输入跟踪码或下单时使用的手机号。",
+    "code": "跟踪码：",
+    "date": "下单日期：",
+    "stepRegistered": "已下单",
+    "stepPacked": "已包装并签名",
+    "stepShipped": "已交邮局",
+    "stepDelivered": "已送达",
+    "recipient": "收件人",
+    "address": "收货地址",
+    "postal": "邮编：",
+    "items": "商品",
+    "qty": "数量：{{n}}",
+    "total": "合计"
+  },
+  "sample": {
+    "badge": "免费 36 页",
+    "title": "免费阅读本书 36 页",
+    "subtitle": "两卷书中最精彩章节与案例的精选，PDF 格式。",
+    "fullName": "姓名",
+    "fullNamePlaceholder": "例如：王明",
+    "phone": "手机号码",
+    "organization": "机构 / 工厂",
+    "position": "职位",
+    "positionPlaceholder": "例如：总经理",
+    "submit": "立即获取 PDF",
+    "privacy": "您的信息将严格保密。",
+    "readyTitle": "试读样章已准备好",
+    "readyText": "下载已自动开始。如未开始，请使用下方按钮。",
+    "download": "下载 PDF（1.4 MB）",
+    "read": "在浏览器中阅读"
+  },
+  "framework": {
+    "keyboardHint": "也可以用方向键在步骤之间切换。"
+  },
+  "cases": {
+    "file": "案例"
+  },
+  "cards": {
+    "direct": "直接成本",
+    "opportunity": "机会损失",
+    "learning": "学习与试错",
+    "side": "副作用",
+    "hint": "一个决策的真实成本通常约为其直接成本的 {{pct}}。翻转卡片，试试这些工具。"
+  },
+  "lessons": {
+    "showing": "精选 {{n}} 条",
+    "note": "本页为第 39、40 章的精选；四十个错误与四十条教训的完整清单见第二卷。"
+  },
+  "faq": {
+    "search": "搜索问题...",
+    "noResults": "没有匹配的问题。"
+  },
+  "b2b": {
+    "perksTitle": "您的企业订单权益",
+    "perksHint": "调整套数，查看可解锁的权益。",
+    "unlocked": "已解锁",
+    "from": "{{n}} 套起"
+  },
+  "reviews": {
+    "average": "平均评分 {{rating}} / 5",
+    "syncing": "同步中..."
+  },
+  "quiz": {
+    "systemScore": "系统思维得分",
+    "scoreNote": "您的系统思维得分为 {{pct}}。指针越靠近绿色，那 3% 在您管理中的分量就越重。"
+  }
+}

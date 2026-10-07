@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
-  ShoppingBag,
-  Menu,
-  X,
-  Sun,
-  Moon,
-  Truck,
+  AlertCircle,
+  Award,
+  BookOpen,
+  Briefcase,
+  Building2,
+  Check,
+  ChevronDown,
+  Compass,
   FileText,
   Globe,
-  ChevronDown,
-  Check,
-  BookOpen,
-  Compass,
-  Award,
-  Briefcase,
-  Layers,
-  AlertCircle,
-  MessageSquare,
   HelpCircle,
-  Building2,
+  Layers,
+  Menu,
+  MessageSquare,
+  Moon,
+  ShoppingBag,
+  Sun,
+  Truck,
   User,
+  X,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'motion/react';
 import { ActiveTab, ThemeMode } from '../types';
 import { toPersianDigits } from '../utils/persian';
-import { motion, AnimatePresence } from 'motion/react';
 import { syncDocumentDirAndLang } from '../i18n/config';
 
 interface NavbarProps {
@@ -38,7 +39,9 @@ interface NavbarProps {
   onOpenSamplePdf: () => void;
 }
 
-const languages = [
+type LangCode = 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar';
+
+const languages: { code: LangCode; name: string; label: string; path: string }[] = [
   { code: 'fa', name: 'فارسی', label: 'FA', path: '/' },
   { code: 'en', name: 'English', label: 'EN', path: '/en' },
   { code: 'es', name: 'Español', label: 'ES', path: '/es' },
@@ -49,6 +52,22 @@ const languages = [
   { code: 'hi', name: 'हिन्दी', label: 'HI', path: '/hi' },
   { code: 'ar', name: 'العربية', label: 'AR', path: '/ar' },
 ];
+
+const navItems: { id: ActiveTab; key: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { id: 'books', key: 'books', icon: BookOpen },
+  { id: 'framework', key: 'framework', icon: Compass },
+  { id: 'quiz', key: 'quiz', icon: Award },
+  { id: 'case-studies', key: 'caseStudies', icon: Briefcase },
+  { id: 'cards', key: 'cards', icon: Layers },
+  { id: 'mistakes-lessons', key: 'mistakesLessons', icon: AlertCircle },
+  { id: 'user-experiences', key: 'userExperiences', icon: MessageSquare },
+  { id: 'faq', key: 'faq', icon: HelpCircle },
+  { id: 'b2b', key: 'b2b', icon: Building2 },
+  { id: 'author', key: 'author', icon: User },
+];
+
+const iconButton =
+  'relative flex h-10 items-center justify-center gap-1.5 rounded-xl border border-line bg-surface/70 px-2.5 text-ink-2 transition-colors hover:border-copper/50 hover:text-ink';
 
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
@@ -62,37 +81,55 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
 
   const isLight = theme === 'light';
   const isFa = i18n.language === 'fa';
-  const currentLangObj = languages.find((l) => l.code === i18n.language) || languages[0];
+  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
 
-  const changeLanguageTo = (targetLang: 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar') => {
-    const targetObj = languages.find((l) => l.code === targetLang) || languages[0];
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Close the language menu on outside click / Escape.
+  useEffect(() => {
+    if (!langOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setLangOpen(false);
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [langOpen]);
+
+  // Lock page scroll behind the mobile menu.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileMenuOpen]);
+
+  const changeLanguageTo = (targetLang: LangCode) => {
+    const target = languages.find((l) => l.code === targetLang) || languages[0];
     i18n.changeLanguage(targetLang);
-    const basePath = targetObj.path;
-    const newPath = activeTab === 'quiz'
-      ? (targetLang === 'fa' ? '/manager-assessment' : `${basePath}/manager-assessment`)
-      : basePath;
+    const newPath =
+      activeTab === 'quiz' ? (targetLang === 'fa' ? '/manager-assessment' : `${target.path}/manager-assessment`) : target.path;
     window.history.pushState({}, '', newPath);
     syncDocumentDirAndLang(targetLang);
-    setLangDropdownOpen(false);
+    setLangOpen(false);
   };
-
-  // Complete list of all navigation tabs - all 10 items displayed fully
-  const navItems: { id: ActiveTab; key: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: 'books', key: 'books', icon: BookOpen },
-    { id: 'framework', key: 'framework', icon: Compass },
-    { id: 'quiz', key: 'quiz', icon: Award },
-    { id: 'case-studies', key: 'caseStudies', icon: Briefcase },
-    { id: 'cards', key: 'cards', icon: Layers },
-    { id: 'mistakes-lessons', key: 'mistakesLessons', icon: AlertCircle },
-    { id: 'user-experiences', key: 'userExperiences', icon: MessageSquare },
-    { id: 'faq', key: 'faq', icon: HelpCircle },
-    { id: 'b2b', key: 'b2b', icon: Building2 },
-    { id: 'author', key: 'author', icon: User },
-  ];
 
   const handleSelectTab = (tab: ActiveTab) => {
     onTabChange(tab);
@@ -100,328 +137,271 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const cartLabel = isFa ? toPersianDigits(cartCount) : String(cartCount);
+
   return (
-    <header className={`sticky top-0 z-40 backdrop-blur-md transition-colors duration-300 border-b shadow-sm ${
-      isLight
-        ? 'bg-[#FAF8F5]/95 border-stone-300 text-stone-900'
-        : 'bg-[#121314]/95 border-stone-800 text-[#FAF7F2]'
-    }`}>
-      {/* Top Bar: Brand & Action Controls */}
-      <div className="w-full max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6">
-        <div className="flex items-center justify-between h-16 gap-3">
-
-          {/* Logo & Brand */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <button
-              onClick={() => handleSelectTab('books')}
-              className="flex items-center gap-2 sm:gap-2.5 text-start group focus:outline-none shrink-0"
-            >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#B87333] to-[#8B4513] p-0.5 shadow-lg shadow-[#B87333]/20 flex items-center justify-center shrink-0">
-                <div className={`w-full h-full rounded-[10px] flex items-center justify-center transition-colors ${
-                  isLight ? 'bg-white group-hover:bg-amber-50' : 'bg-[#121314] group-hover:bg-[#1E2022]'
-                }`}>
-                  <span className="text-[#B87333] font-black text-lg tracking-tighter">{t('navbar.highlight')}</span>
-                </div>
-              </div>
-              <div className="flex flex-col text-start whitespace-nowrap shrink-0">
-                <span className={`font-extrabold text-sm sm:text-base tracking-tight transition-colors ${
-                  isLight ? 'text-stone-900 group-hover:text-[#B87333]' : 'text-[#FAF7F2] group-hover:text-[#B87333]'
-                }`}>
-                  {t('navbar.title')} <span className="text-[#B87333]">{t('navbar.highlight')}</span>
+    <header
+      className={`sticky top-0 z-40 border-b backdrop-blur-xl transition-[background-color,box-shadow,border-color] duration-300 ${
+        scrolled ? 'bg-canvas/85 border-line shadow-[0_10px_30px_-20px_rgba(0,0,0,0.6)]' : 'bg-canvas/70 border-transparent'
+      }`}
+    >
+      {/* Row 1: brand + actions */}
+      <div className="mx-auto w-full max-w-[1600px] px-3 sm:px-5 lg:px-6">
+        <div className="flex h-16 items-center justify-between gap-3">
+          <button onClick={() => handleSelectTab('books')} className="group flex shrink-0 items-center gap-2.5 text-start">
+            <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#D9894A] via-[#B87333] to-[#7A3E14] p-[1.5px] shadow-[0_6px_20px_-6px_rgba(217,137,74,0.7)]">
+              <span className="flex h-full w-full items-center justify-center rounded-[10px] bg-canvas transition-colors group-hover:bg-transparent">
+                <span className="text-base font-black tracking-tighter text-copper-hi transition-colors group-hover:text-white">
+                  {t('navbar.highlight')}
                 </span>
-                <span className={`hidden xl:block text-[11px] font-medium leading-tight max-w-[280px] truncate ${
-                  isLight ? 'text-stone-500' : 'text-stone-400'
-                }`}>
-                  {t('navbar.subtitle')}
-                </span>
-              </div>
-            </button>
-          </div>
+              </span>
+            </span>
+            <span className="flex flex-col whitespace-nowrap">
+              <span className="text-sm sm:text-base font-black tracking-tight text-ink">
+                {t('navbar.title')} <span className="text-copper-hi">{t('navbar.highlight')}</span>
+              </span>
+              <span className="hidden xl:block max-w-[280px] truncate text-[11px] font-medium text-ink-3">{t('navbar.subtitle')}</span>
+            </span>
+          </button>
 
-          {/* Action Controls */}
-          <div className="flex items-center shrink-0 gap-1.5 sm:gap-2">
-
-            {/* 9-Language Dropdown Switcher */}
-            <div className="relative shrink-0 z-50">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className={`rounded-xl border font-bold transition-all flex items-center justify-center gap-1.5 px-2.5 py-1.5 text-xs shrink-0 ${
-                  isLight
-                    ? 'bg-amber-50 hover:bg-amber-100 text-stone-900 border-amber-200 shadow-sm'
-                    : 'bg-stone-800 hover:bg-stone-700 text-[#FAF7F2] border-stone-700'
-                }`}
-                title={t('navbar.langTitle', 'تغییر زبان / Language')}
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            {/* Language */}
+            <div ref={langRef} className="relative z-50">
+              <button
+                onClick={() => setLangOpen((v) => !v)}
+                className={`${iconButton} text-xs font-bold`}
+                aria-haspopup="listbox"
+                aria-expanded={langOpen}
+                title={t('navbar.langTitle')}
               >
-                <Globe className="w-3.5 h-3.5 text-[#B87333]" />
-                <span>{currentLangObj.label}</span>
-                <ChevronDown className={`w-3 h-3 text-stone-400 transition-transform duration-200 ${langDropdownOpen ? 'rotate-180' : ''}`} />
-              </motion.button>
-
+                <Globe className="w-4 h-4 text-copper-hi" />
+                <span>{currentLang.label}</span>
+                <ChevronDown className={`w-3 h-3 transition-transform ${langOpen ? 'rotate-180' : ''}`} />
+              </button>
               <AnimatePresence>
-                {langDropdownOpen && (
-                  <>
-                    <div
-                      className="fixed inset-0 z-40"
-                      onClick={() => setLangDropdownOpen(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className={`absolute end-0 mt-2 w-44 rounded-2xl p-1.5 border shadow-2xl z-50 overflow-hidden ${
-                        isLight ? 'bg-white border-amber-200/80 text-stone-900' : 'bg-[#1E2022] border-stone-700 text-[#FAF7F2]'
-                      }`}
-                    >
-                      {languages.map((lang) => {
-                        const isSelected = i18n.language === lang.code;
-                        return (
+                {langOpen && (
+                  <motion.ul
+                    role="listbox"
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
+                    transition={{ duration: 0.16 }}
+                    className="absolute end-0 z-50 mt-2 w-48 origin-top rounded-2xl border border-line bg-surface p-1.5 og-shadow"
+                  >
+                    {languages.map((lang) => {
+                      const selected = i18n.language === lang.code;
+                      return (
+                        <li key={lang.code}>
                           <button
-                            key={lang.code}
-                            onClick={() => changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar')}
-                            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                              isSelected
-                                ? isLight
-                                  ? 'bg-amber-100/70 text-[#B87333]'
-                                  : 'bg-[#B87333]/20 text-[#B87333]'
-                                : isLight
-                                  ? 'hover:bg-stone-100 text-stone-700'
-                                  : 'hover:bg-stone-800 text-stone-300'
+                            role="option"
+                            aria-selected={selected}
+                            onClick={() => changeLanguageTo(lang.code)}
+                            className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition-colors ${
+                              selected ? 'bg-copper/12 text-copper-hi' : 'text-ink-2 hover:bg-surface-2 hover:text-ink'
                             }`}
                           >
-                            <div className="flex items-center gap-2">
-                              <span className="font-extrabold">{lang.label}</span>
-                              <span className="text-[11px] opacity-80 font-normal">({lang.name})</span>
-                            </div>
-                            {isSelected && <Check className="w-3.5 h-3.5 text-[#B87333]" />}
+                            <span className="flex items-center gap-2">
+                              <span className="w-6 font-black">{lang.label}</span>
+                              <span className="font-medium">{lang.name}</span>
+                            </span>
+                            {selected && <Check className="w-3.5 h-3.5" />}
                           </button>
-                        );
-                      })}
-                    </motion.div>
-                  </>
+                        </li>
+                      );
+                    })}
+                  </motion.ul>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Dark / Light Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onToggleTheme}
-              className={`p-2 rounded-xl border transition-all flex items-center justify-center shrink-0 ${
-                isLight
-                  ? 'bg-amber-100/80 border-amber-300 text-amber-800 hover:bg-amber-200'
-                  : 'bg-stone-800/80 border-stone-700 text-amber-400 hover:bg-stone-700'
-              }`}
-              title={isLight ? t('navbar.switchThemeDark') : t('navbar.switchThemeLight')}
-            >
-              {isLight ? (
-                <Moon className="w-4 h-4 text-amber-900" />
-              ) : (
-                <Sun className="w-4 h-4 text-amber-400" />
-              )}
-            </motion.button>
-
-            {/* Download Sample PDF Button */}
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={onOpenSamplePdf}
-              className={`hidden sm:flex items-center gap-1.5 rounded-xl font-semibold border transition-all shrink-0 px-2.5 py-1.5 text-xs ${
-                isLight
-                  ? 'bg-stone-100 hover:bg-stone-200 text-stone-800 border-stone-300'
-                  : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border-stone-700/60'
-              }`}
-              title={t('navbar.samplePdfBtn')}
-            >
-              <FileText className="w-3.5 h-3.5 text-[#B87333] shrink-0" />
-              <span className="whitespace-nowrap">{t('navbar.samplePdfBtn')}</span>
-            </motion.button>
-
-            {/* Order Tracking Button */}
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={onOpenTracking}
-              className={`hidden sm:flex items-center gap-1.5 rounded-xl font-semibold border transition-all shrink-0 px-2.5 py-1.5 text-xs ${
-                isLight
-                  ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300'
-                  : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border-stone-700/60'
-              }`}
-              title={t('navbar.orderTrackingBtn')}
-            >
-              <Truck className="w-4 h-4 text-emerald-500 shrink-0" />
-              <span className="whitespace-nowrap">{t('navbar.orderTrackingBtn')}</span>
-            </motion.button>
-
-            {/* Cart Drawer Trigger */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onOpenCart}
-              className={`relative flex items-center justify-center p-2 rounded-xl border transition-all shrink-0 ${
-                isLight
-                  ? 'bg-white hover:bg-stone-100 text-stone-900 border-stone-300 shadow-sm'
-                  : 'bg-[#1E2022] hover:bg-stone-800 text-[#FAF7F2] border-stone-700/80'
-              }`}
-              aria-label={t('navbar.cartTooltip')}
-            >
-              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#B87333]" />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -end-2 bg-[#B87333] text-white text-[10px] sm:text-[11px] font-bold w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
-                  {isFa ? toPersianDigits(cartCount) : cartCount}
-                </span>
-              )}
-            </motion.button>
-
-            {/* Mobile Hamburger Menu Toggle (Active on screens under md: 768px) */}
+            {/* Theme */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`md:hidden p-2 rounded-xl border shrink-0 transition-colors ${
-                isLight ? 'bg-stone-100 border-stone-300 text-stone-800 hover:bg-stone-200' : 'bg-stone-800 border-stone-700 text-stone-200 hover:bg-stone-700'
-              }`}
-              aria-label="Toggle navigation menu"
+              onClick={onToggleTheme}
+              className={`${iconButton} w-10 overflow-hidden`}
+              title={isLight ? t('navbar.switchThemeDark') : t('navbar.switchThemeLight')}
+              aria-label={isLight ? t('navbar.switchThemeDark') : t('navbar.switchThemeLight')}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={theme}
+                  initial={{ y: 14, rotate: -90, opacity: 0 }}
+                  animate={{ y: 0, rotate: 0, opacity: 1 }}
+                  exit={{ y: -14, rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="flex"
+                >
+                  {isLight ? <Moon className="w-4 h-4 text-copper-hi" /> : <Sun className="w-4 h-4 text-amber-400" />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+
+            <button onClick={onOpenSamplePdf} className={`${iconButton} hidden sm:flex text-xs font-bold`} title={t('navbar.samplePdfBtn')}>
+              <FileText className="w-4 h-4 text-copper-hi" />
+              <span className="whitespace-nowrap">{t('navbar.samplePdfBtn')}</span>
+            </button>
+
+            <button onClick={onOpenTracking} className={`${iconButton} hidden sm:flex text-xs font-bold`} title={t('navbar.orderTrackingBtn')}>
+              <Truck className="w-4 h-4 text-emerald-500" />
+              <span className="whitespace-nowrap">{t('navbar.orderTrackingBtn')}</span>
+            </button>
+
+            {/* Cart */}
+            <button onClick={onOpenCart} className={`${iconButton} w-10`} aria-label={t('navbar.cartTooltip')}>
+              <ShoppingBag className="w-[18px] h-[18px] text-copper-hi" />
+              <AnimatePresence>
+                {cartCount > 0 && (
+                  <motion.span
+                    key={cartCount}
+                    initial={{ scale: 0.3, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.3, opacity: 0 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+                    className="absolute -top-1.5 -end-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#D9894A] to-[#8B4513] px-1 text-[10px] font-black text-white ring-2 ring-canvas"
+                  >
+                    {cartLabel}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              className={`${iconButton} w-10 md:hidden`}
+              aria-label={mobileMenuOpen ? t('ui.common.close') : t('ui.nav.menu')}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
-
           </div>
-
         </div>
       </div>
 
-      {/* Row 2: Full Navigation Bar with ALL 10 Items (Visible on md: 768px and above) */}
-      <div className={`hidden md:block border-t ${
-        isLight ? 'border-stone-200/80 bg-stone-100/60' : 'border-stone-800/80 bg-black/25'
-      }`}>
-        <div className="w-full max-w-[1600px] mx-auto px-2 sm:px-4">
-          <nav className="flex items-center overflow-x-auto scrollbar-none py-1.5">
-            <div className="flex items-center gap-1 xl:gap-1.5 mx-auto min-w-max px-2">
-              {navItems.map((item) => {
-                const isActive = activeTab === item.id;
-                return (
+      {/* Row 2: every section, always visible on md+ */}
+      <div className="hidden md:block border-t border-line">
+        <nav className="og-no-scrollbar mx-auto w-full max-w-[1600px] overflow-x-auto px-2 sm:px-4 max-xl:[mask-image:linear-gradient(90deg,transparent,black_28px,black_calc(100%-28px),transparent)]">
+          <ul className="mx-auto flex min-w-max items-center gap-0.5 py-1.5 px-2 justify-center">
+            {navItems.map((item) => {
+              const active = activeTab === item.id;
+              const Icon = item.icon;
+              return (
+                <li key={item.id}>
                   <button
-                    key={item.id}
                     onClick={() => handleSelectTab(item.id)}
-                    className={`relative rounded-xl transition-all duration-200 whitespace-nowrap px-2.5 xl:px-3 py-1 text-xs font-semibold shrink-0 ${
-                      isActive
-                        ? isLight
-                          ? 'bg-white text-[#B87333] font-bold shadow-sm border border-[#B87333]/20'
-                          : 'bg-[#1E2022] text-[#B87333] font-bold shadow-md border border-[#B87333]/30'
-                        : isLight
-                          ? 'text-stone-700 hover:text-stone-900 hover:bg-white/80'
-                          : 'text-stone-300 hover:text-white hover:bg-stone-800/60'
+                    aria-current={active ? 'page' : undefined}
+                    className={`group relative flex items-center gap-1.5 whitespace-nowrap rounded-xl px-2 xl:px-2.5 2xl:px-3 py-1.5 text-[11px] xl:text-xs font-bold transition-colors ${
+                      active ? 'text-copper-hi' : 'text-ink-2 hover:text-ink'
                     }`}
                   >
-                    <span>{t(`navbar.links.${item.key}`)}</span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeTabIndicator"
-                        className="absolute -bottom-1 start-2 end-2 h-0.5 bg-[#B87333] rounded-full"
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-active-pill"
+                        className="absolute inset-0 rounded-xl border border-copper/30 bg-copper/10"
+                        transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                       />
                     )}
+                    <Icon className={`relative hidden 2xl:block w-3.5 h-3.5 ${active ? '' : 'text-ink-3 group-hover:text-copper-hi'}`} />
+                    <span className="relative">{t(`navbar.links.${item.key}`)}</span>
                   </button>
-                );
-              })}
-            </div>
-          </nav>
-        </div>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
 
-      {/* Mobile Drawer Menu (Under md: 768px) */}
+      {/* Mobile full-screen menu. Portalled to <body>: the header's backdrop-filter
+          would otherwise become the containing block of this fixed overlay. */}
+      {createPortal(
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className={`md:hidden border-b px-4 pt-4 pb-6 space-y-3 max-h-[80vh] overflow-y-auto ${
-              isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
-            }`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="md:hidden fixed inset-x-0 top-16 bottom-0 z-30 overflow-y-auto bg-canvas"
           >
-            {/* Mobile Language Switcher Bar */}
-            <div className={`p-2.5 rounded-xl border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2 ${
-              isLight ? 'bg-amber-50/70 border-amber-200' : 'bg-stone-900 border-stone-800'
-            }`}>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-stone-700 dark:text-stone-300">
-                <Globe className="w-4 h-4 text-[#B87333]" />
-                <span>{t('navbar.langTitle', 'زبان / Language')}</span>
-              </div>
-              <div className="flex gap-1 flex-wrap">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      changeLanguageTo(lang.code as 'fa' | 'en' | 'es' | 'de' | 'fr' | 'zh' | 'ja' | 'hi' | 'ar');
-                      setMobileMenuOpen(false);
-                    }}
-                    className={`px-2 py-1 rounded-lg text-xs font-bold transition-all ${
-                      i18n.language === lang.code
-                        ? 'bg-[#B87333] text-white shadow-sm'
-                        : isLight
-                          ? 'bg-white text-stone-700 hover:bg-stone-100 border border-stone-200'
-                          : 'bg-stone-800 text-stone-300 hover:bg-stone-700 border border-stone-700'
-                    }`}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(184,115,51,0.18),transparent_70%)]" />
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.035, delayChildren: 0.05 } } }}
+              className="relative px-4 pt-5 pb-10 space-y-5"
+            >
+              <ul className="grid grid-cols-2 gap-2">
+                {navItems.map((item) => {
+                  const active = activeTab === item.id;
+                  const Icon = item.icon;
+                  return (
+                    <motion.li key={item.id} variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}>
+                      <button
+                        onClick={() => handleSelectTab(item.id)}
+                        className={`flex w-full flex-col items-start gap-3 rounded-2xl border p-4 text-start transition-colors ${
+                          active
+                            ? 'border-copper/50 bg-copper/12 text-copper-hi'
+                            : 'border-line bg-surface text-ink hover:border-copper/40'
+                        }`}
+                      >
+                        <Icon className={`w-5 h-5 ${active ? '' : 'text-copper-hi'}`} />
+                        <span className="text-sm font-bold leading-5">{t(`navbar.links.${item.key}`)}</span>
+                      </button>
+                    </motion.li>
+                  );
+                })}
+              </ul>
 
-            {/* Quick Action Triggers in Mobile */}
-            <div className="grid grid-cols-2 gap-2 mb-4 pb-4 border-b border-stone-500/20">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenSamplePdf();
-                }}
-                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#B87333]/10 border border-[#B87333]/30 text-xs font-semibold text-[#B87333]"
-              >
-                <FileText className="w-4 h-4" />
-                <span className="truncate">{t('navbar.samplePdfMobile')}</span>
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenTracking();
-                }}
-                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-semibold text-emerald-500"
-              >
-                <Truck className="w-4 h-4" />
-                <span className="truncate">{t('navbar.orderTrackingBtn')}</span>
-              </button>
-            </div>
+              <motion.div variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }} className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenSamplePdf();
+                  }}
+                  className="flex items-center justify-center gap-2 rounded-2xl border border-copper/30 bg-copper/10 px-3 py-3 text-xs font-bold text-copper-hi"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span className="truncate">{t('navbar.samplePdfMobile')}</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenTracking();
+                  }}
+                  className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-3 text-xs font-bold text-emerald-500"
+                >
+                  <Truck className="w-4 h-4" />
+                  <span className="truncate">{t('navbar.orderTrackingBtn')}</span>
+                </button>
+              </motion.div>
 
-            {/* Navigation Links Grid (1 column on small phones, 2 columns on larger phones) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {navItems.map((item) => {
-                const isActive = activeTab === item.id;
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleSelectTab(item.id)}
-                    className={`flex items-center gap-2.5 p-3 rounded-xl text-xs font-bold text-start transition-all ${
-                      isActive
-                        ? 'bg-[#B87333] text-white shadow-md'
-                        : isLight
-                          ? 'bg-stone-100 text-stone-800 hover:bg-stone-200'
-                          : 'bg-stone-900 text-stone-300 hover:bg-stone-800'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-[#B87333]'}`} />
-                    <span className="truncate">{t(`navbar.links.${item.key}`)}</span>
-                  </button>
-                );
-              })}
-            </div>
+              <motion.div variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }} className="space-y-2.5">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-ink-3">
+                  <Globe className="w-3.5 h-3.5 text-copper-hi" />
+                  {t('ui.nav.language')}
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        changeLanguageTo(lang.code);
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`rounded-xl px-3 py-2 text-xs font-bold transition-colors ${
+                        i18n.language === lang.code
+                          ? 'bg-gradient-to-br from-[#D9894A] to-[#8B4513] text-white'
+                          : 'border border-line bg-surface text-ink-2'
+                      }`}
+                    >
+                      {lang.name}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )}
     </header>
   );
 };

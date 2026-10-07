@@ -1,17 +1,87 @@
 @import "tailwindcss";
 
+/* `dark:` follows the app's theme class on <html>, not the OS setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens — one palette, two themes. Components use the semantic
+   utilities (bg-surface, text-ink-2, border-line…) instead of branching
+   on the theme in JS.
+   ------------------------------------------------------------------ */
+@theme inline {
+  --color-canvas: var(--og-canvas);
+  --color-surface: var(--og-surface);
+  --color-surface-2: var(--og-surface-2);
+  --color-field: var(--og-field);
+  --color-line: var(--og-line);
+  --color-line-strong: var(--og-line-strong);
+  --color-ink: var(--og-ink);
+  --color-ink-2: var(--og-ink-2);
+  --color-ink-3: var(--og-ink-3);
+  --color-copper: #B87333;
+  --color-copper-hi: var(--og-copper-hi);
+  --color-copper-deep: #7A3E14;
+}
+
+:root {
+  --og-canvas: #0E0F10;
+  --og-surface: #16171A;
+  --og-surface-2: #1D1E22;
+  --og-field: #101113;
+  --og-line: rgba(255, 255, 255, 0.08);
+  --og-line-strong: rgba(255, 255, 255, 0.16);
+  --og-ink: #FAF7F2;
+  --og-ink-2: #B5ADA5;
+  --og-ink-3: #857D76;
+  --og-copper-hi: #E8A672;
+  --og-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+:root.light {
+  --og-canvas: #FAF8F5;
+  --og-surface: #FFFFFF;
+  --og-surface-2: #F4EFE8;
+  --og-field: #FBF9F6;
+  --og-line: rgba(41, 37, 36, 0.10);
+  --og-line-strong: rgba(41, 37, 36, 0.20);
+  --og-ink: #1C1917;
+  --og-ink-2: #57534E;
+  --og-ink-3: #78716C;
+  --og-copper-hi: #9A5A22;
+  --og-shadow: 0 24px 60px -28px rgba(87, 60, 30, 0.28);
+  color-scheme: light;
+}
+
 @layer base {
-  html[lang="fa"], [dir="rtl"] {
+  /* Scoped to <html> so local dir="ltr" islands (numbers, sliders) keep the page font. */
+  html[lang="fa"], html[dir="rtl"] {
     font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
-  html[lang="en"], [dir="ltr"] {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  html[dir="ltr"] {
+    font-family: 'Plus Jakarta Sans', 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
   body {
-    background-color: #121314;
-    color: #FAF7F2;
+    background-color: var(--og-canvas);
+    color: var(--og-ink);
     text-align: start;
   }
+  :focus-visible {
+    outline: 2px solid #D9894A;
+    outline-offset: 2px;
+  }
+}
+
+@utility og-shadow {
+  box-shadow: var(--og-shadow);
+}
+
+/* Hide scrollbars on horizontally scrolling chip rows. */
+.og-no-scrollbar {
+  scrollbar-width: none;
+}
+.og-no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Custom Scrollbars */
@@ -20,10 +90,10 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #121314;
+  background: var(--og-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #33363A;
+  background: var(--og-line-strong);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -44,4 +114,85 @@
   transform: rotateY(180deg);
 }
 
+/* ------------------------------------------------------------------
+   "+3 Experience" — cinematic homepage primitives
+   ------------------------------------------------------------------ */
 
+/* Film grain layer (static SVG noise, tiled — cheap to composite) */
+.og-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+}
+
+/* Copper text with a slow moving sheen */
+.og-copper-text {
+  background: linear-gradient(110deg, #8B4513 0%, #D9894A 28%, #FFD3A1 42%, #D9894A 56%, #B87333 75%, #8B4513 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: og-sheen 6s ease-in-out infinite;
+}
+@keyframes og-sheen {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: 0% 0; }
+}
+
+/* Infinite marquee (track contains content twice) */
+.og-marquee-track {
+  animation: og-marquee var(--og-marquee-duration, 60s) linear infinite;
+}
+.og-marquee-track.og-reverse {
+  animation-direction: reverse;
+}
+.og-marquee:hover .og-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes og-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Nervous jitter for the "instinctive manager" side */
+@keyframes og-jitter {
+  0%, 100% { transform: translate(0, 0) rotate(var(--og-rot, 0deg)); }
+  20% { transform: translate(-1.5px, 1px) rotate(calc(var(--og-rot, 0deg) - 2deg)); }
+  40% { transform: translate(1.5px, -1px) rotate(calc(var(--og-rot, 0deg) + 2deg)); }
+  60% { transform: translate(-1px, -1.5px) rotate(var(--og-rot, 0deg)); }
+  80% { transform: translate(1px, 1.5px) rotate(calc(var(--og-rot, 0deg) + 1deg)); }
+}
+.og-jitter {
+  animation: og-jitter 0.45s steps(2, end) infinite;
+}
+
+/* Scroll cue line */
+@keyframes og-drip {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.og-drip {
+  animation: og-drip 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes og-spin-slow {
+  to { transform: rotate(360deg); }
+}
+.og-spin-slow {
+  animation: og-spin-slow 80s linear infinite;
+}
+.og-spin-slower-reverse {
+  animation: og-spin-slow 140s linear infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .og-copper-text,
+  .og-marquee-track,
+  .og-jitter,
+  .og-drip,
+  .og-spin-slow,
+  .og-spin-slower-reverse {
+    animation: none !important;
+  }
+}

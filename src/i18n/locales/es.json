@@ -831,5 +831,63 @@
       "submitBtn": "Enviar Experiencia y Reseña",
       "validationError": "Por favor complete todos los campos obligatorios (Nombre, Organización, Logro Clave y Reseña)."
     }
+  },
+  "story": {
+    "intro": {
+      "shared": "ADN compartido entre humanos y orangutanes",
+      "difference": "Y toda la diferencia está en ese 3%.",
+      "skip": "Entrar"
+    },
+    "hero": {
+      "eyebrow": "Gestión para el mundo real",
+      "line1": "El {{pct}} de nuestros genes es idéntico al de un orangután.",
+      "line2": "El {{pct}} restante es lo que nos hace humanos.",
+      "body": "En la gestión ocurre lo mismo. El directivo instintivo y el directivo inteligente comparten el 97% de sus hábitos: ambos convocan reuniones, leen informes y toman decisiones. Este libro trata del 3% que cambia el resultado: la esencia de 40 años en plantas industriales reales.",
+      "quizLink": "¿Cuánto tienes de orangután?",
+      "scroll": "Descubre el 3%",
+      "fieldHint": "Mueve el cursor: allí donde un directivo mira de verdad, el caos se convierte en sistema."
+    },
+    "dna": {
+      "kicker": "Las matemáticas de una diferencia",
+      "sharedLabel": "Compartido con los orangutanes",
+      "diffLabel": "La diferencia que nos hace humanos",
+      "title": "El 3% es pequeño. Y lo es todo.",
+      "body": "En las organizaciones, el 97% de lo que hacen el directivo instintivo y el inteligente es igual. Solo tres genes cambian el destino:",
+      "gene1": "Ver la realidad",
+      "gene2": "Intervenir en el punto de palanca",
+      "gene3": "Fijarlo en la memoria organizacional"
+    },
+    "verdict": {
+      "kicker": "La prueba del espejo",
+      "title": "Una situación. Dos directivos.",
+      "subtitle": "Arrastra el control y mira cuán grande es esa brecha del 3%.",
+      "orangutan": "Directivo instintivo",
+      "plus3": "Directivo +3",
+      "drag": "Arrastra"
+    },
+    "numbers": {
+      "kicker": "40 años, condensados en dos volúmenes",
+      "pages": "páginas de experiencia de campo",
+      "cases": "casos industriales reales",
+      "lessons": "errores y lecciones",
+      "years": "años en la planta"
+    },
+    "marquee": {
+      "mistake": "Error",
+      "lesson": "Lección"
+    },
+    "author": {
+      "kicker": "El hombre que observó la planta durante 40 años",
+      "hint": "Mueve la luz sobre el retrato",
+      "cta": "La historia completa del autor"
+    },
+    "gauge": {
+      "kicker": "Test de instinto",
+      "title": "¿Cuánto de orangután tiene tu organización?",
+      "body": "5 situaciones reales, 5 decisiones, un número honesto. El resultado puede sorprenderte.",
+      "cta": "Empezar el test",
+      "instinct": "Instinto",
+      "system": "Sistema"
+    }
   }
 }

@@ -1,267 +1,225 @@
 import React, { useState } from 'react';
-import { Building2, Users, FileText, CheckCircle2, Send, Sparkles } from 'lucide-react';
-import { B2BForm, ThemeMode } from '../types';
+import { Building2, FileText, Lock, Minus, Phone, Plus, Send, Sparkles, User, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
+import { B2BForm, ThemeMode } from '../types';
 import { saveB2BInquiryToApi } from '../lib/api';
-import { useTranslation } from 'react-i18next';
+import { Button, Card, Check, Container, Field, PageHeader, Reveal, SuccessState, inputClass } from './ui/kit';
+import { useLocaleFormat } from './ui/format';
 
 interface B2BSectionProps {
   theme?: ThemeMode;
 }
 
-export const B2BSection: React.FC<B2BSectionProps> = ({ theme = 'light' }) => {
-  const { t } = useTranslation();
-  const [form, setForm] = useState<B2BForm>({
-    companyName: '',
-    contactPerson: '',
-    phone: '',
-    email: '',
-    quantity: 10,
-    requestAuthorMeeting: true,
-    requestLegalInvoice: true,
-    notes: ''
-  });
+const MIN_QTY = 10;
+const INITIAL: B2BForm = {
+  companyName: '',
+  contactPerson: '',
+  phone: '',
+  email: '',
+  quantity: MIN_QTY,
+  requestAuthorMeeting: true,
+  requestLegalInvoice: true,
+  notes: '',
+};
 
+export const B2BSection: React.FC<B2BSectionProps> = () => {
+  const { t } = useTranslation();
+  const { num } = useLocaleFormat();
+  const [form, setForm] = useState<B2BForm>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
-  const isLight = theme === 'light';
+
+  const setQty = (q: number) => setForm((f) => ({ ...f, quantity: Math.max(MIN_QTY, Math.min(999, Math.round(q) || MIN_QTY)) }));
+
+  const perks = [
+    { icon: FileText, title: t('b2b.features.f1Title'), desc: t('b2b.features.f1Desc'), from: 1 },
+    { icon: Sparkles, title: t('b2b.features.f3Title'), desc: t('b2b.features.f3Desc'), from: 10 },
+    { icon: Users, title: t('b2b.features.f2Title'), desc: t('b2b.features.f2Desc'), from: 20 },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
     saveB2BInquiryToApi(form);
-    confetti({
-      particleCount: 70,
-      spread: 80,
-      origin: { y: 0.6 }
-    });
+    confetti({ particleCount: 80, spread: 80, origin: { y: 0.6 }, colors: ['#D9894A', '#FFD3A1', '#10B981'] });
   };
 
   return (
-    <section id="b2b" className={`py-16 md:py-20 transition-colors duration-300 border-b ${
-      isLight ? 'bg-[#FAF8F5] border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-800 text-[#FAF7F2]'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Right Column: B2B Features & Value Proposition */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-xs font-bold ${
-              isLight ? 'bg-amber-100 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/40 text-[#B87333]'
-            }`}>
-              <Building2 className="w-4 h-4 text-[#B87333]" />
-              <span>{t('b2b.badge')}</span>
-            </div>
+    <>
+      <PageHeader icon={Building2} kicker={t('b2b.badge')} title={t('b2b.title')} subtitle={t('b2b.subtitle')} />
 
-            <h2 className={`text-3xl sm:text-4xl font-extrabold leading-tight ${
-              isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-            }`}>
-              {t('b2b.title')}
-            </h2>
-
-            <p className={`text-sm sm:text-base leading-relaxed ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-              {t('b2b.subtitle')}
-            </p>
-
-            <div className="space-y-4 pt-2">
-              <div className={`flex items-start gap-3 p-4 rounded-2xl border ${
-                isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
-              }`}>
-                <FileText className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
-                <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>{t('b2b.features.f1Title')}</h3>
-                  <p className="text-xs text-stone-400 mt-1">
-                    {t('b2b.features.f1Desc')}
-                  </p>
-                </div>
-              </div>
-
-              <div className={`flex items-start gap-3 p-4 rounded-2xl border ${
-                isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
-              }`}>
-                <Users className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
-                <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>{t('b2b.features.f2Title')}</h3>
-                  <p className="text-xs text-stone-400 mt-1">
-                    {t('b2b.features.f2Desc')}
-                  </p>
-                </div>
-              </div>
-
-              <div className={`flex items-start gap-3 p-4 rounded-2xl border ${
-                isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-800'
-              }`}>
-                <Sparkles className="w-5 h-5 text-[#B87333] shrink-0 mt-0.5" />
-                <div>
-                  <h3 className={`text-sm font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>{t('b2b.features.f3Title')}</h3>
-                  <p className="text-xs text-stone-400 mt-1">
-                    {t('b2b.features.f3Desc')}
-                  </p>
-                </div>
-              </div>
-            </div>
+      <Container className="py-12 sm:py-16">
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
+          {/* Perks that react to the quantity */}
+          <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-32">
+            <Reveal>
+              <h2 className="text-lg font-black text-ink">{t('ui.b2b.perksTitle')}</h2>
+              <p className="mt-1 text-xs text-ink-3">{t('ui.b2b.perksHint')}</p>
+            </Reveal>
+            {perks.map(({ icon: Icon, title, desc, from }, i) => {
+              const unlocked = form.quantity >= from;
+              return (
+                <Reveal key={title} delay={i * 0.08}>
+                  <div
+                    className={`relative overflow-hidden rounded-3xl border p-5 transition-all duration-500 ${
+                      unlocked ? 'border-copper/45 bg-copper/[0.07]' : 'border-line bg-surface opacity-60'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <span
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl transition-colors ${
+                          unlocked ? 'bg-gradient-to-br from-[#D9894A] to-[#7A3E14] text-white' : 'bg-surface-2 text-ink-3'
+                        }`}
+                      >
+                        {unlocked ? <Icon className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
+                      </span>
+                      <div className="space-y-1.5">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-sm font-black text-ink">{title}</h3>
+                          {from > 1 && (
+                            <span
+                              className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
+                                unlocked ? 'bg-emerald-500/15 text-emerald-500' : 'bg-surface-2 text-ink-3'
+                              }`}
+                            >
+                              {unlocked ? t('ui.b2b.unlocked') : t('ui.b2b.from', { n: num(from) })}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs leading-6 text-ink-2">{desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
 
-          {/* Left Column: Interactive Form */}
-          <div className="lg:col-span-6">
-            <div className={`p-6 sm:p-8 rounded-3xl border shadow-2xl space-y-6 ${
-              isLight ? 'bg-white border-stone-200' : 'bg-[#1E2022] border-stone-700'
-            }`}>
-              
+          {/* Form */}
+          <Reveal className="lg:col-span-7" delay={0.1}>
+            <Card className="relative overflow-hidden p-6 sm:p-8 og-shadow">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,rgba(184,115,51,0.14),transparent_70%)]" />
               {!submitted ? (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <h3 className={`text-lg font-bold pb-2 border-b border-stone-500/20 ${
-                    isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-                  }`}>
-                    {t('b2b.formTitle')}
-                  </h3>
+                <form onSubmit={handleSubmit} className="relative space-y-5">
+                  <h2 className="text-xl font-black text-ink">{t('b2b.formTitle')}</h2>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        {t('b2b.companyNameLabel')}
-                      </label>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Field label={t('b2b.companyNameLabel').replace(/[:：*]+$/, '')} icon={Building2} required>
                       <input
-                        type="text"
                         required
                         value={form.companyName}
                         onChange={(e) => setForm({ ...form, companyName: e.target.value })}
                         placeholder={t('b2b.companyNamePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
-                          isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                        }`}
+                        autoComplete="organization"
+                        className={inputClass}
                       />
-                    </div>
-
-                    <div>
-                      <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        {t('b2b.contactPersonLabel')}
-                      </label>
+                    </Field>
+                    <Field label={t('b2b.contactPersonLabel').replace(/[:：*]+$/, '')} icon={User} required>
                       <input
-                        type="text"
                         required
                         value={form.contactPerson}
                         onChange={(e) => setForm({ ...form, contactPerson: e.target.value })}
                         placeholder={t('b2b.contactPersonPlaceholder')}
-                        className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
-                          isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                        }`}
+                        autoComplete="name"
+                        className={inputClass}
                       />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        {t('b2b.phoneLabel')}
-                      </label>
+                    </Field>
+                    <Field label={t('b2b.phoneLabel').replace(/[:：*]+$/, '')} icon={Phone} required>
                       <input
-                        type="tel"
                         required
+                        type="tel"
+                        dir="ltr"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        placeholder={t('b2b.phonePlaceholder')}
-                        className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
-                          isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                        }`}
+                        placeholder="09xx xxx xxxx"
+                        autoComplete="tel"
+                        className={`${inputClass} text-start`}
                       />
-                    </div>
-
-                    <div>
-                      <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                        {t('b2b.quantityLabel')}
-                      </label>
-                      <input
-                        type="number"
-                        min="10"
-                        value={form.quantity}
-                        onChange={(e) => setForm({ ...form, quantity: Number(e.target.value) })}
-                        className={`w-full px-3.5 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
-                          isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                        }`}
-                      />
-                    </div>
+                    </Field>
+                    <Field label={t('b2b.quantityLabel').replace(/[:：]+$/, '')}>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setQty(form.quantity - 1)}
+                          aria-label={t('ui.cart.decrease')}
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line-strong bg-field text-ink-2 hover:text-copper-hi"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <input
+                          type="number"
+                          min={MIN_QTY}
+                          dir="ltr"
+                          value={form.quantity}
+                          onChange={(e) => setQty(Number(e.target.value))}
+                          className={`${inputClass} text-center font-black`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setQty(form.quantity + 1)}
+                          aria-label={t('ui.cart.increase')}
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line-strong bg-field text-ink-2 hover:text-copper-hi"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </Field>
                   </div>
 
-                  <div className="space-y-2 pt-2">
-                    <label className={`flex items-center gap-2 cursor-pointer text-xs ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                      <input
-                        type="checkbox"
-                        checked={form.requestLegalInvoice}
-                        onChange={(e) => setForm({ ...form, requestLegalInvoice: e.target.checked })}
-                        className="w-4 h-4 rounded text-[#B87333] bg-[#121314] border-stone-700"
-                      />
-                      <span>{t('b2b.taxInvoiceCheckbox')}</span>
-                    </label>
+                  <input
+                    type="range"
+                    min={MIN_QTY}
+                    max={100}
+                    value={Math.min(form.quantity, 100)}
+                    onChange={(e) => setQty(Number(e.target.value))}
+                    className="w-full accent-[#B87333]"
+                    aria-label={t('b2b.quantityLabel')}
+                  />
 
-                    <label className={`flex items-center gap-2 cursor-pointer text-xs ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                      <input
-                        type="checkbox"
-                        checked={form.requestAuthorMeeting}
-                        onChange={(e) => setForm({ ...form, requestAuthorMeeting: e.target.checked })}
-                        className="w-4 h-4 rounded text-[#B87333] bg-[#121314] border-stone-700"
-                      />
-                      <span>{t('b2b.meetingCheckbox')}</span>
-                    </label>
+                  <div className="grid gap-3">
+                    <Check checked={form.requestLegalInvoice} onChange={(v) => setForm({ ...form, requestLegalInvoice: v })}>
+                      {t('b2b.taxInvoiceCheckbox')}
+                    </Check>
+                    <Check checked={form.requestAuthorMeeting} onChange={(v) => setForm({ ...form, requestAuthorMeeting: v })}>
+                      {t('b2b.meetingCheckbox')}
+                    </Check>
                   </div>
 
-                  <div>
-                    <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>{t('b2b.notesLabel')}</label>
+                  <Field label={t('b2b.notesLabel').replace(/[:：]+$/, '')}>
                     <textarea
                       rows={3}
                       value={form.notes}
                       onChange={(e) => setForm({ ...form, notes: e.target.value })}
                       placeholder={t('b2b.notesPlaceholder')}
-                      className={`w-full px-3.5 py-2 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
-                        isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                      }`}
+                      className={`${inputClass} resize-none`}
                     />
-                  </div>
+                  </Field>
 
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    className="w-full py-3.5 rounded-2xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-4 h-4" />
-                    <span>{t('b2b.submitBtn')}</span>
-                  </motion.button>
+                  <Button type="submit" size="lg" className="w-full">
+                    <Send className="w-5 h-5" />
+                    {t('b2b.submitBtn')}
+                  </Button>
                 </form>
               ) : (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-8 space-y-4"
-                >
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
-                  </div>
-                  <h3 className={`text-xl font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                    {t('b2b.successTitle')}
-                  </h3>
-                  <p className="text-xs text-stone-400 leading-relaxed max-w-md mx-auto">
-                    {t('b2b.successSubtitle')}
-                  </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className={`px-6 py-2.5 rounded-xl text-xs font-bold ${
-                      isLight ? 'bg-stone-200 text-stone-800 hover:bg-stone-300' : 'bg-stone-800 text-white hover:bg-stone-700'
-                    }`}
-                  >
-                    {t('b2b.resetBtn')}
-                  </button>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">
+                  <SuccessState title={t('b2b.successTitle')} text={t('b2b.successSubtitle')}>
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        setForm(INITIAL);
+                        setSubmitted(false);
+                      }}
+                    >
+                      {t('b2b.resetBtn')}
+                    </Button>
+                  </SuccessState>
                 </motion.div>
               )}
-
-            </div>
-          </div>
-
+            </Card>
+          </Reveal>
         </div>
-
-      </div>
-    </section>
+      </Container>
+    </>
   );
 };
-

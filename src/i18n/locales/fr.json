@@ -831,5 +831,63 @@
       "submitBtn": "Envoyer le Témoignage",
       "validationError": "Veuillez remplir tous les champs obligatoires (Nom, Entreprise, Résultat Clé et Texte)."
     }
+  },
+  "story": {
+    "intro": {
+      "shared": "d’ADN commun entre l’humain et l’orang-outan",
+      "difference": "Et toute la différence tient dans ces 3 %.",
+      "skip": "Entrer"
+    },
+    "hero": {
+      "eyebrow": "Le management pour le monde réel",
+      "line1": "{{pct}} de nos gènes sont identiques à ceux d’un orang-outan.",
+      "line2": "Les {{pct}} restants font de nous des humains.",
+      "body": "En management, c’est pareil. Le manager instinctif et le manager intelligent partagent 97 % de leurs habitudes : réunions, rapports, décisions. Ce livre parle des 3 % qui changent le résultat — l’essence de 40 années passées dans de vraies usines.",
+      "quizLink": "Quelle part d’orang-outan en vous ?",
+      "scroll": "Découvrez les 3 %",
+      "fieldHint": "Déplacez le curseur : là où un manager regarde vraiment, le chaos devient système."
+    },
+    "dna": {
+      "kicker": "Les mathématiques d’une différence",
+      "sharedLabel": "en commun avec l’orang-outan",
+      "diffLabel": "la différence qui nous rend humains",
+      "title": "3 %, c’est peu. C’est pourtant tout.",
+      "body": "Dans les organisations aussi, 97 % de ce que font le manager instinctif et le manager intelligent est identique. Trois gènes seulement changent le destin :",
+      "gene1": "Voir la réalité",
+      "gene2": "Intervenir au point de levier",
+      "gene3": "L’ancrer dans la mémoire de l’organisation"
+    },
+    "verdict": {
+      "kicker": "Le test du miroir",
+      "title": "Une situation. Deux managers.",
+      "subtitle": "Faites glisser la poignée et mesurez l’écart que creusent ces 3 %.",
+      "orangutan": "Manager instinctif",
+      "plus3": "Manager +3",
+      "drag": "Glisser"
+    },
+    "numbers": {
+      "kicker": "40 ans, condensés en deux volumes",
+      "pages": "pages d’expérience de terrain",
+      "cases": "dossiers industriels réels",
+      "lessons": "erreurs et leçons",
+      "years": "ans dans les ateliers"
+    },
+    "marquee": {
+      "mistake": "Erreur",
+      "lesson": "Leçon"
+    },
+    "author": {
+      "kicker": "L’homme qui a observé l’usine pendant 40 ans",
+      "hint": "Déplacez la lumière sur le portrait",
+      "cta": "L’histoire complète de l’auteur"
+    },
+    "gauge": {
+      "kicker": "Test d’instinct",
+      "title": "Quelle part d’orang-outan dans votre organisation ?",
+      "body": "5 situations réelles, 5 décisions, un chiffre honnête. Le résultat pourrait vous surprendre.",
+      "cta": "Commencer le test",
+      "instinct": "Instinct",
+      "system": "Système"
+    }
   }
 }

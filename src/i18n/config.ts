@@ -9,6 +9,15 @@ import zhTranslation from './locales/zh.json';
 import jaTranslation from './locales/ja.json';
 import hiTranslation from './locales/hi.json';
 import arTranslation from './locales/ar.json';
+import faUi from './locales/ui/fa.json';
+import enUi from './locales/ui/en.json';
+import esUi from './locales/ui/es.json';
+import deUi from './locales/ui/de.json';
+import frUi from './locales/ui/fr.json';
+import zhUi from './locales/ui/zh.json';
+import jaUi from './locales/ui/ja.json';
+import hiUi from './locales/ui/hi.json';
+import arUi from './locales/ui/ar.json';
 
 // Detect initial language based on URL path
 const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
@@ -37,15 +46,15 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      fa: { translation: faTranslation },
-      en: { translation: enTranslation },
-      es: { translation: esTranslation },
-      de: { translation: deTranslation },
-      fr: { translation: frTranslation },
-      zh: { translation: zhTranslation },
-      ja: { translation: jaTranslation },
-      hi: { translation: hiTranslation },
-      ar: { translation: arTranslation },
+      fa: { translation: { ...faTranslation, ui: faUi } },
+      en: { translation: { ...enTranslation, ui: enUi } },
+      es: { translation: { ...esTranslation, ui: esUi } },
+      de: { translation: { ...deTranslation, ui: deUi } },
+      fr: { translation: { ...frTranslation, ui: frUi } },
+      zh: { translation: { ...zhTranslation, ui: zhUi } },
+      ja: { translation: { ...jaTranslation, ui: jaUi } },
+      hi: { translation: { ...hiTranslation, ui: hiUi } },
+      ar: { translation: { ...arTranslation, ui: arUi } },
     },
     lng: initialLang,
     fallbackLng: 'fa',

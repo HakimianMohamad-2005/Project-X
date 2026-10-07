@@ -1,431 +1,449 @@
-import React, { useState } from 'react';
-import { X, Trash2, Plus, Minus, ShoppingBag, ShieldCheck, Tag, PenTool, ArrowLeft, Truck, Check } from 'lucide-react';
-import { CartItem, OrderCustomerInfo, ThemeMode } from '../types';
-import { toPersianDigits, formatCurrency } from '../utils/persian';
-import { IRAN_PROVINCES_CITIES } from '../data/bookData';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'motion/react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Building2,
+  Hash,
+  Mail,
+  MapPin,
+  Minus,
+  PenTool,
+  Phone,
+  Plus,
+  ShieldCheck,
+  ShoppingBag,
+  Tag,
+  Trash2,
+  Truck,
+  User,
+} from 'lucide-react';
+import { CartItem, OrderCustomerInfo } from '../types';
+import { IRAN_PROVINCES_CITIES } from '../data/bookData';
+import { computeCartTotals, promoPercentFor } from '../lib/cart';
+import { Button, Drawer, Field, inputClass } from './ui/kit';
+import { CoverThumb } from './ui/CoverThumb';
+import { useLocaleFormat } from './ui/format';
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  cartItems: CartItem[];
+  items: CartItem[];
   onUpdateQuantity: (id: string, delta: number) => void;
   onRemoveItem: (id: string) => void;
-  onProceedToPayment: (customerInfo: OrderCustomerInfo, promoDiscountPercent: number) => void;
-  theme?: ThemeMode;
+  onCheckout: (customerInfo: OrderCustomerInfo, promoPercent: number) => void;
+  onBrowseBooks: () => void;
 }
+
+type Step = 'cart' | 'shipping';
+
+const EMPTY_INFO: OrderCustomerInfo = {
+  fullName: '',
+  phone: '',
+  province: 'تهران',
+  city: 'تهران',
+  address: '',
+  postalCode: '',
+  invoiceType: 'real',
+  companyName: '',
+  nationalId: '',
+};
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
   isOpen,
   onClose,
-  cartItems,
+  items,
   onUpdateQuantity,
   onRemoveItem,
-  onProceedToPayment,
-  theme = 'light'
+  onCheckout,
+  onBrowseBooks,
 }) => {
-  const [step, setStep] = useState<'cart' | 'shipping'>('cart');
-  const isLight = theme === 'light';
-
-  // Customer Shipping Info
-  const [customerInfo, setCustomerInfo] = useState<OrderCustomerInfo>({
-    fullName: '',
-    phone: '',
-    province: 'تهران',
-    city: 'تهران',
-    address: '',
-    postalCode: '',
-    invoiceType: 'real',
-    companyName: '',
-    nationalId: ''
-  });
-
-  // Promo Code
+  const { t } = useTranslation();
+  const { price, num, pct, isRtl } = useLocaleFormat();
+  const [step, setStep] = useState<Step>('cart');
+  const [info, setInfo] = useState<OrderCustomerInfo>(EMPTY_INFO);
   const [promoCode, setPromoCode] = useState('');
-  const [promoDiscountPercent, setPromoDiscountPercent] = useState(0);
-  const [promoMessage, setPromoMessage] = useState<{ text: string; isError: boolean } | null>(null);
+  const [promoPercent, setPromoPercent] = useState(0);
+  const [promoState, setPromoState] = useState<'idle' | 'ok' | 'bad'>('idle');
 
-  if (!isOpen) return null;
+  // Always reopen on the cart step.
+  useEffect(() => {
+    if (isOpen) setStep('cart');
+  }, [isOpen]);
 
-  const selectedProvinceCities = IRAN_PROVINCES_CITIES.find(p => p.province === customerInfo.province)?.cities || [];
+  const totals = computeCartTotals(items, promoPercent);
+  const cities = IRAN_PROVINCES_CITIES.find((p) => p.province === info.province)?.cities || [];
+  const itemCount = items.reduce((a, b) => a + b.quantity, 0);
+  const ForwardIcon = ArrowLeft;
 
-  const handleApplyPromo = () => {
-    const code = promoCode.trim().toUpperCase();
-    if (code === 'ORANGUTAN1403' || code === 'HAKIMIAN' || code === 'PLUS3') {
-      setPromoDiscountPercent(15);
-      setPromoMessage({ text: 'کد تخفیف ۱۵٪ ویژه با موفقیت اعمال گردید!', isError: false });
-    } else {
-      setPromoDiscountPercent(0);
-      setPromoMessage({ text: 'کد تخفیف وارد شده نامعتبر است.', isError: true });
-    }
+  const applyPromo = () => {
+    const percent = promoPercentFor(promoCode);
+    setPromoPercent(percent);
+    setPromoState(percent > 0 ? 'ok' : 'bad');
   };
 
-  // Calculations
-  const rawTotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const promoDiscountAmount = Math.round(rawTotal * (promoDiscountPercent / 100));
-
-  const hasBundle = cartItems.some(item => item.bookId === 'bundle-full');
-  const shippingCost = hasBundle || rawTotal > 600000 ? 0 : 35000;
-
-  const finalTotal = Math.max(0, rawTotal - promoDiscountAmount + shippingCost);
-
-  const handleShippingSubmit = (e: React.FormEvent) => {
+  const submitShipping = (e: React.FormEvent) => {
     e.preventDefault();
-    onProceedToPayment(customerInfo, promoDiscountPercent);
+    onCheckout(info, promoPercent);
   };
+
+  const steps: { key: Step | 'payment'; label: string }[] = [
+    { key: 'cart', label: t('ui.cart.stepCart') },
+    { key: 'shipping', label: t('ui.cart.stepShipping') },
+    { key: 'payment', label: t('ui.cart.stepPayment') },
+  ];
+  const stepIndex = step === 'cart' ? 0 : 1;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-black/80 backdrop-blur-sm">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10">
-          
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className={`pointer-events-auto w-screen max-w-md border-r shadow-2xl flex flex-col justify-between ${
-              isLight ? 'bg-white border-stone-200 text-stone-900' : 'bg-[#1E2022] border-stone-800 text-[#FAF7F2]'
-            }`}
-          >
-            
-            {/* Header */}
-            <div className="p-6 border-b border-stone-500/20 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-[#B87333]/20 border border-[#B87333]/30">
-                  <ShoppingBag className="w-5 h-5 text-[#B87333]" />
-                </div>
-                <div>
-                  <h2 className={`text-base font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                    {step === 'cart' ? 'سبد خرید کتاب' : 'اطلاعات ارسال و خریدار'}
-                  </h2>
-                  <span className="text-[11px] text-stone-400">
-                    {step === 'cart' ? `${toPersianDigits(cartItems.length)} عنوان انتخاب شده` : 'ثبت آدرس جهت ارسال پست پیشتاز'}
+    <Drawer open={isOpen} onClose={onClose}>
+      {/* Header */}
+      <div className="relative px-6 pt-6 pb-5 border-b border-line">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(ellipse_at_top,rgba(184,115,51,0.18),transparent_70%)]" />
+        <div className="relative flex items-center gap-3 pe-12">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-copper/15 text-copper-hi border border-copper/25">
+            {step === 'cart' ? <ShoppingBag className="w-5 h-5" /> : <Truck className="w-5 h-5" />}
+          </span>
+          <div>
+            <h2 className="text-lg font-black">{step === 'cart' ? t('ui.cart.title') : t('ui.cart.shippingTitle')}</h2>
+            <p className="text-xs text-ink-3">
+              {step === 'cart' ? t('ui.cart.itemsCount', { n: num(itemCount) }) : t('ui.cart.shippingSubtitle')}
+            </p>
+          </div>
+        </div>
+
+        {items.length > 0 && (
+          <ol className="relative mt-5 grid grid-cols-3 gap-2">
+            {steps.map((s, i) => {
+              const done = i < stepIndex;
+              const active = i === stepIndex;
+              return (
+                <li key={s.key} className="space-y-1.5">
+                  <span className="block h-1 rounded-full bg-line overflow-hidden">
+                    <motion.span
+                      className="block h-full bg-gradient-to-r from-[#D9894A] to-[#FFD3A1]"
+                      initial={false}
+                      animate={{ width: done || active ? '100%' : '0%' }}
+                      style={{ transformOrigin: isRtl ? 'right' : 'left' }}
+                      transition={{ duration: 0.5 }}
+                    />
                   </span>
-                </div>
-              </div>
+                  <span className={`block text-[11px] font-bold ${active ? 'text-copper-hi' : done ? 'text-ink-2' : 'text-ink-3'}`}>
+                    {num(i + 1)}. {s.label}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </div>
 
-              <button
-                onClick={onClose}
-                className={`p-2 rounded-xl ${
-                  isLight ? 'bg-stone-100 text-stone-600 hover:text-stone-900' : 'bg-stone-800 text-stone-400 hover:text-white'
-                }`}
+      {/* Body */}
+      <div className="flex-1 overflow-y-auto px-6 py-5">
+        {items.length === 0 ? (
+          <div className="flex h-full flex-col items-center justify-center text-center gap-5 py-10">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-copper/20 blur-2xl" />
+              <span className="relative flex h-24 w-24 items-center justify-center rounded-[2rem] border border-line bg-surface-2">
+                <ShoppingBag className="w-10 h-10 text-copper-hi" />
+              </span>
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-black">{t('ui.cart.emptyTitle')}</h3>
+              <p className="text-sm text-ink-2 max-w-xs">{t('ui.cart.emptyText')}</p>
+            </div>
+            <Button onClick={onBrowseBooks}>
+              <BookOpen className="w-4 h-4" />
+              {t('ui.cart.browse')}
+            </Button>
+          </div>
+        ) : (
+          <AnimatePresence mode="wait" initial={false}>
+            {step === 'cart' ? (
+              <motion.div
+                key="cart"
+                initial={{ opacity: 0, x: isRtl ? -24 : 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: isRtl ? 24 : -24 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-4"
               >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Content Body */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              
-              {cartItems.length === 0 ? (
-                <div className="text-center py-16 space-y-4">
-                  <ShoppingBag className="w-12 h-12 text-stone-400 mx-auto" />
-                  <p className="text-sm font-semibold text-stone-400">
-                    سبد خرید شما در حال حاضر خالی است.
-                  </p>
-                  <button
-                    onClick={onClose}
-                    className="px-6 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 text-white text-xs font-bold"
-                  >
-                    مشاهده نسخه‌های کتاب
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {step === 'cart' ? (
-                    <div className="space-y-6">
-                      
-                      {/* Cart Items List */}
-                      <div className="space-y-4">
-                        {cartItems.map((item) => (
-                          <div
-                            key={item.id}
-                            className={`p-4 rounded-2xl border flex items-center justify-between gap-3 ${
-                              isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/90 border-stone-800'
-                            }`}
-                          >
-                            <div className="space-y-1 flex-1">
-                              <h3 className={`text-xs font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                                {item.title}
-                              </h3>
-
-                              {item.authorSignatureRequested && (
-                                <span className="text-[10px] text-[#B87333] font-bold block flex items-center gap-1">
-                                  <PenTool className="w-3 h-3 text-[#B87333]" />
-                                  <span>امضای اختصاصی: {item.recipientName || 'بدون نام'}</span>
-                                </span>
-                              )}
-
-                              <span className="text-xs font-extrabold text-[#B87333] block">
-                                {formatCurrency(item.price)}
+                <ul className="space-y-3">
+                  <AnimatePresence initial={false}>
+                    {items.map((item) => (
+                      <motion.li
+                        key={item.id}
+                        layout
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, x: isRtl ? -40 : 40, height: 0, marginTop: 0 }}
+                        className="flex gap-4 rounded-2xl border border-line bg-surface-2/60 p-3"
+                      >
+                        <CoverThumb bookId={item.bookId} />
+                        <div className="min-w-0 flex-1 space-y-1.5">
+                          <h3 className="text-sm font-bold leading-6">{item.title}</h3>
+                          {item.authorSignatureRequested && (
+                            <span className="flex items-center gap-1 text-[11px] font-bold text-copper-hi">
+                              <PenTool className="w-3 h-3 shrink-0" />
+                              <span className="truncate">
+                                {t('ui.cart.signatureFor', { name: item.recipientName || t('ui.cart.noName') })}
                               </span>
-                            </div>
-
-                            {/* Quantity Controls */}
-                            <div className={`flex items-center gap-2 p-1.5 rounded-xl border ${
-                              isLight ? 'bg-white border-stone-200' : 'bg-[#121314] border-stone-800'
-                            }`}>
+                            </span>
+                          )}
+                          <div className="flex items-center justify-between gap-2 pt-1">
+                            <span className="text-sm font-black text-copper-hi">{price(item.price * item.quantity)}</span>
+                            <div className="flex items-center gap-1">
+                              <div className="flex items-center rounded-xl border border-line bg-field">
+                                <button
+                                  onClick={() => onUpdateQuantity(item.id, 1)}
+                                  aria-label={t('ui.cart.increase')}
+                                  className="flex h-8 w-8 items-center justify-center text-ink-2 hover:text-copper-hi"
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                </button>
+                                <span className="w-6 text-center text-sm font-black tabular-nums">{num(item.quantity)}</span>
+                                <button
+                                  onClick={() => onUpdateQuantity(item.id, -1)}
+                                  aria-label={t('ui.cart.decrease')}
+                                  className="flex h-8 w-8 items-center justify-center text-ink-2 hover:text-copper-hi"
+                                >
+                                  <Minus className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
                               <button
-                                onClick={() => onUpdateQuantity(item.id, 1)}
-                                className="p-1 rounded text-stone-400 hover:text-stone-900"
+                                onClick={() => onRemoveItem(item.id)}
+                                aria-label={t('ui.cart.remove')}
+                                className="flex h-8 w-8 items-center justify-center rounded-xl text-ink-3 hover:bg-red-500/10 hover:text-red-500 transition-colors"
                               >
-                                <Plus className="w-3.5 h-3.5" />
-                              </button>
-                              <span className={`text-xs font-bold w-5 text-center ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                                {toPersianDigits(item.quantity)}
-                              </span>
-                              <button
-                                onClick={() => onUpdateQuantity(item.id, -1)}
-                                className="p-1 rounded text-stone-400 hover:text-stone-900"
-                              >
-                                <Minus className="w-3.5 h-3.5" />
+                                <Trash2 className="w-4 h-4" />
                               </button>
                             </div>
-
-                            <button
-                              onClick={() => onRemoveItem(item.id)}
-                              className="p-2 text-stone-400 hover:text-red-500"
-                              title="حذف"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
                           </div>
-                        ))}
-                      </div>
-
-                      {/* Promo Code Box */}
-                      <div className={`p-4 rounded-2xl border space-y-2 ${
-                        isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900 border-stone-800'
-                      }`}>
-                        <label className={`text-xs font-semibold block ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
-                          کد تخفیف دارید؟
-                        </label>
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            value={promoCode}
-                            onChange={(e) => setPromoCode(e.target.value)}
-                            placeholder="مثلاً: ORANGUTAN1403"
-                            className={`flex-1 px-3 py-2 rounded-xl border text-xs uppercase focus:outline-none focus:border-[#B87333] ${
-                              isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                            }`}
-                          />
-                          <button
-                            onClick={handleApplyPromo}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold border ${
-                              isLight ? 'bg-stone-200 text-stone-800 border-stone-300' : 'bg-stone-800 text-stone-200 border-stone-700'
-                            }`}
-                          >
-                            اعمال
-                          </button>
                         </div>
+                      </motion.li>
+                    ))}
+                  </AnimatePresence>
+                </ul>
 
-                        {promoMessage && (
-                          <p className={`text-[11px] font-semibold ${promoMessage.isError ? 'text-red-500' : 'text-emerald-500'}`}>
-                            {promoMessage.text}
-                          </p>
-                        )}
-                      </div>
-
-                    </div>
-                  ) : (
-                    /* Step 2: Customer Shipping Form */
-                    <form id="shipping-form" onSubmit={handleShippingSubmit} className="space-y-4 text-xs">
-                      
-                      <div>
-                        <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
-                          نام و نام خانوادگی خریدار:*
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={customerInfo.fullName}
-                          onChange={(e) => setCustomerInfo({ ...customerInfo, fullName: e.target.value })}
-                          placeholder="مثلاً: علیرضا حسینی"
-                          className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                            isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                          }`}
-                        />
-                      </div>
-
-                      <div>
-                        <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
-                          شماره همراه (جهت دریافت پیامک پستی):*
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          value={customerInfo.phone}
-                          onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-                          placeholder="۰۹۱۲..."
-                          className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                            isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                          }`}
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>استان:*</label>
-                          <select
-                            value={customerInfo.province}
-                            onChange={(e) => {
-                              const newProv = e.target.value;
-                              const firstCity = IRAN_PROVINCES_CITIES.find(p => p.province === newProv)?.cities[0] || '';
-                              setCustomerInfo({ ...customerInfo, province: newProv, city: firstCity });
-                            }}
-                            className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                              isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                            }`}
-                          >
-                            {IRAN_PROVINCES_CITIES.map((p) => (
-                              <option key={p.province} value={p.province}>{p.province}</option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>شهر:*</label>
-                          <select
-                            value={customerInfo.city}
-                            onChange={(e) => setCustomerInfo({ ...customerInfo, city: e.target.value })}
-                            className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                              isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                            }`}
-                          >
-                            {selectedProvinceCities.map((c) => (
-                              <option key={c} value={c}>{c}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>آدرس دقیق پستی:*</label>
-                        <textarea
-                          rows={2}
-                          required
-                          value={customerInfo.address}
-                          onChange={(e) => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-                          placeholder="خیابان، پلاک، واحد..."
-                          className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                            isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                          }`}
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>کد پستی ۱۰ رقمی:*</label>
-                          <input
-                            type="text"
-                            required
-                            value={customerInfo.postalCode}
-                            onChange={(e) => setCustomerInfo({ ...customerInfo, postalCode: e.target.value })}
-                            placeholder="۱۰ رقم بدون فاصله"
-                            className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                              isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                            }`}
-                          />
-                        </div>
-
-                        <div>
-                          <label className={`font-semibold block mb-1 ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>نوع فاکتور:</label>
-                          <select
-                            value={customerInfo.invoiceType}
-                            onChange={(e) => setCustomerInfo({ ...customerInfo, invoiceType: e.target.value as any })}
-                            className={`w-full px-3 py-2 rounded-xl border focus:outline-none focus:border-[#B87333] ${
-                              isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-                            }`}
-                          >
-                            <option value="real">فاکتور حقیقی (شخصی)</option>
-                            <option value="legal">فاکتور رسمی حقوقی (شرکتی)</option>
-                          </select>
-                        </div>
-                      </div>
-
-                    </form>
+                {/* Promo */}
+                <div className="rounded-2xl border border-dashed border-line-strong p-4 space-y-2.5">
+                  <span className="flex items-center gap-1.5 text-xs font-bold text-ink-2">
+                    <Tag className="w-3.5 h-3.5 text-copper-hi" />
+                    {t('ui.cart.promoLabel')}
+                  </span>
+                  <div className="flex gap-2">
+                    <input
+                      value={promoCode}
+                      onChange={(e) => {
+                        setPromoCode(e.target.value);
+                        setPromoState('idle');
+                      }}
+                      onKeyDown={(e) => e.key === 'Enter' && applyPromo()}
+                      placeholder={t('ui.cart.promoPlaceholder')}
+                      dir="ltr"
+                      className={`${inputClass} uppercase tracking-wider`}
+                    />
+                    <Button variant="secondary" size="md" onClick={applyPromo} className="shrink-0 !h-auto">
+                      {t('ui.cart.apply')}
+                    </Button>
+                  </div>
+                  {promoState !== 'idle' && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`text-xs font-bold ${promoState === 'ok' ? 'text-emerald-500' : 'text-red-500'}`}
+                    >
+                      {promoState === 'ok' ? t('ui.cart.promoOk', { percent: pct(promoPercent) }) : t('ui.cart.promoBad')}
+                    </motion.p>
                   )}
-                </>
-              )}
-
-            </div>
-
-            {/* Drawer Footer Summary & Checkout Button */}
-            {cartItems.length > 0 && (
-              <div className={`p-6 border-t space-y-4 ${
-                isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/90 border-stone-800'
-              }`}>
-                
-                <div className="space-y-1.5 text-xs text-stone-400">
-                  <div className="flex items-center justify-between">
-                    <span>جمع کل اقلام:</span>
-                    <span className={isLight ? 'text-stone-900 font-bold' : 'text-[#FAF7F2]'}>{formatCurrency(rawTotal)}</span>
-                  </div>
-
-                  {promoDiscountAmount > 0 && (
-                    <div className="flex items-center justify-between text-emerald-500 font-semibold">
-                      <span>تخفیف ویژه کد پرومو:</span>
-                      <span>- {formatCurrency(promoDiscountAmount)}</span>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <span>هزینه ارسال (پست پیشتاز):</span>
-                    <span className={shippingCost === 0 ? 'text-emerald-500 font-bold' : ''}>
-                      {shippingCost === 0 ? 'رایگان' : formatCurrency(shippingCost)}
-                    </span>
-                  </div>
-
-                  <div className={`flex items-center justify-between pt-2 border-t border-stone-500/20 text-sm font-extrabold ${
-                    isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-                  }`}>
-                    <span>مبلغ قابل پرداخت:</span>
-                    <span className="text-[#B87333] text-base">{formatCurrency(finalTotal)}</span>
-                  </div>
                 </div>
-
-                {step === 'cart' ? (
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setStep('shipping')}
-                    className="w-full py-3.5 rounded-2xl bg-[#B87333] hover:bg-amber-600 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
-                  >
-                    <span>تکمیل اطلاعات ارسال</span>
-                    <ArrowLeft className="w-4 h-4" />
-                  </motion.button>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setStep('cart')}
-                      className={`px-4 py-3.5 rounded-2xl text-xs font-bold border ${
-                        isLight ? 'bg-stone-200 text-stone-800 border-stone-300' : 'bg-stone-800 text-stone-300 border-stone-700'
-                      }`}
+              </motion.div>
+            ) : (
+              <motion.form
+                key="shipping"
+                id="shipping-form"
+                onSubmit={submitShipping}
+                initial={{ opacity: 0, x: isRtl ? -24 : 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: isRtl ? 24 : -24 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-4"
+              >
+                <Field label={t('ui.cart.fullName')} icon={User} required>
+                  <input
+                    required
+                    value={info.fullName}
+                    onChange={(e) => setInfo({ ...info, fullName: e.target.value })}
+                    placeholder={t('ui.cart.fullNamePlaceholder')}
+                    autoComplete="name"
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label={t('ui.cart.phone')} icon={Phone} required hint={t('ui.cart.phoneHint')}>
+                  <input
+                    required
+                    type="tel"
+                    dir="ltr"
+                    value={info.phone}
+                    onChange={(e) => setInfo({ ...info, phone: e.target.value })}
+                    placeholder="09xx xxx xxxx"
+                    autoComplete="tel"
+                    className={`${inputClass} text-start`}
+                  />
+                </Field>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label={t('ui.cart.province')} icon={MapPin} required>
+                    <select
+                      value={info.province}
+                      onChange={(e) => {
+                        const province = e.target.value;
+                        const city = IRAN_PROVINCES_CITIES.find((p) => p.province === province)?.cities[0] || '';
+                        setInfo({ ...info, province, city });
+                      }}
+                      className={inputClass}
                     >
-                      بازگشت
-                    </button>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      type="submit"
-                      form="shipping-form"
-                      className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs shadow-xl flex items-center justify-center gap-2"
+                      {IRAN_PROVINCES_CITIES.map((p) => (
+                        <option key={p.province} value={p.province}>
+                          {p.province}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Field label={t('ui.cart.city')} required>
+                    <select value={info.city} onChange={(e) => setInfo({ ...info, city: e.target.value })} className={inputClass}>
+                      {cities.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                </div>
+                <Field label={t('ui.cart.address')} required>
+                  <textarea
+                    required
+                    rows={2}
+                    value={info.address}
+                    onChange={(e) => setInfo({ ...info, address: e.target.value })}
+                    placeholder={t('ui.cart.addressPlaceholder')}
+                    autoComplete="street-address"
+                    className={`${inputClass} resize-none`}
+                  />
+                </Field>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label={t('ui.cart.postal')} icon={Mail} required>
+                    <input
+                      required
+                      dir="ltr"
+                      inputMode="numeric"
+                      value={info.postalCode}
+                      onChange={(e) => setInfo({ ...info, postalCode: e.target.value })}
+                      placeholder={t('ui.cart.postalPlaceholder')}
+                      autoComplete="postal-code"
+                      className={`${inputClass} text-start`}
+                    />
+                  </Field>
+                  <Field label={t('ui.cart.invoice')}>
+                    <select
+                      value={info.invoiceType}
+                      onChange={(e) => setInfo({ ...info, invoiceType: e.target.value as OrderCustomerInfo['invoiceType'] })}
+                      className={inputClass}
                     >
-                      <ShieldCheck className="w-4 h-4" />
-                      <span>اتصال به درگاه امن آنلاین</span>
-                    </motion.button>
-                  </div>
-                )}
+                      <option value="real">{t('ui.cart.invoiceReal')}</option>
+                      <option value="legal">{t('ui.cart.invoiceLegal')}</option>
+                    </select>
+                  </Field>
+                </div>
+                <AnimatePresence initial={false}>
+                  {info.invoiceType === 'legal' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="grid grid-cols-2 gap-3 overflow-hidden"
+                    >
+                      <Field label={t('ui.cart.company')} icon={Building2} required>
+                        <input
+                          required
+                          value={info.companyName || ''}
+                          onChange={(e) => setInfo({ ...info, companyName: e.target.value })}
+                          className={inputClass}
+                        />
+                      </Field>
+                      <Field label={t('ui.cart.nationalId')} icon={Hash} required>
+                        <input
+                          required
+                          dir="ltr"
+                          inputMode="numeric"
+                          value={info.nationalId || ''}
+                          onChange={(e) => setInfo({ ...info, nationalId: e.target.value })}
+                          className={`${inputClass} text-start`}
+                        />
+                      </Field>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        )}
+      </div>
 
+      {/* Summary */}
+      {items.length > 0 && (
+        <div className="border-t border-line bg-surface-2/50 px-6 py-5 space-y-4">
+          <dl className="space-y-2 text-sm">
+            <div className="flex justify-between text-ink-2">
+              <dt>{t('ui.cart.subtotal')}</dt>
+              <dd className="font-bold text-ink">{price(totals.subtotal)}</dd>
+            </div>
+            {totals.discount > 0 && (
+              <div className="flex justify-between text-emerald-500 font-bold">
+                <dt>{t('ui.cart.discount')}</dt>
+                <dd>− {price(totals.discount)}</dd>
               </div>
             )}
+            <div className="flex justify-between text-ink-2">
+              <dt>{t('ui.cart.shipping')}</dt>
+              <dd className={totals.shipping === 0 ? 'font-bold text-emerald-500' : 'font-bold text-ink'}>
+                {totals.shipping === 0 ? t('ui.cart.free') : price(totals.shipping)}
+              </dd>
+            </div>
+            <div className="flex items-baseline justify-between border-t border-line pt-3">
+              <dt className="font-black">{t('ui.cart.total')}</dt>
+              <dd className="text-xl font-black text-copper-hi">{price(totals.total)}</dd>
+            </div>
+          </dl>
 
-          </motion.div>
+          {step === 'cart' ? (
+            <Button size="lg" className="w-full" onClick={() => setStep('shipping')}>
+              {t('ui.cart.toShipping')}
+              <ForwardIcon className="w-5 h-5 ltr:rotate-180" />
+            </Button>
+          ) : (
+            <div className="flex gap-2">
+              <Button variant="secondary" size="lg" onClick={() => setStep('cart')} className="!px-5">
+                {t('ui.cart.back')}
+              </Button>
+              <Button variant="success" size="lg" type="submit" form="shipping-form" className="flex-1">
+                <ShieldCheck className="w-5 h-5" />
+                {t('ui.cart.toPayment')}
+              </Button>
+            </div>
+          )}
 
+          <div className="flex items-center justify-center gap-4 text-[11px] font-semibold text-ink-3">
+            <span className="inline-flex items-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+              {t('ui.cart.secure')}
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <Truck className="w-3.5 h-3.5 text-copper-hi" />
+              {t('ui.cart.fastShipping')}
+            </span>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </Drawer>
   );
 };

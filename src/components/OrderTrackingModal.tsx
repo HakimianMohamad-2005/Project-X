@@ -1,216 +1,197 @@
 import React, { useState } from 'react';
-import { X, Search, Truck, CheckCircle2, Clock, Package, MapPin, Printer } from 'lucide-react';
-import { Order, ThemeMode } from '../types';
-import { toPersianDigits, formatCurrency } from '../utils/persian';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
+import { CheckCircle2, Loader2, MapPin, Package, PackageSearch, Search, Truck, User } from 'lucide-react';
+import { Order } from '../types';
 import { searchOrderInApi, normalizeDigits } from '../lib/api';
+import { Button, Modal, inputClass } from './ui/kit';
+import { CoverThumb } from './ui/CoverThumb';
+import { useLocaleFormat } from './ui/format';
 
 interface OrderTrackingModalProps {
   isOpen: boolean;
   onClose: () => void;
   recentOrders: Order[];
-  theme?: ThemeMode;
 }
 
-export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
-  isOpen,
-  onClose,
-  recentOrders,
-  theme = 'light'
-}) => {
+const STATUS_PROGRESS: Record<Order['status'], number> = {
+  registered: 1,
+  processing: 2,
+  shipped: 3,
+  delivered: 4,
+};
+
+export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({ isOpen, onClose, recentOrders }) => {
+  const { t } = useTranslation();
+  const { price, num } = useLocaleFormat();
   const [searchCode, setSearchCode] = useState('');
   const [searchedOrder, setSearchedOrder] = useState<Order | null>(null);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [notFound, setNotFound] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const isLight = theme === 'light';
 
-  // Automatically select most recent order if available
   const activeOrder = searchedOrder || (recentOrders.length > 0 ? recentOrders[0] : null);
-
-  if (!isOpen) return null;
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchCode.trim()) return;
-    
-    setErrorMsg('');
+    setNotFound(false);
     setIsSearching(true);
 
     const term = normalizeDigits(searchCode);
     const foundLocal = recentOrders.find((o) => {
-      const normCode = normalizeDigits(o.orderCode || '');
-      const normPhone = normalizeDigits(o.customerInfo?.phone || '');
-      return (
-        normCode.includes(term) ||
-        normPhone.includes(term) ||
-        (term.length >= 4 && normCode.endsWith(term))
-      );
+      const code = normalizeDigits(o.orderCode || '');
+      const phone = normalizeDigits(o.customerInfo?.phone || '');
+      return code.includes(term) || phone.includes(term) || (term.length >= 4 && code.endsWith(term));
     });
-
     if (foundLocal) {
       setSearchedOrder(foundLocal);
       setIsSearching(false);
       return;
     }
 
-    // Search in MySQL Database
-    const remoteOrder = await searchOrderInApi(searchCode.trim());
+    const remote = await searchOrderInApi(searchCode.trim());
     setIsSearching(false);
-
-    if (remoteOrder) {
-      setSearchedOrder(remoteOrder);
-    } else {
-      setErrorMsg('سفارشی با این کد رهگیری یا شماره همراه در دیتابیس آنلاین ثبت نشده است.');
-    }
+    if (remote) setSearchedOrder(remote);
+    else setNotFound(true);
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        className={`w-full max-w-2xl rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto border ${
-          isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-[#1E2022] border-stone-700 text-[#FAF7F2]'
-        }`}
-      >
-        
-        <button
-          onClick={onClose}
-          className={`absolute top-6 left-6 p-2 rounded-xl ${
-            isLight ? 'bg-stone-100 text-stone-600 hover:text-stone-900' : 'bg-stone-800 text-stone-400 hover:text-white'
-          }`}
-        >
-          <X className="w-5 h-5" />
-        </button>
+  const steps = [
+    { label: t('ui.track.stepRegistered'), icon: CheckCircle2 },
+    { label: t('ui.track.stepPacked'), icon: Package },
+    { label: t('ui.track.stepShipped'), icon: Truck },
+    { label: t('ui.track.stepDelivered'), icon: MapPin },
+  ];
+  const progress = activeOrder ? STATUS_PROGRESS[activeOrder.status] ?? 1 : 0;
 
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-2xl bg-[#B87333]/20 border border-[#B87333]/30">
-            <Truck className="w-6 h-6 text-[#B87333]" />
-          </div>
-          <div>
-            <h3 className={`text-xl font-bold ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-              سامانه آنلاین پیگیری سفارش‌های پستی
-            </h3>
-            <p className="text-xs text-stone-400">
-              مشاهده آخرین وضعیت بسته‌بندی و کد رهگیری مرسوله پیشتاز
-            </p>
+  return (
+    <Modal open={isOpen} onClose={onClose} size="lg">
+      <div className="p-6 sm:p-8 space-y-6">
+        <div className="flex items-start gap-3 pe-12">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-copper/15 text-copper-hi border border-copper/25">
+            <PackageSearch className="w-5 h-5" />
+          </span>
+          <div className="space-y-0.5">
+            <h3 className="text-lg font-black">{t('ui.track.title')}</h3>
+            <p className="text-xs text-ink-3">{t('ui.track.subtitle')}</p>
           </div>
         </div>
 
-        {/* Search Input Bar */}
         <form onSubmit={handleSearch} className="flex gap-2">
-          <input
-            type="text"
-            value={searchCode}
-            onChange={(e) => setSearchCode(e.target.value)}
-            placeholder="ورود کد رهگیری (مثلاً: OG3-982410)..."
-            className={`flex-1 px-4 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B87333] ${
-              isLight ? 'bg-stone-50 border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-700 text-[#FAF7F2]'
-            }`}
-          />
-          <button
-            type="submit"
-            disabled={isSearching}
-            className="px-5 py-2.5 rounded-xl bg-[#B87333] hover:bg-amber-600 disabled:opacity-50 text-white text-xs font-bold shadow-md flex items-center gap-2"
-          >
-            <Search className="w-4 h-4" />
-            <span>{isSearching ? 'در حال جستجو...' : 'جستجو'}</span>
-          </button>
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute top-1/2 -translate-y-1/2 start-3.5 w-4 h-4 text-ink-3" />
+            <input
+              value={searchCode}
+              onChange={(e) => setSearchCode(e.target.value)}
+              placeholder={t('ui.track.placeholder')}
+              className={`${inputClass} ps-10`}
+            />
+          </div>
+          <Button type="submit" disabled={isSearching} className="shrink-0 !h-auto">
+            {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+            <span className="hidden sm:inline">{isSearching ? t('ui.track.searching') : t('ui.track.search')}</span>
+          </Button>
         </form>
 
-        {errorMsg && (
-          <p className="text-xs text-red-500 font-semibold">{errorMsg}</p>
-        )}
+        {notFound && <p className="rounded-xl bg-red-500/10 border border-red-500/25 px-4 py-2.5 text-xs font-bold text-red-500">{t('ui.track.notFound')}</p>}
 
-        {/* Order Details Display */}
         {activeOrder ? (
-          <div className="space-y-6 pt-2">
-            
-            {/* Status Timeline */}
-            <div className={`p-5 rounded-2xl border space-y-4 ${
-              isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900 border-stone-800'
-            }`}>
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-stone-400">کد رهگیری: <strong className="text-[#B87333] font-mono text-sm">{activeOrder.orderCode}</strong></span>
-                <span className="text-stone-400">تاریخ ثبت: <strong className={isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}>{activeOrder.date}</strong></span>
+          <motion.div key={activeOrder.orderCode} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5">
+            {/* Timeline */}
+            <div className="rounded-3xl border border-line bg-surface-2/50 p-5 space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span className="text-ink-3">
+                  {t('ui.track.code')} <strong className="font-mono text-sm text-copper-hi">{activeOrder.orderCode}</strong>
+                </span>
+                <span className="text-ink-3">
+                  {t('ui.track.date')} <strong className="text-ink">{activeOrder.date}</strong>
+                </span>
               </div>
+              <ol className="relative grid grid-cols-4 gap-1">
+                <span className="absolute top-5 inset-x-[12.5%] h-0.5 bg-line" aria-hidden="true" />
+                <motion.span
+                  aria-hidden="true"
+                  className="absolute top-5 start-[12.5%] h-0.5 bg-gradient-to-r from-emerald-500 to-[#D9894A] rtl:bg-gradient-to-l"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(Math.min(progress, 3) / 3) * 75}%` }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                />
+                {steps.map((s, i) => {
+                  const Icon = s.icon;
+                  const done = i < progress;
+                  const active = i === progress;
+                  return (
+                    <li key={i} className="relative flex flex-col items-center gap-2 text-center">
+                      <span
+                        className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 ${
+                          done
+                            ? 'border-emerald-500 bg-emerald-500 text-white'
+                            : active
+                              ? 'border-copper bg-surface text-copper-hi'
+                              : 'border-line-strong bg-surface text-ink-3'
+                        }`}
+                      >
+                        {active && <span className="absolute inset-0 rounded-full border-2 border-copper animate-ping opacity-40" />}
+                        <Icon className="w-4 h-4" />
+                      </span>
+                      <span className={`text-[11px] font-bold leading-4 ${done || active ? 'text-ink' : 'text-ink-3'}`}>{s.label}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
 
-              {/* Steps Visual Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-center text-[10px] font-bold">
-                <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500">
-                  <CheckCircle2 className="w-4 h-4 mx-auto mb-1 text-emerald-500" />
-                  <span>ثبت سفارش</span>
-                </div>
-                <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500">
-                  <Package className="w-4 h-4 mx-auto mb-1 text-emerald-500" />
-                  <span>تکمیل و امضا</span>
-                </div>
-                <div className="p-2 rounded-xl bg-[#B87333]/20 border border-[#B87333] text-[#B87333]">
-                  <Truck className="w-4 h-4 mx-auto mb-1 text-[#B87333] animate-pulse" />
-                  <span>تحویل به پست</span>
-                </div>
-                <div className={`p-2 rounded-xl border ${
-                  isLight ? 'bg-stone-200 border-stone-300 text-stone-500' : 'bg-stone-800 border-stone-700 text-stone-500'
-                }`}>
-                  <MapPin className="w-4 h-4 mx-auto mb-1 text-stone-500" />
-                  <span>تحویل خریدار</span>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div className="rounded-2xl border border-line p-4 space-y-1.5">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-ink-3">
+                  <User className="w-3.5 h-3.5" />
+                  {t('ui.track.recipient')}
+                </span>
+                <p className="font-black">{activeOrder.customerInfo.fullName}</p>
+                <p className="text-xs text-ink-2" dir="ltr">
+                  {activeOrder.customerInfo.phone}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-line p-4 space-y-1.5">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-ink-3">
+                  <MapPin className="w-3.5 h-3.5" />
+                  {t('ui.track.address')}
+                </span>
+                <p className="text-ink leading-6">
+                  {activeOrder.customerInfo.province}، {activeOrder.customerInfo.city}، {activeOrder.customerInfo.address}
+                </p>
+                <p className="text-xs text-ink-3">
+                  {t('ui.track.postal')} {activeOrder.customerInfo.postalCode}
+                </p>
               </div>
             </div>
 
-            {/* Customer & Address Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className={`p-4 rounded-2xl border space-y-1 ${
-                isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/80 border-stone-800'
-              }`}>
-                <span className="text-stone-400 font-semibold block">تحویل گیرنده:</span>
-                <span className={`font-bold text-sm block ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                  {activeOrder.customerInfo.fullName}
-                </span>
-                <span className="text-stone-400 block">تلفن: {activeOrder.customerInfo.phone}</span>
-              </div>
-
-              <div className={`p-4 rounded-2xl border space-y-1 ${
-                isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/80 border-stone-800'
-              }`}>
-                <span className="text-stone-400 font-semibold block">آدرس ارسال:</span>
-                <span className={`block ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                  استان {activeOrder.customerInfo.province}، {activeOrder.customerInfo.city}، {activeOrder.customerInfo.address}
-                </span>
-                <span className="text-stone-400 block">کد پستی: {activeOrder.customerInfo.postalCode}</span>
-              </div>
-            </div>
-
-            {/* Purchased Items List */}
-            <div className={`p-4 rounded-2xl border space-y-3 ${
-              isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/80 border-stone-800'
-            }`}>
-              <span className={`text-xs font-bold block ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>اقلام سفارش:</span>
-              <ul className={`space-y-2 text-xs ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
+            <div className="rounded-2xl border border-line p-4 space-y-3">
+              <span className="text-xs font-bold text-ink-3">{t('ui.track.items')}</span>
+              <ul className="space-y-3">
                 {activeOrder.items.map((it, idx) => (
-                  <li key={idx} className="flex items-center justify-between pb-2 border-b border-stone-500/20">
-                    <span>{it.title} (تعداد: {toPersianDigits(it.quantity)})</span>
-                    <span className="font-bold text-[#B87333]">{formatCurrency(it.price * it.quantity)}</span>
+                  <li key={idx} className="flex items-center gap-3">
+                    <CoverThumb bookId={it.bookId} className="!h-14 !w-12 scale-90" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-bold truncate">{it.title}</p>
+                      <p className="text-xs text-ink-3">{t('ui.track.qty', { n: num(it.quantity) })}</p>
+                    </div>
+                    <span className="text-sm font-black text-copper-hi">{price(it.price * it.quantity)}</span>
                   </li>
                 ))}
               </ul>
-              <div className={`flex items-center justify-between text-xs font-extrabold pt-1 ${
-                isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-              }`}>
-                <span>مبلغ کل:</span>
-                <span className="text-[#B87333] text-sm">{formatCurrency(activeOrder.finalPrice)}</span>
+              <div className="flex items-baseline justify-between border-t border-line pt-3">
+                <span className="font-black">{t('ui.track.total')}</span>
+                <span className="text-lg font-black text-copper-hi">{price(activeOrder.finalPrice)}</span>
               </div>
             </div>
-
-          </div>
+          </motion.div>
         ) : (
-          <div className="text-center py-12 text-stone-400 text-xs">
-            برای مشاهده وضعیت، کد رهگیری سفارش خود را در کادر بالا وارد نمایید.
+          <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-line-strong py-12 text-center">
+            <Truck className="w-10 h-10 text-ink-3" />
+            <p className="text-sm text-ink-2 max-w-xs">{t('ui.track.empty')}</p>
           </div>
         )}
-
-      </motion.div>
-    </div>
+      </div>
+    </Modal>
   );
 };

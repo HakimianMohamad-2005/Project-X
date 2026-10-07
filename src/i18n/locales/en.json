@@ -831,5 +831,63 @@
       "submitBtn": "Submit Review & Experience",
       "validationError": "Please fill in all required fields (Name, Organization, Key Achievement, and Review text)."
     }
+  },
+  "story": {
+    "intro": {
+      "shared": "DNA shared by humans and orangutans",
+      "difference": "And the whole difference lives in that 3%.",
+      "skip": "Enter"
+    },
+    "hero": {
+      "eyebrow": "Management for the real world",
+      "line1": "{{pct}} of our genes are identical to an orangutan’s.",
+      "line2": "The remaining {{pct}} is what makes us human.",
+      "body": "Management works the same way. The instinctive manager and the intelligent manager share 97% of their habits — both hold meetings, read reports and make decisions. This book is about the 3% that changes the outcome: the distilled lessons of 40 years on real factory floors.",
+      "quizLink": "How orangutan are you?",
+      "scroll": "Discover the 3%",
+      "fieldHint": "Move your cursor — wherever a manager truly looks, chaos turns into a system."
+    },
+    "dna": {
+      "kicker": "The math of a difference",
+      "sharedLabel": "Shared with orangutans",
+      "diffLabel": "The difference that makes us human",
+      "title": "3% is small. It is also everything.",
+      "body": "In organizations, too, 97% of what instinctive and intelligent managers do is the same. Just three genes change the destiny:",
+      "gene1": "Seeing reality",
+      "gene2": "Intervening at the leverage point",
+      "gene3": "Locking it into organizational memory"
+    },
+    "verdict": {
+      "kicker": "The mirror test",
+      "title": "One situation. Two managers.",
+      "subtitle": "Drag the handle and watch how wide that 3% gap really is.",
+      "orangutan": "Instinctive manager",
+      "plus3": "+3 manager",
+      "drag": "Drag"
+    },
+    "numbers": {
+      "kicker": "40 years, compressed into two volumes",
+      "pages": "pages of field experience",
+      "cases": "real industrial case files",
+      "lessons": "mistakes & lessons",
+      "years": "years on the factory floor"
+    },
+    "marquee": {
+      "mistake": "Mistake",
+      "lesson": "Lesson"
+    },
+    "author": {
+      "kicker": "The man who watched the factory floor for 40 years",
+      "hint": "Move the light across the portrait",
+      "cta": "The author’s full story"
+    },
+    "gauge": {
+      "kicker": "Instinct quiz",
+      "title": "How “orangutan” is your organization?",
+      "body": "5 real situations, 5 decisions, one honest number. The result may surprise you.",
+      "cta": "Start the quiz",
+      "instinct": "Instinct",
+      "system": "System"
+    }
   }
 }

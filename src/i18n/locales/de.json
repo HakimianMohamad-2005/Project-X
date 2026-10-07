@@ -831,5 +831,63 @@
       "submitBtn": "Erfahrungsbericht absenden",
       "validationError": "Bitte füllen Sie alle erforderlichen Felder aus (Name, Unternehmen, Kern-Erfolg und Text)."
     }
+  },
+  "story": {
+    "intro": {
+      "shared": "gemeinsame DNA von Mensch und Orang-Utan",
+      "difference": "Und der ganze Unterschied steckt in diesen 3 %.",
+      "skip": "Eintreten"
+    },
+    "hero": {
+      "eyebrow": "Management für die reale Welt",
+      "line1": "{{pct}} unserer Gene sind mit denen eines Orang-Utans identisch.",
+      "line2": "Die übrigen {{pct}} machen uns zum Menschen.",
+      "body": "Im Management ist es genauso. Der instinktive und der intelligente Manager teilen 97 % ihrer Gewohnheiten – beide halten Meetings, lesen Berichte und treffen Entscheidungen. Dieses Buch handelt von den 3 %, die das Ergebnis verändern: die Essenz aus 40 Jahren in echten Fabrikhallen.",
+      "quizLink": "Wie viel Orang-Utan steckt in Ihnen?",
+      "scroll": "Entdecken Sie die 3 %",
+      "fieldHint": "Bewegen Sie den Cursor – wo ein Manager wirklich hinsieht, wird Chaos zum System."
+    },
+    "dna": {
+      "kicker": "Die Mathematik eines Unterschieds",
+      "sharedLabel": "gemeinsam mit Orang-Utans",
+      "diffLabel": "der Unterschied, der uns menschlich macht",
+      "title": "3 % sind wenig. Und doch alles.",
+      "body": "Auch in Organisationen tun instinktive und intelligente Manager zu 97 % dasselbe. Nur drei Gene verändern das Schicksal:",
+      "gene1": "Die Realität sehen",
+      "gene2": "Am Hebelpunkt eingreifen",
+      "gene3": "Im Organisationsgedächtnis verankern"
+    },
+    "verdict": {
+      "kicker": "Der Spiegeltest",
+      "title": "Eine Situation. Zwei Manager.",
+      "subtitle": "Ziehen Sie den Regler und sehen Sie, wie groß die 3-%-Lücke wirklich ist.",
+      "orangutan": "Instinktiver Manager",
+      "plus3": "+3-Manager",
+      "drag": "Ziehen"
+    },
+    "numbers": {
+      "kicker": "40 Jahre, verdichtet in zwei Bänden",
+      "pages": "Seiten Praxiserfahrung",
+      "cases": "echte Industriefälle",
+      "lessons": "Fehler & Lektionen",
+      "years": "Jahre in der Fabrikhalle"
+    },
+    "marquee": {
+      "mistake": "Fehler",
+      "lesson": "Lektion"
+    },
+    "author": {
+      "kicker": "Der Mann, der 40 Jahre die Fabrikhalle beobachtete",
+      "hint": "Bewegen Sie das Licht über das Porträt",
+      "cta": "Die ganze Geschichte des Autors"
+    },
+    "gauge": {
+      "kicker": "Instinkt-Test",
+      "title": "Wie viel Orang-Utan steckt in Ihrer Organisation?",
+      "body": "5 reale Situationen, 5 Entscheidungen, eine ehrliche Zahl. Das Ergebnis könnte Sie überraschen.",
+      "cta": "Test starten",
+      "instinct": "Instinkt",
+      "system": "System"
+    }
   }
 }

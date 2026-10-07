@@ -1,0 +1,165 @@
+{
+  "common": {
+    "close": "閉じる",
+    "optional": "任意",
+    "clear": "クリア",
+    "sending": "送信中..."
+  },
+  "nav": {
+    "menu": "メニュー",
+    "language": "言語"
+  },
+  "footer": {
+    "ctaTitle": "その3%を選ぶ。",
+    "ctaText": "全2巻・728ページ、40年の現場経験。著者の直筆サイン付き、全国送料無料でお届けします。",
+    "ctaBuy": "本を購入する",
+    "ctaQuiz": "まずは自分を診断"
+  },
+  "pricing": {
+    "add": "カートに追加",
+    "save": "{{amount}} お得"
+  },
+  "cart": {
+    "title": "カート",
+    "itemsCount": "カートに {{n}} 冊",
+    "shippingTitle": "配送情報",
+    "shippingSubtitle": "本のお届け先を教えてください",
+    "stepCart": "カート",
+    "stepShipping": "配送",
+    "stepPayment": "お支払い",
+    "emptyTitle": "カートは空です",
+    "emptyText": "全2巻・728ページのマネジメント経験があなたを待っています。",
+    "browse": "本を見る",
+    "signatureFor": "サイン宛名：{{name}}",
+    "noName": "宛名なし",
+    "increase": "数量を増やす",
+    "decrease": "数量を減らす",
+    "remove": "カートから削除",
+    "promoLabel": "クーポンコードをお持ちですか？",
+    "promoPlaceholder": "例：PLUS3",
+    "apply": "適用",
+    "promoOk": "{{percent}} の割引を適用しました。",
+    "promoBad": "このクーポンコードは無効です。",
+    "fullName": "氏名",
+    "fullNamePlaceholder": "例：山田 太郎",
+    "phone": "携帯電話番号",
+    "phoneHint": "追跡番号のSMS用",
+    "province": "州",
+    "city": "市",
+    "address": "住所",
+    "addressPlaceholder": "番地、建物名、部屋番号...",
+    "postal": "郵便番号",
+    "postalPlaceholder": "10桁、スペースなし",
+    "invoice": "請求書の種類",
+    "invoiceReal": "個人",
+    "invoiceLegal": "法人向け正式請求書",
+    "company": "会社名",
+    "nationalId": "法人番号",
+    "subtotal": "小計",
+    "discount": "割引",
+    "shipping": "速達郵便",
+    "free": "無料",
+    "total": "お支払い金額",
+    "toShipping": "配送情報の入力へ",
+    "back": "戻る",
+    "toPayment": "安全に支払う",
+    "secure": "安全なお支払い",
+    "fastShipping": "速達でお届け"
+  },
+  "pay": {
+    "title": "安全な決済ゲートウェイ",
+    "merchant": "加盟店：オランウータン +3 出版",
+    "amount": "お支払い金額",
+    "card": "カード番号",
+    "cvv": "CVV2",
+    "expiry": "有効期限",
+    "month": "月",
+    "year": "年",
+    "otp": "ワンタイムパスワード",
+    "getOtp": "コードを取得",
+    "resendOtp": "再送信",
+    "otpSent": "ワンタイムパスワードをカード名義人の電話に送信しました。",
+    "pay": "{{amount}} を支払う",
+    "processing": "銀行の承認を待っています...",
+    "cancel": "キャンセルしてサイトに戻る",
+    "successTitle": "お支払いが完了しました",
+    "successText": "ご注文を受け付け、梱包作業に入りました。",
+    "code": "追跡番号",
+    "recipient": "受取人",
+    "paid": "お支払い済み金額",
+    "track": "注文を追跡する"
+  },
+  "track": {
+    "title": "注文の追跡",
+    "subtitle": "お荷物の最新の梱包・発送状況",
+    "placeholder": "追跡番号または携帯電話番号",
+    "search": "検索",
+    "searching": "検索中...",
+    "notFound": "この追跡番号または電話番号の注文は見つかりませんでした。",
+    "empty": "追跡番号、またはご注文時の携帯電話番号を入力してください。",
+    "code": "追跡番号：",
+    "date": "注文日：",
+    "stepRegistered": "注文受付",
+    "stepPacked": "梱包・サイン済み",
+    "stepShipped": "郵便局へ引き渡し",
+    "stepDelivered": "配達完了",
+    "recipient": "受取人",
+    "address": "お届け先",
+    "postal": "郵便番号：",
+    "items": "注文内容",
+    "qty": "数量：{{n}}",
+    "total": "合計"
+  },
+  "sample": {
+    "badge": "無料36ページ",
+    "title": "本書の36ページを無料で読む",
+    "subtitle": "両巻から厳選した章とケースファイルをPDFでお届けします。",
+    "fullName": "氏名",
+    "fullNamePlaceholder": "例：山田 太郎",
+    "phone": "携帯電話番号",
+    "organization": "組織 / 工場",
+    "position": "役職",
+    "positionPlaceholder": "例：代表取締役",
+    "submit": "今すぐPDFを受け取る",
+    "privacy": "お客様の情報は厳重に管理します。",
+    "readyTitle": "サンプルの準備ができました",
+    "readyText": "ダウンロードが自動で始まりました。始まらない場合は下のボタンを押してください。",
+    "download": "PDFをダウンロード（1.4 MB）",
+    "read": "ブラウザで読む"
+  },
+  "framework": {
+    "keyboardHint": "矢印キーでもステップを移動できます。"
+  },
+  "cases": {
+    "file": "ファイル"
+  },
+  "cards": {
+    "direct": "直接コスト",
+    "opportunity": "機会損失",
+    "learning": "学習と失敗",
+    "side": "副作用",
+    "hint": "意思決定の本当のコストは、たいてい直接コストの約 {{pct}} です。カードを裏返してツールを試してみてください。"
+  },
+  "lessons": {
+    "showing": "厳選 {{n}} 件",
+    "note": "このページは第39章・第40章からの抜粋です。40の失敗と40の教訓の全リストは第2巻に収録されています。"
+  },
+  "faq": {
+    "search": "質問を検索...",
+    "noResults": "該当する質問はありません。"
+  },
+  "b2b": {
+    "perksTitle": "法人注文の特典",
+    "perksHint": "セット数を変えると、解放される特典を確認できます。",
+    "unlocked": "解放済み",
+    "from": "{{n}} セットから"
+  },
+  "reviews": {
+    "average": "平均評価 {{rating}} / 5",
+    "syncing": "同期中..."
+  },
+  "quiz": {
+    "systemScore": "システム思考スコア",
+    "scoreNote": "あなたのシステム思考スコアは {{pct}} です。針が緑に近いほど、その3%があなたのマネジメントに根づいています。"
+  }
+}

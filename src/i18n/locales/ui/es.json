@@ -1,0 +1,165 @@
+{
+  "common": {
+    "close": "Cerrar",
+    "optional": "Opcional",
+    "clear": "Borrar",
+    "sending": "Enviando..."
+  },
+  "nav": {
+    "menu": "Menú",
+    "language": "Idioma"
+  },
+  "footer": {
+    "ctaTitle": "Elige el 3%.",
+    "ctaText": "Dos volúmenes, 728 páginas y cuarenta años de experiencia de campo, con dedicatoria personal del autor y envío gratuito a todo el país.",
+    "ctaBuy": "Conseguir el libro",
+    "ctaQuiz": "Ponte a prueba primero"
+  },
+  "pricing": {
+    "add": "Añadir al carrito",
+    "save": "Ahorras {{amount}}"
+  },
+  "cart": {
+    "title": "Tu carrito",
+    "itemsCount": "{{n}} libro(s) en tu carrito",
+    "shippingTitle": "Datos de envío",
+    "shippingSubtitle": "¿A dónde enviamos tus libros?",
+    "stepCart": "Carrito",
+    "stepShipping": "Envío",
+    "stepPayment": "Pago",
+    "emptyTitle": "Tu carrito está vacío",
+    "emptyText": "Dos volúmenes y 728 páginas de experiencia directiva te están esperando.",
+    "browse": "Ver los libros",
+    "signatureFor": "Dedicado a: {{name}}",
+    "noName": "Sin nombre",
+    "increase": "Aumentar cantidad",
+    "decrease": "Reducir cantidad",
+    "remove": "Quitar del carrito",
+    "promoLabel": "¿Tienes un código promocional?",
+    "promoPlaceholder": "p. ej. PLUS3",
+    "apply": "Aplicar",
+    "promoOk": "Descuento del {{percent}} aplicado.",
+    "promoBad": "Este código promocional no es válido.",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "p. ej. Laura Gómez",
+    "phone": "Teléfono móvil",
+    "phoneHint": "Para el SMS de seguimiento",
+    "province": "Provincia",
+    "city": "Ciudad",
+    "address": "Dirección postal completa",
+    "addressPlaceholder": "Calle, número, piso...",
+    "postal": "Código postal",
+    "postalPlaceholder": "10 dígitos, sin espacios",
+    "invoice": "Tipo de factura",
+    "invoiceReal": "Personal",
+    "invoiceLegal": "Factura oficial de empresa",
+    "company": "Nombre de la empresa",
+    "nationalId": "Identificación fiscal",
+    "subtotal": "Subtotal",
+    "discount": "Descuento",
+    "shipping": "Correo urgente",
+    "free": "Gratis",
+    "total": "Total a pagar",
+    "toShipping": "Continuar al envío",
+    "back": "Volver",
+    "toPayment": "Pago seguro",
+    "secure": "Pago seguro",
+    "fastShipping": "Envío urgente"
+  },
+  "pay": {
+    "title": "Pasarela de pago segura",
+    "merchant": "Comercio: Ediciones Orangután +3",
+    "amount": "Importe a pagar",
+    "card": "Número de tarjeta",
+    "cvv": "CVV2",
+    "expiry": "Fecha de caducidad",
+    "month": "MM",
+    "year": "AA",
+    "otp": "Contraseña de un solo uso",
+    "getOtp": "Obtener código",
+    "resendOtp": "Reenviar",
+    "otpSent": "La contraseña de un solo uso se envió al teléfono del titular.",
+    "pay": "Pagar {{amount}}",
+    "processing": "Esperando la aprobación del banco...",
+    "cancel": "Cancelar y volver al sitio",
+    "successTitle": "Pago realizado con éxito",
+    "successText": "Tu pedido está registrado y en camino al empaquetado.",
+    "code": "Código de seguimiento",
+    "recipient": "Destinatario",
+    "paid": "Importe pagado",
+    "track": "Seguir mi pedido"
+  },
+  "track": {
+    "title": "Sigue tu pedido",
+    "subtitle": "El último estado de empaquetado y envío de tu paquete",
+    "placeholder": "Código de seguimiento o teléfono",
+    "search": "Buscar",
+    "searching": "Buscando...",
+    "notFound": "No se encontró ningún pedido con este código o teléfono.",
+    "empty": "Introduce el código de seguimiento o el teléfono con el que hiciste el pedido.",
+    "code": "Código:",
+    "date": "Fecha del pedido:",
+    "stepRegistered": "Pedido realizado",
+    "stepPacked": "Empaquetado y firmado",
+    "stepShipped": "Entregado a correos",
+    "stepDelivered": "Entregado",
+    "recipient": "Destinatario",
+    "address": "Dirección de envío",
+    "postal": "Código postal:",
+    "items": "Artículos",
+    "qty": "Cant.: {{n}}",
+    "total": "Total"
+  },
+  "sample": {
+    "badge": "36 páginas gratis",
+    "title": "Lee 36 páginas del libro gratis",
+    "subtitle": "Una selección de los mejores capítulos y casos de ambos volúmenes, en PDF.",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "p. ej. Laura Gómez",
+    "phone": "Teléfono móvil",
+    "organization": "Organización / fábrica",
+    "position": "Cargo",
+    "positionPlaceholder": "p. ej. Director general",
+    "submit": "Obtener el PDF ahora",
+    "privacy": "Tus datos se mantienen privados.",
+    "readyTitle": "Tu muestra está lista",
+    "readyText": "La descarga ha comenzado automáticamente. Si no fue así, usa el botón de abajo.",
+    "download": "Descargar el PDF (1,4 MB)",
+    "read": "Leer en el navegador"
+  },
+  "framework": {
+    "keyboardHint": "También puedes moverte entre los pasos con las flechas del teclado."
+  },
+  "cases": {
+    "file": "Caso"
+  },
+  "cards": {
+    "direct": "Coste directo",
+    "opportunity": "Oportunidad perdida",
+    "learning": "Aprendizaje y errores",
+    "side": "Efectos secundarios",
+    "hint": "El coste real de una decisión suele rondar el {{pct}} de su coste directo. Da la vuelta a las tarjetas y prueba las herramientas."
+  },
+  "lessons": {
+    "showing": "{{n}} elementos seleccionados",
+    "note": "Esta página es una selección de los capítulos 39 y 40; la lista completa de cuarenta errores y cuarenta lecciones está en el Volumen 2."
+  },
+  "faq": {
+    "search": "Buscar en las preguntas...",
+    "noResults": "Ninguna pregunta coincide con esta búsqueda."
+  },
+  "b2b": {
+    "perksTitle": "Ventajas de tu pedido corporativo",
+    "perksHint": "Cambia el número de colecciones para ver qué ventajas se desbloquean.",
+    "unlocked": "Desbloqueado",
+    "from": "Desde {{n}} colecciones"
+  },
+  "reviews": {
+    "average": "Valoración media {{rating}} / 5",
+    "syncing": "Sincronizando..."
+  },
+  "quiz": {
+    "systemScore": "Puntuación de pensamiento sistémico",
+    "scoreNote": "Tu puntuación de pensamiento sistémico es {{pct}}. Cuanto más cerca del verde está la aguja, más fuerte es ese 3% en tu forma de dirigir."
+  }
+}

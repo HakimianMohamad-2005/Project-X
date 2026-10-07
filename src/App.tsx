@@ -21,11 +21,16 @@ import { SeoManager } from './components/SeoManager';
 import { Footer } from './components/Footer';
 import { AdminDashboard } from './components/AdminDashboard';
 import { VisitorProvider, useVisitor } from './context/VisitorContext';
+import { HomeStory } from './components/experience/HomeStory';
+import { IntroCurtain } from './components/experience/IntroCurtain';
+import { AmbientLayer } from './components/experience/AmbientLayer';
+import { Container } from './components/ui/kit';
 
 import { CartItem, Order, OrderCustomerInfo, ActiveTab, ThemeMode } from './types';
 import { BOOKS_DATA, BUNDLE_DATA } from './data/bookData';
 import { motion, AnimatePresence } from 'motion/react';
 import { saveOrderToApi, fetchRecentOrdersFromApi } from './lib/api';
+import { computeCartTotals } from './lib/cart';
 
 function parseRouteFromPath(pathname: string) {
   let targetLang = 'fa';
@@ -66,7 +71,35 @@ function MainAppContent() {
   // Initialize tab and language from URL pathname
   const initialRoute = parseRouteFromPath(typeof window !== 'undefined' ? window.location.pathname : '/');
   const [activeTab, setActiveTab] = useState<ActiveTab>(initialRoute.tab);
-  const [theme, setTheme] = useState<ThemeMode>('light');
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    try {
+      const saved = window.localStorage.getItem('og3-theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+    } catch {
+      // Storage unavailable (private mode) — fall back to the brand default.
+    }
+    return 'dark';
+  });
+
+  // Opening title plays once per browser session, only when landing on the homepage.
+  const [introState, setIntroState] = useState<'playing' | 'opening' | 'done'>(() => {
+    try {
+      const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (initialRoute.tab !== 'books' || reduced || window.sessionStorage.getItem('og3-intro-seen')) return 'done';
+      return 'playing';
+    } catch {
+      return 'done';
+    }
+  });
+
+  useEffect(() => {
+    if (introState !== 'done') return;
+    try {
+      window.sessionStorage.setItem('og3-intro-seen', '1');
+    } catch {
+      // Without storage the intro simply plays again next time.
+    }
+  }, [introState]);
 
   // Handle popstate for / /en /es /de /fr /zh /ja /hi /ar and /manager-assessment /admin navigation
   useEffect(() => {
@@ -119,7 +152,15 @@ function MainAppContent() {
 
   // Toggle Theme Function
   const handleToggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme((prev) => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      try {
+        window.localStorage.setItem('og3-theme', next);
+      } catch {
+        // Ignore storage failures; the toggle still works for this visit.
+      }
+      return next;
+    });
   };
 
   useEffect(() => {
@@ -163,13 +204,16 @@ function MainAppContent() {
       const existingIdx = prev.findIndex((item) => item.bookId === bookId);
 
       if (existingIdx > -1) {
-        const updated = [...prev];
-        updated[existingIdx].quantity += 1;
-        if (customAuthorSignature) {
-          updated[existingIdx].authorSignatureRequested = true;
-          updated[existingIdx].recipientName = recipientName;
-        }
-        return updated;
+        // Immutable update: the updater may run twice under StrictMode.
+        return prev.map((item, idx) =>
+          idx !== existingIdx
+            ? item
+            : {
+                ...item,
+                quantity: item.quantity + 1,
+                ...(customAuthorSignature ? { authorSignatureRequested: true, recipientName } : {}),
+              }
+        );
       }
 
       let newCartItem: CartItem;
@@ -231,32 +275,31 @@ function MainAppContent() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const handleCheckout = (customerInfo: OrderCustomerInfo) => {
-    const rawTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const promoDiscountAmount = 0;
-    const shippingCost = 0;
-    const finalTotal = Math.max(0, rawTotal - promoDiscountAmount + shippingCost);
-
-    setPayableAmount(finalTotal);
+  const handleCheckout = (customerInfo: OrderCustomerInfo, promoPercent: number) => {
+    // Same pricing the drawer showed, including promo and shipping.
+    setPayableAmount(computeCartTotals(cartItems, promoPercent).total);
     setPendingCustomerInfo(customerInfo);
     setIsCartOpen(false);
     setIsPaymentOpen(true);
   };
 
   const handlePaymentSuccess = (newOrder: Order) => {
+    // The payment window stays open on its receipt; the cart is emptied now.
     saveOrderToApi(newOrder);
     setRecentOrders((prev) => [newOrder, ...prev]);
     setCartItems([]);
-    setIsPaymentOpen(false);
-    setIsTrackingOpen(true);
   };
 
-  const isLight = theme === 'light';
-
   return (
-    <div className={`min-h-screen w-full max-w-full overflow-x-hidden transition-colors duration-300 selection:bg-[#B87333] selection:text-white antialiased ${
-      isLight ? 'bg-[#FAF8F5] text-stone-900' : 'bg-[#121314] text-[#FAF7F2]'
-    }`}>
+    <div className="min-h-screen w-full max-w-full overflow-x-clip bg-canvas text-ink transition-colors duration-300 selection:bg-[#B87333] selection:text-white antialiased">
+
+      {introState !== 'done' && (
+        <IntroCurtain
+          onOpening={() => setIntroState('opening')}
+          onDone={() => setIntroState('done')}
+        />
+      )}
+      <AmbientLayer theme={theme} />
 
       {/* Dynamic SEO Manager for Title, Meta, Canonical & Open Graph */}
       <SeoManager activeTab={activeTab} />
@@ -273,24 +316,29 @@ function MainAppContent() {
         onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
       />
 
-      {/* Hero Section Banner - Rendered on main books tab */}
+      {/* Cinematic homepage: hero + the 97% / 3% story */}
       {activeTab === 'books' && (
-        <Hero
-          theme={theme}
-          onAddToCart={handleAddToCart}
-          onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
-          onTabChange={handleTabSelect}
-        />
+        <>
+          <Hero
+            theme={theme}
+            onAddToCart={handleAddToCart}
+            onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
+            onTabChange={handleTabSelect}
+            revealed={introState !== 'playing'}
+          />
+          <HomeStory onTabChange={handleTabSelect} theme={theme} />
+        </>
       )}
 
       {/* Main Tabbed Content Area with Smooth Motion Transitions */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-[500px]">
+      {/* Each page brings its own header and container. */}
+      <main className="min-h-[500px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
           >
             {activeTab === 'books' && (
@@ -339,10 +387,12 @@ function MainAppContent() {
 
             {/* Confidential Admin Telemetry Dashboard */}
             {activeTab === 'admin' && (
-              <AdminDashboard
-                onBackToSite={() => handleTabSelect('books')}
-                theme={theme}
-              />
+              <Container className="py-10">
+                <AdminDashboard
+                  onBackToSite={() => handleTabSelect('books')}
+                  theme={theme}
+                />
+              </Container>
             )}
           </motion.div>
         </AnimatePresence>
@@ -363,29 +413,33 @@ function MainAppContent() {
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemoveItem={handleRemoveCartItem}
         onCheckout={handleCheckout}
-        theme={theme}
+        onBrowseBooks={() => {
+          setIsCartOpen(false);
+          handleTabSelect('books');
+        }}
       />
 
       <SamplePdfModal
         isOpen={isSamplePdfOpen}
         onClose={() => setIsSamplePdfOpen(false)}
-        theme={theme}
       />
 
       <PaymentGatewayModal
         isOpen={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
-        payableAmount={payableAmount}
+        amount={payableAmount}
         customerInfo={pendingCustomerInfo}
         cartItems={cartItems}
         onPaymentSuccess={handlePaymentSuccess}
-        theme={theme}
+        onViewTracking={() => {
+          setIsPaymentOpen(false);
+          setIsTrackingOpen(true);
+        }}
       />
 
       <OrderTrackingModal
         isOpen={isTrackingOpen}
         onClose={() => setIsTrackingOpen(false)}
-        theme={theme}
         recentOrders={recentOrders}
       />
 

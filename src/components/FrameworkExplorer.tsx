@@ -1,203 +1,208 @@
-import React, { useState } from 'react';
-import { Eye, Target, ShieldCheck, Zap, CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react';
-import { toPersianDigits } from '../utils/persian';
-import { ThemeMode } from '../types';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useEffect, useState } from 'react';
+import { AlertTriangle, ArrowLeft, CheckCircle2, Compass, Eye, Lightbulb, ShieldCheck, Target, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'motion/react';
+import { ThemeMode } from '../types';
+import { Button, Container, PageHeader, Reveal } from './ui/kit';
+import { useLocaleFormat } from './ui/format';
 
 interface FrameworkExplorerProps {
   theme?: ThemeMode;
 }
 
-const STEP_ICONS = ['Eye', 'Target', 'ShieldCheck', 'Zap'];
+interface Step {
+  stepNumber: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  orangutanDiff: string;
+  plus3Diff: string;
+  tag: string;
+}
 
-export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = ({ theme = 'light' }) => {
-  const { t, i18n } = useTranslation();
-  const isPersian = i18n.language === 'fa';
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const isLight = theme === 'light';
+const ICONS = [Eye, Target, ShieldCheck, Zap];
 
-  const steps = (t('framework.steps', { returnObjects: true }) as any[]) || [];
-  const currentStep = steps[activeStepIndex] || {};
-  const currentIconName = STEP_ICONS[activeStepIndex] || 'Eye';
+/** Concentric ripples for the "positive aftershock" step. */
+const Ripples: React.FC = () => (
+  <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+    {[0, 1, 2].map((i) => (
+      <motion.span
+        key={i}
+        className="absolute h-24 w-24 rounded-full border border-copper/60"
+        initial={{ scale: 0.6, opacity: 0.8 }}
+        animate={{ scale: 2.6, opacity: 0 }}
+        transition={{ duration: 3, repeat: Infinity, delay: i, ease: 'easeOut' }}
+      />
+    ))}
+  </div>
+);
 
-  const renderIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Eye':
-        return <Eye className="w-6 h-6 text-[#B87333]" />;
-      case 'Target':
-        return <Target className="w-6 h-6 text-[#B87333]" />;
-      case 'ShieldCheck':
-        return <ShieldCheck className="w-6 h-6 text-[#B87333]" />;
-      case 'Zap':
-        return <Zap className="w-6 h-6 text-amber-400" />;
-      default:
-        return <Eye className="w-6 h-6 text-[#B87333]" />;
-    }
-  };
+export const FrameworkExplorer: React.FC<FrameworkExplorerProps> = () => {
+  const { t } = useTranslation();
+  const { num, isRtl } = useLocaleFormat();
+  const raw = t('framework.steps', { returnObjects: true });
+  const steps = (Array.isArray(raw) ? raw : []) as Step[];
+  const [active, setActive] = useState(0);
+  const step = steps[active] || ({} as Step);
+  const Icon = ICONS[active] || Eye;
+  const isAftershock = step.stepNumber > 3;
+
+  // Arrow keys move through the model (respecting reading direction).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
+      const next = isRtl ? 'ArrowLeft' : 'ArrowRight';
+      const prev = isRtl ? 'ArrowRight' : 'ArrowLeft';
+      if (e.key === next) setActive((i) => Math.min(steps.length - 1, i + 1));
+      if (e.key === prev) setActive((i) => Math.max(0, i - 1));
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isRtl, steps.length]);
+
+  const stepLabel = (s: Step) => (s.stepNumber <= 3 ? `+${num(1)}` : t('framework.aftershockLabel'));
 
   return (
-    <section id="framework" className={`py-16 md:py-20 transition-colors duration-300 border-b ${
-      isLight ? 'bg-[#FAF8F5] border-stone-300 text-stone-900' : 'bg-[#121314] border-stone-800 text-[#FAF7F2]'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
-          <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-xs font-bold ${
-            isLight ? 'bg-amber-100/80 border-amber-300 text-[#B87333]' : 'bg-[#1E2022] border-[#B87333]/30 text-[#B87333]'
-          }`}>
-            <span>{t('framework.badge')}</span>
-          </div>
-          <h2 className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
-            isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-          }`}>
-            {t('framework.title')}
-          </h2>
-          <p className={`text-sm sm:text-base leading-relaxed ${
-            isLight ? 'text-stone-600' : 'text-stone-400'
-          }`}>
-            {t('framework.subtitle')}
-          </p>
-        </div>
-
-        {/* Step Selector Buttons */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {steps.map((step, idx) => {
-            const isActive = idx === activeStepIndex;
-            const iconName = STEP_ICONS[idx] || 'Eye';
-            const stepNumText = step.stepNumber <= 3
-              ? (isPersian ? `گام ${toPersianDigits(step.stepNumber)}` : `Step ${step.stepNumber}`)
-              : t('framework.aftershockLabel');
-
-            return (
-              <motion.button
-                key={step.stepNumber || idx}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setActiveStepIndex(idx)}
-                className={`p-4 rounded-2xl border text-start transition-all flex flex-col justify-between h-36 relative ${
-                  isActive
-                    ? isLight
-                      ? 'bg-white border-[#B87333] shadow-xl ring-2 ring-[#B87333]/30'
-                      : 'bg-[#1E2022] border-[#B87333] shadow-xl shadow-[#B87333]/10 ring-2 ring-[#B87333]/40'
-                    : isLight
-                      ? 'bg-stone-100 border-stone-200 hover:bg-stone-200/60'
-                      : 'bg-[#181A1C] border-stone-800 hover:border-stone-700 hover:bg-[#1E2022]/60'
+    <>
+      <PageHeader icon={Compass} kicker={t('framework.badge')} title={t('framework.title')} subtitle={t('framework.subtitle')}>
+        {/* The equation */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-2xl sm:text-4xl font-black">
+          {[0, 1, 2].map((i) => (
+            <React.Fragment key={i}>
+              <button
+                onClick={() => setActive(i)}
+                className={`rounded-2xl px-3 sm:px-4 py-1.5 transition-all ${
+                  active === i ? 'bg-copper/15 text-copper-hi ring-1 ring-copper/40 scale-110' : 'text-ink-3 hover:text-ink-2'
                 }`}
+                aria-label={steps[i]?.title}
               >
-                <div className="flex items-center justify-between">
-                  <div className={`p-2 rounded-xl ${
-                    isActive ? 'bg-[#B87333]/20' : isLight ? 'bg-stone-200' : 'bg-stone-800'
-                  }`}>
-                    {renderIcon(iconName)}
-                  </div>
-                  <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
-                    isActive ? 'bg-[#B87333] text-white' : isLight ? 'bg-stone-200 text-stone-700' : 'bg-stone-800 text-stone-400'
-                  }`}>
-                    {stepNumText}
-                  </span>
-                </div>
-                <div>
-                  <h3 className={`text-sm font-bold truncate ${
-                    isActive ? 'text-[#B87333]' : isLight ? 'text-stone-900' : 'text-[#FAF7F2]'
-                  }`}>
-                    {step.title}
-                  </h3>
-                  <p className="text-[11px] text-stone-400 truncate mt-0.5">
-                    {step.tag}
-                  </p>
-                </div>
-              </motion.button>
-            );
-          })}
+                <bdi dir="ltr">+{num(1)}</bdi>
+              </button>
+              {i < 2 && <span className="text-ink-3">+</span>}
+            </React.Fragment>
+          ))}
+          <span className="text-ink-3">=</span>
+          <bdi dir="ltr" className="og-copper-text">+{num(3)}</bdi>
+        </div>
+      </PageHeader>
+
+      <Container className="py-14 sm:py-20 space-y-10">
+        {/* Stepper */}
+        <div className="relative">
+          <div className="absolute top-7 inset-x-[12.5%] h-0.5 bg-line hidden sm:block" aria-hidden="true" />
+          <motion.div
+            aria-hidden="true"
+            className="absolute top-7 start-[12.5%] h-0.5 bg-gradient-to-r from-[#D9894A] to-[#FFD3A1] rtl:bg-gradient-to-l hidden sm:block"
+            animate={{ width: `${(active / Math.max(1, steps.length - 1)) * 75}%` }}
+            transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+          />
+          <ol className="relative grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            {steps.map((s, i) => {
+              const StepIcon = ICONS[i] || Eye;
+              const isActive = i === active;
+              const done = i < active;
+              return (
+                <li key={s.stepNumber ?? i}>
+                  <button
+                    onClick={() => setActive(i)}
+                    aria-current={isActive ? 'step' : undefined}
+                    className={`group flex w-full flex-col items-center gap-3 rounded-3xl border p-4 text-center transition-all sm:border-transparent sm:bg-transparent ${
+                      isActive ? 'border-copper/50 bg-copper/10' : 'border-line bg-surface'
+                    }`}
+                  >
+                    <span
+                      className={`relative flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all duration-300 ${
+                        isActive
+                          ? 'border-copper bg-gradient-to-br from-[#D9894A] to-[#7A3E14] text-white shadow-[0_0_30px_-4px_rgba(217,137,74,0.8)] scale-110'
+                          : done
+                            ? 'border-copper/60 bg-surface text-copper-hi'
+                            : 'border-line-strong bg-surface text-ink-3 group-hover:border-copper/50 group-hover:text-copper-hi'
+                      }`}
+                    >
+                      <StepIcon className="w-6 h-6" />
+                    </span>
+                    <span className={`text-[11px] font-black ${isActive ? 'text-copper-hi' : 'text-ink-3'}`} dir="ltr">
+                      {stepLabel(s)}
+                    </span>
+                    <span className={`text-sm font-bold leading-6 ${isActive ? 'text-ink' : 'text-ink-2'}`}>{s.title}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
         </div>
 
-        {/* Active Step Detailed Animated Display */}
+        {/* Detail */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeStepIndex}
-            initial={{ opacity: 0, y: 15 }}
+          <motion.article
+            key={active}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className={`p-6 sm:p-8 rounded-3xl border shadow-2xl space-y-8 ${
-              isLight ? 'bg-white border-stone-200 shadow-stone-200/50' : 'bg-[#1E2022] border-stone-800'
-            }`}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="grid gap-6 lg:grid-cols-12"
           >
-            
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-stone-500/20">
-              <div className="flex items-center gap-4">
-                <div className="p-3.5 rounded-2xl bg-[#B87333]/20 border border-[#B87333]/30">
-                  {renderIcon(currentIconName)}
-                </div>
-                <div>
-                  <span className="text-xs font-bold text-[#B87333] uppercase tracking-wider block">
-                    {currentStep.tag}
+            {/* Emblem */}
+            <div className="relative lg:col-span-4 overflow-hidden rounded-[2rem] border border-line bg-[#0A0A0B] p-8 text-[#FAF7F2] flex flex-col items-center justify-center text-center min-h-[300px]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(184,115,51,0.35),transparent_65%)]" />
+              {isAftershock && <Ripples />}
+              <div className="relative">
+                <span className="block text-[7rem] leading-none font-black og-copper-text" dir="ltr">
+                  {step.stepNumber <= 3 ? num(step.stepNumber) : '+'}
+                </span>
+                <span className="mt-2 flex items-center justify-center gap-2 text-xs font-black tracking-wider text-[#E8A672]">
+                  <Icon className="w-4 h-4" />
+                  {step.tag}
+                </span>
+              </div>
+            </div>
+
+            <div className="lg:col-span-8 space-y-6 rounded-[2rem] border border-line bg-surface p-6 sm:p-8">
+              <div className="space-y-2">
+                <h2 className="text-2xl sm:text-3xl font-black text-ink">{step.title}</h2>
+                <p className="text-sm font-bold text-copper-hi">{step.subtitle}</p>
+              </div>
+              <p className="text-sm sm:text-base leading-8 text-ink-2">{step.description}</p>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="relative overflow-hidden rounded-2xl border border-red-500/25 bg-red-500/[0.06] p-5 space-y-2.5">
+                  <span className="flex items-center gap-2 text-sm font-black text-red-500">
+                    <AlertTriangle className="w-4 h-4" />
+                    {t('framework.orangutanTitle')}
                   </span>
-                  <h3 className={`text-2xl font-black ${isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}`}>
-                    {currentStep.title}
-                  </h3>
+                  <p className="text-sm leading-7 text-ink-2">{step.orangutanDiff}</p>
+                </div>
+                <div className="relative overflow-hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.06] p-5 space-y-2.5">
+                  <span className="flex items-center gap-2 text-sm font-black text-emerald-500">
+                    <CheckCircle2 className="w-4 h-4" />
+                    {t('framework.plus3Title')}
+                  </span>
+                  <p className="text-sm leading-7 text-ink-2">{step.plus3Diff}</p>
                 </div>
               </div>
-              <p className={`text-sm font-semibold md:max-w-md ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                {currentStep.subtitle}
-              </p>
-            </div>
 
-            {/* Description Paragraph */}
-            <div className={`text-sm sm:text-base leading-relaxed font-normal ${
-              isLight ? 'text-stone-700' : 'text-stone-300'
-            }`}>
-              {currentStep.description}
-            </div>
-
-            {/* Comparison Grid: Instinctive vs +3 Approach */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-              
-              {/* Orangutan Instinctive Box */}
-              <div className={`p-5 rounded-2xl border space-y-3 ${
-                isLight ? 'bg-red-50/80 border-red-200' : 'bg-[#8B2626]/10 border-[#8B2626]/40'
-              }`}>
-                <div className="flex items-center gap-2 text-red-600 font-bold text-sm">
-                  <AlertTriangle className="w-5 h-5 shrink-0" />
-                  <span>{t('framework.orangutanTitle')}</span>
-                </div>
-                <p className={`text-xs sm:text-sm leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
-                  {currentStep.orangutanDiff}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-line pt-5">
+                <p className="flex items-start gap-2 text-xs leading-6 text-ink-3">
+                  <Lightbulb className="mt-0.5 w-4 h-4 shrink-0 text-amber-500" />
+                  <span>
+                    <strong className="text-ink-2">{t('framework.bottomLabel')}</strong> {t('framework.bottomText')}
+                  </span>
                 </p>
-              </div>
-
-              {/* +3 Systemic Approach Box */}
-              <div className={`p-5 rounded-2xl border space-y-3 ${
-                isLight ? 'bg-emerald-50/80 border-emerald-200' : 'bg-[#2E5A44]/20 border-[#2E5A44]/50'
-              }`}>
-                <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  <span>{t('framework.plus3Title')}</span>
-                </div>
-                <p className={`text-xs sm:text-sm leading-relaxed ${isLight ? 'text-stone-800' : 'text-stone-300'}`}>
-                  {currentStep.plus3Diff}
-                </p>
-              </div>
-
-            </div>
-
-            {/* Practical Application Banner */}
-            <div className={`p-4 rounded-2xl border flex items-center gap-3 ${
-              isLight ? 'bg-stone-50 border-stone-200' : 'bg-stone-900/90 border-stone-800'
-            }`}>
-              <Lightbulb className="w-5 h-5 text-amber-500 shrink-0" />
-              <div className={`text-xs sm:text-sm ${isLight ? 'text-stone-700' : 'text-stone-300'}`}>
-                <strong className={isLight ? 'text-stone-900' : 'text-[#FAF7F2]'}>{t('framework.bottomLabel')}</strong> {t('framework.bottomText')}
+                {active < steps.length - 1 && (
+                  <Button variant="secondary" size="sm" onClick={() => setActive(active + 1)} className="shrink-0">
+                    {steps[active + 1]?.title}
+                    <ArrowLeft className="w-4 h-4 ltr:rotate-180" />
+                  </Button>
+                )}
               </div>
             </div>
-
-          </motion.div>
+          </motion.article>
         </AnimatePresence>
 
-      </div>
-    </section>
+        <Reveal>
+          <p className="text-center text-xs text-ink-3">{t('ui.framework.keyboardHint')}</p>
+        </Reveal>
+      </Container>
+    </>
   );
 };
-

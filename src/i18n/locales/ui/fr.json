@@ -1,0 +1,165 @@
+{
+  "common": {
+    "close": "Fermer",
+    "optional": "Facultatif",
+    "clear": "Effacer",
+    "sending": "Envoi en cours..."
+  },
+  "nav": {
+    "menu": "Menu",
+    "language": "Langue"
+  },
+  "footer": {
+    "ctaTitle": "Choisissez les 3 %.",
+    "ctaText": "Deux volumes, 728 pages et quarante ans d’expérience de terrain — avec une dédicace personnelle de l’auteur et la livraison gratuite dans tout le pays.",
+    "ctaBuy": "Obtenir le livre",
+    "ctaQuiz": "Testez-vous d’abord"
+  },
+  "pricing": {
+    "add": "Ajouter au panier",
+    "save": "Économisez {{amount}}"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "itemsCount": "{{n}} livre(s) dans votre panier",
+    "shippingTitle": "Informations de livraison",
+    "shippingSubtitle": "Où devons-nous envoyer vos livres ?",
+    "stepCart": "Panier",
+    "stepShipping": "Livraison",
+    "stepPayment": "Paiement",
+    "emptyTitle": "Votre panier est vide",
+    "emptyText": "Deux volumes et 728 pages d’expérience managériale vous attendent.",
+    "browse": "Voir les livres",
+    "signatureFor": "Dédicacé à : {{name}}",
+    "noName": "Sans nom",
+    "increase": "Augmenter la quantité",
+    "decrease": "Diminuer la quantité",
+    "remove": "Retirer du panier",
+    "promoLabel": "Vous avez un code promo ?",
+    "promoPlaceholder": "ex. PLUS3",
+    "apply": "Appliquer",
+    "promoOk": "Remise de {{percent}} appliquée.",
+    "promoBad": "Ce code promo n’est pas valide.",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "ex. Claire Martin",
+    "phone": "Numéro de mobile",
+    "phoneHint": "Pour le SMS de suivi",
+    "province": "Province",
+    "city": "Ville",
+    "address": "Adresse postale complète",
+    "addressPlaceholder": "Rue, numéro, appartement...",
+    "postal": "Code postal",
+    "postalPlaceholder": "10 chiffres, sans espaces",
+    "invoice": "Type de facture",
+    "invoiceReal": "Particulier",
+    "invoiceLegal": "Facture officielle d’entreprise",
+    "company": "Nom de l’entreprise",
+    "nationalId": "Identifiant fiscal",
+    "subtotal": "Sous-total",
+    "discount": "Remise",
+    "shipping": "Courrier express",
+    "free": "Gratuit",
+    "total": "Total à payer",
+    "toShipping": "Continuer vers la livraison",
+    "back": "Retour",
+    "toPayment": "Paiement sécurisé",
+    "secure": "Paiement sécurisé",
+    "fastShipping": "Livraison express"
+  },
+  "pay": {
+    "title": "Passerelle de paiement sécurisée",
+    "merchant": "Commerçant : Éditions Orang-outan +3",
+    "amount": "Montant à payer",
+    "card": "Numéro de carte",
+    "cvv": "CVV2",
+    "expiry": "Date d’expiration",
+    "month": "MM",
+    "year": "AA",
+    "otp": "Mot de passe à usage unique",
+    "getOtp": "Recevoir le code",
+    "resendOtp": "Renvoyer",
+    "otpSent": "Le mot de passe à usage unique a été envoyé au téléphone du titulaire.",
+    "pay": "Payer {{amount}}",
+    "processing": "En attente de l’accord de la banque...",
+    "cancel": "Annuler et revenir au site",
+    "successTitle": "Paiement réussi",
+    "successText": "Votre commande est enregistrée et part à l’emballage.",
+    "code": "Code de suivi",
+    "recipient": "Destinataire",
+    "paid": "Montant payé",
+    "track": "Suivre ma commande"
+  },
+  "track": {
+    "title": "Suivre votre commande",
+    "subtitle": "Le dernier statut d’emballage et d’expédition de votre colis",
+    "placeholder": "Code de suivi ou numéro de mobile",
+    "search": "Rechercher",
+    "searching": "Recherche...",
+    "notFound": "Aucune commande ne correspond à ce code ou à ce numéro.",
+    "empty": "Saisissez le code de suivi ou le numéro de mobile de votre commande.",
+    "code": "Code de suivi :",
+    "date": "Commandé le :",
+    "stepRegistered": "Commande passée",
+    "stepPacked": "Emballée et dédicacée",
+    "stepShipped": "Remise à la poste",
+    "stepDelivered": "Livrée",
+    "recipient": "Destinataire",
+    "address": "Adresse de livraison",
+    "postal": "Code postal :",
+    "items": "Articles",
+    "qty": "Qté : {{n}}",
+    "total": "Total"
+  },
+  "sample": {
+    "badge": "36 pages offertes",
+    "title": "Lisez 36 pages du livre gratuitement",
+    "subtitle": "Une sélection des meilleurs chapitres et dossiers des deux volumes, en PDF.",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "ex. Claire Martin",
+    "phone": "Numéro de mobile",
+    "organization": "Organisation / usine",
+    "position": "Fonction",
+    "positionPlaceholder": "ex. Directeur général",
+    "submit": "Recevoir le PDF",
+    "privacy": "Vos informations restent confidentielles.",
+    "readyTitle": "Votre extrait est prêt",
+    "readyText": "Le téléchargement a démarré automatiquement. Sinon, utilisez le bouton ci-dessous.",
+    "download": "Télécharger le PDF (1,4 Mo)",
+    "read": "Lire dans le navigateur"
+  },
+  "framework": {
+    "keyboardHint": "Vous pouvez aussi passer d’une étape à l’autre avec les flèches du clavier."
+  },
+  "cases": {
+    "file": "Dossier"
+  },
+  "cards": {
+    "direct": "Coût direct",
+    "opportunity": "Opportunité perdue",
+    "learning": "Apprentissage et erreurs",
+    "side": "Effets secondaires",
+    "hint": "Le coût réel d’une décision représente souvent environ {{pct}} de son coût direct. Retournez les cartes et essayez les outils."
+  },
+  "lessons": {
+    "showing": "{{n}} éléments sélectionnés",
+    "note": "Cette page est une sélection des chapitres 39 et 40 ; la liste complète des quarante erreurs et quarante leçons se trouve dans le volume 2."
+  },
+  "faq": {
+    "search": "Rechercher dans les questions...",
+    "noResults": "Aucune question ne correspond à cette recherche."
+  },
+  "b2b": {
+    "perksTitle": "Les avantages de votre commande entreprise",
+    "perksHint": "Modifiez le nombre de coffrets pour voir quels avantages se débloquent.",
+    "unlocked": "Débloqué",
+    "from": "Dès {{n}} coffrets"
+  },
+  "reviews": {
+    "average": "Note moyenne {{rating}} / 5",
+    "syncing": "Synchronisation..."
+  },
+  "quiz": {
+    "systemScore": "Score de pensée systémique",
+    "scoreNote": "Votre score de pensée systémique est de {{pct}}. Plus l’aiguille est proche du vert, plus ces 3 % pèsent dans votre façon de diriger."
+  }
+}
