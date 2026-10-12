@@ -252,10 +252,10 @@ export async function getGeoLocationSilent(): Promise<GeoLocationInfo> {
       url: 'https://freeipapi.com/api/json',
       map: (d: any): GeoLocationInfo => ({
         ip: d.ipAddress || '127.0.0.1',
-        city: d.cityName || 'تهران',
+        city: d.cityName || '',
         region: d.regionName || '',
-        country: d.countryName || 'Iran',
-        countryCode: d.countryCode || 'IR',
+        country: d.countryName || '',
+        countryCode: d.countryCode || '',
         isp: 'Internet Provider',
         latitude: d.latitude,
         longitude: d.longitude,
@@ -265,10 +265,10 @@ export async function getGeoLocationSilent(): Promise<GeoLocationInfo> {
       url: 'https://ipapi.co/json/',
       map: (d: any): GeoLocationInfo => ({
         ip: d.ip || '127.0.0.1',
-        city: d.city || 'تهران',
+        city: d.city || '',
         region: d.region || '',
-        country: d.country_name || 'Iran',
-        countryCode: d.country_code || 'IR',
+        country: d.country_name || '',
+        countryCode: d.country_code || '',
         isp: d.org || 'Internet Provider',
         latitude: d.latitude,
         longitude: d.longitude,
@@ -296,18 +296,14 @@ export async function getGeoLocationSilent(): Promise<GeoLocationInfo> {
     } catch {}
   }
 
-  // Fallback if offline or blocked by adblocker
-  const fallback: GeoLocationInfo = {
-    ip: '185.143.234.12',
-    city: 'تهران',
-    region: 'Tehran',
-    country: 'ایران',
-    countryCode: 'IR',
-    isp: 'MCI / Irancell / Shatel',
+  // Lookup blocked or offline: report "unknown" rather than inventing a location.
+  // The server still records the real IP address.
+  return {
+    ip: '',
+    city: '',
+    region: '',
+    country: '',
+    countryCode: '',
+    isp: '',
   };
-
-  try {
-    sessionStorage.setItem(GEO_CACHE_KEY, JSON.stringify(fallback));
-  } catch {}
-  return fallback;
 }

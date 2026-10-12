@@ -65,8 +65,8 @@ export const BUNDLE_DATA = {
   subtitle: 'جلد اول (۳۲۲ صفحه) + جلد دوم (۴۰۶ صفحه)',
   totalPages: 728,
   originalPrice: 4300000,
-  bundlePrice: 4000000,
-  discountPercentage: 7,
+  bundlePrice: 3440000,
+  discountPercentage: 20,
   badge: 'پیشنهاد ویژه نویسنده • تخفیف پکیج کامل',
   features: [
     'دسترسی به تمام ۷۲۸ صفحه آموزش کاربردی مدیریت در ایران',

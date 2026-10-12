@@ -402,10 +402,11 @@ export const Modal: React.FC<{
   );
 };
 
-export const Drawer: React.FC<{ open: boolean; onClose: () => void; children: React.ReactNode }> = ({
+export const Drawer: React.FC<{ open: boolean; onClose: () => void; children: React.ReactNode; size?: 'md' | 'xl' }> = ({
   open,
   onClose,
   children,
+  size = 'md',
 }) => {
   useOverlayBehaviour(open, onClose);
   const { i18n } = useTranslation();
@@ -429,7 +430,7 @@ export const Drawer: React.FC<{ open: boolean; onClose: () => void; children: Re
             animate={{ x: 0 }}
             exit={{ x: offscreen }}
             transition={{ type: 'spring', damping: 30, stiffness: 260 }}
-            className={`absolute inset-y-0 ${rtl ? 'left-0 border-r' : 'right-0 border-l'} flex w-full max-w-md flex-col border-line bg-surface text-ink og-shadow`}
+            className={`absolute inset-y-0 ${rtl ? 'left-0 border-r' : 'right-0 border-l'} flex w-full ${size === 'xl' ? 'max-w-3xl' : 'max-w-md'} flex-col border-line bg-surface text-ink og-shadow`}
           >
             <CloseButton onClick={onClose} className="absolute top-5 end-5 z-10" />
             {children}

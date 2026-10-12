@@ -36,9 +36,13 @@ export const PublicVisitorCounter: React.FC<PublicVisitorCounterProps> = ({ onOp
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onOpenAdmin]);
 
-  const formattedCount = isFa
-    ? toPersianDigits(totalVisitors.toLocaleString('fa-IR'))
-    : totalVisitors.toLocaleString('en-US');
+  // Real all-time visits from the server; nothing is shown until the first answer arrives.
+  const formattedCount =
+    totalVisitors === null
+      ? null
+      : isFa
+        ? toPersianDigits(totalVisitors.toLocaleString('fa-IR'))
+        : totalVisitors.toLocaleString('en-US');
 
   return (
     <div className="inline-flex items-center gap-3 rounded-2xl border border-line bg-surface px-3.5 py-2 text-ink">
@@ -54,9 +58,13 @@ export const PublicVisitorCounter: React.FC<PublicVisitorCounterProps> = ({ onOp
         <span className="text-ink-2">
           {t('telemetry.totalVisitorsLabel', 'مجموع مراجعین رسمی سایت:')}
         </span>
-        <span className="font-extrabold text-copper-hi text-sm tabular-nums">
-          {formattedCount}
-        </span>
+        {formattedCount === null ? (
+          <span className="inline-block h-3.5 w-12 animate-pulse rounded bg-surface-2" aria-hidden="true" />
+        ) : (
+          <span className="font-extrabold text-copper-hi text-sm tabular-nums">
+            {formattedCount}
+          </span>
+        )}
         <span className="text-[11px] opacity-75">
           {t('telemetry.personSuffix', 'نفر')}
         </span>

@@ -344,7 +344,7 @@ const updateSchemaStructuredData = (seoData: SeoMetaData, lang: string, isAssess
           'description': seoData.schemaDesc,
           'offers': {
             '@type': 'Offer',
-            'price': '4000000',
+            'price': '3440000',
             'priceCurrency': 'IRR',
             'availability': 'https://schema.org/InStock',
             'url': seoData.canonical

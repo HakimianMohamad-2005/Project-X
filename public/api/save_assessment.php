@@ -59,21 +59,13 @@ $tableSql = "CREATE TABLE IF NOT EXISTS `advanced_assessments` (
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+// Reading results exposes names and phone numbers, so it lives behind the
+// admin passcode in get_assessments.php instead of this public endpoint.
 if ($method === 'GET') {
-    $sql = "SELECT id, created_at, full_name, phone, role, industry, headcount, experience, scope, raw_score, percentage, tier_title, consistency_level, consistency_score, key_strength, status FROM advanced_assessments ORDER BY id DESC LIMIT 100";
-    $result = $conn->query($sql);
-    $items = array();
-
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $items[] = $row;
-        }
-    }
-
+    http_response_code(403);
     echo json_encode(array(
-        'success' => true,
-        'assessments' => $items,
-        'total' => count($items)
+        'success' => false,
+        'message' => 'دسترسی غیرمجاز. مشاهده نتایج فقط از پنل مدیریت امکان‌پذیر است.'
     ), JSON_UNESCAPED_UNICODE);
     exit();
 }

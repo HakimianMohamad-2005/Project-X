@@ -38,6 +38,10 @@ CREATE TABLE IF NOT EXISTS `visitor_telemetry` (
   `visitor_id` VARCHAR(50) NOT NULL,
   `session_id` VARCHAR(50) NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_seen_at` DATETIME DEFAULT NULL,
+  `is_active` TINYINT(1) DEFAULT 1,
+  `page_views` INT DEFAULT 1,
+  `referrer` VARCHAR(255) DEFAULT '',
   `ip_address` VARCHAR(60) DEFAULT '',
   `city` VARCHAR(100) DEFAULT '',
   `country` VARCHAR(100) DEFAULT '',
@@ -55,5 +59,19 @@ CREATE TABLE IF NOT EXISTS `visitor_telemetry` (
   `raw_telemetry_json` LONGTEXT,
   INDEX `idx_vid` (`visitor_id`),
   INDEX `idx_sid` (`session_id`),
-  INDEX `idx_created` (`created_at`)
+  INDEX `idx_created` (`created_at`),
+  INDEX `idx_last_seen` (`last_seen_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- One row per section opened during a visit (for "most visited sections")
+CREATE TABLE IF NOT EXISTS `visitor_pageviews` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `visitor_id` VARCHAR(50) NOT NULL,
+  `session_id` VARCHAR(50) NOT NULL,
+  `path` VARCHAR(255) DEFAULT '/',
+  `section` VARCHAR(60) DEFAULT '',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_pv_created` (`created_at`),
+  INDEX `idx_pv_section` (`section`),
+  INDEX `idx_pv_sid` (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

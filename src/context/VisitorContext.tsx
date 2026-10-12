@@ -1,82 +1,140 @@
 /**
- * Visitor Telemetry Context
- * Manages visitor identity (VID), session lifecycle (SID), public total counter,
- * live active online counter with multi-tab BroadcastChannel sync and organic oscillation,
- * navigation trail, and confidential admin authentication.
+ * Visitor tracking + admin authentication.
+ *
+ * Every page load reports a visit to /api/track_visitor.php. A visit (session) is shared
+ * by all tabs of a browser and ends after 30 minutes without activity, the same rule
+ * analytics tools use. While a tab is visible it sends a heartbeat every 30 seconds,
+ * which is what makes the admin's "online now" count real. Hiding or closing the tab
+ * sends a "leave" beacon so the visitor drops out immediately.
+ *
+ * Publicly, only the all-time total is exposed (footer counter).
  */
 
-import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { BatteryInfo, VisitorTelemetry } from '../types/telemetry';
 import {
-  VisitorTelemetry,
-  TelemetrySummary,
-  NavigationTrailItem,
-} from '../types/telemetry';
-import {
-  getHardwareInfo,
   getBatteryInfo,
-  getNetworkInfo,
-  getScreenInfo,
   getDeviceOsBrowserInfo,
   getGeoLocationSilent,
+  getHardwareInfo,
+  getNetworkInfo,
+  getScreenInfo,
 } from '../utils/visitorTelemetry';
 
 interface VisitorContextType {
-  totalVisitors: number;
-  liveOnlineVisitors: number;
-  currentVisitor: VisitorTelemetry | null;
-  summary: TelemetrySummary;
+  /** All-time visits from the server; null until the first response arrives. */
+  totalVisitors: number | null;
   isAdminAuthenticated: boolean;
   loginAdmin: (passcode: string) => boolean;
   logoutAdmin: () => void;
-  recordNavigation: (path: string, title?: string) => void;
-  refreshTelemetry: () => void;
-  exportJson: () => void;
-  exportCsv: () => void;
+  /** Report that the visitor opened another section (`section` is the tab id). */
+  recordNavigation: (path: string, section?: string) => void;
 }
 
 const VisitorContext = createContext<VisitorContextType | null>(null);
 
-// Keys for persistence
+const TRACK_URL = '/api/track_visitor.php';
 const STORAGE_VID_KEY = 'orangutan_telemetry_vid';
 const STORAGE_FIRST_SEEN_KEY = 'orangutan_telemetry_first_seen';
-const STORAGE_TOTAL_COUNT_KEY = 'orangutan_telemetry_total_visitors';
-const STORAGE_REGISTRY_KEY = 'orangutan_telemetry_registry_v1';
-const SESSION_SID_KEY = 'orangutan_telemetry_sid';
+const STORAGE_VISIT_KEY = 'og3-visit';
+const STORAGE_TOTAL_KEY = 'og3-total-visits';
 const SESSION_ADMIN_AUTH_KEY = 'orangutan_admin_auth_token';
+// The validated passcode is kept for this tab so admin-only APIs can be called with it.
+export const SESSION_ADMIN_PASSCODE_KEY = 'orangutan_admin_passcode';
 
-// Realistic Baseline for Total Visitors (40 Years of Industry Management book)
-const BASELINE_TOTAL_VISITORS = 14820;
+const VISIT_TIMEOUT_MS = 30 * 60 * 1000;
+const HEARTBEAT_MS = 30 * 1000;
 
-// Unique ID Generators
 function generateUniqueId(prefix: 'VID' | 'SID'): string {
   const rand = Math.random().toString(36).substring(2, 8).toUpperCase();
   const time = Date.now().toString(36).slice(-4).toUpperCase();
   return `${prefix}-${time}${rand}`;
 }
 
-export const VisitorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [totalVisitors, setTotalVisitors] = useState<number>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_TOTAL_COUNT_KEY);
-      if (stored) {
-        const num = parseInt(stored, 10);
-        return isNaN(num) ? BASELINE_TOTAL_VISITORS : Math.max(BASELINE_TOTAL_VISITORS, num);
-      }
-    } catch {}
-    return BASELINE_TOTAL_VISITORS;
-  });
+function readStorage(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
 
-  const [liveOnlineVisitors, setLiveOnlineVisitors] = useState<number>(14);
-  const [currentVisitor, setCurrentVisitor] = useState<VisitorTelemetry | null>(null);
-  const [visitorRegistry, setVisitorRegistry] = useState<VisitorTelemetry[]>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_REGISTRY_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) return parsed;
-      }
-    } catch {}
-    return [];
+function writeStorage(key: string, value: string) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Private mode: tracking still works for this page view.
+  }
+}
+
+/** Stable per-browser visitor id. */
+function getVisitorId(): string {
+  const stored = readStorage(STORAGE_VID_KEY);
+  if (stored && /^VID-[A-Z0-9]{4,24}$/.test(stored)) return stored;
+  const id = generateUniqueId('VID');
+  writeStorage(STORAGE_VID_KEY, id);
+  writeStorage(STORAGE_FIRST_SEEN_KEY, new Date().toISOString());
+  return id;
+}
+
+/** Current visit id, shared across tabs; a new one after 30 minutes of inactivity. */
+function getVisitId(): string {
+  try {
+    const raw = readStorage(STORAGE_VISIT_KEY);
+    if (raw) {
+      const v = JSON.parse(raw) as { id: string; last: number };
+      if (v && /^SID-[A-Z0-9]{4,24}$/.test(v.id) && Date.now() - v.last < VISIT_TIMEOUT_MS) return v.id;
+    }
+  } catch {
+    // Corrupt value: start a fresh visit.
+  }
+  const id = generateUniqueId('SID');
+  touchVisit(id);
+  return id;
+}
+
+function touchVisit(id: string) {
+  writeStorage(STORAGE_VISIT_KEY, JSON.stringify({ id, last: Date.now() }));
+}
+
+/** Section (tab id) for a URL, mirroring the routes in App. */
+function sectionFromPath(pathname: string): string {
+  if (pathname.includes('/admin')) return 'admin';
+  if (pathname.includes('/manager-assessment') || pathname.includes('/quiz')) return 'quiz';
+  if (pathname.includes('/user-experiences') || pathname.includes('/reviews')) return 'user-experiences';
+  return 'books';
+}
+
+async function post(body: Record<string, unknown>): Promise<any | null> {
+  try {
+    const res = await fetch(TRACK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      keepalive: true,
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    // Offline, blocked, or the dev server (which serves PHP as plain text).
+    return null;
+  }
+}
+
+function beacon(body: Record<string, unknown>) {
+  try {
+    const blob = new Blob([JSON.stringify(body)], { type: 'application/json' });
+    if (navigator.sendBeacon && navigator.sendBeacon(TRACK_URL, blob)) return;
+  } catch {
+    // Fall through to fetch.
+  }
+  void post(body);
+}
+
+export const VisitorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [totalVisitors, setTotalVisitors] = useState<number | null>(() => {
+    const cached = Number(readStorage(STORAGE_TOTAL_KEY));
+    return Number.isFinite(cached) && cached > 0 ? cached : null;
   });
 
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
@@ -87,248 +145,177 @@ export const VisitorProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   });
 
-  // Multi-tab sync channel
-  const syncChannel = useMemo(() => {
-    if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
-      try {
-        return new BroadcastChannel('telemetry_sync_channel');
-      } catch {}
+  // Mutable tracking state shared by the effects and callbacks below.
+  const track = useRef({
+    vid: '',
+    sid: '',
+    started: false,
+    section: 'books',
+    path: '/',
+    geo: { city: '', country: '' },
+    disabled: false,
+  });
+
+  const applyTotal = useCallback((resp: any) => {
+    const n = resp && typeof resp.totalVisits === 'number' ? resp.totalVisits : null;
+    if (n !== null && n >= 0) {
+      setTotalVisitors(n);
+      writeStorage(STORAGE_TOTAL_KEY, String(n));
     }
-    return null;
   }, []);
 
-  // 1. Initialize Visitor Identity & Session Lifecycle
-  useEffect(() => {
-    let vid = '';
-    let isNewVisitor = false;
-    let firstSeen = new Date().toISOString();
+  /** Full payload for the first report of a visit. */
+  const sendStart = useCallback(async (force = false) => {
+    const t = track.current;
+    if (t.disabled || t.section === 'admin') return;
+    // Once per visit per page load (StrictMode re-runs effects in development).
+    if (t.started && !force) return;
+    t.started = true;
+    touchVisit(t.sid);
 
-    try {
-      const storedVid = localStorage.getItem(STORAGE_VID_KEY);
-      if (storedVid) {
-        vid = storedVid;
-        firstSeen = localStorage.getItem(STORAGE_FIRST_SEEN_KEY) || firstSeen;
-      } else {
-        vid = generateUniqueId('VID');
-        isNewVisitor = true;
-        localStorage.setItem(STORAGE_VID_KEY, vid);
-        localStorage.setItem(STORAGE_FIRST_SEEN_KEY, firstSeen);
-      }
-    } catch {
-      vid = generateUniqueId('VID');
-    }
+    const battery = await Promise.race<BatteryInfo>([
+      getBatteryInfo(),
+      new Promise<BatteryInfo>((resolve) =>
+        setTimeout(() => resolve({ levelPercent: null, charging: null, supported: false }), 400)
+      ),
+    ]);
 
-    let sid = '';
-    let isNewSession = false;
-    try {
-      const storedSid = sessionStorage.getItem(SESSION_SID_KEY);
-      if (storedSid) {
-        sid = storedSid;
-      } else {
-        sid = generateUniqueId('SID');
-        isNewSession = true;
-        sessionStorage.setItem(SESSION_SID_KEY, sid);
-
-        // Only increment Total Visitors counter once per new session!
-        setTotalVisitors((prev) => {
-          const next = prev + 1;
-          try {
-            localStorage.setItem(STORAGE_TOTAL_COUNT_KEY, String(next));
-          } catch {}
-          return next;
-        });
-      }
-    } catch {
-      sid = generateUniqueId('SID');
-    }
-
-    // Build Initial Telemetry Payload
-    const initTelemetry = async () => {
-      const battery = await getBatteryInfo();
-      const geo = await getGeoLocationSilent();
-      const hardware = getHardwareInfo();
-      const network = getNetworkInfo();
-      const screen = getScreenInfo();
-      const client = getDeviceOsBrowserInfo();
-
-      const initialTrail: NavigationTrailItem = {
-        path: window.location.pathname || '/',
-        title: document.title || 'خانه',
-        timestamp: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        timeSpentSeconds: 0,
-      };
-
-      const visitor: VisitorTelemetry = {
-        visitorId: vid,
-        sessionId: sid,
-        isNewVisitor,
-        isNewSession,
-        firstSeenAt: firstSeen,
-        lastSeenAt: new Date().toISOString(),
-        sessionStartedAt: new Date().toISOString(),
-        durationSeconds: 1,
-        currentPath: window.location.pathname || '/',
-        referrer: document.referrer || 'مستقیم (Direct)',
-        hardware,
-        battery,
-        network,
-        screen,
-        client,
-        geo,
-        navigationTrail: [initialTrail],
-      };
-
-      setCurrentVisitor(visitor);
-
-      // Save and update registry in localStorage
-      setVisitorRegistry((prev) => {
-        const withoutCurrent = prev.filter((v) => v.sessionId !== sid);
-        const updated = [visitor, ...withoutCurrent].slice(0, 80); // Keep last 80 visitors
-        try {
-          localStorage.setItem(STORAGE_REGISTRY_KEY, JSON.stringify(updated));
-        } catch {}
-        return updated;
-      });
-
-      // Send to server backend silently if available
-      try {
-        fetch('/api/track_visitor.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(visitor),
-        }).catch(() => {});
-      } catch {}
+    const now = new Date().toISOString();
+    const referrer = document.referrer && !document.referrer.startsWith(window.location.origin) ? document.referrer : '';
+    const payload: VisitorTelemetry & { action: string; section: string } = {
+      action: 'start',
+      section: t.section,
+      visitorId: t.vid,
+      sessionId: t.sid,
+      isNewVisitor: false,
+      isNewSession: true,
+      firstSeenAt: readStorage(STORAGE_FIRST_SEEN_KEY) || now,
+      lastSeenAt: now,
+      sessionStartedAt: now,
+      durationSeconds: 0,
+      currentPath: t.path,
+      referrer,
+      hardware: getHardwareInfo(),
+      battery,
+      network: getNetworkInfo(),
+      screen: getScreenInfo(),
+      client: getDeviceOsBrowserInfo(),
+      geo: { ip: '', city: t.geo.city, region: '', country: t.geo.country, countryCode: '', isp: '' },
+      navigationTrail: [{ path: t.path, title: t.section, timestamp: now }],
     };
 
-    initTelemetry();
+    applyTotal(await post(payload as unknown as Record<string, unknown>));
+  }, [applyTotal]);
+
+  const sendLight = useCallback(
+    async (action: 'heartbeat' | 'pageview') => {
+      const t = track.current;
+      if (t.disabled || t.section === 'admin') return;
+      if (!t.started) {
+        await sendStart();
+        return;
+      }
+      touchVisit(t.sid);
+      const resp = await post({
+        action,
+        visitorId: t.vid,
+        sessionId: t.sid,
+        currentPath: t.path,
+        section: t.section,
+        geo: t.geo,
+      });
+      // The server never saw (or lost) this visit: report it again in full.
+      if (resp && resp.success && resp.known === false) await sendStart(true);
+    },
+    [sendStart]
+  );
+
+  const sendLeave = useCallback(() => {
+    const t = track.current;
+    if (t.disabled || !t.started) return;
+    beacon({ action: 'leave', visitorId: t.vid, sessionId: t.sid });
   }, []);
 
-  // 2. Heartbeat Timer (Updates active duration)
+  // Boot: identify, report the visit, then keep it alive while the tab is visible.
   useEffect(() => {
+    const t = track.current;
+    try {
+      // Left over from the old browser-only counter (it also kept a device fingerprint).
+      localStorage.removeItem('orangutan_telemetry_registry_v1');
+      localStorage.removeItem('orangutan_telemetry_total_visitors');
+    } catch {}
+    // Automated browsers (crawlers, test runners) are not visitors.
+    t.disabled = (navigator as Navigator & { webdriver?: boolean }).webdriver === true;
+    t.vid = getVisitorId();
+    t.sid = getVisitId();
+    t.path = window.location.pathname || '/';
+    t.section = sectionFromPath(t.path);
+
+    if (document.visibilityState === 'visible') void sendStart();
+
+    // Location arrives later; the next heartbeat carries it.
+    getGeoLocationSilent()
+      .then((geo) => {
+        t.geo = { city: geo.city || '', country: geo.country || '' };
+        if (t.started && document.visibilityState === 'visible') void sendLight('heartbeat');
+      })
+      .catch(() => {});
+
     const interval = setInterval(() => {
-      setCurrentVisitor((prev) => {
-        if (!prev) return null;
-        const updated: VisitorTelemetry = {
-          ...prev,
-          durationSeconds: prev.durationSeconds + 5,
-          lastSeenAt: new Date().toISOString(),
-          battery: prev.battery,
-          network: getNetworkInfo(),
-        };
+      if (document.visibilityState === 'visible') void sendLight('heartbeat');
+    }, HEARTBEAT_MS);
 
-        // Update in registry
-        setVisitorRegistry((reg) => {
-          const idx = reg.findIndex((r) => r.sessionId === updated.sessionId);
-          if (idx > -1) {
-            const next = [...reg];
-            next[idx] = updated;
-            try {
-              localStorage.setItem(STORAGE_REGISTRY_KEY, JSON.stringify(next));
-            } catch {}
-            return next;
-          }
-          return reg;
-        });
-
-        return updated;
-      });
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // 3. Live Online Visitors Simulation & BroadcastChannel Sync
-  useEffect(() => {
-    // Dynamic organic calculation based on hour of day in Iran (GMT+3:30)
-    const calculateBaseOnline = () => {
-      const hour = new Date().getHours();
-      // Peak hours (10:00 to 23:00) vs Late night hours (01:00 to 07:00)
-      if (hour >= 10 && hour <= 23) {
-        return Math.floor(18 + Math.random() * 9); // 18 - 26 live
-      } else if (hour >= 7 && hour < 10) {
-        return Math.floor(10 + Math.random() * 6); // 10 - 15 live
-      } else {
-        return Math.floor(4 + Math.random() * 4); // 4 - 7 live
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') {
+        sendLeave();
+        return;
       }
+      // Back after a long break: that counts as a new visit.
+      const sid = getVisitId();
+      if (sid !== t.sid) {
+        t.sid = sid;
+        t.started = false;
+      }
+      void sendLight('heartbeat');
     };
+    const onPageHide = () => sendLeave();
 
-    setLiveOnlineVisitors(calculateBaseOnline());
-
-    const organicInterval = setInterval(() => {
-      setLiveOnlineVisitors((prev) => {
-        const delta = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
-        const newCount = Math.max(3, prev + delta);
-        if (syncChannel) {
-          try {
-            syncChannel.postMessage({ type: 'SYNC_ONLINE_COUNT', count: newCount });
-          } catch {}
-        }
-        return newCount;
-      });
-    }, 8000);
-
-    if (syncChannel) {
-      syncChannel.onmessage = (event) => {
-        if (event.data?.type === 'SYNC_ONLINE_COUNT' && typeof event.data.count === 'number') {
-          setLiveOnlineVisitors(event.data.count);
-        }
-      };
-    }
-
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('pagehide', onPageHide);
     return () => {
-      clearInterval(organicInterval);
-      if (syncChannel) syncChannel.close();
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', onPageHide);
     };
-  }, [syncChannel]);
+  }, [sendStart, sendLight, sendLeave]);
 
-  // 4. Record Navigation Trail
-  const recordNavigation = useCallback((path: string, title?: string) => {
-    setCurrentVisitor((prev) => {
-      if (!prev) return null;
-      const cleanPath = path || '/';
-      const cleanTitle = title || document.title || cleanPath;
+  const recordNavigation = useCallback(
+    (path: string, section?: string) => {
+      const t = track.current;
+      const nextPath = path || '/';
+      const nextSection = section || sectionFromPath(nextPath);
+      if (nextSection === t.section && nextPath === t.path) return;
+      const wasAdmin = t.section === 'admin';
+      t.path = nextPath;
+      t.section = nextSection;
 
-      const newTrailItem: NavigationTrailItem = {
-        path: cleanPath,
-        title: cleanTitle,
-        timestamp: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        timeSpentSeconds: 0,
-      };
+      if (nextSection === 'admin') {
+        // The admin watching the dashboard is not a site visitor.
+        sendLeave();
+        return;
+      }
+      void sendLight(wasAdmin ? 'heartbeat' : 'pageview');
+    },
+    [sendLight, sendLeave]
+  );
 
-      const updatedTrail = [...prev.navigationTrail, newTrailItem];
-      const updated: VisitorTelemetry = {
-        ...prev,
-        currentPath: cleanPath,
-        navigationTrail: updatedTrail,
-        lastSeenAt: new Date().toISOString(),
-      };
-
-      // Update registry
-      setVisitorRegistry((reg) => {
-        const idx = reg.findIndex((r) => r.sessionId === updated.sessionId);
-        if (idx > -1) {
-          const next = [...reg];
-          next[idx] = updated;
-          try {
-            localStorage.setItem(STORAGE_REGISTRY_KEY, JSON.stringify(next));
-          } catch {}
-          return next;
-        }
-        return [updated, ...reg];
-      });
-
-      return updated;
-    });
-  }, []);
-
-  // 5. Admin Authentication Gate
   const loginAdmin = useCallback((passcode: string): boolean => {
-    // Accepted passcodes: strictly configured by admin
     const validCodes = ['3plus@admin', 'orangutan40', '4430929292'];
     if (validCodes.includes(passcode.trim())) {
       setIsAdminAuthenticated(true);
       try {
         sessionStorage.setItem(SESSION_ADMIN_AUTH_KEY, 'authenticated_valid');
+        sessionStorage.setItem(SESSION_ADMIN_PASSCODE_KEY, passcode.trim());
       } catch {}
       return true;
     }
@@ -339,170 +326,12 @@ export const VisitorProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setIsAdminAuthenticated(false);
     try {
       sessionStorage.removeItem(SESSION_ADMIN_AUTH_KEY);
+      sessionStorage.removeItem(SESSION_ADMIN_PASSCODE_KEY);
     } catch {}
   }, []);
-
-  // 6. Refresh Telemetry Data
-  const refreshTelemetry = useCallback(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_REGISTRY_KEY);
-      if (stored) {
-        setVisitorRegistry(JSON.parse(stored));
-      }
-    } catch {}
-  }, []);
-
-  // 7. Compute Summary Analytics for Admin Dashboard
-  const summary: TelemetrySummary = useMemo(() => {
-    const list = visitorRegistry.length > 0 ? visitorRegistry : (currentVisitor ? [currentVisitor] : []);
-
-    let desktopCount = 0;
-    let mobileCount = 0;
-    let tabletCount = 0;
-
-    const osCounts: Record<string, number> = {};
-    const browserCounts: Record<string, number> = {};
-    const pageViews: Record<string, number> = {};
-
-    list.forEach((v) => {
-      // Device
-      if (v.client?.deviceType === 'desktop') desktopCount++;
-      else if (v.client?.deviceType === 'mobile') mobileCount++;
-      else if (v.client?.deviceType === 'tablet') tabletCount++;
-      else desktopCount++;
-
-      // OS
-      const osName = v.client?.os || 'نامشخص';
-      osCounts[osName] = (osCounts[osName] || 0) + 1;
-
-      // Browser
-      const bName = v.client?.browser ? v.client.browser.split(' ')[0] : 'نامشخص';
-      browserCounts[bName] = (browserCounts[bName] || 0) + 1;
-
-      // Pages
-      v.navigationTrail?.forEach((trail) => {
-        pageViews[trail.path] = (pageViews[trail.path] || 0) + 1;
-      });
-    });
-
-    const totalCount = Math.max(1, list.length);
-    const desktopPercent = Math.round((desktopCount / totalCount) * 100);
-    const mobilePercent = Math.round((mobileCount / totalCount) * 100);
-    const tabletPercent = Math.max(0, 100 - desktopPercent - mobilePercent);
-
-    const topOperatingSystems = Object.entries(osCounts)
-      .map(([name, count]) => ({
-        name,
-        count,
-        percent: Math.round((count / totalCount) * 100),
-      }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
-
-    const topBrowsers = Object.entries(browserCounts)
-      .map(([name, count]) => ({
-        name,
-        count,
-        percent: Math.round((count / totalCount) * 100),
-      }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
-
-    const topPages = Object.entries(pageViews)
-      .map(([path, views]) => ({ path, views }))
-      .sort((a, b) => b.views - a.views)
-      .slice(0, 6);
-
-    return {
-      totalVisitors,
-      liveOnlineVisitors,
-      deviceBreakdown: { desktopPercent, mobilePercent, tabletPercent },
-      topOperatingSystems,
-      topBrowsers,
-      topPages,
-      recentVisitors: list,
-    };
-  }, [visitorRegistry, currentVisitor, totalVisitors, liveOnlineVisitors]);
-
-  // 8. Export Helpers (JSON & UTF-8 BOM CSV)
-  const exportJson = useCallback(() => {
-    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(visitorRegistry, null, 2));
-    const a = document.createElement('a');
-    a.setAttribute('href', dataStr);
-    a.setAttribute('download', `orangutan_telemetry_${Date.now()}.json`);
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }, [visitorRegistry]);
-
-  const exportCsv = useCallback(() => {
-    // Prefix ﻿ (UTF-8 BOM) for flawless Persian display in Excel
-    const headers = [
-      'شناسه مراجع (VID)',
-      'شناسه نشست (SID)',
-      'آی‌پی',
-      'شهر / کشور',
-      'دستگاه',
-      'سیستم‌عامل',
-      'مرورگر',
-      'مدل کارت گرافیک (GPU)',
-      'هسته‌های پردازنده (CPU)',
-      'رم تخمینی (GB)',
-      'درصد باتری',
-      'کیفیت شبکه',
-      'رزولوشن نمایشگر',
-      'صفحه جاری',
-      'مدت حضور (ثانیه)',
-      'تاریخ و ساعت ورود',
-    ];
-
-    const rows = visitorRegistry.map((v) => [
-      `"${v.visitorId}"`,
-      `"${v.sessionId}"`,
-      `"${v.geo?.ip || ''}"`,
-      `"${v.geo?.city || ''} / ${v.geo?.country || ''}"`,
-      `"${v.client?.deviceType || ''}"`,
-      `"${v.client?.os || ''}"`,
-      `"${v.client?.browser || ''}"`,
-      `"${(v.hardware?.gpu?.renderer || '').replace(/"/g, '""')}"`,
-      `"${v.hardware?.cpuCores || ''}"`,
-      `"${v.hardware?.deviceMemoryGb || ''}"`,
-      `"${v.battery?.levelPercent !== null ? v.battery.levelPercent + '%' : 'نامشخص'}"`,
-      `"${v.network?.effectiveType || ''} (${v.network?.downlinkMbps || '-'} Mbps)"`,
-      `"${v.screen?.screenWidth}x${v.screen?.screenHeight} (DPR: ${v.screen?.devicePixelRatio})"`,
-      `"${v.currentPath}"`,
-      `"${v.durationSeconds}"`,
-      `"${new Date(v.sessionStartedAt).toLocaleString('fa-IR')}"`,
-    ]);
-
-    const csvContent = '﻿' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `orangutan_telemetry_registry_${Date.now()}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  }, [visitorRegistry]);
 
   return (
-    <VisitorContext.Provider
-      value={{
-        totalVisitors,
-        liveOnlineVisitors,
-        currentVisitor,
-        summary,
-        isAdminAuthenticated,
-        loginAdmin,
-        logoutAdmin,
-        recordNavigation,
-        refreshTelemetry,
-        exportJson,
-        exportCsv,
-      }}
-    >
+    <VisitorContext.Provider value={{ totalVisitors, isAdminAuthenticated, loginAdmin, logoutAdmin, recordNavigation }}>
       {children}
     </VisitorContext.Provider>
   );
