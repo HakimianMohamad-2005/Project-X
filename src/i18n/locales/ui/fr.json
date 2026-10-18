@@ -161,5 +161,30 @@
   "quiz": {
     "systemScore": "Score de pensée systémique",
     "scoreNote": "Votre score de pensée systémique est de {{pct}}. Plus l’aiguille est proche du vert, plus ces 3 % pèsent dans votre façon de diriger."
+  },
+  "flip": {
+    "vol1": "Volume 1",
+    "vol2": "Volume 2",
+    "hint": "Faites glisser le coin de la page ou cliquez",
+    "prev": "Page précédente",
+    "next": "Page suivante",
+    "soundOn": "Activer le son des pages",
+    "soundOff": "Couper le son des pages",
+    "cover": "Couverture",
+    "pageN": "Page {{n}}",
+    "pages12": "Pages {{a}} et {{b}}",
+    "end": "Fin de l’aperçu",
+    "sample": "Recevoir le PDF gratuit de 36 pages",
+    "open": "Feuilleter"
+  },
+  "reader": {
+    "tapHint": "Touchez un livre pour l’ouvrir",
+    "openBook": "Ouvrir et feuilleter le livre",
+    "openHint": "Faites glisser la couverture ou touchez-la pour l’ouvrir",
+    "close": "Fermer le livre",
+    "zoomIn": "Zoom avant",
+    "zoomOut": "Zoom arrière",
+    "titlePage": "Page de titre",
+    "loading": "Préparation du livre..."
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { syncDocumentDirAndLang } from './i18n/config';
 import { Navbar } from './components/Navbar';
@@ -20,6 +20,10 @@ import { OrderTrackingModal } from './components/OrderTrackingModal';
 import { SeoManager } from './components/SeoManager';
 import { Footer } from './components/Footer';
 import { AdminDashboard } from './components/AdminDashboard';
+import { webglAvailable } from './components/reader/webgl';
+
+// three.js only loads when someone actually opens a book.
+const BookReader = lazy(() => import('./components/reader/BookReader'));
 import { VisitorProvider, useVisitor } from './context/VisitorContext';
 import { HomeStory } from './components/experience/HomeStory';
 import { IntroCurtain } from './components/experience/IntroCurtain';
@@ -145,6 +149,26 @@ function MainAppContent() {
   };
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [reader, setReader] = useState<{ volume: 'vol-1' | 'vol-2'; origin: HTMLElement | null; shown: boolean } | null>(null);
+
+  const openReader = (volume: 'vol-1' | 'vol-2', origin: HTMLElement) => {
+    if (!webglAvailable()) {
+      // No 3D support: the free sample PDF is the next best way to look inside.
+      setIsSamplePdfOpen(true);
+      return;
+    }
+    setReader({ volume, origin, shown: false });
+  };
+
+  // The "flip through" buttons on the volume cards open the reader from their cover.
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const { volume, el } = (e as CustomEvent<{ volume: 'vol-1' | 'vol-2'; el: HTMLElement }>).detail;
+      openReader(volume, el);
+    };
+    window.addEventListener('og3-open-reader', onOpen);
+    return () => window.removeEventListener('og3-open-reader', onOpen);
+  });
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSamplePdfOpen, setIsSamplePdfOpen] = useState(false);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
@@ -325,6 +349,9 @@ function MainAppContent() {
             onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
             onTabChange={handleTabSelect}
             revealed={introState !== 'playing'}
+            onOpenReader={openReader}
+            onPrefetchReader={() => void import('./components/reader/BookReader')}
+            hiddenVolume={reader?.shown ? reader.volume : null}
           />
           <HomeStory onTabChange={handleTabSelect} theme={theme} />
         </>
@@ -418,6 +445,31 @@ function MainAppContent() {
           handleTabSelect('books');
         }}
       />
+
+      {reader && (
+        <Suspense fallback={null}>
+          <BookReader
+            volume={reader.volume}
+            origin={reader.origin}
+            onReady={() => setReader((r) => (r ? { ...r, shown: true } : r))}
+            onClose={() => setReader(null)}
+            onAddToCart={(id) => handleAddToCart(id)}
+            onOpenSamplePdf={() => setIsSamplePdfOpen(true)}
+            onVolumeChange={(id) =>
+              setReader((r) =>
+                r
+                  ? {
+                      ...r,
+                      volume: id,
+                      // Fly home into the matching hero book when the reader closes.
+                      origin: document.querySelector<HTMLElement>(`[data-reader-volume="${id}"]`) || r.origin,
+                    }
+                  : r
+              )
+            }
+          />
+        </Suspense>
+      )}
 
       <SamplePdfModal
         isOpen={isSamplePdfOpen}

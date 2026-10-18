@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowLeft, Download, MousePointer2, Zap } from 'lucide-react';
+import { ArrowLeft, BookOpen, Download, MousePointer2, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, useMotionValue, useSpring, useTransform, animate } from 'motion/react';
 import { formatCurrency } from '../utils/persian';
@@ -16,6 +16,12 @@ interface HeroProps {
   theme?: ThemeMode;
   /** False while the intro curtain is still covering the page. */
   revealed?: boolean;
+  /** Open the full-screen 3D reader, flying out of the clicked book. */
+  onOpenReader?: (volume: 'vol-1' | 'vol-2', el: HTMLElement) => void;
+  /** The volume currently shown in the reader (its DOM twin is hidden). */
+  hiddenVolume?: string | null;
+  /** Start downloading the reader as soon as a book is hovered. */
+  onPrefetchReader?: () => void;
 }
 
 const MARK = '§';
@@ -77,6 +83,9 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenSamplePdf,
   onTabChange,
   revealed = true,
+  onOpenReader,
+  hiddenVolume,
+  onPrefetchReader,
 }) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
@@ -265,25 +274,54 @@ export const Hero: React.FC<HeroProps> = ({
             style={{ rotateX, rotateY }}
             className="relative [transform-style:preserve-3d]"
           >
-            <Book3D
-              cover="/Jeld2%20-%20Front.png"
-              alt={`${t('hero.title')} ${t('hero.highlight')} — 2`}
-              width={228}
-              depth={40}
-              className="!absolute top-0 left-0"
-              style={{ transform: 'translate3d(-74px, -30px, -110px) rotateZ(-5deg)' }}
-            />
-            <Book3D
-              cover="/Jeld%20-%20Front.png"
-              alt={`${t('hero.title')} ${t('hero.highlight')} — 1`}
-              width={228}
-              depth={38}
-              style={{ transform: 'translate3d(34px, 18px, 30px)' }}
-            />
+            {(
+              [
+                { id: 'vol-2', cover: '/Jeld2%20-%20Front.png', depth: 40, place: 'translate3d(-74px, -30px, -110px) rotateZ(-5deg)', n: 2, abs: true },
+                { id: 'vol-1', cover: '/Jeld%20-%20Front.png', depth: 38, place: 'translate3d(34px, 18px, 30px)', n: 1, abs: false },
+              ] as const
+            ).map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                onClick={(e) => onOpenReader?.(b.id, e.currentTarget)}
+                data-reader-volume={b.id}
+                onPointerEnter={onPrefetchReader}
+                onFocus={onPrefetchReader}
+                aria-label={`${t('ui.reader.openBook')} — ${t(b.n === 1 ? 'ui.flip.vol1' : 'ui.flip.vol2')}`}
+                className={`group pointer-events-auto block cursor-pointer rounded-md outline-none [transform-style:preserve-3d] focus-visible:ring-2 focus-visible:ring-[#E8A672] ${
+                  b.abs ? 'absolute top-0 left-0' : 'relative'
+                }`}
+                style={{ transform: b.place, opacity: hiddenVolume === b.id ? 0 : 1, transition: 'opacity 0.15s' }}
+              >
+                <Book3D
+                  cover={b.cover}
+                  alt={`${t('hero.title')} ${t('hero.highlight')} — ${b.n}`}
+                  width={228}
+                  depth={b.depth}
+                  className="transition-transform duration-500 ease-out group-hover:[transform:translateZ(26px)_rotateY(-6deg)] group-focus-visible:[transform:translateZ(26px)]"
+                />
+              </button>
+            ))}
           </motion.div>
           </div>
 
           <div className="absolute bottom-6 sm:bottom-10 w-72 h-10 rounded-[100%] bg-black/70 blur-2xl" />
+
+          {onOpenReader && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0 }}
+              transition={{ delay: 1.6, duration: 0.6 }}
+              className="absolute top-3 sm:top-6 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 flex items-center gap-2 rounded-full border border-[#E8A672]/30 bg-black/55 px-3 py-1.5 text-[11px] font-bold text-[#FFD3A1] backdrop-blur whitespace-nowrap"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E8A672] opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D9894A]" />
+              </span>
+              <BookOpen className="w-3.5 h-3.5" />
+              {t('ui.reader.tapHint')}
+            </motion.div>
+          )}
 
           <div className="absolute bottom-2 sm:bottom-6 start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[11px] font-bold text-stone-300 backdrop-blur whitespace-nowrap">
             <span className="tabular-nums text-[#E8A672]">{t('hero.totalPagesBadge')}</span>

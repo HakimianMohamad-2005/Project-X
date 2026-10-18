@@ -63,6 +63,16 @@ export const ProductPricing: React.FC<ProductPricingProps> = ({ onAddToCart }) =
           <span className="absolute top-4 start-4 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-[11px] font-bold text-[#E8A672] backdrop-blur">
             {t(`books.${v.key}.badge`)}
           </span>
+          <button
+            onClick={(e) => {
+              const cover = e.currentTarget.parentElement?.querySelector('img') ?? e.currentTarget;
+              window.dispatchEvent(new CustomEvent('og3-open-reader', { detail: { volume: v.data.id, el: cover } }));
+            }}
+            className="absolute bottom-4 start-4 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 text-[11px] font-bold text-[#FAF7F2] backdrop-blur transition hover:border-[#E8A672]/60 hover:text-[#E8A672]"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            {t('ui.flip.open')}
+          </button>
         </div>
 
         <div className="flex-1 space-y-3">

@@ -161,5 +161,30 @@
   "quiz": {
     "systemScore": "Systems-thinking score",
     "scoreNote": "Your systems-thinking score is {{pct}}. The closer the needle sits to green, the stronger that 3% is in the way you manage."
+  },
+  "flip": {
+    "vol1": "Volume 1",
+    "vol2": "Volume 2",
+    "hint": "Drag the page corner or click it",
+    "prev": "Previous page",
+    "next": "Next page",
+    "soundOn": "Turn page sound on",
+    "soundOff": "Turn page sound off",
+    "cover": "Cover",
+    "pageN": "Page {{n}}",
+    "pages12": "Pages {{a}} & {{b}}",
+    "end": "End of preview",
+    "sample": "Get the free 36-page PDF",
+    "open": "Flip through"
+  },
+  "reader": {
+    "tapHint": "Tap a book to open it",
+    "openBook": "Open and leaf through the book",
+    "openHint": "Drag the cover or tap it to open",
+    "close": "Close the book",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "titlePage": "Title page",
+    "loading": "Preparing the book..."
   }
 }

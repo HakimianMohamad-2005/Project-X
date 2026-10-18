@@ -161,5 +161,30 @@
   "quiz": {
     "systemScore": "Systemdenken-Wert",
     "scoreNote": "Ihr Systemdenken-Wert liegt bei {{pct}}. Je näher die Nadel am Grün steht, desto stärker prägen diese 3 % Ihre Führung."
+  },
+  "flip": {
+    "vol1": "Band 1",
+    "vol2": "Band 2",
+    "hint": "Seitenecke ziehen oder anklicken",
+    "prev": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "soundOn": "Blättergeräusch einschalten",
+    "soundOff": "Blättergeräusch ausschalten",
+    "cover": "Einband",
+    "pageN": "Seite {{n}}",
+    "pages12": "Seiten {{a}} und {{b}}",
+    "end": "Ende der Vorschau",
+    "sample": "Kostenloses 36-seitiges PDF erhalten",
+    "open": "Durchblättern"
+  },
+  "reader": {
+    "tapHint": "Tippen Sie auf ein Buch, um es zu öffnen",
+    "openBook": "Buch öffnen und durchblättern",
+    "openHint": "Einband ziehen oder antippen, um ihn zu öffnen",
+    "close": "Buch schließen",
+    "zoomIn": "Vergrößern",
+    "zoomOut": "Verkleinern",
+    "titlePage": "Titelseite",
+    "loading": "Buch wird vorbereitet..."
   }
 }

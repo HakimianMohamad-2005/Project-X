@@ -161,5 +161,30 @@
   "quiz": {
     "systemScore": "系统思维得分",
     "scoreNote": "您的系统思维得分为 {{pct}}。指针越靠近绿色，那 3% 在您管理中的分量就越重。"
+  },
+  "flip": {
+    "vol1": "第一卷",
+    "vol2": "第二卷",
+    "hint": "拖动页角或点击翻页",
+    "prev": "上一页",
+    "next": "下一页",
+    "soundOn": "开启翻页声",
+    "soundOff": "关闭翻页声",
+    "cover": "封面",
+    "pageN": "第 {{n}} 页",
+    "pages12": "第 {{a}}–{{b}} 页",
+    "end": "试读结束",
+    "sample": "获取免费 36 页 PDF",
+    "open": "翻阅试读"
+  },
+  "reader": {
+    "tapHint": "点击书本即可打开",
+    "openBook": "打开并翻阅本书",
+    "openHint": "拖动或点击封面即可打开",
+    "close": "合上书本",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "titlePage": "扉页",
+    "loading": "正在准备书本..."
   }
 }

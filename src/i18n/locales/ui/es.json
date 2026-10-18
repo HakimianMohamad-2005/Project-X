@@ -161,5 +161,30 @@
   "quiz": {
     "systemScore": "Puntuación de pensamiento sistémico",
     "scoreNote": "Tu puntuación de pensamiento sistémico es {{pct}}. Cuanto más cerca del verde está la aguja, más fuerte es ese 3% en tu forma de dirigir."
+  },
+  "flip": {
+    "vol1": "Volumen 1",
+    "vol2": "Volumen 2",
+    "hint": "Arrastra la esquina de la página o haz clic",
+    "prev": "Página anterior",
+    "next": "Página siguiente",
+    "soundOn": "Activar sonido de página",
+    "soundOff": "Silenciar sonido de página",
+    "cover": "Portada",
+    "pageN": "Página {{n}}",
+    "pages12": "Páginas {{a}} y {{b}}",
+    "end": "Fin de la vista previa",
+    "sample": "Descarga el PDF gratuito de 36 páginas",
+    "open": "Hojéalo"
+  },
+  "reader": {
+    "tapHint": "Toca un libro para abrirlo",
+    "openBook": "Abrir y hojear el libro",
+    "openHint": "Arrastra la portada o tócala para abrirla",
+    "close": "Cerrar el libro",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "titlePage": "Portadilla",
+    "loading": "Preparando el libro..."
   }
 }
