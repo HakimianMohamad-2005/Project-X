@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="اورانگوتان +۳">
+  <title>Orangutan +3</title>
+  <defs>
+    <!-- Tile: near-black with the warm lamp glow of the cover art -->
+    <radialGradient id="tile" cx="30%" cy="18%" r="95%">
+      <stop offset="0" stop-color="#3b2719"/>
+      <stop offset=".42" stop-color="#18120e"/>
+      <stop offset="1" stop-color="#070606"/>
+    </radialGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd9b0" stop-opacity=".55"/>
+      <stop offset=".45" stop-color="#ffd9b0" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#e8a672" stop-opacity=".3"/>
+    </linearGradient>
+
+    <!-- Polished copper, lit from the upper left -->
+    <linearGradient id="copper" x1="0" y1="0" x2=".85" y2="1">
+      <stop offset="0" stop-color="#fff4e4"/>
+      <stop offset=".28" stop-color="#f7c892"/>
+      <stop offset=".62" stop-color="#e39a5c"/>
+      <stop offset="1" stop-color="#b9692c"/>
+    </linearGradient>
+
+    <filter id="lift" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="1.4" stdDeviation="1.2" flood-color="#000" flood-opacity=".7"/>
+    </filter>
+    <filter id="halo" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter>
+
+    <!-- The brand mark, set in Vazirmatn Black: ۳ and its raised + -->
+    <g id="mark" transform="translate(32 32.5) scale(.9) translate(-32 -32)">
+      <path transform="translate(7.47 47.7) scale(.47)"
+            d="M48.58-32.08Q45.36-32.08 42.19-33.18Q39.01-34.28 37.30-36.04Q35.55-34.42 32.91-33.25Q30.27-32.08 27.69-32.08Q27.20-32.08 26.22-32.08Q25.24-32.08 24.80-32.13Q25.49-26.22 25.66-20.68Q25.83-15.14 25.83-9.47L25.83 0L11.47 0L11.47-9.62Q11.47-21.39 10.57-30.76Q9.67-40.14 7.62-47.95Q5.57-55.76 2.20-62.70L15.670-67.48Q17.48-63.23 18.60-59.81Q19.73-56.40 21.63-51.95Q22.46-50.05 23.66-48.75Q24.85-47.46 27.20-47.46Q29.93-47.46 30.64-49.63Q31.35-51.81 31.40-55.57L31.49-63.13L42.82-63.77L43.16-56.54Q43.41-50.83 44.53-49.150Q45.65-47.46 48.00-47.46Q49.76-47.46 50.61-48.71Q51.46-49.95 51.71-51.86Q51.95-53.76 51.95-55.71Q51.95-58.20 51.56-60.77Q51.17-63.33 50.93-65.04L64.36-66.31Q64.65-63.67 64.82-60.94Q64.99-58.20 64.99-55.52Q64.99-49.37 63.45-44.02Q61.91-38.67 58.33-35.38Q54.74-32.08 48.58-32.08Z"/>
+      <path transform="translate(37.57 35.4) scale(.36)"
+            d="M50.20-19.24L33.94-19.24L33.94-1.07L21.63-1.07L21.63-19.24L5.37-19.24L5.37-31.54L21.63-31.54L21.63-48.34L33.94-48.34L33.94-31.54L50.20-31.54Z"/>
+    </g>
+  </defs>
+
+  <!-- Tile with a hairline copper bevel -->
+  <rect width="64" height="64" rx="14.5" fill="url(#tile)"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="13.8" fill="none" stroke="url(#bevel)" stroke-width="1.5"/>
+
+
+  <!-- Soft copper glow behind the mark, then the mark itself -->
+  <use href="#mark" fill="#e08f4f" opacity=".7" filter="url(#halo)"/>
+  <use href="#mark" fill="url(#copper)" filter="url(#lift)"/>
+</svg>

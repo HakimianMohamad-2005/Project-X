@@ -185,6 +185,12 @@
     "zoomIn": "Acercar",
     "zoomOut": "Alejar",
     "titlePage": "Portadilla",
-    "loading": "Preparando el libro..."
+    "loading": "Preparando el libro...",
+    "insideCover": "Interior de la tapa",
+    "motion": "Inclina el teléfono para mover el libro",
+    "rotateHint": "Gira el teléfono para ver las dos páginas",
+    "swipeHint": "Desliza sobre la página · toca dos veces para ampliar",
+    "zoomReset": "Volver al tamaño normal",
+    "keepReading": "Sigue leyendo"
   }
 }

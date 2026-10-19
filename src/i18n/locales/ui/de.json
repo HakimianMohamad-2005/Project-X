@@ -185,6 +185,12 @@
     "zoomIn": "Vergrößern",
     "zoomOut": "Verkleinern",
     "titlePage": "Titelseite",
-    "loading": "Buch wird vorbereitet..."
+    "loading": "Buch wird vorbereitet...",
+    "insideCover": "Innenseite des Einbands",
+    "motion": "Handy neigen, um das Buch zu bewegen",
+    "rotateHint": "Handy quer halten, um beide Seiten zu sehen",
+    "swipeHint": "Über die Seite wischen · doppelt tippen zum Zoomen",
+    "zoomReset": "Zurück zur normalen Größe",
+    "keepReading": "Weiterlesen"
   }
 }

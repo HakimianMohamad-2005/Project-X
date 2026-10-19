@@ -185,6 +185,12 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "titlePage": "Title page",
-    "loading": "Preparing the book..."
+    "loading": "Preparing the book...",
+    "insideCover": "Inside cover",
+    "motion": "Tilt your phone to move the book",
+    "rotateHint": "Turn your phone sideways to see both pages",
+    "swipeHint": "Swipe across the page · double-tap to zoom",
+    "zoomReset": "Back to normal size",
+    "keepReading": "Keep reading"
   }
 }

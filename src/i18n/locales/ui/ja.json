@@ -185,6 +185,12 @@
     "zoomIn": "拡大",
     "zoomOut": "縮小",
     "titlePage": "扉",
-    "loading": "本を準備しています..."
+    "loading": "本を準備しています...",
+    "insideCover": "表紙の裏",
+    "motion": "スマホを傾けて本を動かす",
+    "rotateHint": "スマホを横にすると見開きで読めます",
+    "swipeHint": "ページをスワイプ · ダブルタップで拡大",
+    "zoomReset": "通常サイズに戻す",
+    "keepReading": "続きを読む"
   }
 }

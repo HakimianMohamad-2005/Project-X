@@ -92,6 +92,8 @@ export class BookScene {
   private focusTarget = 0;
   private zoom = 1;
   private zoomTarget = 1;
+  private pan = new THREE.Vector2();
+  private panTarget = new THREE.Vector2();
 
   // Flight
   private flight: { from: THREE.Matrix4Tuple; start: number; dur: number; reverse: boolean; done?: () => void } | null = null;
@@ -102,9 +104,13 @@ export class BookScene {
 
   onLand?: (kind: 'cover' | 'leaf') => void;
 
-  constructor(canvas: HTMLCanvasElement, tex: BookTextures, opts: { thickness: number }) {
+  private lite: boolean;
+
+  constructor(canvas: HTMLCanvasElement, tex: BookTextures, opts: { thickness: number; lite?: boolean }) {
+    // Phones: lighter shadows, fewer particles and a capped pixel ratio keep it at 60 fps.
+    this.lite = !!opts.lite;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.lite ? 1.75 : 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 0.95;
@@ -144,7 +150,7 @@ export class BookScene {
     this.shadowPlane.receiveShadow = true;
     this.root.add(this.shadowPlane);
 
-    this.dust = makeDust();
+    this.dust = makeDust(this.lite ? 110 : 220);
     this.scene.add(this.dust);
 
     this.items = [
@@ -164,7 +170,7 @@ export class BookScene {
     const key = new THREE.DirectionalLight(0xffe2c0, 2.3);
     key.position.set(-2.4, 2.8, 3.1);
     key.castShadow = true;
-    key.shadow.mapSize.set(2048, 2048);
+    key.shadow.mapSize.set(this.lite ? 1024 : 2048, this.lite ? 1024 : 2048);
     key.shadow.camera.left = -2.4;
     key.shadow.camera.right = 2.4;
     key.shadow.camera.top = 2.4;
@@ -395,8 +401,23 @@ export class BookScene {
     this.focusTarget = f;
   }
 
+  /** Space covered by the UI bars (measured by the page), so the book is framed between them. */
+  setInsets(top: number, bottom: number) {
+    this.insets = { top, bottom };
+  }
+
+  /** Move around a zoomed page, in screen pixels. */
+  panBy(dxPx: number, dyPx: number) {
+    const fov = (this.camera.fov * Math.PI) / 180;
+    const worldPerPx = (2 * this.camera.position.length() * Math.tan(fov / 2)) / this.viewH;
+    const limit = Math.max(0, this.zoomTarget - 1) * 0.55;
+    this.panTarget.x = Math.max(-limit, Math.min(limit, this.panTarget.x - dxPx * worldPerPx));
+    this.panTarget.y = Math.max(-limit * 1.3, Math.min(limit * 1.3, this.panTarget.y + dyPx * worldPerPx));
+  }
+
   setZoom(z: number) {
-    this.zoomTarget = Math.min(2.2, Math.max(0.8, z));
+    this.zoomTarget = Math.min(2.4, Math.max(0.85, z));
+    if (this.zoomTarget <= 1.02) this.panTarget.set(0, 0);
   }
 
   get zoomLevel() {
@@ -482,7 +503,6 @@ export class BookScene {
     this.renderer.setSize(w, h, false);
     this.aspect = w / Math.max(1, h);
     this.viewH = Math.max(1, h);
-    this.insets = w < 640 ? { top: 76, bottom: 150 } : { top: 84, bottom: 110 };
     this.camera.aspect = this.aspect;
     this.camera.updateProjectionMatrix();
     this.frame(true);
@@ -494,18 +514,23 @@ export class BookScene {
     this.parallax.lerp(this.parallaxTarget, snap ? 1 : 0.05);
     this.focus += (this.focusTarget - this.focus) * k;
     this.zoom += (this.zoomTarget - this.zoom) * k;
+    this.pan.lerp(this.panTarget, snap ? 1 : 0.18);
     const fov = (this.camera.fov * Math.PI) / 180;
-    const tilt = 0.4; // radians the desk leans away from the reader
+    const reading = Math.min(1, Math.abs(this.focus));
+    const open = smooth(Math.min(1, (this.items[0]?.t ?? 0) * 1.15));
+    // The desk leans away from the reader; reading one page up close straightens it for legibility.
+    const tilt = (this.lite ? 0.32 : 0.4) * (1 - reading) + 0.1 * reading;
     // Fit inside the area between the UI bars, then nudge the target so the book sits centred in it.
     const usable = Math.max(0.35, 1 - (this.insets.top + this.insets.bottom) / this.viewH);
-    const spanW = Math.abs(this.focus) > 0.5 ? PW * 1.1 : CW * 2.2;
-    const spanH = CH * 1.08;
+    const spreadW = CW * 2.2 * open + CW * 1.25 * (1 - open);
+    const spanW = PW * 1.06 * reading + spreadW * (1 - reading);
+    const spanH = CH * (1.08 - 0.04 * reading);
     const distH = spanH / 2 / (Math.tan(fov / 2) * usable);
     const distW = spanW / 2 / (Math.tan(fov / 2) * this.aspect);
     const dist = Math.max(distH, distW) / this.zoom;
-    const tx = this.focus * (PW / 2);
+    const tx = this.focus * (PW / 2) + this.pan.x;
     const shiftPx = (this.insets.bottom - this.insets.top) / 2;
-    const ty = (shiftPx / this.viewH) * 2 * dist * Math.tan(fov / 2) * 0.92;
+    const ty = (shiftPx / this.viewH) * 2 * dist * Math.tan(fov / 2) * 0.92 - this.pan.y;
     this.camera.position.set(tx + this.parallax.x * 0.18, -Math.sin(tilt) * dist + this.parallax.y * 0.12 - ty, Math.cos(tilt) * dist);
     this.camera.lookAt(tx, 0.03 - ty, 0);
   }
@@ -595,8 +620,7 @@ function radialTexture() {
   return new THREE.CanvasTexture(c);
 }
 
-function makeDust() {
-  const n = 220;
+function makeDust(n: number) {
   const pos = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) {
     pos[i * 3] = (Math.random() - 0.5) * 5;

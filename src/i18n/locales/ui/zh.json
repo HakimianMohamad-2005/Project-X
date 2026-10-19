@@ -185,6 +185,12 @@
     "zoomIn": "放大",
     "zoomOut": "缩小",
     "titlePage": "扉页",
-    "loading": "正在准备书本..."
+    "loading": "正在准备书本...",
+    "insideCover": "封面内页",
+    "motion": "倾斜手机来转动书本",
+    "rotateHint": "横置手机即可同时查看两页",
+    "swipeHint": "在页面上滑动翻页 · 双击放大",
+    "zoomReset": "恢复正常大小",
+    "keepReading": "继续阅读"
   }
 }

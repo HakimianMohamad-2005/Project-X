@@ -185,6 +185,12 @@
     "zoomIn": "Zoom avant",
     "zoomOut": "Zoom arrière",
     "titlePage": "Page de titre",
-    "loading": "Préparation du livre..."
+    "loading": "Préparation du livre...",
+    "insideCover": "Intérieur de la couverture",
+    "motion": "Inclinez le téléphone pour bouger le livre",
+    "rotateHint": "Tournez le téléphone pour voir les deux pages",
+    "swipeHint": "Glissez sur la page · touchez deux fois pour zoomer",
+    "zoomReset": "Revenir à la taille normale",
+    "keepReading": "Poursuivre la lecture"
   }
 }
